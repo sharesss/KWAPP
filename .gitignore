@@ -1,0 +1,7 @@
+.gradle/
+.idea/*
+app/build/
+build/
+local.properties
+KWAPP.iml
+app/app.iml
