@@ -13,7 +13,6 @@ import widget.web.BaseWebActivity;
 
 /**
  * created by kp at 2017/8/15
-   修改
  * 关于我们
  */
 public class AboutusActivity extends BaseWebActivity {
