@@ -26,7 +26,6 @@ import http.manager.OkHttpClientManager;
 import utils.StringUtils;
 import utils.UISKipUtils;
 import utils.helper.ToastHelper;
-import utils.sharePreferences.FMWession;
 import widget.ContainsEmojiEditText;
 
 /**
@@ -158,7 +157,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
                     ToastHelper.toastMessage(this, getResourcesStr(R.string.toast_wx_login));
                     return;
                 }
-               FMWession.getInstance().setWxLogin(true);
+//               FMWession.getInstance().setWxLogin(true);
                 SendAuth.Req req = new SendAuth.Req();
                 req.scope = "snsapi_userinfo";
                 api.sendReq(req);
