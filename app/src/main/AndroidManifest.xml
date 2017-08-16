@@ -121,6 +121,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
+            android:name="com.ts.fmxt.ui.user.ProjectReturnActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
             android:name="com.ts.fmxt.ui.wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/title_activity_wxentry"

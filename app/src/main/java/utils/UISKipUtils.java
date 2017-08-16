@@ -21,6 +21,7 @@ import com.ts.fmxt.ui.user.EditUserInfoActivity;
 import com.ts.fmxt.ui.user.FollowProjectActivity;
 import com.ts.fmxt.ui.user.MessageActivity;
 import com.ts.fmxt.ui.user.OtherInfomationActivity;
+import com.ts.fmxt.ui.user.ProjectReturnActivity;
 import com.ts.fmxt.ui.user.UserAgreementActivity;
 import com.ts.fmxt.ui.user.login.ForgetPswActivity;
 import com.ts.fmxt.ui.user.login.LoginActivity;
@@ -215,6 +216,11 @@ public class UISKipUtils {
         Intent intent = new Intent(context, AboutusActivity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
+        context.startActivity(intent);
+    }
+
+    public static void startProjectReturnActivity(Activity context){
+        Intent intent = new Intent(context, ProjectReturnActivity.class);
         context.startActivity(intent);
     }
 

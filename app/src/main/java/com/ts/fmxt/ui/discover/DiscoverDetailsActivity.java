@@ -47,6 +47,8 @@ import widget.FMNoScrollListView;
 import widget.Share.PopupShareView;
 import widget.image.FMNetImageView;
 
+import static com.ts.fmxt.R.id.tv_with_the_vote;
+
 /**
  * created by kp at 2017/8/1
  * 发现详情
@@ -132,7 +134,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         //底部两个按钮
         llCollection = (LinearLayout) findViewById(R.id.ll_collection);
         tvCollection = (TextView) findViewById(R.id.tv_collection);
-        tvWithTheVote = (TextView) findViewById(R.id.tv_with_the_vote);
+        tvWithTheVote = (TextView) findViewById(tv_with_the_vote);
         tvWithTheVote.setOnClickListener(this);
         llCollection.setOnClickListener(this);
         findViewById(R.id.tv_top).setOnClickListener(this);
@@ -242,14 +244,25 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     @Override
     public void onClick(View v) {
+        SharedPreferences sharedPreferences= getSharedPreferences("user",
+                MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
         switch (v.getId()) {
             case R.id.btn_finish:
                 finish();
                 break;
             case R.id.iv_share:
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    return;
+                }
                 showShareDialog();
                 break;
             case R.id.tv_all_reviews:
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    return;
+                }
                 type=0;
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.orange));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
@@ -257,6 +270,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 CommentRequest(type);
                 break;
             case R.id.tv_worth_throwing:
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    return;
+                }
                 type=1;
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
@@ -264,6 +281,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 CommentRequest(type);
                 break;
             case R.id.tv_no_worth_throwing:
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    return;
+                }
                 type=2;
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
@@ -271,18 +292,19 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 CommentRequest(type);
                 break;
             case R.id.tv_write_comment:
-                SharedPreferences sharedPreferences= getSharedPreferences("user",
-                        MODE_PRIVATE);
-                String token=sharedPreferences.getString("token", "");
                 if (token.equals("")) {
                     UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
                     return;
                 }
-//                mConsumerCommentEntity = null;
+
                 dialog = new KeyMapDailog("评论是疯蜜范的最大动力", DiscoverDetailsActivity.this);
                 dialog.show(getSupportFragmentManager(), "评论");
                 break;
             case R.id.ll_collection:
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    return;
+                }
                 if(isCollect){
                     collectionRequest(0);
                     isCollect =false;
@@ -298,6 +320,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 break;
             case R.id.tv_top:
                 RequestTop();
+                break;
+            case R.id.tv_with_the_vote:
+                UISKipUtils.startProjectReturnActivity(DiscoverDetailsActivity.this);
                 break;
         }
     }
