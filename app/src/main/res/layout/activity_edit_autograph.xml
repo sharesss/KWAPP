@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/base_match"
+    android:background="@color/activity_ui_bgs"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <widget.titlebar.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <widget.FMNumEdittext
+        android:id="@+id/edt_edit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"
+        android:layout_below="@id/navigation_view"
+        />
+
+
+</RelativeLayout>

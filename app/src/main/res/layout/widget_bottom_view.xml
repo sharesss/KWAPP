@@ -1,0 +1,47 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <widget.MixedTextDrawView
+        android:id="@+id/bt_nearby"
+        style="@style/main_fragment_mixed"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:visibility="gone"
+        app:text="疯蜜" />
+
+
+    <widget.MixedTextDrawView
+        android:id="@+id/bt_consumer"
+        style="@style/main_fragment_mixed"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="8dp"
+        app:checked="true"
+        app:drawable="@mipmap/tabbar_consumer_off"
+        app:drawableLight="@mipmap/tabbar_consumer_on"
+        app:text="发现" />
+
+
+    <widget.MixedTextDrawView
+        android:id="@+id/bt_account"
+        style="@style/main_fragment_mixed"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_30"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="8dp"
+        app:drawable="@mipmap/tab_mine_icon_0ff"
+        app:drawableLight="@mipmap/tab_mine_on"
+        app:text="我的" />
+
+
+    <TextView
+        android:id="@+id/tv_msg_num"
+        style="@style/base_wrap"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_25"
+        android:text="" />
+
+</merge>

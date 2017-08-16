@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <widget.titlebar.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_c8c8c8"/>
+
+    <com.thindo.base.Widget.refresh.RefreshListView
+        android:id="@id/refresh_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@null"
+        android:descendantFocusability="beforeDescendants"
+        android:divider="@color/line_bg"
+        android:dividerHeight="@dimen/px_1"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:listSelector="@color/none"
+        android:overScrollMode="never"
+        android:smoothScrollbar="true"
+        app:ptrHeaderBackground="@color/ui_bgs"
+        app:ptrMode="both"
+        app:ptrShowIndicator="false" />
+
+    <widget.NetworkView
+        android:id="@id/network"
+        style="@style/base_wrap"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+    <widget.EmptyView
+        android:id="@+id/empty_view"
+        style="@style/base_wrap"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+</LinearLayout>

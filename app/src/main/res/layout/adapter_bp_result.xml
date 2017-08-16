@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        />
+    <LinearLayout
+        android:id="@+id/ll_pb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <ProgressBar
+            android:id="@+id/pb_yellowindex"
+            android:layout_width="270dp"
+            android:max="10"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:progressDrawable="@drawable/yellowcolor"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_height="10dp"
+            android:indeterminate="false" />
+        <TextView
+            android:id="@+id/tv_fraction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10分"
+            android:layout_gravity="bottom"
+            android:textColor="@color/orange"
+            />
+        <TextView
+            android:id="@+id/tv_peoplenum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30人"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp"
+            />
+    </LinearLayout>
+</LinearLayout>

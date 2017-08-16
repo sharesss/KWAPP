@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_8f000000">
+
+    <RelativeLayout
+        android:id="@id/popup_parent_layout"
+        style="@style/popup_parent_layout">
+
+        <TextView
+            android:id="@+id/tv_message"
+            style="@style/base_wrap"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/sp_17" />
+
+        <View
+            android:id="@id/controls4"
+            style="@style/base_houriz_line_bold"
+            android:background="@color/color_d3d3d3"
+            android:layout_below="@id/tv_message" />
+
+        <include
+            layout="@layout/popup_include_event_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/controls4" />
+    </RelativeLayout>
+
+</RelativeLayout>

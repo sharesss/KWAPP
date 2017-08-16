@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 填充颜色 -->
+    <solid android:color="#FFFFFF"></solid>
+
+    <!-- 线的宽度，颜色灰色 -->
+    <stroke
+        android:width="@dimen/dp_1"
+        android:color="@color/color_919191"
+        android:dashGap="@dimen/dp_3"
+        android:dashWidth="@dimen/dp_3"></stroke>
+
+    <!-- 矩形的圆角半径 -->
+    <corners android:radius="@dimen/dp_3" />
+
+</shape>

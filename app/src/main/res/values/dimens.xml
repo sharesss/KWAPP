@@ -1,0 +1,55 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--控件默认高度和宽度-->
+    <dimen name="layout_width_default">48dp</dimen>
+    <dimen name="layout_height_default">48dp</dimen>
+    <!--每个控件之间建议的间隔-->
+    <dimen name="layout_height_space">8dp</dimen>
+    <dimen name="layout_width_padding_default">16dp</dimen>
+
+    <dimen name="text_size_smaller">12sp</dimen>
+    <!--较小的文字大小-->
+    <dimen name="text_size_small">14sp</dimen>
+    <!-- 默认的文字大小-->
+    <dimen name="text_size_normal">16sp</dimen>
+    <!-- 大的文字大小-->
+    <dimen name="text_size_large">18sp</dimen>
+    <!-- 较大的文字大小，默认button字体大小 -->
+    <dimen name="text_size_xlarge">20sp</dimen>
+    <!-- 最大的文字大小-->
+    <dimen name="text_size_xxlarge">22sp</dimen>
+
+    <dimen name="downwards_drop_shadow_height">16dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="default_vertical_margin">16dp</dimen>
+    <dimen name="half_default_horizontal_margin">8dp</dimen>
+    <dimen name="half_default_vertical_margin">8dp</dimen>
+    <dimen name="quarter_default_horizontal_margin">4dp</dimen>
+    <dimen name="quarter_default_vertical_margin">4dp</dimen>
+    <dimen name="note_button_small_size">20dp</dimen>
+    <dimen name="note_button_small_margin_top">8dp</dimen>
+    <dimen name="min_touch_target">48dp</dimen>
+
+
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- 顶部按钮栏高度 -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+    <!-- 顶部按钮paddingLeft -->
+    <dimen name="pickerview_topbar_paddingleft">10dp</dimen>
+    <!-- 顶部按钮paddingRight -->
+    <dimen name="pickerview_topbar_paddingright">30dp</dimen>
+    <!-- 顶部按钮文字大小 -->
+    <dimen name="pickerview_topbar_btn_textsize">20sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">21sp</dimen>
+    <!-- 选项文字大小 需要配合 bools.xml 的 pickerview_customTextSize 为 true 才有效果-->
+    <dimen name="pickerview_textsize">16sp</dimen>
+
+    <dimen name="overlap_pager_margin">-60dp</dimen>
+    <dimen name="dp_280">280dp</dimen>
+
+
+</resources>

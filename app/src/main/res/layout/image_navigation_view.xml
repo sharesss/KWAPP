@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/black">
+
+    <TextView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:gravity="center"
+        android:text="返回"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_15" />
+
+    <ImageView
+        android:id="@+id/iv_title_left"
+        style="@style/base_wrap"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/iv_back"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_18" />
+
+    <ImageView
+        android:id="@+id/iv_right"
+        style="@style/base_wrap"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_15"
+         />
+
+    <ImageView
+        android:id="@+id/tv_num"
+        style="@style/base_wrap"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_3"
+        android:textColor="@color/text_red"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+         />
+</RelativeLayout>

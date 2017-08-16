@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ColorImageView">
+        <attr name="src_color" format="reference"/>
+        <attr name="src_white" format="reference"/>
+        <attr name="view_color" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="MultiStateView">
+        <attr name="msv_loadingView" format="reference"/>
+        <attr name="msv_emptyView" format="reference"/>
+        <attr name="msv_errorView" format="reference"/>
+        <attr name="msv_viewState" format="enum">
+            <enum name="content" value="0"/>
+            <enum name="error" value="1"/>
+            <enum name="empty" value="2"/>
+            <enum name="loading" value="3"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SwipeFlingAdapterView">
+        <attr name="SwipeFlingStyle" format="reference" />
+        <attr name="rotation_degrees" format="float" />
+        <attr name="min_adapter_stack" format="integer" />
+        <attr name="max_visible" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="FancyCoverFlow">
+        <attr name="unselectedAlpha" format="float"/>
+        <attr name="unselectedSaturation" format="float"/>
+        <attr name="unselectedScale" format="float"/>
+        <attr name="maxRotation" format="integer"/>
+        <attr name="scaleDownGravity" format="float"/>
+        <attr name="actionDistance" format="integer">
+            <enum name="auto" value="2147483647"/>
+        </attr>
+    </declare-styleable>
+    <!--mvc-->
+    <declare-styleable name="DragTopLayout">
+
+        <!-- Set the collapse panel offset -->
+        <attr name="dtlCollapseOffset" format="dimension"/>
+
+        <!-- Set enable drag over.The default value is true. -->
+        <attr name="dtlOverDrag" format="boolean"/>
+
+        <!-- Open the top view after the drag layout is created. The default value is false. -->
+        <attr name="dtlOpen" format="boolean"/>
+
+        <!-- The id of the top view (which will be dragged) -->
+        <attr name="dtlTopView" format="reference"/>
+
+        <!-- The content view which will be dragged together with "dtlTopView" -->
+        <attr name="dtlDragContentView" format="reference"/>
+
+        <!-- True the top view can be dragged -->
+        <attr name="dtlCaptureTop" format="boolean"/>
+    </declare-styleable>
+
+
+    <!-- *******MixedTextDrawView************** -->
+
+    <attr name="backgroundLight" format="reference"/>
+    <attr name="text" format="string"/>
+    <attr name="textColor" format="color"/>
+    <attr name="textSize" format="dimension"/>
+
+    <declare-styleable name="MixedTextDraw">
+        <attr name="checked" format="boolean"/>
+        <attr name="text"/>
+        <attr name="textColor"/>
+        <attr name="textSize"/>
+        <attr name="textSizeLight" format="dimension"/>
+        <attr name="textColorLight" format="color"/>
+        <attr name="drawable" format="reference"/>
+        <attr name="drawableLight" format="reference"/>
+        <attr name="drawablePadding" format="dimension"/>
+        <attr name="mixedMode">
+            <flag name="left" value="0x1"/>
+            <flag name="top" value="0x2"/>
+            <flag name="right" value="0x3"/>
+            <flag name="bottom" value="0x4"/>
+        </attr>
+        <attr name="background"/>
+        <attr name="backgroundLight"/>
+        <attr name="paddingLeft" format="dimension"/>
+        <attr name="paddingRight" format="dimension"/>
+        <attr name="paddingTop" format="dimension"/>
+        <attr name="paddingBottom" format="dimension"/>
+        <attr name="mixedFontShadow" format="boolean"/>
+        <attr name="gravity">
+            <flag name="left" value="0x1"/>
+            <flag name="top" value="0x2"/>
+            <flag name="right" value="0x3"/>
+            <flag name="bottom" value="0x4"/>
+            <flag name="center_vertical" value="0x5"/>
+            <flag name="center_horizontal" value="0x6"/>
+            <flag name="center" value="0x7"/>
+            <flag name="clip_vertical" value="0x8"/>
+            <flag name="clip_horizontal" value="0x9"/>
+            <flag name="fill_vertical" value="0x10"/>
+            <flag name="fill_horizontal" value="0x11"/>
+            <flag name="fill" value="0x12"/>
+            <flag name="start" value="0x13"/>
+            <flag name="end" value="0x14"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="DragLinearLayout">
+        <attr name="scrollSensitiveHeight" format="dimension"/>
+        <attr name="placeholderView" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="SeekBarPressure">
+        <attr name="drawableLeft" format="reference"/>
+        <attr name="drawableRight" format="reference"/>
+        <attr name="mode">
+            <flag name="normal" value="0x1"/>
+            <flag name="left" value="0x2"/>
+            <flag name="right" value="0x3"/>
+        </attr>
+        <attr name="seekBarHeight" format="dimension"/>
+        <attr name="marginTop" format="dimension"/>
+        <attr name="round" format="dimension"/>
+        <attr name="background"/>
+        <attr name="backgroundLight"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleProgress">
+        <attr name="circle_progress" format="integer"/>
+        <attr name="circle_max" format="integer"/>
+
+        <attr name="circle_unfinished_color" format="color"/>
+        <attr name="circle_finished_color" format="color"/>
+
+        <attr name="circle_text_size" format="dimension"/>
+        <attr name="circle_text_color" format="color"/>
+
+        <attr name="circle_prefix_text" format="string"/>
+        <attr name="circle_suffix_text" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="TagView">
+        <attr name="lineMargin" format="dimension"/>
+        <attr name="tagMargin" format="dimension"/>
+        <attr name="textPaddingLeft" format="dimension"/>
+        <attr name="textPaddingRight" format="dimension"/>
+        <attr name="textPaddingTop" format="dimension"/>
+        <attr name="textPaddingBottom" format="dimension"/>
+    </declare-styleable>
+
+    <attr name="borderRadius" format="dimension"/>
+    <attr name="type">
+        <enum name="circle" value="0"/>
+        <enum name="round" value="1"/>
+    </attr>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius"/>
+        <attr name="type"/>
+    </declare-styleable>
+    <declare-styleable name="wheelview">
+        <attr name="gravitys">
+            <enum name="center" value="17"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="5"/>
+        </attr>
+        <attr name="textSizess" format="dimension"/>
+        <attr name="textColorOut" format="color"/>
+        <attr name="textColorCenter" format="color"/>
+        <attr name="dividerColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="PickerView">
+
+        <attr name="isLoop" format="boolean" />
+
+    </declare-styleable>
+
+
+    <declare-styleable name="CoverFlowView">
+        <attr name="visibleViews" format="integer" />
+        <!--<attr name="reflectionHeight" format="fraction" />-->
+        <!--<attr name="reflectionGap" format="dimension" />-->
+        <!--<attr name="topImageClickEnable" format="boolean" />-->
+        <attr name="coverflowGravity" format="enum">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="center_vertical" value="2" />
+        </attr>
+        <attr name="coverflowLayoutMode" format="enum">
+            <enum name="match_parent" value="0"/>
+            <enum name="wrap_content" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="card">
+        <attr name="itemMarginTop" format="dimension" />
+        <attr name="bottomMarginTop" format="dimension" />
+        <attr name="yOffsetStep" format="dimension" />
+        <attr name="widthHeightRate" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="AVLoadingIndicatorView">
+    <attr name="indicator">
+        <flag name="BallPulse" value="0"/>
+        <flag name="BallGridPulse" value="1"/>
+        <flag name="BallClipRotate" value="2"/>
+        <flag name="BallClipRotatePulse" value="3"/>
+        <flag name="SquareSpin" value="4"/>
+        <flag name="BallClipRotateMultiple" value="5"/>
+        <flag name="BallPulseRise" value="6"/>
+        <flag name="BallRotate" value="7"/>
+        <flag name="CubeTransition" value="8"/>
+        <flag name="BallZigZag" value="9"/>
+        <flag name="BallZigZagDeflect" value="10"/>
+        <flag name="BallTrianglePath" value="11"/>
+        <flag name="BallScale" value="12"/>
+        <flag name="LineScale" value="13"/>
+        <flag name="LineScaleParty" value="14"/>
+        <flag name="BallScaleMultiple" value="15"/>
+        <flag name="BallPulseSync" value="16"/>
+        <flag name="BallBeat" value="17"/>
+        <flag name="LineScalePulseOut" value="18"/>
+        <flag name="LineScalePulseOutRapid" value="19"/>
+        <flag name="BallScaleRipple" value="20"/>
+        <flag name="BallScaleRippleMultiple" value="21"/>
+        <flag name="BallSpinFadeLoader" value="22"/>
+        <flag name="LineSpinFadeLoader" value="23"/>
+        <flag name="TriangleSkewSpin" value="24"/>
+        <flag name="Pacman" value="25"/>
+        <flag name="BallGridBeat" value="26"/>
+        <flag name="SemiCircleSpin" value="27"/>
+    </attr>
+    <attr name="indicator_color" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="CardContainer">
+        <attr name="android:gravity"/>
+        <attr name="orientation" format="enum">
+            <enum name="ordered" value="0"/>
+            <enum name="disordered" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="innerrect">
+        <attr name="inner_width" format="dimension"/>
+        <attr name="inner_height" format="dimension"/>
+        <attr name="inner_margintop" format="dimension" />
+        <attr name="inner_corner_color" format="color" />
+        <attr name="inner_corner_length" format="dimension" />
+        <attr name="inner_corner_width" format="dimension" />
+        <attr name="inner_scan_bitmap" format="reference" />
+        <attr name="inner_scan_speed" format="integer" />
+        <attr name="inner_scan_iscircle" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="FlowLayout">
+        <attr name="width_space" format="dimension"/>
+        <attr name="height_space" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="Slidr">
+        <attr name="slidr_barHeight" format="dimension" />
+        <attr name="slidr_textTop_visible" format="boolean" />
+        <attr name="slidr_textTop_size" format="dimension" />
+        <attr name="slidr_textBottom_visible" format="boolean" />
+        <attr name="slidr_textBottom_size" format="dimension" />
+        <attr name="slidr_backgroundColor" format="color" />
+
+        <attr name="slidr_step_colorizeAfterLast" format="boolean" />
+        <attr name="slidr_step_drawLine" format="boolean" />
+        <attr name="slidr_step_colorizeOnlyBeforeIndicator" format="boolean" />
+
+        <attr name="slidr_draw_bubble" format="boolean" />
+
+        <attr name="slidr_regions" format="boolean" />
+        <attr name="slidr_regions_centerText" format="boolean" />
+        <attr name="slidr_regions_textFollowRegionColor" format="boolean" />
+        <attr name="slidr_region_leftColor" format="color" />
+        <attr name="slidr_region_rightColor" format="color" />
+
+        <attr name="slidr_indicator_inside" format="boolean" />
+        <attr name="slidr_edditable" format="boolean" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_button_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/none"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@id/btn_cancel"
+        style="@style/popup_event_btn" />
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="@dimen/dp_1"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/color_d3d3d3" />
+
+    <Button
+        android:id="@id/btn_done"
+        style="@style/popup_event_btn"
+        android:background="@color/popup_dialog_right_btn"
+        android:text="确定"
+        android:textColor="@color/orange" />
+
+</LinearLayout>

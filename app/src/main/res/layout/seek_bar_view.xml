@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:id="@+id/rl_sp_bp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_seekbar_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:text="0"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        android:textSize="10sp"
+        android:background="@mipmap/score_icon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/tv_seekbar_distance"
+        />
+    <SeekBar
+        android:id="@+id/sb_bp"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_seekbar_distance"
+        android:max="10"
+        android:progress="0"
+        android:layout_marginLeft="14dp"
+        android:progressDrawable="@drawable/yellowcolor"
+        android:thumb="@drawable/thumb_image"
+        />
+
+    <TextView
+        android:id="@+id/tv_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10"
+        android:layout_toRightOf ="@id/sb_bp"
+        android:layout_below="@id/tv_seekbar_distance"
+        />
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确定评分"
+        android:layout_toRightOf = "@id/tv_max"
+        android:textColor="@color/orange"
+        android:visibility="gone"
+        android:layout_marginLeft="3dp"
+        android:layout_below="@id/tv_seekbar_distance"
+        />
+
+</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:orientation="horizontal">
+    <ProgressBar
+        android:id="@+id/pb_yellowindex"
+        android:layout_width="270dp"
+        android:layout_marginTop="40dp"
+        android:max="10"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:progressDrawable="@drawable/yellowcolor"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="10dp"
+        android:indeterminate="false" />
+        <TextView
+            android:id="@+id/tv_fraction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10分"
+            android:layout_gravity="bottom"
+            android:textColor="@color/orange"
+            />
+        <TextView
+            android:id="@+id/tv_peoplenum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30人"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp"
+            />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_ceek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:gravity="center_horizontal"
+        android:text="为“产品与服务”评分（拖动可评分）"
+        />
+
+
+</LinearLayout>

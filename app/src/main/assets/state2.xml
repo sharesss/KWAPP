@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<array>
+		<dict>
+			<key>title</key>
+			<string>产品说明</string>
+			<key>des</key>
+			<string>疯蜜金融定期类似于银行定期，具有一定的锁定期限。疯蜜金融定期根据锁定时间不同通常分为一月、三月和六月。疯蜜金融年化收益定期为固定收益，不仅本息安心，并且无购买限额。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>收益</string>
+			<key>des</key>
+			<string>疯蜜金融定期年化回报根据锁定时间不同分为一月、三月和六月。锁定期分别为30天、90天、180天。以一月定期为例，收益的计算方式为：本金＊年化百分比* (30/365)</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>产品期限</string>
+			<key>des</key>
+			<string>疯蜜金融定期分为一个月、三个月和六个月，锁定期分别为30天、90天、180天。购买疯蜜金融定期后，在到期日前，将无法赎回资金。到期日过后隔日，资金将会自动赎回到您的可用余额内。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>保障方式</string>
+			<key>des</key>
+			<string>本息保障计划</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>投资门槛</string>
+			<key>des</key>
+			<string>一元起投，购买无上限。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>赎回方式</string>
+			<key>des</key>
+			<string>购买后至到期日之间无法赎回，到期日过后隔日资金将会自动赎回到您的可用余额内。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>费用</string>
+			<key>des</key>
+			<string>购买、赎回疯蜜金融活期不需要额外的费用。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>收益计算规则</string>
+			<key>des</key>
+			<string>疯蜜金融定期当日购买，隔日计息。到期日过后隔日，资金将会自动赎回到您的可用余额内。 以11%的六月期定期举例，2015年12月24日购买10000份额，2016年6月23日回收本金和利息。</string>
+		</dict>
+	</array>
+</plist>

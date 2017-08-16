@@ -1,0 +1,179 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_ui_bgs"
+    android:orientation="vertical">
+
+    <com.ts.fmxt.ui.user.view.UserHeadView
+        android:id="@+id/header"
+        style="@style/base_height_wrap" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_user_realname"
+        android:visibility="gone"
+        style="@style/text_user_item_style"
+        android:layout_marginTop="@dimen/dp_20">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="@color/line_bg" />
+
+        <TextView
+            android:id="@+id/tv_temp_realname"
+            style="@style/text_user__style"
+             />
+
+        <TextView
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/tv_temp_realname"
+            android:textColor="@color/line_bg"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/tv_realname"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_user_realcar"
+        android:visibility="gone"
+        style="@style/text_user_item_style"
+        android:layout_marginTop="@dimen/dp_0">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:background="@color/line_bg" />
+
+        <TextView
+            style="@style/text_user__style"
+
+             />
+
+
+        <TextView
+            android:id="@+id/tv_realcar"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_endorsement_management"
+        android:visibility="gone"
+        style="@style/text_user_item_style"
+        android:layout_marginTop="@dimen/dp_20"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="@color/line_bg" />
+        <TextView
+            style="@style/text_user__style"
+
+             />
+
+
+        <TextView
+            android:id="@+id/tv_endorsement_management"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_1"
+        android:visibility="gone"
+        android:background="@color/line_bg"
+        />
+    <RelativeLayout
+        android:id="@+id/rl_guide"
+        android:visibility="gone"
+        style="@style/text_user_item_style"
+        android:layout_marginTop="@dimen/dp_20">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="@color/line_bg" />
+
+        <TextView
+            style="@style/text_user__style"
+
+             />
+
+
+        <ImageView
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_8"
+            android:src="@mipmap/icon_account_arrow" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bing_setting"
+        style="@style/text_user_item_style"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp_0">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:background="@color/line_bg" />
+
+        <TextView
+            style="@style/text_user__style"
+
+             />
+
+
+        <ImageView
+            android:id="@+id/tv_arrow"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_8"
+            android:src="@mipmap/icon_account_arrow" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_1"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:visibility="gone"
+        android:background="@color/line_bg" />
+
+</LinearLayout>

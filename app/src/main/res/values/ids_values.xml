@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <!-- 界面公共ID -->
+    <item name="AppWidget" type="id"></item>
+
+    <!-- 层级布局ID -->
+    <item name="layout1" type="id"></item>
+    <item name="layout2" type="id"></item>
+    <item name="layout3" type="id"></item>
+    <item name="layout4" type="id"></item>
+    <item name="layout5" type="id"></item>
+    <item name="layout6" type="id"></item>
+    <item name="layout7" type="id"></item>
+    <item name="sv" type="id"></item>
+
+    <!-- 控件布局ID -->
+    <item name="controls1" type="id"></item>
+    <item name="controls2" type="id"></item>
+    <item name="controls3" type="id"></item>
+    <item name="controls4" type="id"></item>
+    <item name="controls5" type="id"></item>
+    <item name="controls6" type="id"></item>
+    <item name="controls7" type="id"></item>
+    <item name="controls8" type="id"></item>
+    <item name="controls9" type="id"></item>
+    <item name="controls10" type="id"></item>
+    <item name="controls11" type="id"></item>
+    <item name="controls12" type="id"></item>
+    <item name="controls13" type="id"></item>
+    <item name="controls14" type="id"></item>
+    <item name="controls15" type="id"></item>
+    <item name="controls16" type="id"></item>
+    <item name="controls17" type="id"></item>
+    <item name="controls18" type="id"></item>
+
+    <!-- Xml comment id -->
+
+
+
+</resources>

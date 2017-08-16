@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/AppWidget"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/color_f5f5f5"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+
+        <TextView
+            android:id="@+id/btn_finish"
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableLeft="@mipmap/arrow_icon"
+            android:drawablePadding="@dimen/dp_3"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_15"
+            android:text="@string/text_back"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/btn_login"
+            style="@style/base_wrap"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/iv_share"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@mipmap/share_icon"
+            android:textSize="@dimen/sp_16" />
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/rly_click"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentBottom="true"
+       >
+
+    <LinearLayout
+    android:id="@+id/ll_collection"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:background="@color/color_f5f5f5"
+    android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:drawablePadding="@dimen/dp_2"
+            android:text="收藏"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/sp_17" />
+    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_with_the_vote"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@color/orange"
+            android:text="我想跟投"
+            android:textColor="@color/white"
+             />
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:id="@+id/sv_arr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/rly_click"
+        android:layout_below="@id/navigation_view">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+<!--  头部-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+    <widget.image.FMNetImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_brand_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_brand_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="12sp"
+        />
+
+    <ProgressBar
+        android:id="@+id/pb_index"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:progress="0"
+        android:max="100"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:progressDrawable="@drawable/barcolor"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="10dp"
+        android:indeterminate="false" />
+        <ProgressBar
+            android:id="@+id/pb_greenindex"
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:progress="85"
+            android:max="100"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:progressDrawable="@drawable/greencolor"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:visibility="gone"
+            android:layout_height="10dp"
+            android:indeterminate="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="可投指数"/>
+
+        <TextView
+            android:id="@+id/tv_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            android:text="0%"
+            />
+
+    </LinearLayout>
+    </LinearLayout>
+    <!--  圆形布局 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_isWorth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="39dp"
+            android:text="你觉得这个项目值得投吗？"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <com.ts.fmxt.ui.discover.view.CircleBar
+            android:id="@+id/iv_circlebar"
+            android:layout_width="100dp"
+            android:layout_below="@id/tv_isWorth"
+            android:layout_height="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_alignParentLeft ="true"
+            />
+
+        <com.ts.fmxt.ui.discover.view.RedCircleBar
+            android:id="@+id/iv_redcirclebar"
+            android:layout_width="100dp"
+            android:layout_below="@id/tv_isWorth"
+            android:layout_height="100dp"
+            android:layout_marginRight="50dp"
+            android:layout_alignParentRight ="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_circlebar"
+            android:layout_marginLeft="75dp"
+            android:layout_alignParentLeft ="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="值得投"
+            android:textColor="@color/orange"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_redcirclebar"
+            android:layout_marginRight="70dp"
+            android:layout_alignParentRight ="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/orange"
+            android:text="不值得投"/>
+    </RelativeLayout>
+
+<!--BP12项-->
+    <com.ts.fmxt.ui.discover.view.FlowLayout
+        app:width_space="10dp"
+        app:height_space="10dp"
+        android:id="@+id/flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:padding="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_temp2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/dp_20"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:id="@+id/iv_temp2"
+            style="@style/base_wrap"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/icon_consume_detail_word" />
+    </LinearLayout>
+
+        <widget.FMNoScrollListView
+            android:id="@+id/lv_bp_item"
+            style="@style/base_height_wrap"
+            android:divider="@color/white" />
+
+
+        <!-- 查看结果-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:background="@color/white">
+       <TextView
+           android:id="@+id/tv_bpresult"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="查看项目评分情况"
+           android:textColor="@color/orange"
+           android:gravity="center"
+           android:layout_gravity="center_horizontal"
+           android:textSize="@dimen/dp_22"
+           android:visibility="gone"
+           android:layout_marginTop="5dp"
+           android:layout_marginBottom="5dp"
+           android:background="@drawable/bg_orange_kongyuan"/>
+
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12项BP得分情况"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:textSize="@dimen/dp_22"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
+
+        </LinearLayout>
+
+        <widget.FMNoScrollListView
+            android:id="@+id/lv_result"
+            style="@style/base_height_wrap"
+            android:divider="@color/white" />
+
+        <!-- 评论-->
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_container"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_all_reviews"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:textColor="@color/orange"
+                android:gravity="center"
+                android:textSize="@dimen/sp_15"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_worth_throwing"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15"
+                />
+
+            <TextView
+                android:id="@+id/tv_no_worth_throwing"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/tv_write_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:paddingTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:drawableLeft="@mipmap/write_icon"
+                android:text="写评论"/>
+        </RelativeLayout>
+
+        <widget.FMNoScrollListView
+            android:id="@+id/lv_comment"
+            style="@style/base_height_wrap"
+            android:layout_below="@id/ll_bottom_container"
+            android:divider="@color/white" />
+
+
+    </LinearLayout>
+
+    </ScrollView>
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/orange"
+        android:layout_marginTop="50dp"
+        android:text="参与项目打分，看自己跟专业投资人的差异"
+        android:textColor="@color/white"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/tv_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/back_icon"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_60"
+        />
+
+</RelativeLayout>

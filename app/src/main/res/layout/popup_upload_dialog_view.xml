@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_8f000000">
+
+    <LinearLayout android:orientation="vertical"
+        android:id="@+id/popup_parent_layout" style="@style/base_wrap" android:layout_centerInParent="true" >
+        <widget.anim.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            app:indicator="BallPulse" />
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/base_wrap"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_5"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

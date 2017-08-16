@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rly_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_7f000000">
+
+
+    <LinearLayout
+        android:id="@+id/popup_parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_30"
+        android:paddingRight="@dimen/dp_30">
+        <widget.wheelview.WheelView
+            android:id="@+id/year"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_weight="1" />
+        <widget.wheelview.WheelView
+            android:id="@+id/month"
+            android:layout_width="@dimen/dp_0"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <widget.wheelview.WheelView
+            android:id="@+id/day"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_weight="1" />
+
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_above="@id/popup_parent_layout"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_clean"
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_8"
+            android:text="@string/text_clean"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/tv_finish"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_8"
+            android:text="@string/bt_complete"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/sp_16" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

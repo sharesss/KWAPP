@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_widget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_7f000000">
+
+    <Button
+        android:id="@+id/other_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_full_orange_5_shape"
+        android:text="@string/button_cancel"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_17" />
+
+
+    <LinearLayout
+        android:id="@+id/rl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/other_cancel"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bt_photo_shape"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_photograph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="拍 照"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/line_bg" />
+
+        <Button
+            android:id="@+id/bt_photoalbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="打开相册"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:id="@+id/bt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/line_bg"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/bt_delect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="删除"
+            android:textColor="@color/text_more"
+            android:textSize="@dimen/sp_16"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

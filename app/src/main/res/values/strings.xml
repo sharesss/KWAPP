@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">疯蜜小投</string>
+    <string name="title_activity_wxentry">WXEntryActivity</string>
+    <string name="cancel">取 消</string>
+    <string name="ensure">确 定</string>
+    <string name="text_back">返回</string>
+    <string name="msg_handling">正在处理&#8230;</string>
+    <string name="msg_error_msg">网络错误,请稍后请求</string>
+    <string name="text_network_msg">啊哦,网络不顺畅..</string>
+    <string name="text_network_loding">重新加载</string>
+    <string name="text_network_tip">检测网络异常</string>
+    <string name="text_image_upload">图片上传中...</string>
+
+    <string name="title_login">登 录</string>
+    <string name="title_login_code">请输入密码</string>
+    <string name="text_forget_password">忘记密码</string>
+    <string name="toast_login_succeed">登录成功</string>
+    <string name="toast_register_succeed">注册成功</string>
+    <string name="bt_complete">完成</string>
+    <string name="text_clean">清空</string>
+    <string name="text_send_code">获取验证码</string>
+    <string name="hint_register_phone">请输入您的手机号码</string>
+    <string name="hint_binding_phone">绑定手机号</string>
+    <string name="title_register">注册</string>
+    <string name="more_login">或</string>
+    <string name="code">请输入手机号 </string>
+    <string name="wx">使用微信快速登录 </string>
+    <string name="toast_wx_login">您还没有安装微信</string>
+    <string name="login_only_can_input">qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890 -/:;()$@".,?!'€£¥•[]{}#%^*+=_\|~#062;#060;</string>
+
+    <string name="user_nickhint">疯蜜昵称(1-8个字)</string>
+    <string name="sex_n">男</string>
+    <string name="sex_m">女</string>
+    <string name="register_hint">注册即表示同意</string>
+    <string name="register_protocol">《疯蜜用户协议》</string>
+    <string name="button_next">下一步</string>
+    <string name="toast_register_code">获取验证码</string>
+    <string name="register_sms_hint">验证码以短信形式发送给您，请注意查收</string>
+    <string name="toast_register_send_code">已发送</string>
+    <string name="input_register_psw">设置密码(6-16位字符)</string>
+    <string name="title_reset_password">修改密码</string>
+    <string name="input_old_psw">旧密码</string>
+    <string name="input_new_psw">新密码</string>
+
+
+    <string name="button_cancel">取消</string>
+    <string name="button_confirm">确定</string>
+
+    <!--我的-->
+    <string name="text_no_login">未登录</string>
+    <string name="toast_login_out">是否退出登录</string>
+    <string name="text_Authentication">认证投资人</string>
+    <string name="title_edit_user_info">编辑信息</string>
+    <string name="head_portrait">头像</string>
+    <string name="nick_name">昵称</string>
+    <string name="sex">性别</string>
+    <string name="age">年龄</string>
+    <string name="phone_num">手机号</string>
+    <string name="password">密码</string>
+    <string name="location">所在地</string>
+    <string name="company">公司</string>
+    <string name="position">职位</string>
+    <string name="annual_income">年收入</string>
+    <string name="personalized_signature">个性签名</string>
+    <string name="safe_exit">安全退出</string>
+    <string name="user_info_nodata">未填写</string>
+    <string name="title_edit_nick_name">昵称</string>
+    <string name="title_edit_compay_name">公司名称</string>
+    <string name="title_edit_position_name">职称</string>
+    <string name="title_personalized_signature">个性签名</string>
+    <string name="title_erificationv_phone_num">验证当前手机号</string>
+    <string name="title_bind_new_phone_num">绑定新手机号</string>
+    <string name="title_edit_password">修改密码</string>
+    <string name="title_certified_investor">认证投资人</string>
+    <string name="follow_project">想跟投的项目</string>
+    <string name="empty">清空</string>
+
+
+    <string name="notice">通知</string>
+
+    <string name="collection_project">收藏的项目</string>
+    <string name="register_psw_hint">密码规则：6-16位字符</string>
+
+    <string name="share_consumenr_title">我觉得还不错，你可以看看</string>
+    <string name="share_consumenr_context">进来看看，我的投资心得吧。</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="about_us">关于我们</string>
+
+
+    <!--正式环境
+    <string name="html_fm_fmoneyShare_user">https://fmb.fmsecret.cn/fm-html5/share/Host_state.html</string>
+    <string name="html_fm_fmoneyShare_detail">https://wx.fmsecret.cn/fm-html5/fmoneyShare/detail.html</string>
+    <string name="html_fm_user_agreement">https://wx.fmsecret.cn/fm-html5/fmoneyShare/userAgreement.html</string>
+     <string name="html_fm_user_about_us">https://wx.fmsecret.cn/fm-html5/fmoneyShare/aboutUs.html</string>
+    -->
+    <!--测试环境-->
+    <string name="html_fm_fmoneyShare_user">https://wx.fmsecret.cn/fm-html5/fmoneyShare/find.html</string>
+    <string name="html_fm_fmoneyShare_detail">https://wx.fmsecret.cn/fm-html5/fmoneyShare/detail.html</string>
+    <string name="html_fm_user_agreement">https://wx.fmsecret.cn/fm-html5/fmoneyShare/userAgreement.html</string>
+    <string name="html_fm_user_about_us">https://wx.fmsecret.cn/fm-html5/fmoneyShare/aboutUs.html</string>
+
+
+</resources>

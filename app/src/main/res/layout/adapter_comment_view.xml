@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rly_paren"
+    style="@style/base_match"
+    android:background="@color/white">
+
+
+    <widget.image.CircleImageView
+        android:id="@+id/iv_portrait"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/base_wrap"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@id/iv_portrait"
+        android:textColor="@color/font_main_secondary"
+        android:textSize="@dimen/sp_15" />
+    <TextView
+        android:id="@+id/tv_isfounder"
+        style="@style/base_wrap"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@id/tv_name"
+        android:textColor="@color/font_main_secondary"
+        android:text="创始人"
+        android:visibility="gone"
+        android:background="@drawable/bg_gray_label_shape"
+        android:textSize="@dimen/sp_15"/>
+    <TextView
+        android:id="@+id/tv_isInvestAuthen"
+        style="@style/base_wrap"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@id/tv_isfounder"
+        android:textColor="@color/font_main_secondary"
+        android:text="投资人"
+        android:visibility="gone"
+        android:background="@drawable/bg_gray_label_shape"
+        android:textSize="@dimen/sp_15"/>
+
+    <widget.image.FMNetImageView
+        android:id="@+id/iv_cat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@id/tv_name"/>
+
+    <LinearLayout
+        android:id="@+id/rl_comment"
+        style="@style/base_wrap"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@id/tv_isInvestAuthen">
+
+        <TextView
+            android:id="@+id/tv_reply"
+            style="@style/base_wrap"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/sp_15"
+            android:visibility="gone" />
+
+        Reply
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_likeCount"
+        style="@style/base_wrap"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_15"
+        android:text="0"
+        android:drawableLeft="@mipmap/like_icon_n"
+        android:drawablePadding="10dp"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+    android:id="@+id/tv_time"
+    style="@style/base_wrap"
+    android:layout_below="@id/tv_name"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_5"
+    android:layout_toRightOf="@id/iv_portrait" />
+
+    <TextView
+        android:id="@+id/tv_replys"
+        style="@style/base_wrap"
+        android:layout_below="@id/tv_name"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="回复"
+        android:textColor="@color/orange"
+        android:layout_toRightOf="@id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_comment"
+        style="@style/base_wrap"
+        android:textColor="@color/font_main"
+        android:layout_below="@id/iv_portrait"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:textSize="@dimen/sp_15" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0d5"
+        android:layout_below="@id/tv_comment"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_ebebeb" />
+
+</RelativeLayout>

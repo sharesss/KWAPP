@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <item name="btn_done" type="id"></item>
+    <item name="btn_cancel" type="id"></item>
+    <item name="popup_parent_layout" type="id"></item>
+    <!-- 标题通用ID -->
+    <item name="navigation_view" type="id" />
+    <item name="app_widget" type="id" />
+    <!--  -->
+    <item name="refresh_lv" type="id"></item>
+    <!--  -->
+    <item name="view_pager" type="id"></item>
+    <item name="tabs" type="id"></item>
+    <!--  -->
+    <item name="refresh_scroll" type="id"></item>
+    <item name="net_image" type="id"></item>
+    <item name="pictures_view" type="id"></item>
+    <!-- 通用的listview组件ID -->
+    <item name="listview" type="id"></item>
+
+    <item name="tv_title" type="id"></item>
+    <item name="container1" type="id"></item>
+    <item name="container2" type="id"></item>
+    <item name="container3" type="id"></item>
+    <item name="container4" type="id"></item>
+    <item name="container5" type="id"></item>
+    <item name="network" type="id"></item>
+
+    <item name="forward" type="id"></item>
+    <item name="rl_msg" type="id" />
+    <item name="tv_message" type="id" />
+    <item name="iv_left" type="id" />
+    <item name="bt_all_tag" type="id" />
+    <item name="buttom" type="id" />
+
+    <!--环信IM-->
+    <item name="title_bar" type="id" />
+    <item name="timestamp" type="id" />
+    <item name="iv_userhead" type="id" />
+    <item name="bubble" type="id" />
+    <item name="tv_userid" type="id" />
+    <item name="progress_bar" type="id" />
+    <item name="msg_status" type="id" />
+    <item name="tv_ack" type="id" />
+    <item name="tv_delivered" type="id" />
+    <item name="voice_recorder" type="id" />
+    <item name="message_list" type="id" />
+    <item name="input_menu" type="id" />
+
+    <!-- Messages IDs -->
+    <item type="id" name="auto_focus"/>
+    <item type="id" name="decode"/>
+    <item type="id" name="decode_failed"/>
+    <item type="id" name="decode_succeeded"/>
+    <item type="id" name="encode_failed"/>
+    <item type="id" name="encode_succeeded"/>
+    <item type="id" name="launch_product_query"/>
+    <item type="id" name="quit"/>
+    <item type="id" name="restart_preview"/>
+    <item type="id" name="return_scan_result"/>
+    <item type="id" name="search_book_contents_failed"/>
+    <item type="id" name="search_book_contents_succeeded"/>
+
+
+</resources>

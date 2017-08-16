@@ -1,0 +1,51 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="base_match">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="base_height_wrap" parent="base_match">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="base_width_wrap" parent="base_match">
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+    
+    <style name="base_match_h" parent="base_match">
+        <item name="android:orientation">horizontal</item>
+    </style>
+    
+    <style name="base_height_wrap_h" parent="base_height_wrap">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="base_wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="base_wrap_h" parent="base_wrap">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- 横线 -->
+    <style name="base_horiz_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <!-- 竖线 -->
+    <style name="base_vertical_line">
+        <item name="android:layout_width">@dimen/dp_0d5</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="base_houriz_line_bold" parent="base_horiz_line">
+        <item name="android:layout_height">1px</item>
+    </style>
+
+
+    <declare-styleable name="CircleImageView"><attr format="dimension" name="border_width"/><attr format="color" name="border_color"/><attr format="boolean" name="border_overlay"/></declare-styleable>
+</resources>

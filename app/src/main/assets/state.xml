@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<array>
+		<dict>
+			<key>title</key>
+			<string>产品说明</string>
+			<key>des</key>
+			<string>疯蜜金融活期产品，是一款收益与风险相对稳定的理财产品
+疯蜜金融活期和银行活期存款相类比，随时可以充值到疯蜜金融账户进行投资，也可以随时赎回到我的账户提现。 疯蜜金融活期产品可以获得高于银行活期收益率的收益，但也受到额度限制。它和疯蜜金融每天投资的上千种债权组合挂钩，收益率浮动，是疯蜜金融入门的投资产品.
+</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>收益</string>
+			<key>des</key>
+			<string>浮动收益，依每日疯蜜金融页面上告示的利率计算当日收益。疯蜜金融活期页面上展示的是复合年化利率，由于疯蜜金融会按日复投，所以这个值会比单日年化收益率高一些。 举例来说，页面上展示的当日年化利率为8%，若您存10000元，通过每日利息复投，一年后您的活期资产将变为10800元。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>产品期限</string>
+			<key>des</key>
+			<string>随时可赎回</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>保障方式</string>
+			<key>des</key>
+			<string>本息保障计划</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>投资门槛</string>
+			<key>des</key>
+			<string>一元起投，每人投资上限100,000元。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>赎回方式</string>
+			<key>des</key>
+			<string>随时可赎回。请至账户中赎回。赎回后可申请提现，将资金转回您的银行卡内。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>费用</string>
+			<key>des</key>
+			<string>购买、赎回疯蜜金融活期不需要额外的费用。</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>收益计算规则</string>
+			<key>des</key>
+			<string>收益复投：假如您存10000元在疯蜜金融活期中，根据当日复合年化收益率获得2.4元收益，第二天疯蜜金融会将这2.4元放入您持有的活期份额中，并同10000元一起作为本金继续投资。 也就是说，第二天你投资的活期本金为10002.4元。依次类推，您每天投资的的活期本金是前一天的本金加收益。 计息时间：每日的活期投资将在次日产生收益。您可在账户内查询昨日收益。</string>
+		</dict>
+	</array>
+
+</plist>

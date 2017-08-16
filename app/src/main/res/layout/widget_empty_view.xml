@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/base_match">
+
+    <RelativeLayout style="@style/base_match">
+
+        <ImageView
+            android:id="@+id/iv_empty"
+            style="@style/base_wrap"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_list_nodata"
+            />
+
+        <TextView
+            android:id="@+id/tv_empty"
+            style="@style/base_wrap"
+            android:layout_below="@id/iv_empty"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="竟然没有"
+            android:textColor="#70767e"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</RelativeLayout>

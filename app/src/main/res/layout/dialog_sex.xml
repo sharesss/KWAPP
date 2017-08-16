@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="100dp">
+
+    <TextView
+        android:id="@+id/tv_man"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="男"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray"/>
+    <TextView
+        android:id="@+id/tv_woman"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="女"/>
+</LinearLayout>

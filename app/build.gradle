@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "com.ts.fmxt"
+        minSdkVersion 17
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    maven { url "https://jitpack.io" }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile files('libs/okhttp-2.7.0.jar')
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile files('libs/qiniu-android-sdk-7.1.2.jar')
+    compile(name: 'FMBaseLibrary', ext: 'aar')
+    compile files('libs/libammsdk.jar')
+    compile files('libs/happy-dns-0.2.3.2.jar')
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile files('libs/MobCommons-2016.0406.1915.jar')
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@id/AppWidget"
+    android:layout_height="match_parent">
+    <widget.titlebar.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_c8c8c8"/>
+
+    <TextView
+        android:id="@+id/tv_isAdopt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="请上传收入或资产证明(房产,汽车或银行流水等)"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@mipmap/upload_line_img"
+        android:layout_height="150dp">
+
+        <widget.image.FMNetImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@mipmap/upload_img"
+            android:scaleType="centerCrop" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_nexts"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_gray_dcdc_hape"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/bt_complete"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/ui_bg"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:layout_height="80dp">
+
+        <TextView
+            android:id="@+id/tv_authentication_privilege"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="认证投资人特权:"/>
+
+        <TextView
+            android:id="@+id/tv_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="认证投资人特权"/>
+
+    </LinearLayout>
+
+</LinearLayout>

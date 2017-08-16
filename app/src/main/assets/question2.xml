@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<array>
+		<dict>
+			<key>Q</key>
+			<string>什么是疯蜜金融定期产品？</string>
+			<key>A</key>
+			<string>疯蜜金融定期类似于银行定期，具有一定的锁定期限。疯蜜金融定期根据锁定时间不同分为一月、三月和六月。疯蜜金融定期为固定收益，不仅本息安心，并且无购买限额。</string>
+		</dict>
+		<dict>
+			<key>Q</key>
+			<string>疯蜜金融定期产品是怎么计算利息的？</string>
+			<key>A</key>
+			<string>疯蜜金融定期当日购买，隔日计息，按30天计算为一个月周期，到期日顺延至第二天即可赎回到可用余额中。以11%的六月期定期举例，2015年12月24日购买10000份额，2016年6月23日，收回本金10000元，及利息542.46元（＝10000＊11%＊180/365）。</string>
+		</dict>
+		<dict>
+			<key>Q</key>
+			<string>疯蜜金融定期可以自动复投吗？</string>
+			<key>A</key>
+			<string>购买疯蜜金融定期后可以在锁定期内随时在我的账户→定期→点击购买的一/三/六月份，修改到期后本息复投、本金复投或自动赎回到可用余额，系统默认为到期后自动赎回。</string>
+		</dict>
+		<dict>
+			<key>Q</key>
+			<string>购买疯蜜金融定期后，如何申请提现？</string>
+			<key>A</key>
+			<string>如果已经提前选择好“到期后自动赎回”，则到期日次日，定期的本金和收益均会自动赎回到可用余额中，只需要提现即可。但在锁定期内，定期将无法赎回。</string>
+		</dict>
+	</array>
+</plist>

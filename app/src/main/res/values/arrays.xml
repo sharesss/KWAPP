@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="annual_salary">
+        <item>5万+</item>
+        <item>10万+</item>
+        <item>50万+</item>
+        <item>100万+</item>
+        <item>500万+</item>
+        <item>1000万+</item>
+        <item>5000万+</item>
+        <item>1亿+</item>
+    </string-array>
+
+    <string-array name="markArray">
+        <item>0</item>
+        <item>10</item>
+
+    </string-array>
+</resources>

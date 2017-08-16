@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/base_match">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_input"
+        style="@style/base_match"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/bg_gray_top_buttom_shape">
+
+        <EditText
+            android:id="@+id/ed_text"
+            style="@style/base_match"
+            android:layout_marginRight="@dimen/dp_30"
+            android:background="@null"
+            android:gravity="top"
+            android:padding="@dimen/dp_5"
+            android:textSize="@dimen/sp_15" />
+
+        <ImageView
+            android:id="@+id/iv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dp_8"
+            android:src="@mipmap/login_quit_icon"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_num"
+        style="@style/base_wrap"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textColor="@color/font_secondary"
+        android:textSize="@dimen/sp_16" />
+
+
+</RelativeLayout>
