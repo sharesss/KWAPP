@@ -193,47 +193,65 @@
             android:text="你觉得这个项目值得投吗？"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:id="@+id/ll_dokels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_isWorth"
+            android:orientation="vertical"
+            android:layout_alignParentLeft ="true">
 
         <com.ts.fmxt.ui.discover.view.CircleBar
             android:id="@+id/iv_circlebar"
             android:layout_width="100dp"
-            android:layout_below="@id/tv_isWorth"
             android:layout_height="100dp"
             android:layout_marginLeft="50dp"
-            android:layout_alignParentLeft ="true"
+
             />
 
+            <TextView
+                android:id="@+id/tv_worth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_circlebar"
+                android:layout_marginLeft="75dp"
+                android:layout_alignParentLeft ="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="值得投"
+                android:background="@drawable/bg_orange_kongyuan"
+                android:textColor="@color/orange"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_notdokels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentRight ="true"
+            android:layout_below="@id/tv_isWorth"
+            >
         <com.ts.fmxt.ui.discover.view.RedCircleBar
             android:id="@+id/iv_redcirclebar"
             android:layout_width="100dp"
-            android:layout_below="@id/tv_isWorth"
             android:layout_height="100dp"
             android:layout_marginRight="50dp"
-            android:layout_alignParentRight ="true"
             />
 
         <TextView
+            android:id="@+id/tv_noworth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_circlebar"
-            android:layout_marginLeft="75dp"
-            android:layout_alignParentLeft ="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="值得投"
-            android:textColor="@color/orange"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iv_redcirclebar"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="70dp"
             android:layout_alignParentRight ="true"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textColor="@color/orange"
+            android:background="@drawable/bg_orange_kongyuan"
             android:text="不值得投"/>
+        </LinearLayout>
     </RelativeLayout>
 
 <!--BP12项-->

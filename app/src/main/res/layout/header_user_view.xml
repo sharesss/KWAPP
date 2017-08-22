@@ -41,6 +41,30 @@
                 android:text="@string/text_no_login"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:id="@+id/tv_founder"
+                    style="@style/base_wrap"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:drawablePadding="@dimen/dp_2"
+                    android:background="@drawable/bg_orange_kongyuan"
+                    android:text="创始人"
+                    android:visibility="gone"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/sp_16" />
+                <TextView
+                    android:id="@+id/tv_investor"
+                    style="@style/base_wrap"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:drawablePadding="@dimen/dp_2"
+                    android:text="投资人"
+                    android:visibility="gone"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/bg_orange_kongyuan"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/sp_16" />
+
+
             </LinearLayout>
 
             <LinearLayout

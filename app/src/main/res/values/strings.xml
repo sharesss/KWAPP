@@ -74,6 +74,7 @@
     <string name="title_certified_investor">认证投资人</string>
     <string name="follow_project">想跟投的项目</string>
     <string name="empty">清空</string>
+    <string name="del">删除</string>
 
 
     <string name="notice">通知</string>
@@ -85,6 +86,8 @@
     <string name="share_consumenr_context">进来看看，我的投资心得吧。</string>
     <string name="user_agreement">用户协议</string>
     <string name="about_us">关于我们</string>
+    <string name="confirm_payment">确认支付</string>
+
 
 
     <!--正式环境

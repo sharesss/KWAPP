@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/color_f5f5f5"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:id="@id/AppWidget"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -50,12 +53,22 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/color_c8c8c8"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:gravity="center_vertical"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/tv_reservation_money"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -65,6 +78,7 @@
             android:textSize="20sp"/>
 
         <TextView
+            android:id="@+id/tv_shares_num"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -82,6 +96,7 @@
         android:background="@mipmap/coupon_line"/>
 
     <TextView
+        android:id="@+id/tv_company_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="胡桃里总公司"
@@ -91,6 +106,7 @@
         android:textSize="20sp"/>
 
     <TextView
+        android:id="@+id/tv_equityReserveExplain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="胡桃里总公司"
@@ -108,10 +124,70 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="选择意向入股金额v "
+        android:text="选择意向入股金额"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:layout_marginLeft="10dp"/>
+    <!--BP12项-->
+    <com.ts.fmxt.ui.discover.view.FlowLayout
+        app:width_space="10dp"
+        app:height_space="10dp"
+        android:id="@+id/flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:padding="5dp"/>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:background="@color/color_f5f5f5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="股东权益"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/tv_shareholderequity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hahahhahahah"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            />
+
+    </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="50dp"
+                android:layout_height="1px"
+                android:background="@color/gray"
+                />
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:text="确定"
+                android:background="@drawable/bg_full_orange_5_shape"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

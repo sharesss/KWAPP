@@ -3,10 +3,47 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:id="@id/AppWidget"
     android:layout_height="match_parent">
-    <widget.titlebar.NavigationView
-        android:id="@+id/navigation_view"
+    <RelativeLayout
+        android:id="@+id/rly_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/dp_50">
+
+        <TextView
+            android:id="@+id/btn_finish"
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableLeft="@mipmap/arrow_icon"
+            android:drawablePadding="@dimen/dp_3"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_15"
+            android:text="@string/text_back"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/btn_login"
+            style="@style/base_wrap"
+            android:layout_centerInParent="true"
+            android:text="@string/title_certified_investor"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/btn_register"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="删除"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:drawablePadding="3dp"
+            android:textSize="@dimen/sp_16" />
+
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -18,7 +55,40 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
+        android:visibility="visible"
         android:text="请上传收入或资产证明(房产,汽车或银行流水等)"/>
+
+    <LinearLayout
+        android:id="@+id/ll_authentication"
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="认证投资人："/>
+        <TextView
+            android:id="@+id/tv_isexamine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/orange"
+            android:text="审核中"/>
+
+        <TextView
+            android:id="@+id/tv_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:text="（三个工作日内完成审核）"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

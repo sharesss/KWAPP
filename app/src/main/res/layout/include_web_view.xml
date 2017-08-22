@@ -12,7 +12,11 @@
         android:id="@id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/navigation_view"
+        android:background="@color/color_c8c8c8"/>
     <com.thindo.base.Widget.refresh.RefreshWebView
         android:id="@+id/refresh_web_view"
         android:layout_width="match_parent"
@@ -20,6 +24,7 @@
         android:layout_below="@id/navigation_view"
         android:overScrollMode="never"
         android:smoothScrollbar="true"
+        android:layout_marginTop="1px"
         app:ptrHeaderBackground="@color/ui_bgs"
         app:ptrMode="disabled"
         app:ptrShowIndicator="false" />

@@ -52,7 +52,7 @@
             android:src="@mipmap/nearby_message_icon"
              />
 
-        <ImageView
+        <TextView
             android:id="@+id/tv_num"
             style="@style/base_wrap"
             android:layout_alignParentRight="true"
