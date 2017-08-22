@@ -6,18 +6,18 @@
  * Copyright (c) 2013年 mob.com. All rights reserved.
  */
 
-package com.ts.fmxt.ui.wxapi;
+package com.ts.fmxt.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.modelmsg.SendAuth;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.thindo.base.NetworkAPI.BaseResponse;
 import com.thindo.base.NetworkAPI.OnResponseListener;
 import com.ts.fmxt.R;
@@ -26,6 +26,7 @@ import cn.sharesdk.wechat.utils.WechatHandlerActivity;
 import utils.ReceiverUtils;
 import utils.helper.ToastHelper;
 import utils.sharePreferences.FMWession;
+import widget.weixinpay.Constants;
 
 /**
  * 微信客户端回调activity示例   微信授权登录与绑定
@@ -33,7 +34,6 @@ import utils.sharePreferences.FMWession;
 public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEventHandler,
         OnResponseListener {
     private IWXAPI api;
-    private static final String APP_ID = "wx8b7d7b9b4d470443";
 
     /**
      * 处理微信发出的向第三方应用请求app message
@@ -68,7 +68,7 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wxlogin2);
-        api = WXAPIFactory.createWXAPI(this, APP_ID, false);
+        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);
         //开启微信登录页面
         api.handleIntent(getIntent(), this);
     }
@@ -97,7 +97,7 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
                     String code = ((SendAuth.Resp) resp).code;//需要转换一下才可以
                     Bundle bundle = new Bundle();
                     bundle.putString("code", code);
-                    ReceiverUtils.sendReceiver(ReceiverUtils.LOGIN_WEIXIN, bundle);
+                    ReceiverUtils.sendReceiver(ReceiverUtils.REGISTER_FINISH, bundle);
                 }
             }
         } catch (Exception e) {

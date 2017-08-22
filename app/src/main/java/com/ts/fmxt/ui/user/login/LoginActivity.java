@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
-import com.tencent.mm.sdk.modelmsg.SendAuth;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.thindo.base.NetworkAPI.BaseResponse;
 import com.ts.fmxt.FmxtApplication;
 import com.ts.fmxt.R;
