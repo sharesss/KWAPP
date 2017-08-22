@@ -31,7 +31,6 @@ public class ReceiverUtils {
     public final static int REGISTER_FINISH= 12;//注册流程结束关闭
     public final static int MODIFY_PHONE= 13;//注册流程结束关闭
     public final static int REFRESH= 14;//注册流程结束关闭
-    public final static int LOGIN_WEIXIN = 4;//微信登录
 
 
 

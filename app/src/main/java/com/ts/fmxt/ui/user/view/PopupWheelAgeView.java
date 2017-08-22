@@ -48,10 +48,10 @@ public class PopupWheelAgeView extends BaseEventPopup implements OnClickListener
         super(context);
 
         int year = Integer.valueOf(yearDate.format(new Date()));
-        for (int i = year - 12; i > year - 101; i--) {
+        for (int i = year - 18; i > year - 101; i--) {
             mYearArrayList.add(String.format("%s年", String.valueOf(i)));
         }
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= 18; i++) {
             mMonthArrayList.add(String.format("%s月", String.valueOf(i)));
         }
 
@@ -216,11 +216,11 @@ public class PopupWheelAgeView extends BaseEventPopup implements OnClickListener
                     int callYear = thisY - temp;
                     if (callYear == 0) {
                         yearStr = mYearArrayList.get(0);
-                        callYear = 12;
+                        callYear = 18;
                     }
                     String date = String.format("%s-%s-%s", yearStr.substring(0, yearStr.length() - 1), monthStr.substring(0, monthStr.length() - 1), dataStr.substring(0, dataStr.length() - 1));
-                    if (callYear < 12) {
-                        ToastHelper.toastMessage(getContext(), "年龄必须大于12岁");
+                    if (callYear < 18) {
+                        ToastHelper.toastMessage(getContext(), "年龄必须大于18岁");
                         return;
                     }
                     mWheelListener.completeCall(date, String.valueOf(callYear), 1);

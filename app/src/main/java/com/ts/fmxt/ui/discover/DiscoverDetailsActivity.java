@@ -82,6 +82,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private int cont=0;
     private int recLen = 3;
     private int types;
+    private int istype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,11 +184,18 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if (info.getIsVote()==0) {
             findViewById(R.id.ll_dokels).setOnClickListener(this);
             findViewById(R.id.ll_notdokels).setOnClickListener(this);
-        }else{
+        }else if(info.getIsVote()==1){
             tvWorth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
             tvWorth.setTextColor(getResources().getColor(R.color.gray));
             tvNoworth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
             tvNoworth.setTextColor(getResources().getColor(R.color.gray));
+            type = 1;
+        }else if(info.getIsVote()==2){
+            tvWorth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
+            tvWorth.setTextColor(getResources().getColor(R.color.gray));
+            tvNoworth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
+            tvNoworth.setTextColor(getResources().getColor(R.color.gray));
+            type = 2;
         }
 
         Drawable sexDrawble = getResources().getDrawable(info.getIsCollect() == 1 ? R.mipmap.card_detail_s : R.mipmap.card_detail_n);
@@ -283,7 +291,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.orange));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-                CommentRequest(type);
+                istype =0;
+                CommentRequest(istype);
                 break;
             case R.id.tv_worth_throwing:
                 if (token.equals("")) {
@@ -293,7 +302,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-                CommentRequest(type);
+                istype =1;
+                CommentRequest(istype);
                 break;
             case R.id.tv_no_worth_throwing:
                 if (token.equals("")) {
@@ -303,7 +313,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
-                CommentRequest(type);
+                istype =2;
+                CommentRequest(istype);
                 break;
             case R.id.tv_write_comment:
                 if (token.equals("")) {
@@ -548,7 +559,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                 String stats = json.getString("stats");
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
-
+                                    CommentRequest(type);
                                 } else {
                                     ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
                                 }
@@ -593,11 +604,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                         Drawable sexDrawble = getResources().getDrawable( R.mipmap.card_detail_s);
                                         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
                                         tvCollection.setCompoundDrawables(sexDrawble, null, null, null);
+                                        ToastHelper.toastMessage(DiscoverDetailsActivity.this, "收藏成功");
                                     }else{
                                         Drawable sexDrawble = getResources().getDrawable( R.mipmap.card_detail_n);
                                         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
                                         tvCollection.setCompoundDrawables(sexDrawble, null, null, null);
-
+                                        ToastHelper.toastMessage(DiscoverDetailsActivity.this, "取消收藏成功");
                                     }
 
                                 } else {

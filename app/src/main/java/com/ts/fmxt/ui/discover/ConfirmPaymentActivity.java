@@ -27,7 +27,7 @@ import utils.helper.ToastHelper;
 import widget.titlebar.NavigationView;
 import widget.weixinpay.playUitls;
 
-import static com.ts.fmxt.R.id.tv_confirm;
+
 
 /**
  * Created by kp on 2017/8/18.
@@ -77,7 +77,7 @@ public class ConfirmPaymentActivity extends FMBaseActivity {
         edtPhone= (EditText) findViewById(R.id.edt_phone);
         tvReservationMoney = (TextView) findViewById(R.id.tv_reservation_money);
 
-        tvConfirm = (TextView) findViewById(tv_confirm);
+        tvConfirm = (TextView) findViewById(R.id.tv_wxconfirm);
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -28,8 +28,11 @@ import com.ts.fmxt.ui.user.login.ForgetPswActivity;
 import com.ts.fmxt.ui.user.login.LoginActivity;
 import com.ts.fmxt.ui.user.login.NickNameRegeisterActivity;
 import com.ts.fmxt.ui.user.login.RandomCodeActivity;
+import com.ts.fmxt.ui.user.login.WeChatCompleteInformation;
 
 import http.data.RegisterEntity;
+
+import static android.R.attr.name;
 
 /**
  * created by kp at 2017/7/20
@@ -160,8 +163,9 @@ public class UISKipUtils {
      * @param context
      *
      */
-    public static void startOtherInfomation(Activity context){
+    public static void startOtherInfomation(Activity context,int userid){
         Intent intent = new Intent(context, OtherInfomationActivity.class);
+        intent.putExtra("userid", userid);
         context.startActivity(intent);
     }
 
@@ -237,6 +241,11 @@ public class UISKipUtils {
         intent.putExtra("money", money);
         intent.putExtra("proportion", proportion);
         intent.putExtra("investId", investId);
+        context.startActivity(intent);
+    }
+    public static void satrtWeChatCompleteInformation(Activity context,String info){
+        Intent intent = new Intent(context, WeChatCompleteInformation.class);
+        intent.putExtra("info", info);
         context.startActivity(intent);
     }
 

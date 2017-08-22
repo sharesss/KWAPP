@@ -46,17 +46,14 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
 
     @Override
     public void onMessage(int receiverType, Bundle bundle) {
-        if (receiverType == ReceiverUtils.LOGIN_WEIXIN) {//微信登录回调
-            weixin_code = bundle.getString("code");
-            thirdpartyLoginRequest();
-        }
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ReceiverUtils.addReceiver(this);
+//        ReceiverUtils.addReceiver(this);
         // 微信授权登录
         //通过微信工厂,获取实例
         api = WXAPIFactory.createWXAPI(this, FmxtApplication.APP_ID, true);

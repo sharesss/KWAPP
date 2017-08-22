@@ -27,6 +27,7 @@ import utils.CountDownButtonHelper;
 import utils.ReceiverUtils;
 import utils.StringUtils;
 import utils.Tools;
+import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.ContainsEmojiEditText;
 
@@ -123,7 +124,7 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.tv_protocol://协议
-//                UISKipUtils.startFMBrowserActivity(this, getResourcesStr(R.string.html_fm_agreement), getResourcesStr(R.string.text_fm_agreement));
+                UISKipUtils.satrtUserAgreement(this, getResources().getString(R.string.html_fm_user_agreement), getResources().getString(R.string.user_agreement));
                 break;
         }
     }
@@ -195,7 +196,7 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
 //                            tvSendCode.setTextColor(getResourcesColor(R.color.font_main_secondary));
                             return;
                         }else{
-                            ToastHelper.toastMessage(RandomCodeActivity.this, "获取验证码失败");
+                            ToastHelper.toastMessage(RandomCodeActivity.this, result);
                         }
 
                     }
@@ -214,7 +215,9 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
         staff.put("code",code);
         staff.put("sex",mRegisterEntity.getSex());
         staff.put("nickName",mRegisterEntity.getNickName());
-        staff.put("headPic",mRegisterEntity.getPortraitUri());
+        if(mRegisterEntity.getPortraitUri()!=null){
+            staff.put("headPic",mRegisterEntity.getPortraitUri());
+        }
         staff.put("phoneModel",getDeviceBrand());
 
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.REGISTER,
@@ -231,12 +234,12 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
                             JSONObject js = new JSONObject(result);
                             if (!js.isNull("statsMsg")) {
                                 JSONObject json = js.optJSONObject("statsMsg");
-                                String stats = json.getString("stats");
+                                String stats = json.getString("state");
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
                                     Bundle bundle = new Bundle();
                                     ReceiverUtils.sendReceiver(ReceiverUtils.REGISTER_FINISH,bundle);
-                                    ToastHelper.toastMessage(RandomCodeActivity.this, msg);
+                                    ToastHelper.toastMessage(RandomCodeActivity.this, "注册成功");
 //                                    finish();
                                 } else {
                                     ToastHelper.toastMessage(RandomCodeActivity.this, msg);

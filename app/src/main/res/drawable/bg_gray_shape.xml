@@ -11,5 +11,5 @@
 
     <padding
         android:left="@dimen/dp_10"
-        android:right="@dimen/dp_40" />
+        android:right="@dimen/dp_10" />
 </shape>

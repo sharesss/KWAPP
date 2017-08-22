@@ -145,7 +145,6 @@
         android:layout_marginTop="@dimen/dp_30"
         android:background="@drawable/bg_gray_shape"
         android:gravity="center"
-        android:paddingLeft="40dp"
         android:text="@string/button_next"
         android:textColor="@color/font_main_secondary"
         android:textSize="@dimen/sp_16" />

@@ -74,10 +74,12 @@ public class HttpPathManager {
     public static String SENTOBTAIN = "sentObtain";
     public static String TOKEN = "token";
     public static String REGISTER = USER+"register";
+    public static String NICKNAMEHEAVY = USER+"nicknameHeavy";
     public static String SMSCHECK = "smsCheck";
     public static String LOGIN = USER+"login";
     public static String AUTHENTICATION = INVEST+"authentication";
     public static String INFORMATION = MY+"information";
+    public static String FINDPASSWORD = MY+"findPassword";
     public static String PERSONAL =MY+"personal";
     public static String PERSONALUPDATE =MY+"personalUpdate";
     public static String CITYLIST =CITY+"getCityList";
@@ -104,6 +106,10 @@ public class HttpPathManager {
     public static String SAVEUSERINVESTPROJECTFOLLOW =  INVEST+"saveUserInvestProjectFollow";
     public static String AUTHENTICATIONDELETE =  MY+"authenticationDelete";
     public static String MESSAGECOUNT =  MESSAGE+"messageCount";
+    public static String WEIXINAUTHORIZATION =  USER+"weiXinAuthorization";
+    public static String WEIXINBINDMOBILE =  USER+"weiXinBindMobile";
+
+
 
 
 

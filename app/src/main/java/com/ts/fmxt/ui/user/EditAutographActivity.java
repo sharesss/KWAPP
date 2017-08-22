@@ -3,12 +3,24 @@ package com.ts.fmxt.ui.user;/**
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+import com.squareup.okhttp.Request;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.base.activity.FMBaseActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import http.manager.HttpPathManager;
+import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
+import utils.helper.ToastHelper;
 import widget.FMEdittext;
 import widget.FMNumEdittext;
 import widget.titlebar.NavigationView;
@@ -55,16 +67,62 @@ public class EditAutographActivity extends FMBaseActivity {
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent();
-                                String editinfo = edtEdit.getTextVal().toString();
-                                intent.putExtra("name", editinfo); //将计算的值回传回去
-                                setResult(type, intent);
-                                finish(); //结束当前的activity的生命周期
+                                EditNameRequest();
+
                             }
                         });
             }
         });
 
+    }
+    private void EditNameRequest(){
+        SharedPreferences sharedPreferences= getSharedPreferences("user",
+                MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("tokenId",token);
+
+        String  name = edtEdit.getTextVal().toString();
+        if(!name.equals("未填写")){
+            staff.put("signature",name);
+            staff.put("updateType","2");
+        }
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.PERSONALUPDATE,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+                                    ToastHelper.toastMessage(EditAutographActivity.this, msg);
+                                    Intent intent = new Intent();
+                                    String editinfo = edtEdit.getTextVal().toString();
+                                    intent.putExtra("name", editinfo); //将计算的值回传回去
+                                    setResult(type, intent);
+                                    finish(); //结束当前的activity的生命周期
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
+                                } else {
+                                    ToastHelper.toastMessage(EditAutographActivity.this, msg);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
     }
 
 }

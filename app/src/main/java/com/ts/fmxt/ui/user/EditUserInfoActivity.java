@@ -95,26 +95,9 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 if(isChange){
-                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(EditUserInfoActivity.this);
-                    mPopupDialogWidget.setMessage("您有未保存的数据是否保存");
-                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
-
-                        @Override
-                        public void onEventClick(PopupObject obj) {
-                            if (obj.getWhat() == 1) {
-                                //网络请求,保存数据
-                                personalUpdateRequest();
-//                            ToastHelper.toastMessage(EditUserInfoActivity.this,"已保存");
-//                            finish();
-                            }else {
-                                finish();
-                            }
-
-
-                        }
-                    });
-                    mPopupDialogWidget.showPopupWindow();
-                }else{
+                   personalUpdateRequest();
+                    finish();
+                }else {
                     finish();
                 }
 
@@ -523,7 +506,9 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
         }
         if(age!=null){
             staff.put("birthYears",age);
+            staff.put("updateType","1");
         }
+
         String Location = tvLocation.getText().toString();
         if(!Location.equals("未填写")){
             staff.put("residence",Location);
@@ -540,10 +525,10 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
         if(!annualincome.equals("未填写")){
             staff.put("annualincome",annualincome);
         }
-        String Signature =tvPersonalizedSignature.getText().toString();
-        if(!Signature.equals("未填写")){
-            staff.put("signature",Signature);
-        }
+//        String Signature =tvPersonalizedSignature.getText().toString();
+//        if(!Signature.equals("未填写")){
+//            staff.put("signature",Signature);
+//        }
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.PERSONALUPDATE,
                 new OkHttpClientManager.ResultCallback<String>() {
 

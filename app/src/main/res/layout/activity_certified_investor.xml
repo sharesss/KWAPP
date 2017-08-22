@@ -148,7 +148,7 @@
             android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
-            android:text="认证投资人特权"/>
+            android:text="认证投资人后可向官方提交意向投资金额"/>
 
     </LinearLayout>
 

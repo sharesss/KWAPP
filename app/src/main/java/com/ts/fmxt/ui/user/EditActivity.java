@@ -87,6 +87,11 @@ public class EditActivity extends FMBaseActivity {
                                 if(type ==100){
                                     EditNameRequest();
                                 }
+                                Intent intent = new Intent();
+                                String editinfo = edtEdit.getTextVal().toString();
+                                intent.putExtra("name", editinfo); //将计算的值回传回去
+                                setResult(type, intent);
+                                finish(); //结束当前的activity的生命周期
                             }
                         });
             }

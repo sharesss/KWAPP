@@ -67,7 +67,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             } else if (resp.errCode == -2) {
                 msg = "支付失败";
 //                if (!StringUtils.isEmpty(FMWession.getInstance().getHuaJiaoPlayKey())) {
-//
+
 //                }
             }
             ToastHelper.toastMessage(this, msg);

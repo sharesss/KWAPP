@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -33,6 +35,7 @@ import utils.ReceiverUtils;
 import utils.StringUtils;
 import utils.Tools;
 import utils.UISKipUtils;
+import utils.helper.ToastHelper;
 import widget.ContainsEmojiEditText;
 import widget.image.FMRadiusNetImageView;
 import widget.popup.dialog.PopupUploadDialog;
@@ -134,11 +137,9 @@ public class NickNameRegeisterActivity extends FMBaseActivity implements View.On
                 UISKipUtils.startLoginActivity(this);
                 break;
             case R.id.btn_nexts:
-                String mNickname = edNickname.getText().toString().trim();
-                if (nicknameFlg && sexFlg && ivPictureFlg) {
-                    mRegisterEntity.setNickName(mNickname);
-                    mRegisterEntity.setPortraitUri(path);
-                    UISKipUtils.startPhoneRegisterActivity(this, mRegisterEntity);
+                if (nicknameFlg && sexFlg ) {
+                    nicknameHeavyRequest();
+
                 }
                 break;
 
@@ -288,5 +289,44 @@ public class NickNameRegeisterActivity extends FMBaseActivity implements View.On
 
         boolean flg = m.find();
         return m.find();
+    }
+
+    private void nicknameHeavyRequest(){
+        String mNickname = edNickname.getText().toString().trim();
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("nickName",  mNickname);
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.NICKNAMEHEAVY,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+                                    String mNickname = edNickname.getText().toString().trim();
+                                    mRegisterEntity.setNickName(mNickname);
+                                    mRegisterEntity.setPortraitUri(path);
+                                    UISKipUtils.startPhoneRegisterActivity(NickNameRegeisterActivity.this, mRegisterEntity);
+
+                                } else {
+                                    ToastHelper.toastMessage(NickNameRegeisterActivity.this, msg);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
     }
 }

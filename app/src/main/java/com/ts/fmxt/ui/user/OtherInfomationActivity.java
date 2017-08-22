@@ -18,11 +18,13 @@ import widget.image.CircleImageView;
 public class OtherInfomationActivity extends FMBaseActivity implements View.OnClickListener{
     private CircleImageView ivPortrait;
     private TextView tvUserName,tvFmIdentity,tvCompanyName,tvAutograph;
+    private int userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_infomation);
+        userid = getIntent().getIntExtra("userid",0);
         initView();
     }
 

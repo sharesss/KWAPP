@@ -24,6 +24,7 @@ import http.data.ConsumerCommentEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
 import utils.SpannableUtils;
+import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
@@ -104,11 +105,15 @@ public class CommentAdapter extends FMBaseAdapter implements KeyMapDailog.SendBa
         @Override
         public void onClick(View v) {
             ConsumerCommentEntity info = (ConsumerCommentEntity) getItem(position);
-//            if (!FMWession.getInstance().isLogin() && FMWession.getInstance().getUserInfo() != null) {
-//                UISkipUtils.startOtherUserActivity((Activity) getContext(), info.getUserId(), FMWession.getInstance().getUserInfo().getId() == info.getUserId() ? 1 : 2, "0");
-//            } else {
-//                UISkipUtils.startOtherUserActivity((Activity) getContext(), info.getUserId(), 2, "0");
-//            }
+            SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
+                    getContext().MODE_PRIVATE);
+            String token=sharedPreferences.getString("token", "");
+            if (token.equals("")) {
+                UISKipUtils.startLoginActivity((Activity) getContext());
+                return;
+            } else {
+                UISKipUtils.startOtherInfomation((Activity) getContext(), info.getUserId());
+            }
 
         }
     }

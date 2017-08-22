@@ -106,7 +106,7 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
             ll_authentication.setVisibility(View.VISIBLE);
             isexamine.setText("审核中");
             tv_details.setText("（三个工作日内完成审核）");
-            tv_reason.setText(info.getAuditdesc());
+            tv_reason.setText("认证投资人后可向官方提交意向投资金额");
         }else if(info.getAuditstate()==2){
             tv_isAdopt.setVisibility(View.GONE);
             ll_authentication.setVisibility(View.VISIBLE);
@@ -220,7 +220,8 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
                                         info =  new AuthenticationEntity(js.getJSONObject("assets"));
                                         formatData();
                                     }
-
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
 
                                 } else {
                                     String msg = json.getString("msg");
@@ -262,7 +263,8 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
                                 if (stats.equals("1")) {
                                         ToastHelper.toastMessage(CertifiedInvestorActivity.this, "删除成功");
                                         finish();
-
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
                                 } else {
                                     String msg = json.getString("msg");
                                     ToastHelper.toastMessage(CertifiedInvestorActivity.this, msg);

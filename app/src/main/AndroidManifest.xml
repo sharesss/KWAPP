@@ -52,6 +52,10 @@
             android:name="com.ts.fmxt.ui.user.login.NickNameRegeisterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.login.WeChatCompleteInformation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
             android:name="com.ts.fmxt.ui.user.login.RandomCodeActivity"

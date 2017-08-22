@@ -9,9 +9,11 @@
 package com.ts.fmxt.wxapi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Request;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -22,11 +24,21 @@ import com.thindo.base.NetworkAPI.BaseResponse;
 import com.thindo.base.NetworkAPI.OnResponseListener;
 import com.ts.fmxt.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.sharesdk.wechat.utils.WechatHandlerActivity;
+import http.manager.HttpPathManager;
+import http.manager.OkHttpClientManager;
 import utils.ReceiverUtils;
+import utils.UISKipUtils;
 import utils.helper.ToastHelper;
-import utils.sharePreferences.FMWession;
 import widget.weixinpay.Constants;
+
+
 
 /**
  * 微信客户端回调activity示例   微信授权登录与绑定
@@ -92,13 +104,8 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
     public void onResp(BaseResp resp) {
         try {
             if (resp.errCode == BaseResp.ErrCode.ERR_OK) {
-                if (FMWession.getInstance().isWexLogin()) {
-                    FMWession.getInstance().setWxLogin(false);
                     String code = ((SendAuth.Resp) resp).code;//需要转换一下才可以
-                    Bundle bundle = new Bundle();
-                    bundle.putString("code", code);
-                    ReceiverUtils.sendReceiver(ReceiverUtils.REGISTER_FINISH, bundle);
-                }
+                weiXinAuthorizationRequest(code);
             }
         } catch (Exception e) {
             e.toString();
@@ -141,6 +148,58 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
      */
     public String getResourcesStr(int resourcesId) {
         return getResources().getString(resourcesId);
+    }
+
+    private void weiXinAuthorizationRequest(String code){
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("code", String.valueOf(code));
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.WEIXINAUTHORIZATION,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+
+                                    if(!js.isNull("identification")){
+                                        int  identification = js.getInt("identification");
+                                        if(identification==0){
+                                            ToastHelper.toastMessage(WXEntryActivity.this, msg);
+                                            UISKipUtils.satrtWeChatCompleteInformation(WXEntryActivity.this,result);
+                                        }else{
+                                            UISKipUtils.startMainFrameActivity(WXEntryActivity.this);
+                                            SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+                                            String account = js.getString("account");
+                                            String token = js.getString("token");
+                                            editor.putString("token", token);
+                                            editor.putString("phone", account);
+                                            editor.commit();    //提交数据保存
+                                        }
+                                    }
+
+                                } else {
+                                    ToastHelper.toastMessage(WXEntryActivity.this, msg);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
+
     }
 
 }
