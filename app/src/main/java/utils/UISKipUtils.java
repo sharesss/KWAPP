@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.thindo.base.Utils.AppManager;
 import com.ts.fmxt.ui.MainFrameActivity;
+import com.ts.fmxt.ui.discover.ConfirmPaymentActivity;
 import com.ts.fmxt.ui.discover.DiscoverDetailsActivity;
 import com.ts.fmxt.ui.user.AboutusActivity;
 import com.ts.fmxt.ui.user.BindNewPhoneActivity;
@@ -204,6 +205,12 @@ public class UISKipUtils {
         intent.putExtra("id", id);
         context.startActivity(intent);
     }
+    public static void startDiscoverDetailsActivity(Activity context,int id,int type){
+        Intent intent = new Intent(context, DiscoverDetailsActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
 
     public static void satrtUserAgreement(Activity context,String url, String title){
         Intent intent = new Intent(context, UserAgreementActivity.class);
@@ -219,8 +226,17 @@ public class UISKipUtils {
         context.startActivity(intent);
     }
 
-    public static void startProjectReturnActivity(Activity context){
+    public static void startProjectReturnActivity(Activity context,int investId){
         Intent intent = new Intent(context, ProjectReturnActivity.class);
+        intent.putExtra("investId", investId);
+        context.startActivity(intent);
+    }
+
+    public static void startConfirmPayment(Activity context,int money,String proportion,int investId){
+        Intent intent = new Intent(context, ConfirmPaymentActivity.class);
+        intent.putExtra("money", money);
+        intent.putExtra("proportion", proportion);
+        intent.putExtra("investId", investId);
         context.startActivity(intent);
     }
 

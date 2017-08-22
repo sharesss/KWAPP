@@ -25,7 +25,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
     private Context context;
     private CircleImageView iv_portrait;
     private TextView tv_user_name, tv_fm_identity, tv_user_signature, tv_consumere,tv_place,tv_salary,tv_age;
-    private TextView tv_asset, tv_fb, tv_gift_num, tv_profile,tv_privilege_securities_num,tv_company_name;
+    private TextView tv_asset, tv_fb, tv_gift_num, tv_profile,tv_privilege_securities_num,tv_company_name,tv_investor;
     private UserInfoEntity info;
 
     public UserHeadView(Context context) {
@@ -58,6 +58,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         tv_place = (TextView) findViewById(R.id.tv_place);//地点
         tv_salary= (TextView) findViewById(R.id.tv_salary);//工资
         tv_age = (TextView) findViewById(R.id.tv_age);//年龄
+        tv_investor = (TextView) findViewById(R.id.tv_investor);
         tv_profile = (TextView) findViewById(R.id.tv_profile);
         tv_gift_num = (TextView) findViewById(R.id.tv_gift_num);
         tv_company_name = (TextView) findViewById(R.id.tv_company_name);//公司名称
@@ -113,6 +114,10 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         }else{
             tv_consumere.setText("未审核");
         }
+       if(info.getIsinvestauthen()==1){
+           tv_investor.setVisibility(View.VISIBLE);
+       }
+
         tv_asset.setText(info.getInvestprojectcount()+"");
         tv_fb.setText(info.getInvestprojectcollectcount()+"");
         if(!info.getCompany().equals("null")){

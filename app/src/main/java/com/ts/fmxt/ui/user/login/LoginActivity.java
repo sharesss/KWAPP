@@ -23,6 +23,7 @@ import java.util.Map;
 
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.StringUtils;
 import utils.UISKipUtils;
 import utils.helper.ToastHelper;
@@ -31,7 +32,8 @@ import widget.ContainsEmojiEditText;
 /**
  * Created by A1 on 2015/11/30.
  */
-public class LoginActivity extends FMBaseActivity implements View.OnClickListener {
+public class LoginActivity extends FMBaseActivity implements View.OnClickListener, ReceiverUtils
+        .MessageReceiver {
     private IWXAPI api;
     private ContainsEmojiEditText edtAccount, edtPwd;
     private String weixin_code = "";
@@ -42,21 +44,19 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
     private boolean passwordFlg = false;
     private TextView btLogin;
 
-//    @Override
-//    public void onMessage(int receiverType, Bundle bundle) {
-//        if (receiverType == ReceiverUtils.REGISTER_FINISH) {
-//            finish();
-//        } else if (receiverType == ReceiverUtils.LOGIN_WEIXIN) {//微信登录回调
-//            weixin_code = bundle.getString("code");
-//            thirdpartyLoginRequest();
-//        }
-//    }
+    @Override
+    public void onMessage(int receiverType, Bundle bundle) {
+        if (receiverType == ReceiverUtils.LOGIN_WEIXIN) {//微信登录回调
+            weixin_code = bundle.getString("code");
+            thirdpartyLoginRequest();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        ReceiverUtils.addReceiver(this);
+        ReceiverUtils.addReceiver(this);
         // 微信授权登录
         //通过微信工厂,获取实例
         api = WXAPIFactory.createWXAPI(this, FmxtApplication.APP_ID, true);
@@ -161,10 +161,10 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
                 SendAuth.Req req = new SendAuth.Req();
                 req.scope = "snsapi_userinfo";
                 api.sendReq(req);
+
                 break;
             case R.id.bt_forget_password:   //重置密码
                 UISKipUtils.startForgetActivity(this);
-
                 break;
         }
     }
@@ -197,6 +197,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
                                         SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
                                         SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
                                         editor.putString("token", token);
+                                        editor.putString("phone", edtAccount.getText().toString());
                                         editor.commit();    //提交数据保存
                                     }
                                     ToastHelper.toastMessage(LoginActivity.this,msg);
@@ -214,7 +215,18 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
         );
 
     }
-
+    private String getAppInfo() {
+        try {
+            String pkName = this.getPackageName();
+            String versionName = this.getPackageManager().getPackageInfo(
+                    pkName, 0).versionName;
+            int versionCode = this.getPackageManager()
+                    .getPackageInfo(pkName, 0).versionCode;
+            return pkName ;
+        } catch (Exception e) {
+        }
+        return null;
+    }
     //微信登录
     public void thirdpartyLoginRequest() {
         flg = true;
@@ -290,7 +302,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        ReceiverUtils.removeReceiver(this);
+        ReceiverUtils.removeReceiver(this);
     }
 
 }

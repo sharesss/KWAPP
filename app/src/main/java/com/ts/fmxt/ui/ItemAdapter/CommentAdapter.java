@@ -29,7 +29,7 @@ import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
 
 /**
- * Created by Administrator on 2016/11/11.
+ * Created by kp on 2017/8/11.
  */
 public class CommentAdapter extends FMBaseAdapter implements KeyMapDailog.SendBackListener{
     private KeyMapDailog dialog;

@@ -10,10 +10,11 @@ import com.ts.fmxt.FmxtApplication;
 
 public class HttpPathManager {
 
-     public static String HOST = "http://touzhi.tunnel.qydev.com/investment-app-api/";//曾本地服务器
+//     public static String HOST = "http://touzhi.tunnel.qydev.com/investment-app-api/";//曾本地服务器
 //    public static String HOST = "http://192.168.12.233:8080/investment-app-api/";//阿峰本地服务器
-//    public static String HOST = "https://fmb.fmsecret.cn/newfmb-app-server/rest";//正式
-//        public static String HOST = "https://wx.fmsecret.cn/investment-app-api/";//测试
+
+//    public static String HOST = "https://fmb.fmsecret.cn/investment-app-api/invest/investList/";//正式
+        public static String HOST = "https://wx.fmsecret.cn/investment-app-api/";//测试
 
     //      public static String HOST = "http://fmb.fmsecret.cn/newfmb-app-server/rest";`
 
@@ -93,6 +94,18 @@ public class HttpPathManager {
     public static String EDITINVESTPROJECTCOLLECT =  INVEST+"editInvestProjectCollect";
     public static String GETINVESTPROJECTCOLLECT =  INVEST+"getInvestProjectCollect";
     public static String MESSAGELIST =  MESSAGE+"messageList";
+    public static String UPDATEMESSAGEREADFLAG =  MESSAGE+"updateMessageReadFlag";
+    public static String UPDATEMESSAGEINFORMFLAG =  MESSAGE+"updateMessageInformFlag";
+
+    public static String SAVEINVESTPROJECTVOTE =  INVEST+"saveInvestProjectVote";
+    public static String FINDINVESTRESERVEINFO =  INVEST+"findInvestReserveInfo";
+    public static String INVESTAMOUNTLIST =  INVEST+"investAmountList";
+    public static String SAVEINVESTPROJECTNOTICE =  INVEST+"saveInvestProjectNotice";
+    public static String SAVEUSERINVESTPROJECTFOLLOW =  INVEST+"saveUserInvestProjectFollow";
+    public static String AUTHENTICATIONDELETE =  MY+"authenticationDelete";
+    public static String MESSAGECOUNT =  MESSAGE+"messageCount";
+
+
 
 
 }

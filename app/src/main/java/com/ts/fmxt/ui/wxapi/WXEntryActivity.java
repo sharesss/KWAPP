@@ -33,7 +33,7 @@ import utils.sharePreferences.FMWession;
 public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEventHandler,
         OnResponseListener {
     private IWXAPI api;
-    private static final String APP_ID = "wx5d69b438816ee7ea";
+    private static final String APP_ID = "wx8b7d7b9b4d470443";
 
     /**
      * 处理微信发出的向第三方应用请求app message
@@ -97,7 +97,7 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
                     String code = ((SendAuth.Resp) resp).code;//需要转换一下才可以
                     Bundle bundle = new Bundle();
                     bundle.putString("code", code);
-                    ReceiverUtils.sendReceiver(ReceiverUtils.REGISTER_FINISH, bundle);
+                    ReceiverUtils.sendReceiver(ReceiverUtils.LOGIN_WEIXIN, bundle);
                 }
             }
         } catch (Exception e) {

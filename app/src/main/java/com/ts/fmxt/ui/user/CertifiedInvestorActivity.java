@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import http.data.AuthenticationEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
 import utils.FileUtils;
@@ -33,7 +35,6 @@ import utils.Tools;
 import utils.helper.ToastHelper;
 import widget.image.FMNetImageView;
 import widget.popup.dialog.PopupUploadDialog;
-import widget.titlebar.NavigationView;
 
 /**
  * created by kp at 2017/7/31
@@ -41,10 +42,12 @@ import widget.titlebar.NavigationView;
  */
 public class CertifiedInvestorActivity extends FMBaseActivity implements View.OnClickListener, ReceiverUtils.MessageReceiver{
     private FMNetImageView iv_image;
-    private TextView btn_nexts,tv_isAdopt,tv_authentication_privilege,tv_reason;
+    private TextView btn_nexts,tv_isAdopt,tv_authentication_privilege,tv_reason,isexamine,tv_details,btn_register;
     private String token;
     private String path;
+    private AuthenticationEntity info;
     private PopupUploadDialog mPopupUploadDialog;
+    private LinearLayout ll_authentication;
     private boolean ivPictureFlg = false;
     private int type;
 
@@ -58,9 +61,6 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
             path = bundle.getString("data");
             iv_image.loadImage(path);
         }
-//        else if(receiverType==ReceiverUtils.REGISTER_FINISH){
-//            finish();
-//        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +72,6 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
     }
 
     private void initView() {
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setTitle(R.string.title_certified_investor, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         mPopupUploadDialog=new PopupUploadDialog(this);
         mPopupUploadDialog.setContext(R.string.text_image_upload);
         iv_image = (FMNetImageView) findViewById(R.id.iv_image);//上传照片
@@ -86,17 +79,60 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
         tv_isAdopt = (TextView) findViewById(R.id.tv_isAdopt);//是否通过
         tv_authentication_privilege = (TextView) findViewById(R.id.tv_authentication_privilege);
         tv_reason = (TextView) findViewById(R.id.tv_reason);
+        ll_authentication = (LinearLayout) findViewById(R.id.ll_authentication);
+        isexamine = (TextView) findViewById(R.id.tv_isexamine);
+        tv_details = (TextView) findViewById(R.id.tv_details);
+        btn_register = (TextView) findViewById(R.id.btn_register);
+        findViewById(R.id.btn_finish).setOnClickListener(this);
+        findViewById(R.id.btn_register).setOnClickListener(this);
         iv_image.setOnClickListener(this);
         btn_nexts.setOnClickListener(this);
+
         qiNiuTokenRequest();
         if(type!=0){
             certifiedInvestorRequest();
         }
     }
 
+    private void formatData(){
+        if (info == null) {
+            return;
+        }
+        iv_image.loadImage(info.getPropertyphoto());
+        iv_image.setOnClickListener(null);
+        btn_nexts.setVisibility(View.GONE);
+        if(info.getAuditstate()==1){
+            tv_isAdopt.setVisibility(View.GONE);
+            ll_authentication.setVisibility(View.VISIBLE);
+            isexamine.setText("审核中");
+            tv_details.setText("（三个工作日内完成审核）");
+            tv_reason.setText(info.getAuditdesc());
+        }else if(info.getAuditstate()==2){
+            tv_isAdopt.setVisibility(View.GONE);
+            ll_authentication.setVisibility(View.VISIBLE);
+            isexamine.setText("已认证");
+            tv_details.setText("");
+            tv_reason.setText(info.getAuditdesc());
+        }else if(info.getAuditstate()==3){
+            tv_isAdopt.setVisibility(View.GONE);
+            ll_authentication.setVisibility(View.VISIBLE);
+            isexamine.setText("未通过");
+            tv_details.setText("（请删除后重新认证）");
+            tv_authentication_privilege.setText("不通过原因");
+            tv_reason.setText(info.getAuditdesc());
+            btn_register.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.btn_finish:
+                finish();
+                break;
+            case R.id.btn_register:
+                AuthenticationDeleteRequest();
+                break;
             case R.id.iv_image:
                 selectDrawable();
 
@@ -173,11 +209,62 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
                             if (!js.isNull("statsMsg")) {
                                 JSONObject json = js.optJSONObject("statsMsg");
                                 String stats = json.getString("stats");
-                                String msg = json.getString("msg");
+
                                 if (stats.equals("1")) {
-                                    ToastHelper.toastMessage(CertifiedInvestorActivity.this, msg);
-                                    finish();
+                                    if(type==0){
+                                        String msg = json.getString("msg");
+                                        ToastHelper.toastMessage(CertifiedInvestorActivity.this, msg);
+                                        finish();
+                                    }
+                                    if(!js.isNull("assets")){
+                                        info =  new AuthenticationEntity(js.getJSONObject("assets"));
+                                        formatData();
+                                    }
+
+
                                 } else {
+                                    String msg = json.getString("msg");
+                                    ToastHelper.toastMessage(CertifiedInvestorActivity.this, msg);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, staff
+        );
+
+    }
+    //删除认证
+    private void AuthenticationDeleteRequest(){
+        SharedPreferences sharedPreferences= getSharedPreferences("user",
+                Activity.MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("tokenId",token);
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.AUTHENTICATIONDELETE,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+
+                                if (stats.equals("1")) {
+                                        ToastHelper.toastMessage(CertifiedInvestorActivity.this, "删除成功");
+                                        finish();
+
+                                } else {
+                                    String msg = json.getString("msg");
                                     ToastHelper.toastMessage(CertifiedInvestorActivity.this, msg);
                                 }
                             }

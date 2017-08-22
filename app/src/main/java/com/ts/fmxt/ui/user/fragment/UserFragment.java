@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +29,7 @@ import http.manager.OkHttpClientManager;
 import utils.ReceiverUtils;
 import utils.UISKipUtils;
 import utils.helper.ToastHelper;
+import widget.viewbadger.BadgeView;
 
 /**
  * 用户
@@ -43,8 +43,8 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
     private UserHeadView mHeader;
     private RelativeLayout bingSetting;
     private TextView ivBack;
-    private ImageView tv_num;
-//    private BadgeView mBadgeView;
+    private TextView tv_num;
+    private BadgeView mBadgeView;
     private TextView tv_realname, tv_realcar;
     private RelativeLayout rlEndorsementManagement;
     private Activity mActivity;
@@ -52,7 +52,10 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
 
     @Override
     public void onMessage(int receiverType, Bundle bundle) {
-
+        if (receiverType == ReceiverUtils.REFRESH) {
+            messageCountRequest();
+            userInfoRequest();
+        }
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,13 +77,14 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ReceiverUtils.addReceiver(this);
+        messageCountRequest();
         bindRefreshScrollAdapter((RefreshScrollView) getView().findViewById(R.id.refresh_scroll),
                 R.layout.include_user_centre_v3);
         getRefreshScrollView().setMode(RefreshBase.Mode.PULL_FROM_START);
         mHeader = (UserHeadView) getView().findViewById(R.id.header);
         mHeader.setOnClickListener(this);
         ivBack = (TextView) getView().findViewById(R.id.iv_back);
-        tv_num = (ImageView) getView().findViewById(R.id.tv_num);
+        tv_num = (TextView) getView().findViewById(R.id.tv_num);
         tv_realname = (TextView) getView().findViewById(R.id.tv_realname);
         tv_realcar = (TextView) getView().findViewById(R.id.tv_realcar);
         getView().findViewById(R.id.tv_title_user).setOnClickListener(this);
@@ -120,6 +124,7 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
 
      @Override
       public void onReload() {
+         messageCountRequest();
          userInfoRequest();
       }
 
@@ -138,6 +143,8 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
          String token=sharedPreferences.getString("token", "");
          Map<String, String> staff = new HashMap<String, String>();
          staff.put("tokenId",token);
+         staff.put("userId","");
+
          OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.INFORMATION,
                  new OkHttpClientManager.ResultCallback<String>() {
 
@@ -160,9 +167,9 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
                                          JSONObject jsonobj = js.optJSONObject("information");
                                          userInfo = new UserInfoEntity(jsonobj);
                                          mHeader.formatData(userInfo);
-                                         stopRefreshState();
-                                     }
 
+                                     }
+                                     stopRefreshState();
                                  } else {
                                      ToastHelper.toastMessage(getActivity(), msg);
                                  }
@@ -177,5 +184,51 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
          );
      }
 
+     private void messageCountRequest(){
+         SharedPreferences sharedPreferences= mActivity.getSharedPreferences("user",
+                 Activity.MODE_PRIVATE);
+         String token=sharedPreferences.getString("token", "");
+         Map<String, String> staff = new HashMap<String, String>();
+         staff.put("tokenId",token);
+
+         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.MESSAGECOUNT,
+                 new OkHttpClientManager.ResultCallback<String>() {
+
+                     @Override
+                     public void onError(Request request, Exception e) {
+                         e.printStackTrace();
+                     }
+
+                     @Override
+                     public void onResponse(String result) {
+                         try {
+                             JSONObject js = new JSONObject(result);
+                             if (!js.isNull("statsMsg")) {
+                                 JSONObject json = js.optJSONObject("statsMsg");
+                                 String stats = json.getString("stats");
+                                 String msg = json.getString("msg");
+                                 if (stats.equals("1")) {
+                                  int count =  js.optInt("msgCount");
+                                     if (mBadgeView == null)
+                                         mBadgeView = new BadgeView(getContext(), tv_num);
+                                     mBadgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+                                     mBadgeView.setTextSize(10);
+                                     mBadgeView.setText(String.valueOf(count));
+                                     if (count > 0)
+                                         mBadgeView.show();
+                                     else
+                                         mBadgeView.hide();
+                                 } else {
+                                     ToastHelper.toastMessage(getActivity(), msg);
+                                 }
+                             }
+
+                         } catch (JSONException e) {
+                             e.printStackTrace();
+                         }
+                     }
+                 }, staff
+         );
+     }
 
 }

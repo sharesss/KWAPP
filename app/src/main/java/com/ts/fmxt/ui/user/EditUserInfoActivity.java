@@ -324,7 +324,6 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
                 case 100:
                     String name = data.getStringExtra("name");
                     tvNickname.setText(name);
-                    isChange = true;
                     break;
                 case 200:
                     String compay = data.getStringExtra("name");
@@ -512,10 +511,10 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
         if(path!=null){
             staff.put("picture",path);
         }
-        String  name = tvNickname.getText().toString();
-        if(!name.equals("未填写")){
-            staff.put("nickname",name);
-        }
+//        String  name = tvNickname.getText().toString();
+//        if(!name.equals("未填写")){
+//            staff.put("nickname",name);
+//        }
         String sex = tvSex.getText().toString();
         if(sex.equals("男")){
             staff.put("sex","1");
@@ -564,7 +563,8 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
                                 if (stats.equals("1")) {
                                     ToastHelper.toastMessage(EditUserInfoActivity.this, msg);
                                     finish();
-
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
                                 } else {
                                     ToastHelper.toastMessage(EditUserInfoActivity.this, msg);
                                 }

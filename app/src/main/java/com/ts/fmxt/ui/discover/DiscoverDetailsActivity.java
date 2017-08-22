@@ -56,14 +56,13 @@ import static com.ts.fmxt.R.id.tv_with_the_vote;
 public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements View.OnClickListener, KeyMapDailog.SendBackListener {
     private int investId;
     private FMNetImageView ivImage;
-    private TextView tvBrandName, tvBrandDetails, tvIndex;
+    private TextView tvBrandName, tvBrandDetails, tvIndex,tvWorth,tvNoworth;
     private LinearLayout llTemp,llCollection;
     private ProgressBar pbIndex, pbGreenindex;
     private ConsumerEntity info;
     private CircleBar ivCirclebar;
     private RedCircleBar ivRedCirclebar;
     private FlowLayout flow_layout;
-    private boolean isClick;
     private String checktext;
     private FMNoScrollListView refresh_lv,reviews_lv,lv_result;
     private ItemBpAdapter adapter;
@@ -82,12 +81,15 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private ScrollView svArr;
     private int cont=0;
     private int recLen = 3;
+    private int types;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_details);
         investId = getIntent().getIntExtra("id", -1);
+        types = getIntent().getIntExtra("type", -1);
+
         initView();
     }
 
@@ -107,11 +109,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         //饼图UI
         ivCirclebar = (CircleBar) findViewById(R.id.iv_circlebar);
         ivRedCirclebar = (RedCircleBar) findViewById(R.id.iv_redcirclebar);
-
+        tvWorth = (TextView) findViewById(R.id.tv_worth);
+        tvNoworth= (TextView) findViewById(R.id.tv_noworth);
         DiscoverDetailsRequest();//顶部的数据获取
         InvestBPListRequest();
         CommentRequest(type);
-
 
         //12项BP
         refresh_lv = (FMNoScrollListView) findViewById(R.id.lv_bp_item);
@@ -163,15 +165,30 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         }
         tvIndex.setText(exponent + "%");
 
-        ivCirclebar.setText(String.valueOf(info.getDokels()));//中间的数字
+
         ivCirclebar.startCustomAnimation();
         float progress = progressPercentage(info.getVoteNum(), info.getDokels());
+        float percentage  = num(info.getVoteNum(), info.getDokels());
+        int progres = Math.round(percentage);
+        ivCirclebar.setText(String.valueOf(progres));//中间的数字
         ivCirclebar.setSweepAngle(progress);//进度
+        ivRedCirclebar.startCustomAnimation();
 
-        ivRedCirclebar.setText(String.valueOf(info.getNotDokels()));//中间的数字
         ivRedCirclebar.startCustomAnimation();
         float inxe = progressPercentage(info.getVoteNum(), info.getNotDokels());
+        float percen = num(info.getVoteNum(), info.getNotDokels());
+        int progre = Math.round(percen);
+        ivRedCirclebar.setText(String.valueOf(progre));//中间的数字
         ivRedCirclebar.setSweepAngle(inxe);//进度
+        if (info.getIsVote()==0) {
+            findViewById(R.id.ll_dokels).setOnClickListener(this);
+            findViewById(R.id.ll_notdokels).setOnClickListener(this);
+        }else{
+            tvWorth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
+            tvWorth.setTextColor(getResources().getColor(R.color.gray));
+            tvNoworth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
+            tvNoworth.setTextColor(getResources().getColor(R.color.gray));
+        }
 
         Drawable sexDrawble = getResources().getDrawable(info.getIsCollect() == 1 ? R.mipmap.card_detail_s : R.mipmap.card_detail_n);
         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
@@ -263,7 +280,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
                     return;
                 }
-                type=0;
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.orange));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
@@ -274,7 +290,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
                     return;
                 }
-                type=1;
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
@@ -285,7 +300,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
                     return;
                 }
-                type=2;
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
@@ -322,7 +336,27 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 RequestTop();
                 break;
             case R.id.tv_with_the_vote:
-                UISKipUtils.startProjectReturnActivity(DiscoverDetailsActivity.this);
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    return;
+                }
+                UISKipUtils.startProjectReturnActivity(DiscoverDetailsActivity.this,investId);
+                break;
+            case R.id.ll_dokels://值得投
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    return;
+                }
+                type = 1;
+                IsWorthRequest(type);
+                break;
+            case R.id.ll_notdokels://不值得投
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    return;
+                }
+                type = 2;
+                IsWorthRequest(type);
                 break;
         }
     }
@@ -468,7 +502,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                         mCommentAdapter = new CommentAdapter(DiscoverDetailsActivity.this, tableList.getArrayList(),type);
                                         reviews_lv.setAdapter(mCommentAdapter);
                                         mCommentAdapter.notifyDataSetChanged();
-                                        RequestTop();
                                     }
                                 } else {
                                     ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
@@ -585,6 +618,52 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         );
     }
 
+    //是否值得投
+    private void IsWorthRequest(int voteType){
+        SharedPreferences sharedPreferences= getSharedPreferences("user",
+                MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("investId", String.valueOf(investId));
+        staff.put("voteType", String.valueOf(voteType) );
+        staff.put("tokenId", String.valueOf(token));
+
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.SAVEINVESTPROJECTVOTE,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+                                    tvWorth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
+                                    tvWorth.setTextColor(getResources().getColor(R.color.gray));
+                                    tvNoworth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
+                                    tvNoworth.setTextColor(getResources().getColor(R.color.gray));
+                                } else {
+                                        ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
+
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
+
+    }
+
     //分享对话框
     private void showShareDialog() {
         if (info == null) return;
@@ -617,6 +696,14 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         // TODO Auto-generated method stub
         float percentage = min / max;
         float progress = percentage * 360;
+        return progress;
+
+    }
+
+    private float num(float max, float min) {
+        // TODO Auto-generated method stub
+        float percentage = min / max;
+        float progress = percentage * 100;
         return progress;
 
     }
@@ -659,7 +746,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
                     if(recLen > 0){
                         Message message = handler.obtainMessage(1);
-                        handler.sendMessageDelayed(message, 1000);      // send message
+                        handler.sendMessageDelayed(message, 1000);
+                        if(types!=-1){
+                            RequestBoot();
+                        }else{
+                            RequestTop();
+                        }
                     }else{
                         tvPrompt.setVisibility(View.GONE);
                     }
@@ -683,5 +775,18 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             }
         });
     }
+    private void RequestBoot(){
+        svArr.post(new Runnable() {
 
+            @Override
+            public void run() {
+                svArr.post(new Runnable() {
+                    public void run() {
+                        // 滚动至顶部
+                        svArr.fullScroll(ScrollView.FOCUS_DOWN);
+                    }
+                });
+            }
+        });
+    }
 }

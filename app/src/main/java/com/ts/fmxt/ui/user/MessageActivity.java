@@ -9,28 +9,36 @@ import com.squareup.okhttp.Request;
 import com.thindo.base.Widget.refresh.RefreshListView;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.ItemAdapter.FollowProjectAdapter;
+import com.ts.fmxt.ui.ItemAdapter.MessageAdapter;
 import com.ts.fmxt.ui.base.activity.FMBaseTableActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import http.data.MessageEntity;
 import http.data.TableList;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
+import utils.UISKipUtils;
+import utils.helper.ToastHelper;
 import widget.EmptyView;
+import widget.testlistview.view.CstSwipeDelMenuViewGroup;
 import widget.titlebar.NavigationView;
 
 /**
  * created by kp at 2017/8/3
  * 通知
  */
-public class MessageActivity  extends FMBaseTableActivity {
+public class MessageActivity  extends FMBaseTableActivity implements  CstSwipeDelMenuViewGroup.MenuOnItemClick {
     private EmptyView mEmptyView;
     private RefreshListView refresh_lv;
-    private FollowProjectAdapter adapter;
+    private MessageAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +54,7 @@ public class MessageActivity  extends FMBaseTableActivity {
             @Override
             public void onClick(View v) {
                 //现金明细
-//                UISkipUtils.startAssetMoneyInfoActivity(AssetActivity.this);
+                cleanNotifyRequest();
             }
         });
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new FollowProjectAdapter(this, arrayList));
@@ -72,6 +80,7 @@ public class MessageActivity  extends FMBaseTableActivity {
         FollowProjectRequest();
     }
 
+    private ArrayList<Object> arrays;
     private void FollowProjectRequest(){
         SharedPreferences sharedPreferences= getSharedPreferences("user",
                 MODE_PRIVATE);
@@ -100,21 +109,22 @@ public class MessageActivity  extends FMBaseTableActivity {
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
                                     TableList tableList = new TableList();
-//                                    if (!js.isNull("investProject")) {
-//                                        JSONArray array = js.optJSONArray("investProject");
-//                                        for (int i = 0; i < array.length(); i++) {
-//                                            tableList.getArrayList().add(new ConsumerEntity(array.getJSONObject(i)));
-//                                        }
-//                                        adapter = new FollowProjectAdapter(CollectionProjectActivity.this, tableList.getArrayList());
-//                                        refresh_lv.setAdapter(adapter);
-//                                    }
-//                                    stopRefreshState();
-//                                    mEmptyView.setVisibility(View.GONE);
-//                            ToastHelper.toastMessage(getContext(), msg);
+                                    if (!js.isNull("notifies")) {
+                                        JSONArray array = js.optJSONArray("notifies");
+                                        for (int i = 0; i < array.length(); i++) {
+                                             tableList.getArrayList().add(new MessageEntity(array.getJSONObject(i)));
+                                        }
+                                        arrays = tableList.getArrayList();
+                                        adapter = new MessageAdapter(MessageActivity.this, tableList.getArrayList());
+                                        refresh_lv.setAdapter(adapter);
+                                    }
+                                    stopRefreshState();
+                                    mEmptyView.setVisibility(View.GONE);
+                                    ToastHelper.toastMessage(MessageActivity.this, msg);
                                 } else {
-//                                    ToastHelper.toastMessage(CollectionProjectActivity.this, msg);
-//                                    stopRefreshState();
-//                                    mEmptyView.setVisibility(View.VISIBLE);
+                                    ToastHelper.toastMessage(MessageActivity.this, msg);
+                                    stopRefreshState();
+                                    mEmptyView.setVisibility(View.VISIBLE);
                                 }
                             }
 
@@ -125,4 +135,135 @@ public class MessageActivity  extends FMBaseTableActivity {
                 }, staff
         );
     }
+
+    @Override
+    public void onMenuOnItemClick(int position) {
+        MessageEntity info = (MessageEntity) adapter.getItem(position);
+        ((MessageEntity) arrays.get(position)).setReadFlag(1);
+        DelReadFlagRequest(info);
+        adapter.notifyDataSetChanged();
+        UISKipUtils.startDiscoverDetailsActivity(MessageActivity.this,info.getRealId(),1);
+
+    }
+
+    public void cleanNotifyRequest() {
+        SharedPreferences sharedPreferences= getSharedPreferences("user",
+                MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("tokenId", String.valueOf(token));
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.UPDATEMESSAGEINFORMFLAG,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+                                    FollowProjectRequest();
+                                    adapter.notifyDataSetChanged();
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
+                                } else {
+                                    ToastHelper.toastMessage(MessageActivity.this,msg);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
+    }
+
+    public void cleanNotifyRequest(String type, String id) {
+        SharedPreferences sharedPreferences= getSharedPreferences("user",
+                MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("tokenId", String.valueOf(token));
+        staff.put("type", type);
+        staff.put("msgId", id);
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.UPDATEMESSAGEINFORMFLAG,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                             if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+                                    FollowProjectRequest();
+                                    adapter.notifyDataSetChanged();
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
+                                } else {
+                                ToastHelper.toastMessage(MessageActivity.this,msg);
+
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
+    }
+
+    private void DelReadFlagRequest(MessageEntity info){
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("msgId", String.valueOf(info.getMessageId()) );
+        staff.put("type", String.valueOf(info.getType()) );
+
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.UPDATEMESSAGEREADFLAG,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
+                                } else {
+
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
+    }
+
 }

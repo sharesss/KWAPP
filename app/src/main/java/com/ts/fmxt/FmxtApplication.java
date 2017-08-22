@@ -17,7 +17,7 @@ public class FmxtApplication extends Application {
     public static boolean ISRELEASE ;//true=开发 或者测试地址  false=正式地址
     public final static String APP_VERSION = "1.0.0";//每次发版本记得升级
     private static Context context;
-    public static final String APP_ID = "wx5d69b438816ee7ea";
+    public static final String APP_ID = "wx8b7d7b9b4d470443";
     //图片浏览器参数
 
     public static boolean ISSHOWDOC=true;//是否显示底部的小圆点
