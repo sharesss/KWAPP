@@ -31,6 +31,8 @@ import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.viewbadger.BadgeView;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * 用户
  * Mode.BOTH：同时支持上拉下拉
@@ -94,7 +96,6 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
         getView().findViewById(R.id.rl_guide).setOnClickListener(this);
         getView().findViewById(R.id.iv_msg).setOnClickListener(this);
         getView().findViewById(R.id.iv_setting).setOnClickListener(this);
-        getView().findViewById(R.id.rl_user_realname).setOnClickListener(this);
         getView().findViewById(R.id.rl_user_realcar).setOnClickListener(this);
         rlEndorsementManagement = (RelativeLayout) getView().findViewById(R.id.rl_endorsement_management);
         rlEndorsementManagement.setOnClickListener(this);
@@ -139,7 +140,7 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
 
      private void  userInfoRequest(){
          SharedPreferences sharedPreferences= mActivity.getSharedPreferences("user",
-                 Activity.MODE_PRIVATE);
+                 MODE_PRIVATE);
          String token=sharedPreferences.getString("token", "");
          Map<String, String> staff = new HashMap<String, String>();
          staff.put("tokenId",token);
@@ -167,6 +168,11 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
                                          JSONObject jsonobj = js.optJSONObject("information");
                                          userInfo = new UserInfoEntity(jsonobj);
                                          mHeader.formatData(userInfo);
+                                         SharedPreferences share = getActivity().getSharedPreferences("user",MODE_PRIVATE);
+                                         SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+                                         editor.putInt("isTruenameAuthen", userInfo.getIsTruenameAuthen());
+
+                                         editor.commit();    //提交数据保存
 
                                      }
                                      stopRefreshState();
@@ -186,7 +192,7 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
 
      private void messageCountRequest(){
          SharedPreferences sharedPreferences= mActivity.getSharedPreferences("user",
-                 Activity.MODE_PRIVATE);
+                 MODE_PRIVATE);
          String token=sharedPreferences.getString("token", "");
          Map<String, String> staff = new HashMap<String, String>();
          staff.put("tokenId",token);

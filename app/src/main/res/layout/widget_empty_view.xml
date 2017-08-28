@@ -8,7 +8,7 @@
             style="@style/base_wrap"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_list_nodata"
+            android:src="@mipmap/no_record_icon"
             />
 
         <TextView

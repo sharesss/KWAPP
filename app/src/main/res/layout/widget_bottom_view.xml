@@ -14,7 +14,7 @@
     <widget.MixedTextDrawView
         android:id="@+id/bt_consumer"
         style="@style/main_fragment_mixed"
-        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_60"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="8dp"
@@ -28,7 +28,7 @@
         android:id="@+id/bt_account"
         style="@style/main_fragment_mixed"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_60"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="8dp"

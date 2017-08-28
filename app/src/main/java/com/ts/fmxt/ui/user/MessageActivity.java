@@ -31,6 +31,8 @@ import widget.EmptyView;
 import widget.testlistview.view.CstSwipeDelMenuViewGroup;
 import widget.titlebar.NavigationView;
 
+import static com.ts.fmxt.R.id.empty_view;
+
 /**
  * created by kp at 2017/8/3
  * 通知
@@ -58,9 +60,11 @@ public class MessageActivity  extends FMBaseTableActivity implements  CstSwipeDe
             }
         });
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new FollowProjectAdapter(this, arrayList));
-        mEmptyView = (EmptyView) findViewById(R.id.empty_view);
+        mEmptyView = (EmptyView) findViewById(empty_view);
         refresh_lv = (RefreshListView) findViewById(R.id.refresh_lv);
+        mEmptyView.setEmptyText("再怎么看也没有啦");
         EmptyView mEmptyView = new EmptyView(this);
+        mEmptyView.setEmptyText("暂无消息，不妨主动点");
         setEmptyView(mEmptyView);
         startRefreshState();
     }
@@ -120,7 +124,7 @@ public class MessageActivity  extends FMBaseTableActivity implements  CstSwipeDe
                                     }
                                     stopRefreshState();
                                     mEmptyView.setVisibility(View.GONE);
-                                    ToastHelper.toastMessage(MessageActivity.this, msg);
+//                                    ToastHelper.toastMessage(MessageActivity.this, msg);
                                 } else {
                                     ToastHelper.toastMessage(MessageActivity.this, msg);
                                     stopRefreshState();

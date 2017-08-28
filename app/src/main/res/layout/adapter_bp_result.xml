@@ -10,11 +10,11 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         />
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_pb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
         <ProgressBar
             android:id="@+id/pb_yellowindex"
@@ -22,25 +22,31 @@
             android:max="10"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_centerVertical = "true"
             android:progressDrawable="@drawable/yellowcolor"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_height="10dp"
+            android:layout_height="5dp"
             android:indeterminate="false" />
+
         <TextView
             android:id="@+id/tv_fraction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf= "@id/pb_yellowindex"
             android:text="10分"
             android:layout_gravity="bottom"
+            android:layout_centerVertical = "true"
             android:textColor="@color/orange"
             />
         <TextView
             android:id="@+id/tv_peoplenum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf= "@id/tv_fraction"
             android:text="30人"
             android:layout_gravity="bottom"
+            android:layout_centerVertical = "true"
             android:layout_marginLeft="5dp"
             />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

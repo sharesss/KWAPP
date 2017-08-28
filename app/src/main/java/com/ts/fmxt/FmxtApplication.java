@@ -18,6 +18,7 @@ public class FmxtApplication extends Application {
     public final static String APP_VERSION = "1.0.0";//每次发版本记得升级
     private static Context context;
     public static final String APP_ID = "wx8b7d7b9b4d470443";
+    public final static String CreditAPPID="1004396";
     //图片浏览器参数
 
     public static boolean ISSHOWDOC=true;//是否显示底部的小圆点

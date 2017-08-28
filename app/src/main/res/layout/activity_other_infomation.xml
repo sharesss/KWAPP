@@ -8,20 +8,6 @@
         android:background="@color/black"
         android:layout_height="@dimen/dp_50">
 
-        <TextView
-            android:id="@+id/btn_finish"
-            style="@style/base_wrap"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:drawableLeft="@mipmap/icon_title_back"
-            android:drawablePadding="@dimen/dp_3"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp_15"
-            android:paddingRight="@dimen/dp_15"
-            android:paddingTop="@dimen/dp_15"
-            android:text="@string/text_back"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/tv_register"
@@ -37,9 +23,21 @@
     <RelativeLayout
         android:id="@+id/rly_paren"
         style="@style/base_height_wrap"
-        android:layout_below="@id/rly_title_bar"
         android:layout_marginBottom="@dimen/dp_5"
         android:background="@drawable/bg_oval">
+
+        <TextView
+            android:id="@+id/btn_finish"
+            style="@style/base_wrap"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableLeft="@mipmap/icon_title_back"
+            android:drawablePadding="@dimen/dp_3"
+            android:paddingBottom="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_15"
+            android:text="@string/text_back"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
 
         <widget.image.CircleImageView
             android:id="@+id/iv_portrait"
@@ -58,41 +56,109 @@
             android:layout_marginBottom="15dp"
             android:layout_below="@id/iv_portrait">
 
-            <TextView
-                android:id="@+id/tv_user_name"
-                style="@style/base_wrap"
-                android:layout_marginBottom="@dimen/dp_2"
-                android:drawablePadding="@dimen/dp_2"
-                android:maxLength="12"
-                android:paddingLeft="@dimen/dp_20"
-                android:text="@string/text_no_login"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_20" />
+            <LinearLayout
+                android:id="@+id/ll_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_fm_identity"
-                style="@style/base_wrap"
-                android:layout_below="@id/tv_user_name"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_2"
-                android:maxLines="4"
-                android:paddingLeft="@dimen/dp_20"
-                android:paddingRight="@dimen/dp_20"
-                android:paddingTop="@dimen/dp_2"
-                android:text="产品经理"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_15" />
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    style="@style/base_wrap"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:drawablePadding="@dimen/dp_2"
+                    android:text="@string/text_no_login"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:id="@+id/tv_founder"
+                    style="@style/base_wrap"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:drawablePadding="@dimen/dp_2"
+                    android:background="@drawable/bg_orange_kongyuan"
+                    android:text="创始人"
+                    android:visibility="gone"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/sp_16" />
+                <TextView
+                    android:id="@+id/tv_investor"
+                    style="@style/base_wrap"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:drawablePadding="@dimen/dp_2"
+                    android:text="投资人"
+                    android:visibility="gone"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/bg_orange_kongyuan"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/sp_16" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_work"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_info"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_place"
+                    style="@style/base_wrap"
+                    android:layout_below="@id/tv_user_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:maxLines="4"
+                    android:paddingTop="@dimen/dp_2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_15" />
+
+
+                <TextView
+                    android:id="@+id/tv_fm_identity"
+                    style="@style/base_wrap"
+                    android:layout_below="@id/tv_user_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:maxLines="4"
+                    android:paddingTop="@dimen/dp_2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_15" />
+                <TextView
+                    android:id="@+id/tv_salary"
+                    style="@style/base_wrap"
+                    android:layout_below="@id/tv_user_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:maxLines="4"
+                    android:paddingTop="@dimen/dp_2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_15" />
+                <TextView
+                    android:id="@+id/tv_age"
+                    style="@style/base_wrap"
+                    android:layout_below="@id/tv_user_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:maxLines="4"
+                    android:paddingTop="@dimen/dp_2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_15" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_company_name"
                 style="@style/base_wrap"
-                android:layout_below="@id/tv_fm_identity"
+                android:layout_below="@id/ll_work"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_2"
                 android:maxLines="4"
                 android:paddingLeft="@dimen/dp_20"
                 android:paddingRight="@dimen/dp_20"
                 android:paddingTop="@dimen/dp_2"
-                android:text="上海她商"
                 android:textColor="@color/white"
                 />
             <TextView
@@ -105,7 +171,6 @@
                 android:paddingLeft="@dimen/dp_20"
                 android:paddingRight="@dimen/dp_20"
                 android:paddingTop="@dimen/dp_2"
-                android:text="live for me"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18" />
         </RelativeLayout>
@@ -118,9 +183,12 @@
             android:layout_marginTop="@dimen/dp_50"
             android:layout_marginRight="@dimen/dp_10"
             android:drawableRight="@mipmap/icon_account_arrow"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:textColor="@color/white" />
     </RelativeLayout>
+
+
+
 
     <RelativeLayout
         android:id="@+id/rl_items_to_follow"

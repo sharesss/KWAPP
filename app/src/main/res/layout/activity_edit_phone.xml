@@ -48,14 +48,14 @@
         android:layout_below="@id/rly_title_bar"
         android:layout_marginTop="@dimen/dp_20">
 
-        <EditText
+        <TextView
             android:id="@+id/register_phone"
             style="@style/base_match"
             android:layout_marginLeft="@dimen/dp_5"
             android:background="@null"
-            android:hint="@string/hint_register_phone"
             android:inputType="number"
             android:maxLength="11"
+            android:gravity="center_vertical"
             android:textColor="@color/gray"
             android:textColorHint="@color/font_main_secondary"
             android:textSize="@dimen/sp_16" />

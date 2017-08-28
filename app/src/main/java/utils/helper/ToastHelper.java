@@ -1,6 +1,7 @@
 package utils.helper;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,6 +55,7 @@ public class ToastHelper {
 		tvMsg.setText(message);
 		
 		mToast.setView(view);
+		mToast.setGravity(Gravity.CENTER, 0, 0);
 		mToast.show();
 	}
 }

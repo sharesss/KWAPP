@@ -24,6 +24,9 @@ import com.ts.fmxt.ui.user.MessageActivity;
 import com.ts.fmxt.ui.user.OtherInfomationActivity;
 import com.ts.fmxt.ui.user.ProjectReturnActivity;
 import com.ts.fmxt.ui.user.UserAgreementActivity;
+import com.ts.fmxt.ui.user.authentication.RealNameActivity;
+import com.ts.fmxt.ui.user.authentication.RealNameResultActivity;
+import com.ts.fmxt.ui.user.authentication.RealNameSuccessActivity;
 import com.ts.fmxt.ui.user.login.ForgetPswActivity;
 import com.ts.fmxt.ui.user.login.LoginActivity;
 import com.ts.fmxt.ui.user.login.NickNameRegeisterActivity;
@@ -31,8 +34,6 @@ import com.ts.fmxt.ui.user.login.RandomCodeActivity;
 import com.ts.fmxt.ui.user.login.WeChatCompleteInformation;
 
 import http.data.RegisterEntity;
-
-import static android.R.attr.name;
 
 /**
  * created by kp at 2017/7/20
@@ -54,6 +55,16 @@ public class UISKipUtils {
      */
     public static void startMainFrameActivity(Activity context) {
         Intent intent = new Intent(context, MainFrameActivity.class);
+        context.startActivity(intent);
+    }
+    /**
+     * 主页
+     *
+     * @param context
+     */
+    public static void startMainFrameActivity(Activity context,int id) {
+        Intent intent = new Intent(context, MainFrameActivity.class);
+        intent.putExtra("id", id);
         context.startActivity(intent);
     }
 
@@ -178,6 +189,16 @@ public class UISKipUtils {
         Intent intent = new Intent(context, FollowProjectActivity.class);
         context.startActivity(intent);
     }
+    /**
+     * 想跟投的项目
+     * @param context
+     *
+     */
+    public static void startFollowProject(Activity context,int userid){
+        Intent intent = new Intent(context, FollowProjectActivity.class);
+        intent.putExtra("userid", userid);
+        context.startActivity(intent);
+    }
 
     /**
      * 收藏的项目
@@ -186,6 +207,16 @@ public class UISKipUtils {
      */
     public static void startCollectionProject(Activity context){
         Intent intent = new Intent(context,CollectionProjectActivity.class);
+        context.startActivity(intent);
+    }
+    /**
+     * 收藏的项目
+     * @param context
+     *
+     */
+    public static void startCollectionProject(Activity context,int userid){
+        Intent intent = new Intent(context,CollectionProjectActivity.class);
+        intent.putExtra("userid", userid);
         context.startActivity(intent);
     }
 
@@ -236,11 +267,12 @@ public class UISKipUtils {
         context.startActivity(intent);
     }
 
-    public static void startConfirmPayment(Activity context,int money,String proportion,int investId){
+    public static void startConfirmPayment(Activity context,int money,String proportion,int investId,String CompanyName){
         Intent intent = new Intent(context, ConfirmPaymentActivity.class);
         intent.putExtra("money", money);
         intent.putExtra("proportion", proportion);
         intent.putExtra("investId", investId);
+        intent.putExtra("CompanyName", CompanyName);
         context.startActivity(intent);
     }
     public static void satrtWeChatCompleteInformation(Activity context,String info){
@@ -249,4 +281,35 @@ public class UISKipUtils {
         context.startActivity(intent);
     }
 
+    /**
+     * 认证成功
+     *
+     * @param context
+     */
+    public static void startRealNameSuccessActivity(Activity context) {
+        Intent intent = new Intent(context, RealNameSuccessActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 实名认证
+     *
+     * @param context
+     */
+    public static void startRealNameActivity(Activity context) {
+        Intent intent = new Intent(context, RealNameActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 实名认证结果
+     *
+     * @param context
+     * @param type
+     */
+    public static void startRealNameResultActivity(Activity context, int type) {
+        Intent intent = new Intent(context, RealNameResultActivity.class);
+        intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
 }

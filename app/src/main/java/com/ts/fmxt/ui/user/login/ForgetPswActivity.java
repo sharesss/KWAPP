@@ -43,6 +43,7 @@ public class ForgetPswActivity extends FMBaseActivity implements View.OnClickLis
     private CountDownButtonHelper helper;
     private RegisterEntity mRegisterEntity;
     private ContainsEmojiEditText registerPsw;
+
     private boolean registerPhoneFlg = false;
     private boolean registerSmsCodeFlg = false;
     private boolean sendCodeFlg = false;
@@ -94,10 +95,15 @@ public class ForgetPswActivity extends FMBaseActivity implements View.OnClickLis
                 if (Tools.isFastDoubleClick())
                     return;
                 if (registerPhone.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入手机");
+                ToastHelper.toastMessage(this,"请输入手机");
+                return;
+            }
+                if (registerPhone.getText().length()!=11){
+                    ToastHelper.toastMessage(this,"手机号码长度应为11位数字");
                     return;
                 }
-                    randomCodeRequest();
+
+                randomCodeRequest();
                 break;
             case R.id.btn_nexts:
                 if (Tools.isFastDoubleClick())
@@ -150,7 +156,7 @@ public class ForgetPswActivity extends FMBaseActivity implements View.OnClickLis
         String phone = registerPhone.getText().toString().trim();
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("telephoneint",phone);
-        staff.put("type","2");
+        staff.put("type","3");
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.SENTOBTAIN,
                 new OkHttpClientManager.ResultCallback<String>() {
 
@@ -162,7 +168,7 @@ public class ForgetPswActivity extends FMBaseActivity implements View.OnClickLis
                     @Override
                     public void onResponse(String result) {
                         if(result.equals("1")){
-
+                            helper.start();
                             sendCodeFlg = true;
                             registerSmsCode.requestFocus();
                             registerSmsCode.setCursorVisible(true);
@@ -187,7 +193,7 @@ public class ForgetPswActivity extends FMBaseActivity implements View.OnClickLis
         String  password =registerPsw.getText().toString().trim();
         String  code = registerSmsCode.getText().toString().trim();
         Map<String, String> staff = new HashMap<String, String>();
-        staff.put("telephoneint",phone);
+        staff.put("telephone",phone);
         staff.put("code",code);
         staff.put("password",password);
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.FINDPASSWORD,

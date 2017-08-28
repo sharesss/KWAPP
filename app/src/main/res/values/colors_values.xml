@@ -24,7 +24,7 @@
     <color name="color_f8f7f7">#F8F7F7</color>
     <color name="color_f8f7f8">#F8F7F8</color>
     <color name="color_f0eff5">#f0eff5</color>
-    <color name="color_af8736">#af8736</color>
+    <color name="color_af8736">#b49169</color>
 
     <!-- Alpha for Color -->
     <color name="color_00000000">#00000000</color>
@@ -51,6 +51,7 @@
     <color name="color_ffaf46">#ffaf46</color>
     <color name="color_70bfdc">#70bfdc</color>
     <color name="color_62b651">#62b651</color>
+    <color name="color_41C76B">#41C76B</color>
     <color name="color_fffef3">#fffef3</color>
     <color name="color_1f232a">#1f232a</color>
     <color name="color_323a46">#323a46</color>

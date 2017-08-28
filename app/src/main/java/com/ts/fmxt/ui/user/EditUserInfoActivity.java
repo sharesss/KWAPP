@@ -378,7 +378,7 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
         });
     }
 
-    private String age;
+    private String age="未填写";
     @Override
     public void completeCall(String text, String text2, int type) {
         switch (type) {
@@ -405,12 +405,16 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
         String str = getResourcesStr(R.string.user_info_nodata);
         switch (type) {
             case 1://年龄
+                age =str;
+                isChange = true;
                 tvAge.setText(str);
                 break;
             case 2://年薪
+                isChange = true;
                 tvAnnualIncome.setText(str);
                 break;
             case 3://省份
+                isChange = true;
                 tvLocation.setText(str);
                 break;
         }
@@ -504,26 +508,37 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
         }else{
             staff.put("sex","0");
         }
-        if(age!=null){
+        if(!age.equals("未填写")){
             staff.put("birthYears",age);
+            staff.put("updateType","1");
+        }else if(age.equals("未填写")){
+            staff.put("birthYears","");
             staff.put("updateType","1");
         }
 
         String Location = tvLocation.getText().toString();
         if(!Location.equals("未填写")){
             staff.put("residence",Location);
+        }else {
+            staff.put("residence","");
         }
         String Company =tvCompany.getText().toString();
         if(!Company.equals("未填写")){
             staff.put("company",Company);
+        }else{
+            staff.put("company","");
         }
         String Position = tvPosition.getText().toString();
         if(!Position.equals("未填写")){
             staff.put("position",Position);
+        }else{
+            staff.put("position","");
         }
         String annualincome = tvAnnualIncome.getText().toString();
         if(!annualincome.equals("未填写")){
             staff.put("annualincome",annualincome);
+        }else {
+            staff.put("annualincome","");
         }
 //        String Signature =tvPersonalizedSignature.getText().toString();
 //        if(!Signature.equals("未填写")){

@@ -36,10 +36,12 @@ public class CollectionProjectActivity extends FMBaseTableActivity {
     private EmptyView mEmptyView;
     private RefreshListView refresh_lv;
     private FollowProjectAdapter adapter;
+    private int userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_project);
+        userid = getIntent().getIntExtra("userid",0);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setTitle(getResourcesStr(R.string.collection_project), new View.OnClickListener() {
             @Override
@@ -50,7 +52,9 @@ public class CollectionProjectActivity extends FMBaseTableActivity {
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new FollowProjectAdapter(this, arrayList));
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
         refresh_lv = (RefreshListView) findViewById(R.id.refresh_lv);
+        mEmptyView.setEmptyText("收藏项目，及时跟踪项目动态");
         EmptyView mEmptyView = new EmptyView(this);
+        mEmptyView.setEmptyText("收藏项目，及时跟踪项目动态");
         setEmptyView(mEmptyView);
         startRefreshState();
     }
@@ -75,7 +79,10 @@ public class CollectionProjectActivity extends FMBaseTableActivity {
                 MODE_PRIVATE);
         String token=sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
-        staff.put("tokenId", String.valueOf(token));
+        if(userid!=0){
+            staff.put("userId", String.valueOf(userid));
+        }else
+            staff.put("tokenId", String.valueOf(token));
 
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.GETINVESTPROJECTCOLLECT,
                 new OkHttpClientManager.ResultCallback<String>() {

@@ -86,6 +86,7 @@ public class EditActivity extends FMBaseActivity {
                             public void onClick(View v) {
                                 if(type ==100){
                                     EditNameRequest();
+                                    return;
                                 }
                                 Intent intent = new Intent();
                                 String editinfo = edtEdit.getTextVal().toString();
@@ -109,6 +110,8 @@ public class EditActivity extends FMBaseActivity {
         String  name = edtEdit.getTextVal().toString();
         if(!name.equals("未填写")){
             staff.put("nickname",name);
+        }else if(name.equals("")){
+            staff.put("nickname","");
         }
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.PERSONALUPDATE,
                 new OkHttpClientManager.ResultCallback<String>() {

@@ -156,8 +156,8 @@
             style="@style/base_wrap"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_20"
+            android:text="预约金:"
             android:textColor="@color/font_main"
-            android:text="预约金（7%）"
             android:textSize="@dimen/sp_15" />
 
 

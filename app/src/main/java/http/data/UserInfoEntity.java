@@ -24,6 +24,8 @@ public class UserInfoEntity {
     private int investprojectcount;//想跟投的项目数量
     private int investprojectcollectcount;//收藏的项目数量
     private int  isinvestauthen;//是否是投资人  1：是  0 不是
+    private int isTruenameAuthen;//实名认证  1：是  0 不是
+
 
     public UserInfoEntity(JSONObject json) {
         try {
@@ -41,6 +43,7 @@ public class UserInfoEntity {
             this.investprojectcollectcount=json.optInt("investprojectcollectcount", 0);
             this.isinvestauthen = json.optInt("isinvestauthen",0);
             this.account = json.optString("account");
+            this.isTruenameAuthen = json.optInt("isTruenameAuthen",-1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -156,5 +159,13 @@ public class UserInfoEntity {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public int getIsTruenameAuthen() {
+        return isTruenameAuthen;
+    }
+
+    public void setIsTruenameAuthen(int isTruenameAuthen) {
+        this.isTruenameAuthen = isTruenameAuthen;
     }
 }

@@ -8,7 +8,7 @@
     <widget.image.FMNetImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_150"
+        android:layout_height="@dimen/dp_180"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -20,29 +20,32 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:textSize="20sp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         android:text="奢分期"/>
 
     <TextView
         android:id="@+id/tv_brand_details"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:textSize="12sp"
         android:text="奢分期"/>
 
     <ProgressBar
         android:id="@+id/pb_index"
         android:layout_width="match_parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:progress="65"
         android:max="100"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:progressDrawable="@drawable/barcolor"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_height="10dp"
+        android:layout_height="5dp"
         android:visibility="gone"
         android:indeterminate="false" />
     <ProgressBar
@@ -55,8 +58,8 @@
         android:layout_marginRight="20dp"
         android:progressDrawable="@drawable/greencolor"
         style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="5dp"
         android:visibility="gone"
-        android:layout_height="10dp"
         android:indeterminate="false" />
 
 <LinearLayout
@@ -70,6 +73,7 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="可投指数"/>
 
     <TextView

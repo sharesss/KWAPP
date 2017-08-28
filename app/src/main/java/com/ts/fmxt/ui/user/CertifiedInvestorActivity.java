@@ -34,6 +34,9 @@ import utils.ReceiverUtils;
 import utils.Tools;
 import utils.helper.ToastHelper;
 import widget.image.FMNetImageView;
+import widget.popup.BaseDoubleEventPopup;
+import widget.popup.PopupObject;
+import widget.popup.dialog.MessageContentDialog;
 import widget.popup.dialog.PopupUploadDialog;
 
 /**
@@ -106,13 +109,14 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
             ll_authentication.setVisibility(View.VISIBLE);
             isexamine.setText("审核中");
             tv_details.setText("（三个工作日内完成审核）");
-            tv_reason.setText("认证投资人后可向官方提交意向投资金额");
+            tv_reason.setText("成为认证投资人，优先跟投好项目");
         }else if(info.getAuditstate()==2){
             tv_isAdopt.setVisibility(View.GONE);
             ll_authentication.setVisibility(View.VISIBLE);
             isexamine.setText("已认证");
             tv_details.setText("");
-            tv_reason.setText(info.getAuditdesc());
+            tv_reason.setText("成为认证投资人，优先跟投好项目");
+            btn_register.setVisibility(View.VISIBLE);
         }else if(info.getAuditstate()==3){
             tv_isAdopt.setVisibility(View.GONE);
             ll_authentication.setVisibility(View.VISIBLE);
@@ -131,7 +135,18 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
                 finish();
                 break;
             case R.id.btn_register:
-                AuthenticationDeleteRequest();
+                MessageContentDialog mPopupDialogWidget = new MessageContentDialog(this);
+                mPopupDialogWidget.setMessage("是否删除");
+                mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                    @Override
+                    public void onEventClick(PopupObject obj) {
+                        if (obj.getWhat() == 1)
+                            AuthenticationDeleteRequest();
+                    }
+                });
+                mPopupDialogWidget.showPopupWindow();
+
                 break;
             case R.id.iv_image:
                 selectDrawable();
@@ -162,6 +177,7 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
 
     private void qiNiuTokenRequest() {
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.TOKEN, new OkHttpClientManager.ResultCallback<String>() {
+
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();

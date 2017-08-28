@@ -13,6 +13,7 @@ import com.ts.fmxt.R;
 import com.ts.fmxt.ui.base.activity.FMBaseActivity;
 import com.ts.fmxt.ui.discover.view.FlowLayout;
 import com.ts.fmxt.ui.discover.view.NoticeWin;
+import com.ts.fmxt.ui.discover.view.RiskTipwin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,10 +31,11 @@ import http.manager.OkHttpClientManager;
 import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 
+import static com.ts.fmxt.R.id.btn_register;
 import static com.ts.fmxt.R.id.tv_confirm;
 
 /**
- * Created by A1 on 2017/8/16.
+ * Created by kp on 2017/8/16.
  */
 
 public class ProjectReturnActivity extends FMBaseActivity implements View.OnClickListener {
@@ -43,6 +45,7 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
     private ArrayList arr;
     private String checktext;
     private NoticeWin noticeWin;
+    private RiskTipwin hsewin;
     private ProjectReserveEntity info;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,7 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
 
     private void initView() {
         findViewById(R.id.btn_finish).setOnClickListener(this);
-        findViewById(R.id.btn_register).setOnClickListener(this);
+        findViewById(btn_register).setOnClickListener(this);
         tvReservationMoney = (TextView) findViewById(R.id.tv_reservation_money);
         tvSharesNum = (TextView) findViewById(R.id.tv_shares_num);
         tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
@@ -72,13 +75,13 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
             return;
         }
         tvReservationMoney.setText("预约金："+info.getReserveAmount());
-        int num = info.getReservePeopleNum()-info.getReservePeopleNum();
-//        if(num==0){
-//            tvConfirm.setText("有份额通知我");
-//        }else{
-//            tvConfirm.setText("确定");
-//        }
-        tvSharesNum.setText(info.getReservePeopleNum()+"人入股/剩余名额"+num+"人");
+        int num = info.getReservePeopleNum()-info.getYetReservePropleNum();
+        if(num==0){
+            tvConfirm.setText("有份额通知我");
+        }else{
+            tvConfirm.setText("确定");
+        }
+        tvSharesNum.setText(info.getYetReservePropleNum()+"人入股/剩余名额"+num+"人");
         tvCompanyName.setText(info.getInvestCompany());
         tvEquityReserveExplain.setText(info.getEquityReserveExplain());
         tvShareholderEquity.setText(info.getShareholderEquity());
@@ -98,7 +101,7 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
             view.setTextColor(Color.GRAY);
             view.setPadding(5, 5, 5, 5);
             view.setGravity(Gravity.CENTER);
-            view.setTextSize(18);
+            view.setTextSize(13);
             // 设置背景选择器到TextView上
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
@@ -129,7 +132,6 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
             });
             flow_layout.addView(view);
 
-
         }
 
     }
@@ -139,13 +141,20 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
             case R.id.btn_finish:
                 finish();
                 break;
+            case R.id.btn_register:
+                hsewin =new RiskTipwin(this,getString(R.string.html_fm_user_hse));
+                hsewin.showAtLocation(
+                        findViewById(R.id.AppWidget),
+                        Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
+                break;
             case R.id.tv_confirm:
                 if(tvConfirm.getText().equals("确定")){
                     if(checktext==null){
                         ToastHelper.toastMessage(this,"请选择要跟投的金额");
                         return;
                     }
-                    UISKipUtils.startConfirmPayment(this,info.getReserveAmount(),checktext,investId);
+                    String CompanyName = tvCompanyName.getText().toString();
+                    UISKipUtils.startConfirmPayment(this,info.getReserveAmount(),checktext,investId,CompanyName);
                 }else if(tvConfirm.getText().equals("有份额通知我")){
                     noticeWin = new NoticeWin(this,investId);
                     noticeWin.showAtLocation(

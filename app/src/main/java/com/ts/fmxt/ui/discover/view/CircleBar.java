@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.widget.Toast;
 
 import com.ts.fmxt.R;
 
@@ -132,7 +131,7 @@ public class CircleBar extends View {
 
 	@Override
 	public void setPressed(boolean pressed) {
-		Toast.makeText(getContext(), mText, Toast.LENGTH_SHORT).show();
+//		Toast.makeText(getContext(), mText, Toast.LENGTH_SHORT).show();
 	}
 
 	public void startCustomAnimation() {

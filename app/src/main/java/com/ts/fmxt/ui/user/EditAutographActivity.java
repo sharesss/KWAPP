@@ -86,6 +86,9 @@ public class EditAutographActivity extends FMBaseActivity {
         if(!name.equals("未填写")){
             staff.put("signature",name);
             staff.put("updateType","2");
+        }else if(name.equals("")){
+            staff.put("signature","");
+            staff.put("updateType","2");
         }
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.PERSONALUPDATE,
                 new OkHttpClientManager.ResultCallback<String>() {

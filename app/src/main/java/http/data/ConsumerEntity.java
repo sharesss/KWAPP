@@ -22,8 +22,24 @@ public class ConsumerEntity {
     private int   isVote;//0表示当前用户并未投票，大于0表示当成用户
     private int   isCollect;//是否收藏：0否 ，1是
     private int   voteNum;//投票总数
-
+    private String amount;
     public ConsumerEntity(JSONObject jsonObject) {
+        this.id = jsonObject.optInt("id",0);
+        this.investInitiator = jsonObject.optInt("investInitiator", 0);
+        this.investName = jsonObject.optString("investName");
+        this.investPhoto = jsonObject.optString("investPhoto");
+        this.investDeion = jsonObject.optString("investDeion");
+        this.createTime = jsonObject.optString("createTime");
+        this.exponent = jsonObject.optDouble("exponent");
+        this.dokels = jsonObject.optInt("dokels");
+        this.notDokels = jsonObject.optInt("notDokels");
+        this.isVote = jsonObject.optInt("isVote");
+        this.isCollect = jsonObject.optInt("isCollect");
+        this.voteNum = jsonObject.optInt("voteNum");
+
+    }
+    public ConsumerEntity(JSONObject jsonObject,String amount) {
+        this.amount = amount;
         this.id = jsonObject.optInt("id",0);
         this.investInitiator = jsonObject.optInt("investInitiator", 0);
         this.investName = jsonObject.optString("investName");
@@ -137,5 +153,13 @@ public class ConsumerEntity {
 
     public void setVoteNum(int voteNum) {
         this.voteNum = voteNum;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

@@ -26,7 +26,7 @@ import widget.EmptyView;
 import widget.Share.PopupShareView;
 
 /**
- * 消费返利
+ *
  */
 
 public class ConsumerFragment extends FMBaseTableFragment implements View.OnClickListener {

@@ -41,11 +41,15 @@ import http.data.InvestBPListEntity;
 import http.data.TableList;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.FMNoScrollListView;
 import widget.Share.PopupShareView;
 import widget.image.FMNetImageView;
+import widget.popup.BaseDoubleEventPopup;
+import widget.popup.PopupObject;
+import widget.popup.dialog.MessageContentDialog;
 
 import static com.ts.fmxt.R.id.tv_with_the_vote;
 
@@ -53,7 +57,8 @@ import static com.ts.fmxt.R.id.tv_with_the_vote;
  * created by kp at 2017/8/1
  * 发现详情
  */
-public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements View.OnClickListener, KeyMapDailog.SendBackListener {
+public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements View.OnClickListener, KeyMapDailog.SendBackListener,
+                    ReceiverUtils.MessageReceiver{
     private int investId;
     private FMNetImageView ivImage;
     private TextView tvBrandName, tvBrandDetails, tvIndex,tvWorth,tvNoworth;
@@ -85,9 +90,18 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private int istype;
 
     @Override
+    public void onMessage(int receiverType, Bundle bundle) {
+        if (receiverType == ReceiverUtils.SEEKBAR) {
+            DiscoverDetailsRequest();
+            InvestBPListRequest();
+//            cont++;
+        }
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_details);
+        ReceiverUtils.addReceiver(this);
         investId = getIntent().getIntExtra("id", -1);
         types = getIntent().getIntExtra("type", -1);
 
@@ -215,19 +229,28 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         }
         //标签UI
         llTemp.setVisibility(View.VISIBLE);
+        cont=0;
         // 循环添加TextView到容器
         for (int i = 0; i < arr.size(); i++) {
             InvestBPListEntity info = (InvestBPListEntity)  arr.get(i);
+            if(info.isScore()==1){
+                cont++;
+            }
             final TextView view = new TextView(this);
             view.setText(info.getBpname());
             view.setTextColor(Color.GRAY);
             view.setPadding(5, 5, 5, 5);
             view.setGravity(Gravity.CENTER);
-            view.setTextSize(18);
+            view.setTextSize(13);
             // 设置背景选择器到TextView上
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
             view.setBackground(btnDrawable);
+            if(info.getScore()==0){
+                tvPrompt.setVisibility(View.GONE);
+            }else{
+                tvPrompt.setVisibility(View.VISIBLE);
+            }
 
             // 设置点击事件
             view.setOnClickListener(new View.OnClickListener() {
@@ -255,14 +278,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             });
             flow_layout.addView(view);
 
-            if(info.isScore()==1){
-                cont++;
-            }
-        }
-        if(cont>=6){
-            tvBpresult.setVisibility(View.VISIBLE);
-        }else {
-            tvBpresult.setVisibility(View.GONE);
         }
 
     }
@@ -272,22 +287,30 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         SharedPreferences sharedPreferences= getSharedPreferences("user",
                 MODE_PRIVATE);
         String token=sharedPreferences.getString("token", "");
+        int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
         switch (v.getId()) {
             case R.id.btn_finish:
                 finish();
                 break;
             case R.id.iv_share:
                 if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
                     return;
                 }
                 showShareDialog();
                 break;
-            case R.id.tv_all_reviews:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-                    return;
-                }
+            case R.id.tv_all_reviews://点击评论
+
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.orange));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
@@ -295,10 +318,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 CommentRequest(istype);
                 break;
             case R.id.tv_worth_throwing:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-                    return;
-                }
+
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
@@ -306,10 +326,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 CommentRequest(istype);
                 break;
             case R.id.tv_no_worth_throwing:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-                    return;
-                }
+
                 tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
                 tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
                 tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
@@ -318,7 +335,17 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 break;
             case R.id.tv_write_comment:
                 if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
                     return;
                 }
 
@@ -327,7 +354,17 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 break;
             case R.id.ll_collection:
                 if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
                     return;
                 }
                 if(isCollect){
@@ -339,23 +376,76 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 }
                 break;
             case R.id.tv_bpresult:
-                tvBpresult.setVisibility(View.GONE);
-                tvResult.setVisibility(View.VISIBLE);
-                InvestBPListRequest();
+                if(cont>=6){
+                    tvBpresult.setVisibility(View.GONE);
+                    tvResult.setVisibility(View.VISIBLE);
+                    InvestBPListRequest();
+                }else {
+                    ToastHelper.toastMessage(this,"至少要给6项BP打分才能查看");
+                }
+
                 break;
             case R.id.tv_top:
                 RequestTop();
                 break;
             case R.id.tv_with_the_vote:
                 if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+                    return;
+                }
+                if(isTruenameAuthen==0){
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未实名认证，是否去认证？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startRealNameActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
                     return;
                 }
                 UISKipUtils.startProjectReturnActivity(DiscoverDetailsActivity.this,investId);
                 break;
             case R.id.ll_dokels://值得投
                 if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+                    return;
+                }
+                if(isTruenameAuthen==0){
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未实名认证，是否去认证？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startRealNameActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
                     return;
                 }
                 type = 1;
@@ -363,7 +453,31 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 break;
             case R.id.ll_notdokels://不值得投
                 if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+                    return;
+                }
+                if(isTruenameAuthen==0){
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未实名认证，是否去认证？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startRealNameActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
                     return;
                 }
                 type = 2;
@@ -416,7 +530,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     //12项BP
-    private void  InvestBPListRequest() {
+    public void  InvestBPListRequest() {
         SharedPreferences sharedPreferences= getSharedPreferences("user",
                 MODE_PRIVATE);
         String token=sharedPreferences.getString("token", "");
@@ -448,7 +562,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                             tableList.getArrayList().add(new InvestBPListEntity(array.getJSONObject(i)));
                                         }
                                         arr = tableList.getArrayList();
-                                        if(cont>1){
+                                        if(cont>=6){
                                             mBpresultAdapter = new BpresultAdapter(DiscoverDetailsActivity.this, tableList.getArrayList());
                                             lv_result.setAdapter(mBpresultAdapter);
                                         }else
@@ -661,6 +775,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                     tvWorth.setTextColor(getResources().getColor(R.color.gray));
                                     tvNoworth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
                                     tvNoworth.setTextColor(getResources().getColor(R.color.gray));
+                                    findViewById(R.id.ll_dokels).setOnClickListener(null);
+                                    findViewById(R.id.ll_notdokels).setOnClickListener(null);
                                 } else {
                                         ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
 
@@ -681,9 +797,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if (info == null) return;
         String title = String.format(info.getInvestName());
         PopupShareView popupShareView = new PopupShareView(DiscoverDetailsActivity.this);
-        popupShareView.setContent(info.getInvestDeion());
+        popupShareView.setContent("疯蜜小投：女性消费小额投资实践平台");
 
-        popupShareView.setWechatMomentsTitle(title);
+        popupShareView.setWechatMomentsTitle(title+"疯蜜小投");
         popupShareView.setTitle(title);
         String uri = String.format("%s?id=%s", getString( R.string.html_fm_fmoneyShare_detail), String.valueOf(investId));//
         popupShareView.setUrl(uri);

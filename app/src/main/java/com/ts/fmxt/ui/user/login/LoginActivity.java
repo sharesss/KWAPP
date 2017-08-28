@@ -198,6 +198,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
                                         editor.commit();    //提交数据保存
                                     }
                                     ToastHelper.toastMessage(LoginActivity.this,msg);
+                                    UISKipUtils.startMainFrameActivity(LoginActivity.this,2);
                                     finish();
                                 }else{
                                     ToastHelper.toastMessage(LoginActivity.this,msg);

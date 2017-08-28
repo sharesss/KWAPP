@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <RelativeLayout
         android:id="@+id/rly_paren"
         style="@style/base_height_wrap"
@@ -63,7 +64,6 @@
                     android:background="@drawable/bg_orange_kongyuan"
                     android:textColor="@color/orange"
                     android:textSize="@dimen/sp_16" />
-
 
             </LinearLayout>
 
@@ -157,26 +157,34 @@
     </RelativeLayout>
 
 
-
     <RelativeLayout
         android:id="@+id/rl_consumere"
         style="@style/text_user_item_style"
         android:layout_below="@id/rly_paren"
-        android:layout_marginTop="@dimen/dp_20">
+        >
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_1"
+            android:layout_marginLeft="@dimen/dp_20"
             android:background="@color/line_bg" />
 
         <TextView
+            android:id="@+id/tv_temp_consumere"
             style="@style/base_wrap"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_20"
             android:textColor="@color/font_main"
             android:text="@string/text_Authentication"
             android:textSize="@dimen/sp_15" />
-
+        <TextView
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/tv_temp_consumere"
+            android:text="@string/user_consumere_hide"
+            android:textColor="@color/line_bg"
+            android:textSize="@dimen/sp_15" />
 
         <TextView
             android:id="@+id/tv_consumere"
@@ -199,11 +207,49 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_asset"
+        android:id="@+id/rl_user_real_name"
         style="@style/text_user_item_style"
         android:layout_below="@id/rl_consumere"
         >
 
+
+        <TextView
+            android:id="@+id/tv_temp_realname"
+            style="@style/text_user__style"
+            android:text="@string/user_realname" />
+
+        <TextView
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/tv_temp_realname"
+            android:text="@string/user_realname_hide"
+            android:textColor="@color/line_bg"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/tv_realname"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_asset"
+        style="@style/text_user_item_style"
+        android:layout_below="@id/rl_user_real_name"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_marginLeft="20dp"
+            android:background="@color/line_bg" />
 
         <TextView
             style="@style/base_wrap"
@@ -351,6 +397,7 @@
         android:background="@color/line_bg" />
 
     <LinearLayout
+        android:id="@+id/ll_callphone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_gift"
@@ -370,6 +417,7 @@
 
 
         <TextView
+            android:id="@+id/tv_phone"
             style="@style/base_wrap"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

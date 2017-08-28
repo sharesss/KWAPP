@@ -170,7 +170,7 @@ public class BindNewPhoneActivity extends FMBaseActivity implements View.OnClick
         String phone = registerPhone.getText().toString().trim();
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("telephoneint",phone);
-        staff.put("type","3");
+        staff.put("type","2");
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.SENTOBTAIN,
                 new OkHttpClientManager.ResultCallback<String>() {
 
@@ -207,7 +207,7 @@ public class BindNewPhoneActivity extends FMBaseActivity implements View.OnClick
                 MODE_PRIVATE);
         String token=sharedPreferences.getString("token", "");
         staff.put("tokenId",token);
-        staff.put("telephoneint",phones);
+        staff.put("telephone",phones);
         staff.put("code",code);
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.CHANGENUMBER,
                 new OkHttpClientManager.ResultCallback<String>() {
@@ -219,7 +219,6 @@ public class BindNewPhoneActivity extends FMBaseActivity implements View.OnClick
 
                     @Override
                     public void onResponse(String result) {
-                        if (result.equals("1")) {
                             try {
                                 JSONObject js = new JSONObject(result);
                                 if (!js.isNull("statsMsg")) {
@@ -235,7 +234,7 @@ public class BindNewPhoneActivity extends FMBaseActivity implements View.OnClick
                                         finish();
 
                                     } else {
-                                        ToastHelper.toastMessage(BindNewPhoneActivity.this, result);
+                                        ToastHelper.toastMessage(BindNewPhoneActivity.this, msg);
                                     }
                                 }
 
@@ -244,7 +243,6 @@ public class BindNewPhoneActivity extends FMBaseActivity implements View.OnClick
                             }
                         }
 
-                    }
                 }, staff
         );
 

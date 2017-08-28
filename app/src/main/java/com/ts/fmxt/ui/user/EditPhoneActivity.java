@@ -19,6 +19,7 @@ import java.util.Map;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
 import utils.CountDownButtonHelper;
+import utils.ReceiverUtils;
 import utils.StringUtils;
 import utils.Tools;
 import utils.UISKipUtils;
@@ -28,9 +29,9 @@ import utils.helper.ToastHelper;
  * created by kp at 2017/7/27
  * 修改手机
  */
-public class EditPhoneActivity extends FMBaseActivity implements View.OnClickListener{
+public class EditPhoneActivity extends FMBaseActivity implements View.OnClickListener, ReceiverUtils.MessageReceiver{
     private String phone;
-    private EditText registerPhone;
+    private TextView registerPhone;
     private EditText registerSmsCode;
     private TextView tvSendCode;
     private TextView btnNexts;
@@ -38,6 +39,14 @@ public class EditPhoneActivity extends FMBaseActivity implements View.OnClickLis
     private boolean sendCodeFlg = false;
     private boolean registerPhoneFlg = false;
     private boolean registerSmsCodeFlg = false;
+    @Override
+    public void onMessage(int receiverType, Bundle bundle) {
+        if (receiverType == ReceiverUtils.MODIFY_PHONE) {
+            finish();
+        }
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +58,7 @@ public class EditPhoneActivity extends FMBaseActivity implements View.OnClickLis
     }
 
     private void initView() {
-        registerPhone = (EditText) findViewById(R.id.register_phone);
+        registerPhone = (TextView) findViewById(R.id.register_phone);
         registerSmsCode = (EditText) findViewById(R.id.register_sms_code);
         tvSendCode = (TextView) findViewById(R.id.tv_send_code);
         btnNexts = (TextView) findViewById(R.id.btn_nexts);

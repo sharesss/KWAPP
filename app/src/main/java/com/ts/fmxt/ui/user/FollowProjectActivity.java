@@ -36,10 +36,12 @@ public class FollowProjectActivity extends FMBaseTableActivity {
     private EmptyView mEmptyView;
     private RefreshListView refresh_lv;
     private FollowProjectAdapter adapter;
+    private int userid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_project);
+        userid  =getIntent().getIntExtra("userid",0);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setTitle(getResourcesStr(R.string.follow_project), new View.OnClickListener() {
             @Override
@@ -49,8 +51,10 @@ public class FollowProjectActivity extends FMBaseTableActivity {
         });
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new FollowProjectAdapter(this, arrayList));
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
+        mEmptyView.setEmptyText("跟投项目，及时跟踪项目动态");
         refresh_lv = (RefreshListView) findViewById(R.id.refresh_lv);
         EmptyView mEmptyView = new EmptyView(this);
+        mEmptyView.setEmptyText("跟投项目，及时跟踪项目动态");
         setEmptyView(mEmptyView);
         startRefreshState();
     }
@@ -75,6 +79,9 @@ public class FollowProjectActivity extends FMBaseTableActivity {
                 MODE_PRIVATE);
         String token=sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
+        if(userid!=0){
+            staff.put("userId", String.valueOf(userid));
+        }else
         staff.put("tokenId", String.valueOf(token));
 
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.GETINVESTPROJECTFOLLOW,
@@ -101,7 +108,9 @@ public class FollowProjectActivity extends FMBaseTableActivity {
                                     if (!js.isNull("investProject")) {
                                         JSONArray array = js.optJSONArray("investProject");
                                         for (int i = 0; i < array.length(); i++) {
-                                            tableList.getArrayList().add(new ConsumerEntity(array.getJSONObject(i)));
+                                            String amount = array.getJSONObject(i).getString("amount");
+                                            JSONObject jsn =array.getJSONObject(i).getJSONObject(("investProject"));
+                                            tableList.getArrayList().add(new ConsumerEntity(jsn,amount));
                                         }
                                         adapter = new FollowProjectAdapter(FollowProjectActivity.this, tableList.getArrayList());
                                         refresh_lv.setAdapter(adapter);

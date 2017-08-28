@@ -31,7 +31,7 @@
             android:id="@+id/btn_login"
             style="@style/base_wrap"
             android:layout_centerInParent="true"
-            android:text="@string/app_name"
+            android:text="项目详情"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_18" />
 
@@ -108,7 +108,7 @@
     <widget.image.FMNetImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_150"
+        android:layout_height="@dimen/dp_180"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -117,6 +117,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/black"
         android:textSize="20sp"
         />
 
@@ -126,6 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:textSize="12sp"
         />
 
@@ -139,8 +142,9 @@
         android:layout_marginRight="20dp"
         android:progressDrawable="@drawable/barcolor"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_height="10dp"
+        android:layout_height="5dp"
         android:indeterminate="false" />
+
         <ProgressBar
             android:id="@+id/pb_greenindex"
             android:layout_width="match_parent"
@@ -152,20 +156,21 @@
             android:progressDrawable="@drawable/greencolor"
             style="?android:attr/progressBarStyleHorizontal"
             android:visibility="gone"
-            android:layout_height="10dp"
+            android:layout_height="5dp"
             android:indeterminate="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="可投指数"/>
 
         <TextView
@@ -178,81 +183,7 @@
 
     </LinearLayout>
     </LinearLayout>
-    <!--  圆形布局 -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white">
 
-        <TextView
-            android:id="@+id/tv_isWorth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="39dp"
-            android:text="你觉得这个项目值得投吗？"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-        <LinearLayout
-            android:id="@+id/ll_dokels"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_isWorth"
-            android:orientation="vertical"
-            android:layout_alignParentLeft ="true">
-
-        <com.ts.fmxt.ui.discover.view.CircleBar
-            android:id="@+id/iv_circlebar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="50dp"
-
-            />
-
-            <TextView
-                android:id="@+id/tv_worth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/iv_circlebar"
-                android:layout_marginLeft="75dp"
-                android:layout_alignParentLeft ="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="值得投"
-                android:background="@drawable/bg_orange_kongyuan"
-                android:textColor="@color/orange"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_notdokels"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentRight ="true"
-            android:layout_below="@id/tv_isWorth"
-            >
-        <com.ts.fmxt.ui.discover.view.RedCircleBar
-            android:id="@+id/iv_redcirclebar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="50dp"
-            />
-
-        <TextView
-            android:id="@+id/tv_noworth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="70dp"
-            android:layout_alignParentRight ="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textColor="@color/orange"
-            android:background="@drawable/bg_orange_kongyuan"
-            android:text="不值得投"/>
-        </LinearLayout>
-    </RelativeLayout>
 
 <!--BP12项-->
     <com.ts.fmxt.ui.discover.view.FlowLayout
@@ -261,7 +192,8 @@
         android:id="@+id/flow_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
+        android:paddingTop="20dp"
         android:background="@color/white"
         android:padding="5dp"/>
 
@@ -292,22 +224,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:background="@color/white">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/line_bg"
+                />
        <TextView
            android:id="@+id/tv_bpresult"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="查看项目评分情况"
+           android:text="查看项目评分"
            android:textColor="@color/orange"
            android:gravity="center"
            android:layout_gravity="center_horizontal"
-           android:textSize="@dimen/dp_22"
-           android:visibility="gone"
-           android:layout_marginTop="5dp"
-           android:layout_marginBottom="5dp"
+           android:textSize="@dimen/dp_15"
+           android:layout_marginTop="30dp"
+           android:layout_marginBottom="30dp"
            android:background="@drawable/bg_orange_kongyuan"/>
 
             <TextView
@@ -318,9 +256,9 @@
                 android:textColor="@color/black"
                 android:layout_gravity="center_horizontal"
                 android:visibility="gone"
-                android:textSize="@dimen/dp_22"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:textSize="@dimen/dp_15"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 />
 
         </LinearLayout>
@@ -329,6 +267,83 @@
             android:id="@+id/lv_result"
             style="@style/base_height_wrap"
             android:divider="@color/white" />
+        <!--  圆形布局 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_isWorth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="39dp"
+                android:layout_marginBottom="10dp"
+                android:text="你觉得这个项目值得投吗？"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+            <LinearLayout
+                android:id="@+id/ll_dokels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_isWorth"
+                android:orientation="vertical"
+                android:layout_alignParentLeft ="true">
+
+                <com.ts.fmxt.ui.discover.view.CircleBar
+                    android:id="@+id/iv_circlebar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="50dp"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_worth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_circlebar"
+                    android:layout_marginLeft="75dp"
+                    android:layout_alignParentLeft ="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="值得投"
+                    android:background="@drawable/bg_orange_kongyuan"
+                    android:textColor="@color/orange"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_notdokels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentRight ="true"
+                android:layout_below="@id/tv_isWorth"
+                >
+                <com.ts.fmxt.ui.discover.view.RedCircleBar
+                    android:id="@+id/iv_redcirclebar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="50dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_noworth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="70dp"
+                    android:layout_alignParentRight ="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/orange"
+                    android:background="@drawable/bg_orange_kongyuan"
+                    android:text="不值得投"/>
+            </LinearLayout>
+        </RelativeLayout>
+
 
         <!-- 评论-->
 
@@ -356,6 +371,7 @@
                 android:layout_weight="1"
                 android:layout_height="40dp"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_15"
                 />
@@ -366,6 +382,7 @@
                 android:layout_weight="1"
                 android:layout_height="40dp"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_15"
                 />
@@ -393,8 +410,8 @@
             android:id="@+id/lv_comment"
             style="@style/base_height_wrap"
             android:layout_below="@id/ll_bottom_container"
+            android:layout_marginBottom="60dp"
             android:divider="@color/white" />
-
 
     </LinearLayout>
 
@@ -404,11 +421,11 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="@color/orange"
-        android:layout_marginTop="50dp"
         android:text="参与项目打分，看自己跟专业投资人的差异"
         android:textColor="@color/white"
         android:gravity="center"
-        />
+        android:layout_below="@+id/navigation_view"
+        android:layout_alignParentStart="true" />
     <TextView
         android:id="@+id/tv_top"
         android:layout_width="wrap_content"

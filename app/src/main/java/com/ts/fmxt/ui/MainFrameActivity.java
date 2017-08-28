@@ -40,6 +40,7 @@ public class MainFrameActivity extends BaseFragmentActivity implements MainFragm
     private String circle_name;
     private boolean mlink1;
     private UserFragment user;
+    private int id;
 
     //private LocationService locationService;
     //初始化高德地图
@@ -52,6 +53,13 @@ public class MainFrameActivity extends BaseFragmentActivity implements MainFragm
         setContentView(inflate);
         initView();
         initFragmentManager();
+        id  =getIntent().getIntExtra("id",0);
+        if(id!=0){
+            setCurrentFragment(id); //这里是指定跳转到指定的fragment
+        }
+        if(id==2){
+            mBottomLayout.currentIndex();
+        }
         //initBaidu();
 //        ReceiverUtils.addReceiver(this);
     }
@@ -108,6 +116,9 @@ public class MainFrameActivity extends BaseFragmentActivity implements MainFragm
     public void initView() {
         mBottomLayout = (MainFragmentBottomLayout) findViewById(R.id.bottom_navigation_layout);
         mBottomLayout.setOnItemClick(this);
+
+
+
     }
 
     @Override

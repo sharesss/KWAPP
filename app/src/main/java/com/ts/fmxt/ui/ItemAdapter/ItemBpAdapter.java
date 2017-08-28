@@ -2,10 +2,9 @@ package com.ts.fmxt.ui.ItemAdapter;/**
  * Created by A1 on 2017/8/8.
  */
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.thindo.base.Adapter.FMBaseAdapter;
@@ -25,7 +24,7 @@ public class ItemBpAdapter extends FMBaseAdapter {
     private List list;
     private int investId;
 
-    public ItemBpAdapter(Context context, List arrayList,int investId) {
+    public ItemBpAdapter(Activity context, List arrayList, int investId) {
         super(context, arrayList);
         this.list = arrayList;
         this.investId = investId;
@@ -48,28 +47,13 @@ public class ItemBpAdapter extends FMBaseAdapter {
             ViewHolder = (ViewHolder) convertView.getTag();
         }
         InvestBPListEntity info = (InvestBPListEntity) list.get(position);
-//        ViewHolder.iv_image.loadImage(info.getInvestPhoto());
         ViewHolder.tv_brand_name.setText(info.getBpname());
         ViewHolder.tv_brand_details.setText(info.getBpdeion());
+        ViewHolder.iv_image.loadImage(info.getBpphoto());
+        ViewHolder.iv_image.setVisibility(!info.getBpphoto().equals("") ? View.VISIBLE : View.GONE);
         if(investId!=0){
             ViewHolder.seekBar.formatData(info,investId);
         }
-
-
-
-//        Double index = info.getExponent()*100;
-//        int exponent = (new Double(index)).intValue();
-//        if(exponent<80){
-//            ViewHolder.pb_index.setProgress(exponent);
-//            ViewHolder.pb_index.setVisibility(View.VISIBLE);
-//            ViewHolder.pb_greenindex.setVisibility(View.GONE);
-//        }else{
-//            ViewHolder.pb_greenindex.setProgress(exponent);
-//            ViewHolder.pb_greenindex.setVisibility(View.VISIBLE);
-//            ViewHolder.pb_index.setVisibility(View.GONE);
-//        }
-//        ViewHolder.tv_index.setText(exponent+"%");
-//        ViewHolder.tv_money.setText("意向跟投金额:");
         return convertView;
     }
 
@@ -77,7 +61,6 @@ public class ItemBpAdapter extends FMBaseAdapter {
         private FMNetImageView iv_image;
         private TextView tv_brand_name,tv_index,tv_seekbar_distance;
         private TextView tv_brand_details,tv_money;
-        private ProgressBar pb_index,pb_yellowindex;
         private  seekBar seekBar;
 
 

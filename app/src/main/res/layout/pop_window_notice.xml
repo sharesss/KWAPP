@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:text="我们会记得您的预约信息，给股权有空余名额时，我们会第一时间通知到您的手机"
+            android:text="我们会记得您的预约信息，该股权有空余名额时，我们会第一时间通知到您的手机"
             />
         <TextView
             android:id="@+id/tv_confirm"

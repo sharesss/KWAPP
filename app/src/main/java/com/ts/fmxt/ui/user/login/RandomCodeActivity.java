@@ -107,8 +107,15 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
             case R.id.tv_send_code:
                 if (Tools.isFastDoubleClick())
                     return;
+                if (registerPhone.getText().length()!=11){
+                    ToastHelper.toastMessage(this,"手机号码长度应为11位数字");
+                    return;
+                }
+                if (registerPhone.getText().toString().equals("")){
+                    ToastHelper.toastMessage(this,"请输入手机");
+                    return;
+                }
                 if (sendCodeFlg == false && registerPhoneFlg == true){
-                    helper.start();
                     randomCodeRequest();
                 }
 
@@ -129,12 +136,6 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
         }
     }
 
-
-    @Override
-    public void onSuccess(BaseResponse response) {
-
-
-    }
 
     private void nextButtonChange() {
         if (registerPhoneFlg && registerSmsCodeFlg&&registerFlg) {
@@ -187,7 +188,7 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
                     @Override
                     public void onResponse(String result) {
                         if(result.equals("1")){
-
+                            helper.start();
                             sendCodeFlg = true;
                             registerSmsCode.requestFocus();
                             registerSmsCode.setCursorVisible(true);
@@ -217,6 +218,8 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
         staff.put("nickName",mRegisterEntity.getNickName());
         if(mRegisterEntity.getPortraitUri()!=null){
             staff.put("headPic",mRegisterEntity.getPortraitUri());
+        }else{
+            staff.put("headPic","");
         }
         staff.put("phoneModel",getDeviceBrand());
 
@@ -234,13 +237,12 @@ public class RandomCodeActivity extends FMBaseActivity implements View.OnClickLi
                             JSONObject js = new JSONObject(result);
                             if (!js.isNull("statsMsg")) {
                                 JSONObject json = js.optJSONObject("statsMsg");
-                                String stats = json.getString("state");
+                                String stats = json.getString("stats");
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
                                     Bundle bundle = new Bundle();
                                     ReceiverUtils.sendReceiver(ReceiverUtils.REGISTER_FINISH,bundle);
                                     ToastHelper.toastMessage(RandomCodeActivity.this, "注册成功");
-//                                    finish();
                                 } else {
                                     ToastHelper.toastMessage(RandomCodeActivity.this, msg);
                                 }

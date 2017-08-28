@@ -56,7 +56,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:visibility="visible"
-        android:text="请上传收入或资产证明(房产,汽车或银行流水等)"/>
+        android:text="上传个人资产证明(房产,汽车或银行流水等)"/>
 
     <LinearLayout
         android:id="@+id/ll_authentication"

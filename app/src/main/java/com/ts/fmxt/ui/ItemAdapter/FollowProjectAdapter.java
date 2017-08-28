@@ -19,6 +19,8 @@ import http.data.ConsumerEntity;
 import utils.UISKipUtils;
 import widget.image.FMNetImageView;
 
+import static com.ts.fmxt.R.id.ll_money;
+
 /**
  * created by kp at 2017/7/28
  * 想跟投项目适配器
@@ -43,7 +45,7 @@ public class FollowProjectAdapter extends FMBaseAdapter {
             ViewHolder.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
             ViewHolder.pb_index = (ProgressBar) convertView.findViewById(R.id.pb_index);
             ViewHolder.pb_greenindex = (ProgressBar) convertView.findViewById(R.id.pb_greenindex);
-
+            ViewHolder.ll_money = (LinearLayout) convertView.findViewById(ll_money);
             convertView.setTag(ViewHolder);
         } else {
             ViewHolder = (ViewHolder) convertView.getTag();
@@ -52,7 +54,7 @@ public class FollowProjectAdapter extends FMBaseAdapter {
         ViewHolder.iv_image.loadImage(info.getInvestPhoto());
         ViewHolder.tv_brand_name.setText(info.getInvestName());
         ViewHolder.tv_brand_details.setText(info.getInvestDeion());
-       Double index = info.getExponent()*100;
+        Double index = info.getExponent()*100;
         int exponent = (new Double(index)).intValue();
         if(exponent<80){
             ViewHolder.pb_index.setProgress(exponent);
@@ -64,7 +66,13 @@ public class FollowProjectAdapter extends FMBaseAdapter {
             ViewHolder.pb_index.setVisibility(View.GONE);
         }
         ViewHolder.tv_index.setText(exponent+"%");
-        ViewHolder.tv_money.setText("意向跟投金额:");
+
+        if(info.getAmount()!=null){
+            ViewHolder.ll_money.setVisibility(View.VISIBLE);
+            ViewHolder.tv_money.setText("意向跟投金额:"+info.getAmount()+"万");
+        }else{
+            ViewHolder.ll_money.setVisibility(View.GONE);
+        }
         ViewHolder.ll_consumer_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,13 +84,12 @@ public class FollowProjectAdapter extends FMBaseAdapter {
         return convertView;
     }
 
-
     class ViewHolder {
         private FMNetImageView iv_image;
         private TextView tv_brand_name,tv_index;
         private TextView tv_brand_details,tv_money;
         private ProgressBar pb_index,pb_greenindex;
-        private LinearLayout ll_consumer_info;
+        private LinearLayout ll_consumer_info,ll_money;
 
     }
 }

@@ -9,14 +9,12 @@ import org.json.JSONObject;
 public class InvestMoneyEntity {
     private int id;
     private String  amount;//金额
-    private int stockRate;//股权
-
-
+    private double stockRate;//股权
 
     public InvestMoneyEntity(JSONObject jsonObject) {
         this.id = jsonObject.optInt("id");
         this.amount = jsonObject.optString("amount");
-        this.stockRate = jsonObject.optInt("stockRate");
+        this.stockRate = jsonObject.optDouble("stockRate");
 
     }
 
@@ -36,11 +34,11 @@ public class InvestMoneyEntity {
         this.amount = amount;
     }
 
-    public int getStockRate() {
+    public double getStockRate() {
         return stockRate;
     }
 
-    public void setStockRate(int stockRate) {
+    public void setStockRate(double stockRate) {
         this.stockRate = stockRate;
     }
 }

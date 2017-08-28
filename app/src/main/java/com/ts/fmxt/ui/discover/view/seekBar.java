@@ -5,10 +5,10 @@ package com.ts.fmxt.ui.discover.view;/**
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
 import com.ts.fmxt.R;
+import com.ts.fmxt.ui.discover.DiscoverDetailsActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +27,12 @@ import java.util.Map;
 import http.data.InvestBPListEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
+import utils.UISKipUtils;
 import utils.helper.ToastHelper;
+import widget.popup.BaseDoubleEventPopup;
+import widget.popup.PopupObject;
+import widget.popup.dialog.MessageContentDialog;
 
 /**
  * created by kp at 2017/8/12
@@ -37,10 +43,11 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
     private TextView tv_seekbar_distance,tv_peoplenum,tv_fraction,tv_ceek,tv_result;
     private SeekBar sb_bp;
     private RelativeLayout rl_sp_bp;
-    private LinearLayout ll_pb;
+    private RelativeLayout ll_pb;
     private ProgressBar pb_yellowindex;
     private InvestBPListEntity info;
     private int investIds;
+    DiscoverDetailsActivity activity;
     public seekBar(Context context) {
         super(context);
         initNavigation();
@@ -64,7 +71,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
         sb_bp = (SeekBar)findViewById(R.id.sb_bp);
         sb_bp.setOnSeekBarChangeListener(this);
         tv_seekbar_distance = (TextView) findViewById(R.id.tv_seekbar_distance);
-        ll_pb = (LinearLayout) findViewById(R.id.ll_pb);
+        ll_pb = (RelativeLayout) findViewById(R.id.ll_pb);
         rl_sp_bp = (RelativeLayout) findViewById(R.id.rl_sp_bp);
         pb_yellowindex = (ProgressBar) findViewById(R.id.pb_yellowindex);
         tv_fraction = (TextView) findViewById(R.id.tv_fraction);
@@ -85,7 +92,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
             rl_sp_bp.setVisibility(View.GONE);
             ll_pb.setVisibility(View.VISIBLE);
             pb_yellowindex.setProgress(info.getScore());
-            tv_ceek.setText("“产品与服务”评价结果");
+            tv_ceek.setText("此BP评价结果");
         }
         tv_fraction.setText(info.getScore()+"分");
         tv_peoplenum.setText(info.getPeopleNum()+"人");
@@ -93,6 +100,39 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
 
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
+                        Activity.MODE_PRIVATE);
+                String token=sharedPreferences.getString("token", "");
+                int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
+                if (token.equals("")) {
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) context);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity((Activity) context);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+
+                    return;
+                }
+                if(isTruenameAuthen==0){
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) context);
+                    mPopupDialogWidget.setMessage("您还实名认证，是否去认证？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startRealNameActivity((Activity) context);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+                    return;
+                }
                 investBPGradeRequest(investIds);
 
             }
@@ -101,6 +141,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
 
     // 数值改变
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
         tv_seekbar_distance.setVisibility(View.VISIBLE);
         tv_seekbar_distance.setText(String.valueOf(progress));
         int position =sb_bp.getProgress(); //seekbar当前进度
@@ -113,11 +154,58 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
     // 开始拖动
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+        SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
+                Activity.MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
+            if (token.equals("")) {
+                MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) context);
+                mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
 
+                    @Override
+                    public void onEventClick(PopupObject obj) {
+                        if (obj.getWhat() == 1)
+                            UISKipUtils.startLoginActivity((Activity) context);
+                    }
+                });
+                mPopupDialogWidget.showPopupWindow();
+                return;
+            }
+        if(isTruenameAuthen==0){
+            MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) context);
+            mPopupDialogWidget.setMessage("您还实名认证，是否去认证？");
+            mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                @Override
+                public void onEventClick(PopupObject obj) {
+                    if (obj.getWhat() == 1)
+                        UISKipUtils.startRealNameActivity((Activity) context);
+                }
+            });
+            mPopupDialogWidget.showPopupWindow();
+            return;
+        }
     }
     // 停止拖动
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
+                Activity.MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
+        if (token.equals("")) {
+            seekBar.setProgress(0);
+            tv_result.setVisibility(View.GONE);
+            tv_seekbar_distance.setVisibility(View.GONE);
+            return;
+        }
+        if(isTruenameAuthen==0){
+            seekBar.setProgress(0);
+            tv_result.setVisibility(View.GONE);
+            tv_seekbar_distance.setVisibility(View.GONE);
+            return;
+        }
 
     }
 
@@ -152,14 +240,17 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
                                     rl_sp_bp.setVisibility(View.GONE);
                                     ll_pb.setVisibility(View.VISIBLE);
                                     pb_yellowindex.setProgress(info.getScore());
-                                    tv_ceek.setText("“产品与服务”评价结果");
+                                    tv_ceek.setText("此BP评价结果");
                                     String fen = tv_seekbar_distance.getText().toString();
                                     int SumTotal = info.getSumTotal()+Integer.valueOf(fen);
                                     int PeopleNum = info.getPeopleNum()+1;
                                     double Score = SumTotal/PeopleNum;
                                     int exponent = (new Double(Score)).intValue();
+                                    pb_yellowindex.setProgress(exponent);
                                     tv_fraction.setText(exponent+"分");
                                     tv_peoplenum.setText(PeopleNum+"人");
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.SEEKBAR,bundle);
                                 } else {
                                     ToastHelper.toastMessage(getContext(), msg);
                                 }

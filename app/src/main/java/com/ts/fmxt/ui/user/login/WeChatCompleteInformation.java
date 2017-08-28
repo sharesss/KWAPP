@@ -68,6 +68,7 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
         iv_eye.setOnClickListener(this);
         findViewById(R.id.tv_protocol).setOnClickListener(this);
         findViewById(R.id.btn_nexts).setOnClickListener(this);
+        findViewById(R.id.btn_finish).setOnClickListener(this);
         tvSendCode.setOnClickListener(this);
         try {
             JSONObject js = new JSONObject(info);
@@ -103,7 +104,14 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
             case R.id.tv_send_code:
                 if (Tools.isFastDoubleClick())
                     return;
-                helper.start();
+                if (etdRegisterPhone.getText().toString().equals("")){
+                    ToastHelper.toastMessage(this,"请输入手机");
+                    return;
+                }
+                if (etdRegisterPhone.getText().length()!=11){
+                    ToastHelper.toastMessage(this,"手机号码长度应为11位数字");
+                    return;
+                }
                 randomCodeRequest();
 
                 break;
@@ -137,7 +145,6 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
     public void randomCodeRequest() {
         String phone = etdRegisterPhone.getText().toString().trim();
         Map<String, String> staff = new HashMap<String, String>();
-
         staff.put("telephoneint",phone);
         staff.put("type","1");
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.SENTOBTAIN,
@@ -150,25 +157,24 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
 
                     @Override
                     public void onResponse(String result) {
-                        try {
-                            JSONObject js = new JSONObject(result);
-                            if (!js.isNull("statsMsg")) {
-                                JSONObject json = js.optJSONObject("statsMsg");
-                                String stats = json.getString("stats");
-                                String msg = json.getString("msg");
-                                if (stats.equals("1")) {
-
-                                } else {
-                                    ToastHelper.toastMessage(WeChatCompleteInformation.this, msg);
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if(result.equals("1")){
+                            helper.start();
+                            sendCodeFlg = true;
+                            edtRegisteSmsCode.requestFocus();
+                            edtRegisteSmsCode.setCursorVisible(true);
+                            edtRegisteSmsCode.setFocusable(true);
+//                            tvSendCode.setBackground(getResources().getDrawable(R.drawable.bg_gray_5_shape));
+//                            tvSendCode.setTextColor(getResourcesColor(R.color.font_main_secondary));
+                            return;
+                        }else{
+                            ToastHelper.toastMessage(WeChatCompleteInformation.this, result);
                         }
 
                     }
                 }, staff
         );
+
+
     }
 
     private void weiXinBindMobileRequest(){
@@ -210,7 +216,8 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
                                     editor.putString("token", token);
                                     editor.putString("phone", account);
                                     editor.commit();    //提交数据保存
-
+                                    ToastHelper.toastMessage(WeChatCompleteInformation.this, msg);
+                                    finish();
                                 } else {
                                     ToastHelper.toastMessage(WeChatCompleteInformation.this, msg);
                                 }
