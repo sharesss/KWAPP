@@ -232,6 +232,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         } else {
             list.addAll(headlist.size(), labellist);
         }
+        adapter.notifyDataSetChanged();
         return cont;
     }
 
@@ -425,7 +426,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                             }
                                             int index = labellist.size() + headlist.size();
                                             list.addAll(index, labelBPlist);
-                                            recyclerView.smoothScrollToPosition(index);
+                                            adapter.notifyDataSetChanged();
+                                            recyclerView.smoothScrollToPosition(index + 1);
                                         }
 
                                     }

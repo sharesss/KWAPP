@@ -34,9 +34,8 @@ public class DiscoverLabelItem implements BaseViewItem, View.OnClickListener {
         switch (v.getId()) {
             case R.id.tv_bpresult:
                 o = 1;
-
-                activity.InvestBPListRequest(1);
                 activity.adapter.notifyDataSetChanged();
+                activity.InvestBPListRequest(1);
                 break;
         }
     }
