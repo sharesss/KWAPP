@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:paddingBottom="20dp"
-    android:paddingTop="@dimen/dp_20"
-    android:orientation="vertical">
+    android:paddingTop="@dimen/dp_20">
 
     <LinearLayout
         android:id="@+id/ll_bottom_container"

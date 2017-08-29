@@ -72,7 +72,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private int recLen = 3;
     private int types;
     private int istype;
-    RecyclerViewAdapter adapter;
+    public RecyclerViewAdapter adapter;
     ArrayList<BaseViewItem> list;
     RecyclerView recyclerView;
 
@@ -136,37 +136,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //        tvNoWorthThrowing.setOnClickListener(this);
 //
 //        //底部两个按钮
-//        llCollection = (LinearLayout) findViewById(R.id.ll_collection);
-//        tvCollection = (TextView) findViewById(R.id.tv_collection);
-//        tvWithTheVote = (TextView) findViewById(tv_with_the_vote);
-//        tvWithTheVote.setOnClickListener(this);
-//        llCollection.setOnClickListener(this);
-//        findViewById(R.id.tv_top).setOnClickListener(this);
-//        svArr = (ScrollView) findViewById(R.id.sv_arr);
-        /**
-         * 例子
-         */
-//        info = new ConsumerEntity();
-//        info.setInvestPhoto("https://imgsa.baidu.com/news/q%3D100/sign=d80d7c0988025aafd5327acbcbecab8d/6f061d950a7b020872ea052868d9f2d3562cc8d3.jpg");
-//        info.setInvestName("hh");
-//        info.setInvestDeion("123");
-//        info.setExponent(0.8);
-//
-//        formatData(info);
-//        ArrayList<InvestBPListEntity> arr = new ArrayList<InvestBPListEntity>();
-//        for (int i = 0; i < 10; i++) {
-//            InvestBPListEntity investBPListEntity = new InvestBPListEntity();
-//            investBPListEntity.setBpname(i + "");
-//            arr.add(investBPListEntity);
-//        }
-//        formatDPData(arr, investId);
-//
-//        ArrayList<ConsumerCommentEntity> entities = new ArrayList<ConsumerCommentEntity>();
-//        for (int i = 0; i < 10; i++) {
-//            ConsumerCommentEntity consumerCommentEntity = new ConsumerCommentEntity();
-//            entities.add(consumerCommentEntity);
-//        }
-//        addComment(entities);
+        llCollection = (LinearLayout) findViewById(R.id.ll_collection);
+        tvCollection = (TextView) findViewById(R.id.tv_collection);
+        tvWithTheVote = (TextView) findViewById(R.id.tv_with_the_vote);
+        tvWithTheVote.setOnClickListener(this);
+        llCollection.setOnClickListener(this);
+        findViewById(R.id.tv_top).setOnClickListener(this);
     }
 
     private void formatData(ConsumerEntity info) {
@@ -196,9 +171,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info);
         list.add(discoverCircleItem);
 
-
-        DiscoverCommentItem discoverCommentItem = new DiscoverCommentItem(info);
-        list.add(discoverCommentItem);
 
         /**
          * 这里可以添加各种Item,参照以上代码
@@ -256,13 +228,14 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //            flow_layout.setVisibility(View.GONE);
             return;
         }
-        discoverLabelItem = new DiscoverLabelItem(arr, new DiscoverLabelItem.CallBack() {
+        DiscoverLabelItem.CallBack callBack = new DiscoverLabelItem.CallBack() {
             @Override
             public void onitem(int postion) {
                 int index = list.indexOf(discoverLabelItem);
                 recyclerView.smoothScrollToPosition(index + postion + 2);
             }
-        });
+        };
+        discoverLabelItem = new DiscoverLabelItem(arr, callBack, DiscoverDetailsActivity.this);
         list.add(discoverLabelItem);
         for (InvestBPListEntity entity : arr) {
             DisBPItem disBPItem = new DisBPItem(entity, investId);
@@ -286,48 +259,48 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 }
                 showShareDialog();
                 break;
-            case R.id.tv_all_reviews:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-                    return;
-                }
-                tvAllReviews.setTextColor(this.getResources().getColor(R.color.orange));
-                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-                istype = 0;
-                CommentRequest(istype);
-                break;
-            case R.id.tv_worth_throwing:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-                    return;
-                }
-                tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
-                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
-                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-                istype = 1;
-                CommentRequest(istype);
-                break;
-            case R.id.tv_no_worth_throwing:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-                    return;
-                }
-                tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
-                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
-                istype = 2;
-                CommentRequest(istype);
-                break;
-            case R.id.tv_write_comment:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-                    return;
-                }
-
-                dialog = new KeyMapDailog("评论是疯蜜范的最大动力", DiscoverDetailsActivity.this);
-                dialog.show(getSupportFragmentManager(), "评论");
-                break;
+//            case R.id.tv_all_reviews:
+//                if (token.equals("")) {
+//                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+//                    return;
+//                }
+//                tvAllReviews.setTextColor(this.getResources().getColor(R.color.orange));
+//                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
+//                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
+//                istype = 0;
+//                CommentRequest(istype);
+//                break;
+//            case R.id.tv_worth_throwing:
+//                if (token.equals("")) {
+//                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+//                    return;
+//                }
+//                tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
+//                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
+//                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
+//                istype = 1;
+//                CommentRequest(istype);
+//                break;
+//            case R.id.tv_no_worth_throwing:
+//                if (token.equals("")) {
+//                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+//                    return;
+//                }
+//                tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
+//                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
+//                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
+//                istype = 2;
+//                CommentRequest(istype);
+//                break;
+//            case R.id.tv_write_comment:
+//                if (token.equals("")) {
+//                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+//                    return;
+//                }
+//
+//                dialog = new KeyMapDailog("评论是疯蜜范的最大动力", DiscoverDetailsActivity.this);
+//                dialog.show(getSupportFragmentManager(), "评论");
+//                break;
             case R.id.ll_collection:
                 if (token.equals("")) {
                     UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
@@ -341,11 +314,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     isCollect = true;
                 }
                 break;
-            case R.id.tv_bpresult:
-                tvBpresult.setVisibility(View.GONE);
-                tvResult.setVisibility(View.VISIBLE);
-                InvestBPListRequest();
-                break;
+//            case R.id.tv_bpresult:
+//                tvBpresult.setVisibility(View.GONE);
+//                tvResult.setVisibility(View.VISIBLE);
+//                InvestBPListRequest();
+//                break;
             case R.id.tv_top:
                 RequestTop();
                 break;
@@ -419,7 +392,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     //12项BP
-    private void InvestBPListRequest() {
+    public void InvestBPListRequest() {
         SharedPreferences sharedPreferences = getSharedPreferences("user",
                 MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
@@ -506,6 +479,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //                            tvAllReviews.setText("全部评论(" + totalNum + ")");
 //                            tvWorthThrowing.setText("值得投(" + desre + ")");
 //                            tvNoWorthThrowing.setText("不值得投(" + bedesre + ")");
+
+                            DiscoverCommentItem discoverCommentItem = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
+                            list.add(discoverCommentItem);
+
                             if (!js.isNull("statsMsg")) {
                                 JSONObject json = js.optJSONObject("statsMsg");
                                 String stats = json.getString("stats");
