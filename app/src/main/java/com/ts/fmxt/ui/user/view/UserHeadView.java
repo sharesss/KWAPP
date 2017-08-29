@@ -78,7 +78,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
 
     }
 
-    String Residence,identity,salary,age;
+
     public void formatData(UserInfoEntity info) {
 
         this.info = info;
@@ -150,7 +150,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
             case R.id.rl_consumere://认证
                 UISKipUtils.startCertifiedInvestorActivity((Activity) getContext(),info.getAuditstate());
                 break;
-            case R.id.ll_callphone://用户协议
+            case R.id.ll_callphone://呼叫客服
                 MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) getContext());
                 String phone =tv_phone.getText().toString();
                 mPopupDialogWidget.setMessage(phone);

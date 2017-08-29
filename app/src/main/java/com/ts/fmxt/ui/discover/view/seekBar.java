@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
 import com.ts.fmxt.R;
-import com.ts.fmxt.ui.discover.DiscoverDetailsActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +46,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
     private ProgressBar pb_yellowindex;
     private InvestBPListEntity info;
     private int investIds;
-    DiscoverDetailsActivity activity;
+
     public seekBar(Context context) {
         super(context);
         initNavigation();

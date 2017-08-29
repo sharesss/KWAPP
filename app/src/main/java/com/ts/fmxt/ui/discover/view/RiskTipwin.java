@@ -18,7 +18,8 @@ import com.ts.fmxt.R;
 import static javax.xml.transform.OutputKeys.METHOD;
 
 /**
- * Created by A1 on 2017/8/24.
+ * Created by kp on 2017/8/24.
+ * 风险提示
  */
 
 public class RiskTipwin extends PopupWindow {
