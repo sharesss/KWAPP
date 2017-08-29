@@ -105,7 +105,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //        tvIndex = (TextView) findViewById(R.id.tv_index);
         findViewById(R.id.iv_share).setOnClickListener(this);
         findViewById(R.id.btn_finish).setOnClickListener(this);
-//        tvPrompt = (TextView) findViewById(R.id.tv_prompt);
+        tvPrompt = (TextView) findViewById(R.id.tv_prompt);
 //        Message message = handler.obtainMessage(1);     // Message
 //        handler.sendMessageDelayed(message, 1000);
         //饼图UI
