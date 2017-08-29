@@ -21,10 +21,11 @@ public class ConsumerCommentEntity {
     private String time;
     private int likeCount;//该条评论点赞次数
     private int isLike;//当前用户是否点赞
-    private int  isFounder;//评论人是否项目创始人
-    private int  isInvestAuthen;//评论人是否投资认证
+    private int isFounder;//评论人是否项目创始人
+    private int isInvestAuthen;//评论人是否投资认证
 
-
+    public ConsumerCommentEntity() {
+    }
 
     public ConsumerCommentEntity(JSONObject jsonObj) {
         this.id = jsonObj.optInt("id", 0);

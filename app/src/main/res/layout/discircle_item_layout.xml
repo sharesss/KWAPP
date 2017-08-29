@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?><!--  圆形布局 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_isWorth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp"
+        android:text="你觉得这个项目值得投吗？" />
+
+    <LinearLayout
+        android:id="@+id/ll_dokels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tv_isWorth"
+        android:orientation="vertical">
+
+        <com.ts.fmxt.ui.discover.view.CircleBar
+            android:id="@+id/iv_circlebar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="50dp"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_worth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/iv_circlebar"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_orange_kongyuan"
+            android:text="值得投"
+            android:textColor="@color/orange" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_notdokels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_isWorth"
+        android:orientation="vertical">
+
+        <com.ts.fmxt.ui.discover.view.RedCircleBar
+            android:id="@+id/iv_redcirclebar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="50dp" />
+
+        <TextView
+            android:id="@+id/tv_noworth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_orange_kongyuan"
+            android:text="不值得投"
+            android:textColor="@color/orange" />
+    </LinearLayout>
+</RelativeLayout>

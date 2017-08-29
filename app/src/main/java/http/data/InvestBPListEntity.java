@@ -32,6 +32,9 @@ public class InvestBPListEntity {
         this.bpphoto = jsonObject.optString("bpphoto");
 
     }
+    public InvestBPListEntity() {
+
+    }
 
     public int getId() {
         return id;
