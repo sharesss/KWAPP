@@ -35,7 +35,7 @@ public class DiscoverLabelItem implements BaseViewItem, View.OnClickListener {
             case R.id.tv_bpresult:
                 o = 1;
 
-                activity.InvestBPListRequest();
+                activity.InvestBPListRequest(1);
                 activity.adapter.notifyDataSetChanged();
                 break;
         }
@@ -148,9 +148,5 @@ public class DiscoverLabelItem implements BaseViewItem, View.OnClickListener {
                 }
             }
         }
-    }
-
-    public int getCont() {
-        return cont;
     }
 }

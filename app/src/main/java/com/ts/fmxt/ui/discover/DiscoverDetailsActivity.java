@@ -112,7 +112,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //        tvWorth = (TextView) findViewById(R.id.tv_worth);
 //        tvNoworth = (TextView) findViewById(R.id.tv_noworth);
         DiscoverDetailsRequest();//顶部的数据获取
-        InvestBPListRequest();
+        InvestBPListRequest(0);
         CommentRequest(type);
 
 //        //12项BP
@@ -142,15 +142,17 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         findViewById(R.id.tv_top).setOnClickListener(this);
     }
 
+    ArrayList<BaseViewItem> headlist = new ArrayList<BaseViewItem>();
+
     private void formatData(ConsumerEntity info) {
         if (info == null) {
             return;
         }
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
-        list.add(0, discoverHeadItem);
+        headlist.add(0, discoverHeadItem);
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info);
-        list.add(1, discoverCircleItem);
-
+        headlist.add(1, discoverCircleItem);
+        list.addAll(0, headlist);
 
         /**
          * 这里可以添加各种Item,参照以上代码
@@ -198,40 +200,39 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //        }
     }
 
-    DiscoverLabelItem discoverLabelItem;
+    ArrayList<BaseViewItem> labellist = new ArrayList<>();
+    ArrayList<BaseViewItem> labelBPlist = new ArrayList<>();
 
-    private void formatDPData(ArrayList<InvestBPListEntity> arr, int investId) {
+    private int formatDPData(ArrayList<InvestBPListEntity> arr, int investId) {
         if (arr.size() == 0) {
-            if (discoverLabelItem != null) {
-                list.remove(discoverLabelItem);
-            }
-//            flow_layout.setVisibility(View.GONE);
-            return;
+            list.removeAll(labellist);
+            return 0;
         }
         DiscoverLabelItem.CallBack callBack = new DiscoverLabelItem.CallBack() {
             @Override
             public void onitem(int postion) {
-                int index = list.indexOf(discoverLabelItem);
+                int index = list.indexOf(labellist);
                 recyclerView.smoothScrollToPosition(index + postion + 2);
             }
         };
-        int index = -1;
-        if (discoverLabelItem != null) {
-            index = list.indexOf(discoverLabelItem);
-        }
-        if (index > -1) {
-            DiscoverLabelItem labelItem = new DiscoverLabelItem(arr, callBack, DiscoverDetailsActivity.this);
-            list.set(index, labelItem);
-            discoverLabelItem = labelItem;
-        } else {
-            discoverLabelItem = new DiscoverLabelItem(arr, callBack, DiscoverDetailsActivity.this);
-            list.add(discoverLabelItem);
-        }
-
+        list.removeAll(labellist);
+        labellist.clear();
+        DiscoverLabelItem labelItem = new DiscoverLabelItem(arr, callBack, DiscoverDetailsActivity.this);
+        labellist.add(labelItem);
+        int cont = 0;
         for (InvestBPListEntity entity : arr) {
             DisBPItem disBPItem = new DisBPItem(entity, investId);
-            list.add(disBPItem);
+            if (entity.isScore() == 1) {
+                cont++;
+            }
+            labellist.add(disBPItem);
         }
+        if (headlist.isEmpty()) {
+            list.addAll(labellist);
+        } else {
+            list.addAll(headlist.size(), labellist);
+        }
+        return cont;
     }
 
     @Override
@@ -383,11 +384,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     //12项BP
-    public void InvestBPListRequest() {
+    public void InvestBPListRequest(final int type) {//
         SharedPreferences sharedPreferences = getSharedPreferences("user",
                 MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-        Map<String, String> staff = new HashMap<String, String>();
+        final Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("tokenId", String.valueOf(token));
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.INVESTBPLIST,
@@ -396,7 +397,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     @Override
                     public void onError(Request request, Exception e) {
                         e.printStackTrace();
-                        llTemp.setVisibility(View.GONE);
+//                        llTemp.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -415,35 +416,34 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                         for (int i = 0; i < array.length(); i++) {
                                             arr.add(new InvestBPListEntity(array.getJSONObject(i)));
                                         }
-                                        if (discoverLabelItem != null && discoverLabelItem.getCont() > 1) {
+                                        int cont = formatDPData(arr, investId);
+                                        labelBPlist.clear();
+                                        if (type == 1 && cont > 1) {
                                             for (InvestBPListEntity entity : arr) {
                                                 DisBPresultItem disBPItem = new DisBPresultItem(entity);
-                                                list.add(disBPItem);
+                                                labelBPlist.add(disBPItem);
                                             }
-//                                            mBpresultAdapter = new BpresultAdapter(DiscoverDetailsActivity.this, arr);
-//                                            lv_result.setAdapter(mBpresultAdapter);
-                                        } else
-                                            formatDPData(arr, investId);
-//                                        adapter = new ItemBpAdapter(DiscoverDetailsActivity.this, tableList.getArrayList(), investId);
-//                                        refresh_lv.setAdapter(adapter);
+                                            int index = labellist.size() + headlist.size();
+                                            list.addAll(index, labelBPlist);
+                                            recyclerView.smoothScrollToPosition(index);
+                                        }
 
                                     }
                                 } else {
-                                    llTemp.setVisibility(View.GONE);
+//                                    llTemp.setVisibility(View.GONE);
                                     ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
                                 }
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            llTemp.setVisibility(View.GONE);
+//                            llTemp.setVisibility(View.GONE);
                         }
                     }
                 }, staff
         );
     }
 
-    DiscoverCommentItem discoverCommentItem;
 
     //评论
     public void CommentRequest(final int type) {
@@ -472,20 +472,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                             totalNum = js.optInt("totalNum");
                             desre = js.optInt("desre");
                             bedesre = js.optInt("bedesre");
-                            int index = -1;
-                            if (discoverCommentItem != null) {
-                                index = list.indexOf(discoverLabelItem);
-                            }
-                            if (index > -1) {
-                                DiscoverCommentItem item = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
-                                list.set(index, item);
-                                discoverCommentItem = item;
-                            } else {
-                                discoverCommentItem = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
-                                list.add(discoverCommentItem);
-                            }
-
-
+                            list.removeAll(listcomment);
+                            listcomment.clear();
+                            DiscoverCommentItem discoverCommentItem = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
+                            listcomment.add(discoverCommentItem);
                             if (!js.isNull("statsMsg")) {
                                 JSONObject json = js.optJSONObject("statsMsg");
                                 String stats = json.getString("stats");
@@ -495,9 +485,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                         ArrayList<ConsumerCommentEntity> entities = new ArrayList<ConsumerCommentEntity>();
                                         JSONArray array = js.optJSONArray("comments");
                                         for (int i = 0; i < array.length(); i++) {
-                                            entities.add(new ConsumerCommentEntity(array.getJSONObject(i)));
+                                            DisCommentItem disCommentItem = new DisCommentItem(new ConsumerCommentEntity(array.getJSONObject(i)));
+                                            listcomment.add(disCommentItem);
                                         }
-                                        addComment(entities);
 //                                        mCommentAdapter = new CommentAdapter(DiscoverDetailsActivity.this, tableList.getArrayList(), type);
 //                                        reviews_lv.setAdapter(mCommentAdapter);
 //                                        mCommentAdapter.notifyDataSetChanged();
@@ -506,6 +496,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                     ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
                                 }
                             }
+                            list.addAll(listcomment);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -517,17 +508,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     ArrayList<BaseViewItem> listcomment = new ArrayList<BaseViewItem>();
 
-    private void addComment(ArrayList<ConsumerCommentEntity> entities) {
-        listcomment.clear();
-        for (ConsumerCommentEntity entity : entities) {
-            DisCommentItem disCommentItem = new DisCommentItem(entity);
-            listcomment.add(disCommentItem);
-        }
-        if (list.indexOf(listcomment) == -1) {
-            list.addAll(listcomment);
-        }
-        adapter.notifyDataSetChanged();
-    }
 
     //发表评论，回复评论
     private void consumerContentRequest(String inputText) {
