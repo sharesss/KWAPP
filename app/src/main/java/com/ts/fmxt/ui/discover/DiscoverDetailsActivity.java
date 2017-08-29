@@ -106,8 +106,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         findViewById(R.id.iv_share).setOnClickListener(this);
         findViewById(R.id.btn_finish).setOnClickListener(this);
         tvPrompt = (TextView) findViewById(R.id.tv_prompt);
-//        Message message = handler.obtainMessage(1);     // Message
-//        handler.sendMessageDelayed(message, 1000);
+        Message message = handler.obtainMessage(1);     // Message
+        handler.sendMessageDelayed(message, 1000);
         //饼图UI
 //        ivCirclebar = (CircleBar) findViewById(R.id.iv_circlebar);
 //        ivRedCirclebar = (RedCircleBar) findViewById(R.id.iv_redcirclebar);
@@ -759,11 +759,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     if (recLen > 0) {
                         Message message = handler.obtainMessage(1);
                         handler.sendMessageDelayed(message, 1000);
-                        if (types != -1) {
-                            RequestBoot();
-                        } else {
-                            RequestTop();
-                        }
+//                        if (types != -1) {
+//                            RequestBoot();
+//                        } else {
+//                            RequestTop();
+//                        }
                     } else {
                         tvPrompt.setVisibility(View.GONE);
                     }

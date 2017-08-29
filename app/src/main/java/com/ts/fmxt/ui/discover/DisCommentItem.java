@@ -34,6 +34,7 @@ public class DisCommentItem implements BaseViewItem {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
+//        Resources resources = convertView.getResources();
         viewHolder.iv_portrait.loadImage(entity.getHeadPic());
         viewHolder.tv_time.setText(entity.getTime());
 
@@ -73,6 +74,7 @@ public class DisCommentItem implements BaseViewItem {
 
         private ViewHolder(View convertView) {
             super(convertView);
+
             iv_portrait = (CircleImageView) convertView.findViewById(R.id.iv_portrait);
             tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             tv_name = (TextView) convertView.findViewById(R.id.tv_name);
