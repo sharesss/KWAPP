@@ -62,9 +62,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private KeyMapDailog dialog;
     //    private ArrayList arr;
     private int type = 0;//请求的评论类型0是全部，1是值得投，2是不值得投
-    private int totalNum = 0;//总评
-    private int desre = 0;//值投
-    private int bedesre = 0;//不值投
+
     private TextView tvCollection, tvWithTheVote, tvBpresult, tvResult, tvPrompt;
     private boolean isCollect;
     private ScrollView svArr;
@@ -148,28 +146,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if (info == null) {
             return;
         }
-        list.clear();
-
-//        ivImage.loadImage(info.getInvestPhoto());
-//        tvBrandName.setText(info.getInvestName());
-//        tvBrandDetails.setText(info.getInvestDeion());
-//        Double index = info.getExponent() * 100;
-//        int exponent = (new Double(index)).intValue();
-//        if (exponent < 80) {
-//            pbIndex.setProgress(exponent);
-//            pbIndex.setVisibility(View.VISIBLE);
-//            pbGreenindex.setVisibility(View.GONE);
-//        } else {
-//            pbGreenindex.setProgress(exponent);
-//            pbGreenindex.setVisibility(View.VISIBLE);
-//            pbIndex.setVisibility(View.GONE);
-//        }
-//        tvIndex.setText(exponent + "%");
-
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
-        list.add(discoverHeadItem);
+        list.add(0, discoverHeadItem);
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info);
-        list.add(discoverCircleItem);
+        list.add(1, discoverCircleItem);
 
 
         /**
@@ -235,8 +215,19 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 recyclerView.smoothScrollToPosition(index + postion + 2);
             }
         };
-        discoverLabelItem = new DiscoverLabelItem(arr, callBack, DiscoverDetailsActivity.this);
-        list.add(discoverLabelItem);
+        int index = -1;
+        if (discoverLabelItem != null) {
+            index = list.indexOf(discoverLabelItem);
+        }
+        if (index > -1) {
+            DiscoverLabelItem labelItem = new DiscoverLabelItem(arr, callBack, DiscoverDetailsActivity.this);
+            list.set(index, labelItem);
+            discoverLabelItem = labelItem;
+        } else {
+            discoverLabelItem = new DiscoverLabelItem(arr, callBack, DiscoverDetailsActivity.this);
+            list.add(discoverLabelItem);
+        }
+
         for (InvestBPListEntity entity : arr) {
             DisBPItem disBPItem = new DisBPItem(entity, investId);
             list.add(disBPItem);
@@ -452,6 +443,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         );
     }
 
+    DiscoverCommentItem discoverCommentItem;
+
     //评论
     public void CommentRequest(final int type) {
         SharedPreferences sharedPreferences = getSharedPreferences("user",
@@ -473,15 +466,25 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     public void onResponse(String result) {
                         try {
                             JSONObject js = new JSONObject(result);
-//                            totalNum = js.optInt("totalNum");
-//                            desre = js.optInt("desre");
-//                            bedesre = js.optInt("bedesre");
-//                            tvAllReviews.setText("全部评论(" + totalNum + ")");
-//                            tvWorthThrowing.setText("值得投(" + desre + ")");
-//                            tvNoWorthThrowing.setText("不值得投(" + bedesre + ")");
+                            int totalNum = 0;//总评
+                            int desre = 0;//值投
+                            int bedesre = 0;//不值投
+                            totalNum = js.optInt("totalNum");
+                            desre = js.optInt("desre");
+                            bedesre = js.optInt("bedesre");
+                            int index = -1;
+                            if (discoverCommentItem != null) {
+                                index = list.indexOf(discoverLabelItem);
+                            }
+                            if (index > -1) {
+                                DiscoverCommentItem item = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
+                                list.set(index, item);
+                                discoverCommentItem = item;
+                            } else {
+                                discoverCommentItem = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
+                                list.add(discoverCommentItem);
+                            }
 
-                            DiscoverCommentItem discoverCommentItem = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
-                            list.add(discoverCommentItem);
 
                             if (!js.isNull("statsMsg")) {
                                 JSONObject json = js.optJSONObject("statsMsg");

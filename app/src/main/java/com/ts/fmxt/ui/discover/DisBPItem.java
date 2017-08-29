@@ -37,11 +37,12 @@ public class DisBPItem implements BaseViewItem {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-
         viewHolder.tv_brand_name.setText(info.getBpname());
         viewHolder.tv_brand_details.setText(info.getBpdeion());
-        if (investId != 0) {
-            viewHolder.seekBar.formatData(info, investId);
+        viewHolder.iv_image.loadImage(info.getBpphoto());
+        viewHolder.iv_image.setVisibility(!info.getBpphoto().equals("") ? View.VISIBLE : View.GONE);
+        if(investId!=0){
+            viewHolder.seekBar.formatData(info,investId);
         }
     }
 

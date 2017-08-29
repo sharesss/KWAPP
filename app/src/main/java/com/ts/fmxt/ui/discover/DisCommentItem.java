@@ -1,5 +1,6 @@
 package com.ts.fmxt.ui.discover;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ public class DisCommentItem implements BaseViewItem {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-//        Resources resources = convertView.getResources();
+        Resources resources = viewHolder.iv_portrait.getResources();
         viewHolder.iv_portrait.loadImage(entity.getHeadPic());
         viewHolder.tv_time.setText(entity.getTime());
 
