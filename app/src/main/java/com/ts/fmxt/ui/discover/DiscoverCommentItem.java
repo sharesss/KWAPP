@@ -20,7 +20,7 @@ import utils.UISKipUtils;
 public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
     int totalNum, desre, bedesre;
     DiscoverDetailsActivity activity;
-    int istype = 0;
+
 
     public DiscoverCommentItem(int totalNum, int desre, int bedesre, DiscoverDetailsActivity activity) {
         this.totalNum = totalNum;
@@ -51,17 +51,17 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
             viewHolder.tvWorthThrowing.setOnClickListener(this);
             viewHolder.tvNoWorthThrowing.setOnClickListener(this);
         }
-        if (istype == 0) {
+        if (activity.istype == 0) {
             viewHolder.tvAllReviews.setTextColor(activity.getResources().getColor(R.color.orange));
             viewHolder.tvWorthThrowing.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.tvNoWorthThrowing.setTextColor(activity.getResources().getColor(R.color.black));
         }
-        if (istype == 1) {
+        if (activity.istype == 1) {
             viewHolder.tvAllReviews.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.tvWorthThrowing.setTextColor(activity.getResources().getColor(R.color.orange));
             viewHolder.tvNoWorthThrowing.setTextColor(activity.getResources().getColor(R.color.black));
         }
-        if (istype == 2) {
+        if (activity.istype == 2) {
             viewHolder.tvAllReviews.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.tvWorthThrowing.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.tvNoWorthThrowing.setTextColor(activity.getResources().getColor(R.color.orange));
@@ -87,7 +87,7 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
                     return;
                 }
 
-                istype = 0;
+                activity.istype = 0;
                 activity.CommentRequest(0);
                 activity.adapter.notifyDataSetChanged();
                 break;
@@ -96,7 +96,7 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
                     UISKipUtils.startLoginActivity(activity);
                     return;
                 }
-                istype = 1;
+                activity.istype = 1;
                 activity.CommentRequest(1);
                 activity.adapter.notifyDataSetChanged();
                 break;
@@ -105,7 +105,7 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
                     UISKipUtils.startLoginActivity(activity);
                     return;
                 }
-                istype = 2;
+                activity.istype = 2;
                 activity.CommentRequest(2);
                 activity.adapter.notifyDataSetChanged();
                 break;

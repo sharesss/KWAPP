@@ -69,7 +69,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     private int recLen = 3;
     private int types;
-    private int istype;
+    public int istype;
     public RecyclerViewAdapter adapter;
     ArrayList<BaseViewItem> list;
     RecyclerView recyclerView;
@@ -497,6 +497,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                 }
                             }
                             list.addAll(listcomment);
+                            adapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
