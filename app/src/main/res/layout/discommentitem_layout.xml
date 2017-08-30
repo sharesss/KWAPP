@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center_vertical"
+        android:background="@color/color_9d9d9d"
         android:orientation="horizontal">
 
         <TextView
@@ -33,6 +34,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/black"
+            android:visibility="gone"
             android:textSize="@dimen/sp_15" />
 
         <TextView
@@ -42,6 +44,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/black"
+            android:visibility="gone"
             android:textSize="@dimen/sp_15" />
     </LinearLayout>
 

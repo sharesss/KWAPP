@@ -58,7 +58,7 @@ public class DisBPresultItem implements BaseViewItem {
             tv_fraction = (TextView) convertView.findViewById(R.id.tv_fraction);
             tv_peoplenum = (TextView) convertView.findViewById(R.id.tv_peoplenum);
             pb_yellowindex = (ProgressBar) convertView.findViewById(R.id.pb_yellowindex);
-            ;
+
         }
     }
 }

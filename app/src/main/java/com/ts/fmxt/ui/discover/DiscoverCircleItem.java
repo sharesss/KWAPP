@@ -75,7 +75,7 @@ public class DiscoverCircleItem implements BaseViewItem,View.OnClickListener {
         viewHolder.ivRedCirclebar.setSweepAngle(inxe);//进度
         if (info.getIsVote() == 0) {
             viewHolder.ll_dokels.setOnClickListener(this);
-            viewHolder.ll_dokels.setOnClickListener(this);
+            viewHolder.ll_notdokels.setOnClickListener(this);
         } else if (info.getIsVote() == 1) {
             viewHolder.tvWorth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
             viewHolder.tvWorth.setTextColor(resources.getColor(R.color.gray));
@@ -106,7 +106,7 @@ public class DiscoverCircleItem implements BaseViewItem,View.OnClickListener {
                 MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         switch (view.getId()) {
-            case R.id.tv_all_reviews:
+            case R.id.ll_dokels:
                 if (token.equals("")) {
                     UISKipUtils.startLoginActivity(activity);
                     return;
@@ -189,6 +189,8 @@ public class DiscoverCircleItem implements BaseViewItem,View.OnClickListener {
                                     viewHolder.tvWorth.setTextColor(resources.getColor(R.color.gray));
                                     viewHolder.tvNoworth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
                                     viewHolder.tvNoworth.setTextColor(resources.getColor(R.color.gray));
+                                    viewHolder.ll_dokels.setOnClickListener(null);
+                                    viewHolder.ll_notdokels.setOnClickListener(null);
                                 } else {
                                     ToastHelper.toastMessage(activity, msg);
 

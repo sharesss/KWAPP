@@ -172,7 +172,7 @@ public class DisCommentItem implements BaseViewItem {
                                 String stats = json.getString("stats");
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
-                                    activity.CommentRequest(type);
+                                    activity.CommentRequest(0);
                                 } else {
                                     ToastHelper.toastMessage(activity, msg);
                                 }

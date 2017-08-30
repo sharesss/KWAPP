@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
@@ -65,7 +64,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     private TextView tvCollection, tvWithTheVote, tvBpresult, tvResult;
     private boolean isCollect;
-    private ScrollView svArr;
 
     private int recLen = 3;
     private int types;
@@ -150,7 +148,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         }
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
         headlist.add(0, discoverHeadItem);
-        DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info, DiscoverDetailsActivity.this, type);
+        DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info, DiscoverDetailsActivity.this, investId);
 //        headlist.add(1, discoverCircleItem);
         list.addAll(0, headlist);
         if (listcomment.isEmpty()) {
@@ -196,9 +194,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //            type = 2;
 //        }
 //
-//        Drawable sexDrawble = getResources().getDrawable(info.getIsCollect() == 1 ? R.mipmap.card_detail_s : R.mipmap.card_detail_n);
-//        sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
-//        tvCollection.setCompoundDrawables(sexDrawble, null, null, null);
+        Drawable sexDrawble = getResources().getDrawable(info.getIsCollect() == 1 ? R.mipmap.card_detail_s : R.mipmap.card_detail_n);
+        sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
+        tvCollection.setCompoundDrawables(sexDrawble, null, null, null);
 //        if (info.getIsCollect() == 1) {
 //            isCollect = true;
 //        } else {
@@ -496,6 +494,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                             DisCommentItem disCommentItem = new DisCommentItem(new ConsumerCommentEntity(array.getJSONObject(i)), DiscoverDetailsActivity.this, type);
                                             listcomment.add(disCommentItem);
                                         }
+                                        adapter.notifyDataSetChanged();
 //                                        mCommentAdapter = new CommentAdapter(DiscoverDetailsActivity.this, tableList.getArrayList(), type);
 //                                        reviews_lv.setAdapter(mCommentAdapter);
 //                                        mCommentAdapter.notifyDataSetChanged();
@@ -622,7 +621,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     //是否值得投
-    private void IsWorthRequest(int voteType) {
+    private void   IsWorthRequest(int voteType) {
         SharedPreferences sharedPreferences = getSharedPreferences("user",
                 MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
@@ -755,32 +754,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     private void RequestTop() {
         recyclerView.smoothScrollToPosition(0);
-//        svArr.post(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                svArr.post(new Runnable() {
-//                    public void run() {
-//                        // 滚动至顶部
-//                        svArr.fullScroll(ScrollView.FOCUS_UP);
-//                    }
-//                });
-//            }
-//        });
+
     }
 
     private void RequestBoot() {
-        svArr.post(new Runnable() {
+        recyclerView.scrollToPosition(adapter.getItemCount()-1);
 
-            @Override
-            public void run() {
-                svArr.post(new Runnable() {
-                    public void run() {
-                        // 滚动至顶部
-                        svArr.fullScroll(ScrollView.FOCUS_DOWN);
-                    }
-                });
-            }
-        });
     }
 }

@@ -79,24 +79,19 @@ public class OtherInfomationActivity extends FMBaseActivity implements View.OnCl
         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
         tvUserName.setCompoundDrawables(sexDrawble, null, null, null);
 
-        if(!info.getResidence().equals("")){
-            tv_place.setText(info.getResidence() + "/");
+        StringBuilder inf =  new StringBuilder().append(!info.getResidence().equals("")&&!info.getResidence().equals("null")  ? info.getResidence()+"/":"").append(!info.getPosition().equals("")&&!info.getPosition().equals("null")? info.getPosition()+"/":"")
+                .append(!info.getAnnualincome().equals("")&&!info.getAnnualincome().equals("null")?info.getAnnualincome()+"/":"").append(!String.valueOf(info.getAge()).equals("")&&!!String.valueOf(info.getAge()).equals("null")&&info.getAge()!=0?String.valueOf(info.getAge())+"/":"");
+        if(inf.length()>1){
+            inf.delete(inf.length()-1, inf.length());
         }
-        if(!info.getPosition().equals("")){
-            tv_fm_identity.setText( info.getPosition()+"/" );
-        }
-        if(!info.getAnnualincome().equals("")){
-            tv_salary.setText( info.getAnnualincome()+"/" );
-        }
-        if(!String.valueOf(info.getAge()).equals("")&&info.getAge()!=0) {
-            tv_age.setText(info.getAge()+"");
-        }
+        tv_place.setText(inf);
         if(!info.getCompany().equals("null")){
             tvCompanyName.setText(info.getCompany());
         }
         if(!info.getSignature().equals("null")){
             tvAutograph.setText(info.getSignature());
         }
+
         tv_items_to_follow.setText(info.getInvestprojectcount()+"");
         tv_collection_items.setText(info.getInvestprojectcollectcount()+"");
     }
