@@ -153,7 +153,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info, DiscoverDetailsActivity.this, type);
 //        headlist.add(1, discoverCircleItem);
         list.addAll(0, headlist);
-        list.add(discoverCircleItem);
+        if (listcomment.isEmpty()) {
+            list.add(discoverCircleItem);
+        } else {
+            list.add(list.size() - listcomment.size(), discoverCircleItem);
+        }
+
 
         /**
          * 这里可以添加各种Item,参照以上代码
@@ -475,7 +480,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                             totalNum = js.optInt("totalNum");
                             desre = js.optInt("desre");
                             bedesre = js.optInt("bedesre");
-                            list.removeAll(listcomment);
+//                            list.removeAll(listcomment);
                             listcomment.clear();
                             DiscoverCommentItem discoverCommentItem = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
                             listcomment.add(discoverCommentItem);
@@ -514,7 +519,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
 
     //发表评论，回复评论
-    private void consumerContentRequest(String inputText) {
+    private void consumerContentRequest(String inputText, final ConsumerCommentEntity mConsumerCommentEntity, final int type, int investId) {
         SharedPreferences sharedPreferences = getSharedPreferences("user",
                 MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
@@ -710,7 +715,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     @Override
     public void sendBack(String inputText) {
         dialog.dismiss();
-        consumerContentRequest(inputText);
+        consumerContentRequest(inputText, mConsumerCommentEntity, type, investId);
     }
 
     public static abstract interface OnClickListener {
