@@ -63,7 +63,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     //    private ArrayList arr;
     private int type = 0;//请求的评论类型0是全部，1是值得投，2是不值得投
 
-    private TextView tvCollection, tvWithTheVote, tvBpresult, tvResult, tvPrompt;
+    private TextView tvCollection, tvWithTheVote, tvBpresult, tvResult;
     private boolean isCollect;
     private ScrollView svArr;
 
@@ -103,7 +103,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //        tvIndex = (TextView) findViewById(R.id.tv_index);
         findViewById(R.id.iv_share).setOnClickListener(this);
         findViewById(R.id.btn_finish).setOnClickListener(this);
-        tvPrompt = (TextView) findViewById(R.id.tv_prompt);
+
         Message message = handler.obtainMessage(1);     // Message
         handler.sendMessageDelayed(message, 3000);
         //饼图UI
@@ -741,6 +741,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         public void handleMessage(Message msg) {         // handle message
             switch (msg.what) {
                 case 1:
+                    TextView tvPrompt = (TextView) findViewById(R.id.tv_prompt);
                     tvPrompt.setVisibility(View.GONE);
             }
             super.handleMessage(msg);
