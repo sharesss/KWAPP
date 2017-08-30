@@ -151,8 +151,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
         headlist.add(0, discoverHeadItem);
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info,DiscoverDetailsActivity.this,type);
-        headlist.add(1, discoverCircleItem);
+//        headlist.add(1, discoverCircleItem);
         list.addAll(0, headlist);
+        list.add(discoverCircleItem);
 
         /**
          * 这里可以添加各种Item,参照以上代码
@@ -211,8 +212,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DiscoverLabelItem.CallBack callBack = new DiscoverLabelItem.CallBack() {
             @Override
             public void onitem(int postion) {
-                int index = list.indexOf(labellist);
-                recyclerView.smoothScrollToPosition(index + postion + 2);
+                int index = headlist.size()+1;
+                recyclerView.smoothScrollToPosition(index + postion);
             }
         };
         list.removeAll(labellist);
@@ -484,7 +485,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
                                     if (!js.isNull("comments")) {
-                                        ArrayList<ConsumerCommentEntity> entities = new ArrayList<ConsumerCommentEntity>();
+//                                        ArrayList<ConsumerCommentEntity> entities = new ArrayList<ConsumerCommentEntity>();
                                         JSONArray array = js.optJSONArray("comments");
                                         for (int i = 0; i < array.length(); i++) {
                                             DisCommentItem disCommentItem = new DisCommentItem(new ConsumerCommentEntity(array.getJSONObject(i)),DiscoverDetailsActivity.this,type);
