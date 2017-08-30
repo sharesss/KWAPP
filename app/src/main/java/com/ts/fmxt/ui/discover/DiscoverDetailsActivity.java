@@ -478,7 +478,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                             totalNum = js.optInt("totalNum");
                             desre = js.optInt("desre");
                             bedesre = js.optInt("bedesre");
-//                            list.removeAll(listcomment);
+                            list.removeAll(listcomment);
                             listcomment.clear();
                             DiscoverCommentItem discoverCommentItem = new DiscoverCommentItem(totalNum, desre, bedesre, DiscoverDetailsActivity.this);
                             listcomment.add(discoverCommentItem);
@@ -713,7 +713,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     @Override
     public void sendBack(String inputText) {
-        dialog.dismiss();
         consumerContentRequest(inputText, mConsumerCommentEntity, type, investId);
     }
 

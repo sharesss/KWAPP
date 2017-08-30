@@ -119,6 +119,7 @@ public class KeyMapDailog extends DialogFragment {
                     Toast.makeText(getActivity(), "输入内容为空", Toast.LENGTH_LONG).show();
                     return;
                 } else {
+                    dismiss();
                     sendBackListener.sendBack(inputDlg.getText().toString());
                 }
             }
