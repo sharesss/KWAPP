@@ -761,18 +761,19 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     };
 
     private void RequestTop() {
-        svArr.post(new Runnable() {
-
-            @Override
-            public void run() {
-                svArr.post(new Runnable() {
-                    public void run() {
-                        // 滚动至顶部
-                        svArr.fullScroll(ScrollView.FOCUS_UP);
-                    }
-                });
-            }
-        });
+        recyclerView.smoothScrollToPosition(0);
+//        svArr.post(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                svArr.post(new Runnable() {
+//                    public void run() {
+//                        // 滚动至顶部
+//                        svArr.fullScroll(ScrollView.FOCUS_UP);
+//                    }
+//                });
+//            }
+//        });
     }
 
     private void RequestBoot() {
