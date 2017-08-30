@@ -150,7 +150,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         }
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
         headlist.add(0, discoverHeadItem);
-        DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info);
+        DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info,DiscoverDetailsActivity.this,type);
         headlist.add(1, discoverCircleItem);
         list.addAll(0, headlist);
 
@@ -487,7 +487,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                         ArrayList<ConsumerCommentEntity> entities = new ArrayList<ConsumerCommentEntity>();
                                         JSONArray array = js.optJSONArray("comments");
                                         for (int i = 0; i < array.length(); i++) {
-                                            DisCommentItem disCommentItem = new DisCommentItem(new ConsumerCommentEntity(array.getJSONObject(i)));
+                                            DisCommentItem disCommentItem = new DisCommentItem(new ConsumerCommentEntity(array.getJSONObject(i)),DiscoverDetailsActivity.this,type);
                                             listcomment.add(disCommentItem);
                                         }
 //                                        mCommentAdapter = new CommentAdapter(DiscoverDetailsActivity.this, tableList.getArrayList(), type);

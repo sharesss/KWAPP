@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.discover.view.KeyMapDailog;
 
-import http.data.ConsumerEntity;
 import utils.UISKipUtils;
 
 /**
@@ -20,6 +19,7 @@ import utils.UISKipUtils;
 public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
     int totalNum, desre, bedesre;
     DiscoverDetailsActivity activity;
+    public int istype =0;
 
 
     public DiscoverCommentItem(int totalNum, int desre, int bedesre, DiscoverDetailsActivity activity) {
@@ -44,24 +44,24 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
         ViewHolder viewHolder = (ViewHolder) holder;
 
         viewHolder.tvAllReviews.setText("全部评论(" + totalNum + ")");
-        viewHolder.tvWorthThrowing.setText("值得投(" + desre + ")");
-        viewHolder.tvNoWorthThrowing.setText("不值得投(" + bedesre + ")");
+//        viewHolder.tvWorthThrowing.setText("值得投(" + desre + ")");
+//        viewHolder.tvNoWorthThrowing.setText("不值得投(" + bedesre + ")");
         if (activity != null) {
             viewHolder.tvAllReviews.setOnClickListener(this);
             viewHolder.tvWorthThrowing.setOnClickListener(this);
             viewHolder.tvNoWorthThrowing.setOnClickListener(this);
         }
-        if (activity.istype == 0) {
+        if (istype == 0) {
             viewHolder.tvAllReviews.setTextColor(activity.getResources().getColor(R.color.orange));
             viewHolder.tvWorthThrowing.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.tvNoWorthThrowing.setTextColor(activity.getResources().getColor(R.color.black));
         }
-        if (activity.istype == 1) {
+        if (istype == 1) {
             viewHolder.tvAllReviews.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.tvWorthThrowing.setTextColor(activity.getResources().getColor(R.color.orange));
             viewHolder.tvNoWorthThrowing.setTextColor(activity.getResources().getColor(R.color.black));
         }
-        if (activity.istype == 2) {
+        if (istype == 2) {
             viewHolder.tvAllReviews.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.tvWorthThrowing.setTextColor(activity.getResources().getColor(R.color.black));
             viewHolder.tvNoWorthThrowing.setTextColor(activity.getResources().getColor(R.color.orange));
@@ -87,7 +87,7 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
                     return;
                 }
 
-                activity.istype = 0;
+                istype = 0;
                 activity.CommentRequest(0);
                 activity.adapter.notifyDataSetChanged();
                 break;
@@ -96,7 +96,7 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
                     UISKipUtils.startLoginActivity(activity);
                     return;
                 }
-                activity.istype = 1;
+                istype = 1;
                 activity.CommentRequest(1);
                 activity.adapter.notifyDataSetChanged();
                 break;
@@ -105,7 +105,7 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
                     UISKipUtils.startLoginActivity(activity);
                     return;
                 }
-                activity.istype = 2;
+                istype = 2;
                 activity.CommentRequest(2);
                 activity.adapter.notifyDataSetChanged();
                 break;
