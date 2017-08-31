@@ -5,6 +5,18 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
+    <com.ts.fmxt.ui.discover.view.FlowLayout
+        android:id="@+id/flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:padding="5dp"
+        app:height_space="10dp"
+        app:width_space="10dp" />
+
+
     <LinearLayout
         android:id="@+id/ll_temp2"
         android:layout_width="match_parent"
@@ -21,17 +33,6 @@
             android:layout_gravity="center_horizontal"
             android:src="@mipmap/icon_consume_detail_word" />
     </LinearLayout>
-
-    <com.ts.fmxt.ui.discover.view.FlowLayout
-        android:id="@+id/flow_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:padding="5dp"
-        app:height_space="10dp"
-        app:width_space="10dp" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +53,7 @@
             android:gravity="center"
             android:text="查看项目评分情况"
             android:textColor="@color/orange"
-            android:textSize="@dimen/dp_22"
+            android:textSize="@dimen/dp_18"
             android:visibility="gone" />
 
         <TextView
@@ -64,7 +65,7 @@
             android:layout_marginTop="5dp"
             android:text="12项BP得分情况"
             android:textColor="@color/black"
-            android:textSize="@dimen/dp_22"
+            android:textSize="@dimen/dp_18"
             android:visibility="gone" />
 
     </LinearLayout>

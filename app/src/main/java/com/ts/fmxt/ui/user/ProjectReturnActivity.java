@@ -101,7 +101,7 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
             view.setTextColor(Color.GRAY);
             view.setPadding(5, 5, 5, 5);
             view.setGravity(Gravity.CENTER);
-            view.setTextSize(13);
+            view.setTextSize(10);
             // 设置背景选择器到TextView上
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
