@@ -21,33 +21,20 @@ import http.data.InvestBPListEntity;
 /**
  */
 
-public class DiscoverLabelItem implements BaseViewItem, View.OnClickListener {
+public class DiscoverLabelItem implements BaseViewItem {
     ArrayList<InvestBPListEntity> arr;
     private String checktext;
-    private int cont = 0;
     CallBack callBack;
-    DiscoverDetailsActivity activity;
     int o = 0;
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_bpresult:
-                o = 1;
-                activity.adapter.notifyDataSetChanged();
-                activity.InvestBPListRequest(1);
-                break;
-        }
-    }
 
     public interface CallBack {
         void onitem(int postion);
     }
 
-    public DiscoverLabelItem(ArrayList<InvestBPListEntity> arr, CallBack callBack, DiscoverDetailsActivity activity) {
+    public DiscoverLabelItem(ArrayList<InvestBPListEntity> arr, CallBack callBack) {
         this.arr = arr;
         this.callBack = callBack;
-        this.activity = activity;
     }
 
     @Override
@@ -65,20 +52,6 @@ public class DiscoverLabelItem implements BaseViewItem, View.OnClickListener {
         ViewHolder viewHolder = (ViewHolder) holder;
         //标签UI
         viewHolder.llTemp.setVisibility(View.VISIBLE);
-        if (o == 1) {
-            viewHolder.tvBpresult.setVisibility(View.GONE);
-            viewHolder.tvResult.setVisibility(View.VISIBLE);
-        } else {
-            if (cont >= 6) {
-                viewHolder.tvBpresult.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.tvBpresult.setVisibility(View.GONE);
-            }
-        }
-        if (activity != null) {
-            viewHolder.tvBpresult.setOnClickListener(this);
-        }
-
     }
 
     @Override
@@ -90,15 +63,12 @@ public class DiscoverLabelItem implements BaseViewItem, View.OnClickListener {
     private class ViewHolder extends RecyclerViewHolder {
         FlowLayout flow_layout;
         LinearLayout llTemp;
-        TextView tvBpresult, tvResult;
 
 
         private ViewHolder(final View covert) {
             super(covert);
             flow_layout = (FlowLayout) covert.findViewById(R.id.flow_layout);
             llTemp = (LinearLayout) covert.findViewById(R.id.ll_temp2);
-            tvBpresult = (TextView) covert.findViewById(R.id.tv_bpresult);
-            tvResult = (TextView) covert.findViewById(R.id.tv_result);
             // 循环添加TextView到容器
             for (int i = 0; i < arr.size(); i++) {
                 InvestBPListEntity info = arr.get(i);
@@ -141,10 +111,6 @@ public class DiscoverLabelItem implements BaseViewItem, View.OnClickListener {
                     }
                 });
                 flow_layout.addView(view);
-
-                if (info.isScore() == 1) {
-                    cont++;
-                }
             }
         }
     }

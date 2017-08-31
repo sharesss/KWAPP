@@ -110,7 +110,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //        tvWorth = (TextView) findViewById(R.id.tv_worth);
 //        tvNoworth = (TextView) findViewById(R.id.tv_noworth);
         DiscoverDetailsRequest();//顶部的数据获取
-        InvestBPListRequest(0);
+        InvestBPListRequest(false);
         CommentRequest(type);
 
 //        //12项BP
@@ -221,7 +221,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         };
         list.removeAll(labellist);
         labellist.clear();
-        DiscoverLabelItem labelItem = new DiscoverLabelItem(arr, callBack, DiscoverDetailsActivity.this);
+        DiscoverLabelItem labelItem = new DiscoverLabelItem(arr, callBack);
         labellist.add(labelItem);
         int cont = 0;
         for (InvestBPListEntity entity : arr) {
@@ -231,6 +231,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             }
             labellist.add(disBPItem);
         }
+        DisBPLabelItem disBPLabelItem = new DisBPLabelItem(cont, DiscoverDetailsActivity.this);
+        labellist.add(disBPLabelItem);
         if (headlist.isEmpty()) {
             list.addAll(labellist);
         } else {
@@ -388,8 +390,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         );
     }
 
+    boolean oncheckBP = false;
+
     //12项BP
-    public void InvestBPListRequest(final int type) {//
+    public void InvestBPListRequest(final boolean oncheckBP) {//
+        this.oncheckBP = oncheckBP;
         SharedPreferences sharedPreferences = getSharedPreferences("user",
                 MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
@@ -423,7 +428,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                         }
                                         int cont = formatDPData(arr, investId);
                                         labelBPlist.clear();
-                                        if (type == 1 && cont > 1) {
+                                        if (oncheckBP && cont > 1) {
                                             for (InvestBPListEntity entity : arr) {
                                                 DisBPresultItem disBPItem = new DisBPresultItem(entity);
                                                 labelBPlist.add(disBPItem);
@@ -621,7 +626,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     //是否值得投
-    private void   IsWorthRequest(int voteType) {
+    private void IsWorthRequest(int voteType) {
         SharedPreferences sharedPreferences = getSharedPreferences("user",
                 MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
@@ -716,18 +721,18 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         consumerContentRequest(inputText, mConsumerCommentEntity, type, investId);
     }
 
-    public static abstract interface OnClickListener {
-        public abstract void onClick(); //单击事件处理接口
-    }
-
-    OnClickListener listener = null;   //监听器类对象
-
-    //实现这个View的监听器
-    public void setOnClickListener(OnClickListener listener) {
-
-        this.listener = listener;   //引用监听器类对象,在这里可以使用监听器类的对象
-
-    }
+//    public static abstract interface OnClickListener {
+//        public abstract void onClick(); //单击事件处理接口
+//    }
+//
+//    OnClickListener listener = null;   //监听器类对象
+//
+//    //实现这个View的监听器
+//    public void setOnClickListener(OnClickListener listener) {
+//
+//        this.listener = listener;   //引用监听器类对象,在这里可以使用监听器类的对象
+//
+//    }
 
     @Override
     public void onReload() {
@@ -757,7 +762,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     private void RequestBoot() {
-        recyclerView.scrollToPosition(adapter.getItemCount()-1);
+        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
 
     }
 }
