@@ -77,44 +77,27 @@ public class DiscoverCommentItem implements BaseViewItem, View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences("user",
-                Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        if (!activity.checkLogin()) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.tv_all_reviews:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(activity);
-                    return;
-                }
 
                 istype = 0;
                 activity.CommentRequest(0);
                 activity.adapter.notifyDataSetChanged();
                 break;
             case R.id.tv_worth_throwing:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(activity);
-                    return;
-                }
                 istype = 1;
                 activity.CommentRequest(1);
                 activity.adapter.notifyDataSetChanged();
                 break;
             case R.id.tv_no_worth_throwing:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(activity);
-                    return;
-                }
                 istype = 2;
                 activity.CommentRequest(2);
                 activity.adapter.notifyDataSetChanged();
                 break;
             case R.id.tv_write_comment:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(activity);
-                    return;
-                }
-
                 KeyMapDailog dialog = new KeyMapDailog("评论是疯蜜范的最大动力", activity);
                 dialog.show(activity.getSupportFragmentManager(), "评论");
                 break;

@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -244,16 +245,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     @Override
     public void onClick(View v) {
-        SharedPreferences sharedPreferences = getSharedPreferences("user",
-                MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
         switch (v.getId()) {
             case R.id.btn_finish:
                 finish();
                 break;
             case R.id.iv_share:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                if (!checkLogin()) {
                     return;
                 }
                 showShareDialog(info);
@@ -301,8 +298,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //                dialog.show(getSupportFragmentManager(), "评论");
 //                break;
             case R.id.ll_collection:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                if (!checkLogin()) {
                     return;
                 }
                 if (isCollect) {
@@ -322,23 +318,20 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 RequestTop();
                 break;
             case R.id.tv_with_the_vote:
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                if (!checkLogin()) {
                     return;
                 }
                 UISKipUtils.startProjectReturnActivity(DiscoverDetailsActivity.this, investId);
                 break;
             case R.id.ll_dokels://值得投
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                if (!checkLogin()) {
                     return;
                 }
                 type = 1;
                 IsWorthRequest(type);
                 break;
             case R.id.ll_notdokels://不值得投
-                if (token.equals("")) {
-                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                if (!checkLogin()) {
                     return;
                 }
                 type = 2;
@@ -348,9 +341,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     private void DiscoverDetailsRequest() {
-        SharedPreferences sharedPreferences = getSharedPreferences("user",
-                MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        if (!checkLogin()) {
+            return;
+        }
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("tokenId", String.valueOf(token));
@@ -395,9 +388,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     //12项BP
     public void InvestBPListRequest(final boolean oncheckBP) {//
         this.oncheckBP = oncheckBP;
-        SharedPreferences sharedPreferences = getSharedPreferences("user",
-                MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        if (!checkLogin()) {
+            return;
+        }
         final Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("tokenId", String.valueOf(token));
@@ -458,9 +451,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     //评论
     public void CommentRequest(final int type) {
-        SharedPreferences sharedPreferences = getSharedPreferences("user",
-                MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        if (!checkLogin()) {
+            return;
+        }
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("commentType", String.valueOf(type));
@@ -524,9 +517,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     //发表评论，回复评论
     private void consumerContentRequest(String inputText, final ConsumerCommentEntity mConsumerCommentEntity, final int type, int investId) {
-        SharedPreferences sharedPreferences = getSharedPreferences("user",
-                MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        if (!checkLogin()) {
+            return;
+        }
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("commentType", String.valueOf(type));
@@ -570,9 +563,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     //收藏接口
     private void collectionRequest(final int enabled) {
-        SharedPreferences sharedPreferences = getSharedPreferences("user",
-                MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        if (!checkLogin()) {
+            return;
+        }
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("enabled", String.valueOf(enabled));
@@ -627,9 +620,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     //是否值得投
     private void IsWorthRequest(int voteType) {
-        SharedPreferences sharedPreferences = getSharedPreferences("user",
-                MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        if (!checkLogin()) {
+            return;
+        }
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("voteType", String.valueOf(voteType));
@@ -685,15 +678,27 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         popupShareView.showPopupWindow();
     }
 
-    public void replys(String name, ConsumerCommentEntity info) {
-        mConsumerCommentEntity = info;
+    private String token;
+
+    public boolean checkLogin() {
+        if (!TextUtils.isEmpty(token)) {
+            return true;
+        }
         SharedPreferences sharedPreferences = getSharedPreferences("user",
                 MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
-        if (token.equals("")) {
+        token = sharedPreferences.getString("token", "");
+        if (TextUtils.isEmpty(token)) {
             UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+            return false;
+        }
+        return true;
+    }
+
+    public void replys(String name, ConsumerCommentEntity info) {
+        if (!checkLogin()) {
             return;
         }
+        mConsumerCommentEntity = info;
         dialog = null;
         dialog = new KeyMapDailog(String.format("回复:%s", name), DiscoverDetailsActivity.this);
         dialog.show(getSupportFragmentManager(), "回复评论");

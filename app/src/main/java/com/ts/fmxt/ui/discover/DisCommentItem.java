@@ -34,7 +34,7 @@ public class DisCommentItem implements BaseViewItem {
     private DiscoverDetailsActivity activity;
     private int type;
 
-    public DisCommentItem(ConsumerCommentEntity entity,DiscoverDetailsActivity activity,int type) {
+    public DisCommentItem(ConsumerCommentEntity entity, DiscoverDetailsActivity activity, int type) {
         this.entity = entity;
         this.activity = activity;
         this.type = type;
@@ -58,7 +58,7 @@ public class DisCommentItem implements BaseViewItem {
         viewHolder.tv_time.setText(entity.getTime());
 
         viewHolder.tv_name.setText(entity.getNickName());
-        viewHolder.tv_reply.setText(SpannableUtils.getSpannableLatterStr("回复", entity.getParentUserName(),resources.getColor(R.color.font_main_secondary), 0f));
+        viewHolder.tv_reply.setText(SpannableUtils.getSpannableLatterStr("回复", entity.getParentUserName(), resources.getColor(R.color.font_main_secondary), 0f));
         viewHolder.tv_reply.setVisibility(entity.getParentId() > 0 ? View.VISIBLE : View.GONE);
         viewHolder.tv_comment.setText(entity.getContent());
         viewHolder.iv_portrait.setOnClickListener(new onItemClick(position));
@@ -75,7 +75,7 @@ public class DisCommentItem implements BaseViewItem {
                 activity.replys(entity.getNickName(), entity);
             }
         });
-        viewHolder.tv_likeCount.setOnClickListener( new ClickListener(position));
+        viewHolder.tv_likeCount.setOnClickListener(new ClickListener(position));
 
     }
 
@@ -115,20 +115,17 @@ public class DisCommentItem implements BaseViewItem {
 
         @Override
         public void onClick(View v) {
-            SharedPreferences sharedPreferences= activity.getSharedPreferences("user",
-                    activity.MODE_PRIVATE);
-            String token=sharedPreferences.getString("token", "");
-            if (token.equals("")) {
-                UISKipUtils.startLoginActivity(activity);
+            if (!activity.checkLogin()) {
                 return;
-            } else {
-                UISKipUtils.startOtherInfomation(activity, entity.getUserId());
             }
+
+            UISKipUtils.startOtherInfomation(activity, entity.getUserId());
+
 
         }
     }
 
-        public class ClickListener implements View.OnClickListener {
+    public class ClickListener implements View.OnClickListener {
         private int position;
 
         public ClickListener(int position) {
@@ -138,19 +135,19 @@ public class DisCommentItem implements BaseViewItem {
 
         @Override
         public void onClick(View v) {
-            if(entity.getIsLike()==0){
-                isLikeRequest(entity,1);
-                }else{
-                isLikeRequest(entity,0);
-                }
+            if (entity.getIsLike() == 0) {
+                isLikeRequest(entity, 1);
+            } else {
+                isLikeRequest(entity, 0);
+            }
 
         }
     }
 
-        private void isLikeRequest(ConsumerCommentEntity info,int  state){
-        SharedPreferences sharedPreferences= activity.getSharedPreferences("user",
+    private void isLikeRequest(ConsumerCommentEntity info, int state) {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("user",
                 activity.MODE_PRIVATE);
-        String token=sharedPreferences.getString("token", "");
+        String token = sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investCommentId", String.valueOf(info.getId()));
         staff.put("tokenId", String.valueOf(token));
