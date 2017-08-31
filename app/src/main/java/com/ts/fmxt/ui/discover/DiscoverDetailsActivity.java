@@ -677,10 +677,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         String title = info.getInvestName();
         PopupShareView popupShareView = new PopupShareView(DiscoverDetailsActivity.this);
         popupShareView.setContent(info.getInvestDeion());
-
         popupShareView.setWechatMomentsTitle(title);
         popupShareView.setTitle(title);
-        String uri = String.format("%s?id=%s", getString(R.string.html_fm_fmoneyShare_detail), String.valueOf(investId));//
+        String uri = String.format("%s?id=%d", getString(R.string.html_fm_fmoneyShare_detail), investId);//
         popupShareView.setUrl(uri);
         popupShareView.setLogo(info.getInvestPhoto());
         popupShareView.showPopupWindow();
