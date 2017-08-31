@@ -256,7 +256,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
                     return;
                 }
-                showShareDialog();
+                showShareDialog(info);
                 break;
 //            case R.id.tv_all_reviews:
 //                if (token.equals("")) {
@@ -672,9 +672,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     //分享对话框
-    private void showShareDialog() {
+    private void showShareDialog(ConsumerEntity info) {
         if (info == null) return;
-        String title = String.format(info.getInvestName());
+        String title = info.getInvestName();
         PopupShareView popupShareView = new PopupShareView(DiscoverDetailsActivity.this);
         popupShareView.setContent(info.getInvestDeion());
 
