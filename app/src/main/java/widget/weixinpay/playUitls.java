@@ -2,10 +2,15 @@ package widget.weixinpay;
 
 import android.content.Context;
 
-
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import http.data.WeiXinPayEntity;
 
@@ -32,16 +37,16 @@ public class playUitls {
             req.packageValue = "Sign=WXPay";
             req.nonceStr = Util.genNonceStr();
             req.timeStamp = String.valueOf(Util.genTimeStamp());
-            req.sign= info.getSign();
-//            List<NameValuePair> signParams = new LinkedList<NameValuePair>();
-//            signParams.add(new BasicNameValuePair("appid", req.appId));
-//            signParams.add(new BasicNameValuePair("noncestr", req.nonceStr));
-//            signParams.add(new BasicNameValuePair("package", req.packageValue));
-//            signParams.add(new BasicNameValuePair("partnerid", req.partnerId));
-//            signParams.add(new BasicNameValuePair("prepayid", req.prepayId));
-//            signParams.add(new BasicNameValuePair("timestamp", req.timeStamp));
-//             signParams.add(new BasicNameValuePair("sign", req.sign));
-//            req.sign = Util.genAppSign(signParams);
+
+            List<NameValuePair> signParams = new LinkedList<NameValuePair>();
+            signParams.add(new BasicNameValuePair("appid", req.appId));
+            signParams.add(new BasicNameValuePair("noncestr", req.nonceStr));
+            signParams.add(new BasicNameValuePair("package", req.packageValue));
+            signParams.add(new BasicNameValuePair("partnerid", req.partnerId));
+            signParams.add(new BasicNameValuePair("prepayid", req.prepayId));
+            signParams.add(new BasicNameValuePair("timestamp", req.timeStamp));
+
+            req.sign = Util.genAppSign(signParams);
             weixinApi.registerApp(info.getAppid());
             weixinApi.sendReq(req);
         }

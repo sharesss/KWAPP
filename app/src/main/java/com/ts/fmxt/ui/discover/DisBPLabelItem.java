@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.ts.fmxt.R;
 
+import utils.helper.ToastHelper;
+
 /**
  */
 
@@ -19,8 +21,13 @@ public class DisBPLabelItem implements BaseViewItem, View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_bpresult:
-                activity.InvestBPListRequest(true);
-                activity.adapter.notifyDataSetChanged();
+                if (cont >= 6) {
+                    activity.InvestBPListRequest(true);
+                    activity.adapter.notifyDataSetChanged();
+                } else {
+                    ToastHelper.toastMessage(activity,"至少要给6个BP评分后才能查看");
+                }
+
                 break;
         }
     }
@@ -47,12 +54,6 @@ public class DisBPLabelItem implements BaseViewItem, View.OnClickListener {
         if (activity.oncheckBP) {
             viewHolder.tvBpresult.setVisibility(View.GONE);
             viewHolder.tvResult.setVisibility(View.VISIBLE);
-        } else {
-            if (cont >= 6) {
-                viewHolder.tvBpresult.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.tvBpresult.setVisibility(View.GONE);
-            }
         }
         if (activity != null) {
             viewHolder.tvBpresult.setOnClickListener(this);

@@ -13,6 +13,7 @@ import http.data.InvestBPListEntity;
 import widget.image.FMNetImageView;
 
 /**
+ *
  */
 
 public class DisBPItem implements BaseViewItem {

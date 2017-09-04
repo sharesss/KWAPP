@@ -22,6 +22,7 @@ import java.util.Map;
 import http.data.WeiXinPayEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.Tools;
 import utils.helper.ToastHelper;
 import widget.titlebar.NavigationView;
 import widget.weixinpay.playUitls;
@@ -84,33 +85,33 @@ public class ConfirmPaymentActivity extends FMBaseActivity {
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastHelper.toastMessage(getBaseContext(), "此功能开发中，敬请期待");
+//                ToastHelper.toastMessage(getBaseContext(), "此功能开发中，敬请期待");
 
-//                if (Tools.isFastDoubleClick()) {
-//                    ToastHelper.toastMessage(getBaseContext(), "请勿重复操作");
-//                    return;
-//                }
-//                boolean sIsWXAppInstalledAndSupported = api.isWXAppInstalled() && api.isWXAppSupportAPI();
-//                if (!sIsWXAppInstalledAndSupported) {
-//                    ToastHelper.toastMessage(ConfirmPaymentActivity.this,"您还没安装微信");
-//                    return;
-//                }
-//                String name = edtName.getText().toString();
-//                String wechat = edtWechat.getText().toString();
-//                String phone = edtPhone.getText().toString();
-//                if(name.equals("")){
-//                    ToastHelper.toastMessage(ConfirmPaymentActivity.this,"请填写您的名字");
-//                    return;
-//                }
-//                if(wechat.equals("")){
-//                    ToastHelper.toastMessage(ConfirmPaymentActivity.this,"请填写您的微信号");
-//                    return;
-//                }
-//                if(phone.equals("")){
-//                    ToastHelper.toastMessage(ConfirmPaymentActivity.this,"请填写您的手机号");
-//                    return;
-//                }
-//                WechatPay();
+                if (Tools.isFastDoubleClick()) {
+                    ToastHelper.toastMessage(getBaseContext(), "请勿重复操作");
+                    return;
+                }
+                boolean sIsWXAppInstalledAndSupported = api.isWXAppInstalled() && api.isWXAppSupportAPI();
+                if (!sIsWXAppInstalledAndSupported) {
+                    ToastHelper.toastMessage(ConfirmPaymentActivity.this,"您还没安装微信");
+                    return;
+                }
+                String name = edtName.getText().toString();
+                String wechat = edtWechat.getText().toString();
+                String phone = edtPhone.getText().toString();
+                if(name.equals("")){
+                    ToastHelper.toastMessage(ConfirmPaymentActivity.this,"请填写您的名字");
+                    return;
+                }
+                if(wechat.equals("")){
+                    ToastHelper.toastMessage(ConfirmPaymentActivity.this,"请填写您的微信号");
+                    return;
+                }
+                if(phone.equals("")){
+                    ToastHelper.toastMessage(ConfirmPaymentActivity.this,"请填写您的手机号");
+                    return;
+                }
+                WechatPay();
             }
         });
     }

@@ -33,6 +33,8 @@ import widget.popup.BaseDoubleEventPopup;
 import widget.popup.PopupObject;
 import widget.popup.dialog.MessageContentDialog;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * created by kp at 2017/8/12
  * 滑动布局
@@ -100,7 +102,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
             @Override
             public void onClick(View view) {
                 SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
-                        Activity.MODE_PRIVATE);
+                        MODE_PRIVATE);
                 String token=sharedPreferences.getString("token", "");
                 int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
                 if (token.equals("")) {
@@ -154,7 +156,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
         SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
-                Activity.MODE_PRIVATE);
+                MODE_PRIVATE);
         String token=sharedPreferences.getString("token", "");
         int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
             if (token.equals("")) {
@@ -190,7 +192,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
-                Activity.MODE_PRIVATE);
+                MODE_PRIVATE);
         String token=sharedPreferences.getString("token", "");
         int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
         if (token.equals("")) {
@@ -210,7 +212,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
 
     private void investBPGradeRequest(int investId){
         SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
-                Activity.MODE_PRIVATE);
+                MODE_PRIVATE);
         String fen = tv_seekbar_distance.getText().toString();
         String token=sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
@@ -250,6 +252,10 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
                                     tv_peoplenum.setText(PeopleNum+"人");
                                     Bundle bundle = new Bundle();
                                     ReceiverUtils.sendReceiver(ReceiverUtils.SEEKBAR,bundle);
+                                    SharedPreferences share = context.getSharedPreferences("investinfo",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+                                    editor.putBoolean("isGrade", true);
+                                    editor.commit();    //提交数据保存
                                 } else {
                                     ToastHelper.toastMessage(getContext(), msg);
                                 }

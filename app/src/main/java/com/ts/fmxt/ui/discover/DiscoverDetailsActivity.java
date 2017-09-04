@@ -80,6 +80,19 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         investId = getIntent().getIntExtra("id", -1);
         types = getIntent().getIntExtra("type", -1);
 
+
+        SharedPreferences share = getSharedPreferences("investinfo",MODE_PRIVATE);
+        int id = share.getInt("investId", 0);
+        boolean isGrade = share.getBoolean("isGrade",false);
+        if(id == investId&&isGrade){
+            TextView tvPrompt = (TextView) findViewById(R.id.tv_prompt);
+            tvPrompt.setVisibility(View.GONE);
+        }else{
+            SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+            editor.putInt("investId", investId);
+            editor.commit();    //提交数据保存
+        }
+
         initView();
     }
 
@@ -496,6 +509,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //                                        mCommentAdapter = new CommentAdapter(DiscoverDetailsActivity.this, tableList.getArrayList(), type);
 //                                        reviews_lv.setAdapter(mCommentAdapter);
 //                                        mCommentAdapter.notifyDataSetChanged();
+                                        if(types==1){
+                                            RequestBoot();
+                                        }
                                     }
                                 } else {
                                     ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
@@ -766,7 +782,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     private void RequestBoot() {
-        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+        recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
 
     }
 }
