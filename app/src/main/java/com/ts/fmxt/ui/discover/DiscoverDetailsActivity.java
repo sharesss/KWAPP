@@ -81,13 +81,13 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         types = getIntent().getIntExtra("type", -1);
 
 
-        SharedPreferences share = getSharedPreferences("investinfo",MODE_PRIVATE);
+        SharedPreferences share = getSharedPreferences("investinfo", MODE_PRIVATE);
         int id = share.getInt("investId", 0);
-        boolean isGrade = share.getBoolean("isGrade",false);
-        if(id == investId&&isGrade){
+        boolean isGrade = share.getBoolean("isGrade", false);
+        if (id == investId && isGrade) {
             TextView tvPrompt = (TextView) findViewById(R.id.tv_prompt);
             tvPrompt.setVisibility(View.GONE);
-        }else{
+        } else {
             SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
             editor.putInt("investId", investId);
             editor.commit();    //提交数据保存
@@ -163,7 +163,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
         headlist.add(0, discoverHeadItem);
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info, DiscoverDetailsActivity.this, investId);
-//        headlist.add(1, discoverCircleItem);
         list.addAll(0, headlist);
         if (listcomment.isEmpty()) {
             list.add(discoverCircleItem);
@@ -248,7 +247,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DisBPLabelItem disBPLabelItem = new DisBPLabelItem(cont, DiscoverDetailsActivity.this);
         labellist.add(disBPLabelItem);
         if (headlist.isEmpty()) {
-            list.addAll(labellist);
+            list.addAll(0, labellist);
         } else {
             list.addAll(headlist.size(), labellist);
         }
@@ -442,7 +441,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                             int index = labellist.size() + headlist.size();
                                             list.addAll(index, labelBPlist);
                                             adapter.notifyDataSetChanged();
-                                            recyclerView.smoothScrollToPosition(index + 1);
+                                            if (oncheckBP) {
+                                                recyclerView.smoothScrollToPosition(index + 1);
+                                            }
                                         }
 
                                     }
@@ -499,18 +500,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
                                     if (!js.isNull("comments")) {
-//                                        ArrayList<ConsumerCommentEntity> entities = new ArrayList<ConsumerCommentEntity>();
                                         JSONArray array = js.optJSONArray("comments");
                                         for (int i = 0; i < array.length(); i++) {
                                             DisCommentItem disCommentItem = new DisCommentItem(new ConsumerCommentEntity(array.getJSONObject(i)), DiscoverDetailsActivity.this, type);
                                             listcomment.add(disCommentItem);
-                                        }
-                                        adapter.notifyDataSetChanged();
-//                                        mCommentAdapter = new CommentAdapter(DiscoverDetailsActivity.this, tableList.getArrayList(), type);
-//                                        reviews_lv.setAdapter(mCommentAdapter);
-//                                        mCommentAdapter.notifyDataSetChanged();
-                                        if(types==1){
-                                            RequestBoot();
                                         }
                                     }
                                 } else {
@@ -519,6 +512,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                             }
                             list.addAll(listcomment);
                             adapter.notifyDataSetChanged();
+                            if (types == 1) {
+                                RequestBoot();
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
