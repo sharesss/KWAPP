@@ -10,10 +10,10 @@ import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
-
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.ts.fmxt.R;
 
+import utils.ReceiverUtils;
 import utils.helper.ToastHelper;
 import widget.weixinpay.Constants;
 
@@ -49,7 +49,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             String msg = "";
             if (resp.errCode == 0) {
                 msg = "支付成功";
-//                ReceiverUtils.sendReceiver(ReceiverUtils.WX_PLAY, null);
+                ReceiverUtils.sendReceiver(ReceiverUtils.WX_PLAY, null);
 //                if (!StringUtils.isEmpty(FMWession.getInstance().getHuaJiaoPlayKey())) {//通知花椒回调
 //
 //                } else {

@@ -28,6 +28,7 @@ import http.data.ProjectReserveEntity;
 import http.data.TableList;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 
@@ -38,7 +39,7 @@ import static com.ts.fmxt.R.id.tv_confirm;
  * Created by kp on 2017/8/16.
  */
 
-public class ProjectReturnActivity extends FMBaseActivity implements View.OnClickListener {
+public class ProjectReturnActivity extends FMBaseActivity implements View.OnClickListener, ReceiverUtils.MessageReceiver {
     private int investId;
     private TextView tvReservationMoney,tvSharesNum,tvCompanyName,tvEquityReserveExplain,tvShareholderEquity,tvConfirm;
     private FlowLayout flow_layout;
@@ -47,10 +48,18 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
     private NoticeWin noticeWin;
     private RiskTipwin hsewin;
     private ProjectReserveEntity info;
+
+    @Override
+    public void onMessage(int receiverType, Bundle bundle) {
+        if(receiverType==ReceiverUtils.WX_PLAY){
+            finish();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_return);
+        ReceiverUtils.addReceiver(this);
         investId = getIntent().getIntExtra("investId", -1);
         initView();
     }
@@ -247,5 +256,11 @@ public class ProjectReturnActivity extends FMBaseActivity implements View.OnClic
                 }, staff
         );
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ReceiverUtils.removeReceiver(this);
     }
 }

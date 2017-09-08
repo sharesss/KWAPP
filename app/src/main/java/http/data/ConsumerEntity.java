@@ -4,6 +4,8 @@ package http.data;/**
 
 import org.json.JSONObject;
 
+import utils.DateFormatUtils;
+
 /**
  * created by kp at 2017/8/4
  * 发现首页
@@ -11,6 +13,8 @@ import org.json.JSONObject;
 public class ConsumerEntity {
 
     private int id;//id
+    private String headPic;
+    private String nickName;
     private int investInitiator;//投资发起人UserId
     private String  investName;//投资项目名称
     private String  investPhoto;//图片
@@ -25,11 +29,15 @@ public class ConsumerEntity {
     private String amount;
     public ConsumerEntity(JSONObject jsonObject) {
         this.id = jsonObject.optInt("id",0);
+        this.nickName = jsonObject.optString("nickName");
+        this.headPic  =jsonObject.optString("headPic");
         this.investInitiator = jsonObject.optInt("investInitiator", 0);
         this.investName = jsonObject.optString("investName");
         this.investPhoto = jsonObject.optString("investPhoto");
         this.investDeion = jsonObject.optString("investDeion");
-        this.createTime = jsonObject.optString("createTime");
+        if (!jsonObject.isNull("createTime")) {
+            this.createTime = DateFormatUtils.longToDate("yyyy-MM-dd", jsonObject.optLong("createTime", 0));
+        }
         this.exponent = jsonObject.optDouble("exponent");
         this.dokels = jsonObject.optInt("dokels");
         this.notDokels = jsonObject.optInt("notDokels");
@@ -41,11 +49,15 @@ public class ConsumerEntity {
     public ConsumerEntity(JSONObject jsonObject,String amount) {
         this.amount = amount;
         this.id = jsonObject.optInt("id",0);
+        this.nickName = jsonObject.optString("nickName");
+        this.headPic  =jsonObject.optString("headPic");
         this.investInitiator = jsonObject.optInt("investInitiator", 0);
         this.investName = jsonObject.optString("investName");
         this.investPhoto = jsonObject.optString("investPhoto");
         this.investDeion = jsonObject.optString("investDeion");
-        this.createTime = jsonObject.optString("createTime");
+        if (!jsonObject.isNull("createTime")) {
+            this.createTime = DateFormatUtils.longToDate("yyyy-MM-dd", jsonObject.optLong("createTime", 0));
+        }
         this.exponent = jsonObject.optDouble("exponent");
         this.dokels = jsonObject.optInt("dokels");
         this.notDokels = jsonObject.optInt("notDokels");
@@ -161,5 +173,21 @@ public class ConsumerEntity {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getHeadPic() {
+        return headPic;
+    }
+
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

@@ -10,6 +10,7 @@ import com.thindo.base.Utils.AppManager;
 import com.ts.fmxt.ui.MainFrameActivity;
 import com.ts.fmxt.ui.discover.ConfirmPaymentActivity;
 import com.ts.fmxt.ui.discover.DiscoverDetailsActivity;
+import com.ts.fmxt.ui.discover.ReportActivity;
 import com.ts.fmxt.ui.user.AboutusActivity;
 import com.ts.fmxt.ui.user.BindNewPhoneActivity;
 import com.ts.fmxt.ui.user.CertifiedInvestorActivity;
@@ -310,6 +311,16 @@ public class UISKipUtils {
     public static void startRealNameResultActivity(Activity context, int type) {
         Intent intent = new Intent(context, RealNameResultActivity.class);
         intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 举报
+     * @param context
+     */
+    public static void startReportActivity(Activity context,int investId) {
+        Intent intent = new Intent(context, ReportActivity.class);
+        intent.putExtra("investId", investId);
         context.startActivity(intent);
     }
 }

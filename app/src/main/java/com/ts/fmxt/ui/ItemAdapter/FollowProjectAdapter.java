@@ -17,6 +17,7 @@ import java.util.List;
 
 import http.data.ConsumerEntity;
 import utils.UISKipUtils;
+import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
 
 import static com.ts.fmxt.R.id.ll_money;
@@ -38,6 +39,9 @@ public class FollowProjectAdapter extends FMBaseAdapter {
             ViewHolder = new ViewHolder();
             convertView = View.inflate(getContext(), R.layout.item_follow_project, null);
             ViewHolder.ll_consumer_info = (LinearLayout) convertView.findViewById(R.id.ll_consumer_info);
+            ViewHolder.iv_portrait  = (CircleImageView) convertView.findViewById(R.id.iv_portrait);
+            ViewHolder.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+            ViewHolder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             ViewHolder.iv_image  = (FMNetImageView) convertView.findViewById(R.id.iv_image);
             ViewHolder.tv_brand_name = (TextView) convertView.findViewById(R.id.tv_brand_name);
             ViewHolder.tv_brand_details = (TextView) convertView.findViewById(R.id.tv_brand_details);
@@ -52,6 +56,9 @@ public class FollowProjectAdapter extends FMBaseAdapter {
         }
         ConsumerEntity info = (ConsumerEntity) getItem(position);
         ViewHolder.iv_image.loadImage(info.getInvestPhoto());
+        ViewHolder.iv_portrait.loadImage(info.getHeadPic());
+        ViewHolder.tv_name.setText(info.getNickName());
+        ViewHolder.tv_time.setText(info.getCreateTime());
         ViewHolder.tv_brand_name.setText(info.getInvestName());
         ViewHolder.tv_brand_details.setText(info.getInvestDeion());
         Double index = info.getExponent()*100;
@@ -86,6 +93,8 @@ public class FollowProjectAdapter extends FMBaseAdapter {
 
     class ViewHolder {
         private FMNetImageView iv_image;
+        private CircleImageView iv_portrait;
+        private TextView tv_name,tv_time;
         private TextView tv_brand_name,tv_index;
         private TextView tv_brand_details,tv_money;
         private ProgressBar pb_index,pb_greenindex;

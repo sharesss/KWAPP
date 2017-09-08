@@ -9,5 +9,7 @@
         android:width="1px"
         android:color="@color/gray"
     />
-
+    <padding
+        android:left="@dimen/dp_10"
+        android:right="@dimen/dp_10" />
 </shape>

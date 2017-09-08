@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ts.fmxt.R;
 
 import java.io.ByteArrayOutputStream;
@@ -142,13 +141,13 @@ public class PopupShareView extends BaseEventPopup implements OnClickListener {
         sp.setUrl(url);
 
 
-        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(logo);
-        long imageSize = getBitmapsize(bitmap);
-        if (imageSize > 32) {
-            sp.setImageData(imageZoom(bitmap));
-        } else {
+//        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(logo);
+//        long imageSize = getBitmapsize(bitmap);
+//        if (imageSize > 32) {
+//            sp.setImageData(imageZoom(bitmap));
+//        } else {
             sp.setImageUrl(logo);
-        }
+//        }
         shareParams = sp;
     }
 

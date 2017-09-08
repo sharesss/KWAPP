@@ -32,6 +32,9 @@ public class ReceiverUtils {
     public final static int MODIFY_PHONE= 13;//注册流程结束关闭
     public final static int REFRESH= 14;//注册流程结束关闭
     public final static int SEEKBAR= 15;//投票刷新详情界面
+    public final static int WX_PLAY =16;//微信支付完成
+    public final static int REPORT =17;//展示举报的其他输入框
+    public final static int GONE =18;//取消展示举报的其他输入框
 
 
 

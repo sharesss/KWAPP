@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.ts.fmxt.R;
 
 import http.data.ConsumerEntity;
+import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
 
 /**
@@ -36,6 +37,9 @@ public class DiscoverHeadItem implements BaseViewItem {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.ivImage.loadImage(info.getInvestPhoto());
+        viewHolder.iv_portrait.loadImage(info.getHeadPic());
+        viewHolder.tv_name.setText(info.getNickName());
+        viewHolder.tv_time.setText(info.getCreateTime());
         viewHolder.tvBrandName.setText(info.getInvestName());
         viewHolder.tvBrandDetails.setText(info.getInvestDeion());
         Double index = info.getExponent() * 100;
@@ -61,8 +65,10 @@ public class DiscoverHeadItem implements BaseViewItem {
 
     private class ViewHolder extends RecyclerViewHolder {
         FMNetImageView ivImage;
+        CircleImageView iv_portrait;
         TextView tvBrandName;
         TextView tvBrandDetails;
+        TextView tv_name,tv_time;
         TextView tvIndex;
         ProgressBar pbIndex;
         ProgressBar pbGreenindex;
@@ -70,6 +76,9 @@ public class DiscoverHeadItem implements BaseViewItem {
         private ViewHolder(View view) {
             super(view);
             ivImage = (FMNetImageView) view.findViewById(R.id.iv_image);
+            iv_portrait  = (CircleImageView) view.findViewById(R.id.iv_portrait);
+            tv_name = (TextView) view.findViewById(R.id.tv_name);
+            tv_time= (TextView) view.findViewById(R.id.tv_time);
             tvBrandName = (TextView) view.findViewById(R.id.tv_brand_name);
             tvBrandDetails = (TextView) view.findViewById(R.id.tv_brand_details);
             pbIndex = (ProgressBar) view.findViewById(R.id.pb_index);

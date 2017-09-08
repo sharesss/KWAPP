@@ -10,6 +10,7 @@ import com.ts.fmxt.R;
 import com.ts.fmxt.ui.base.activity.FMBaseActivity;
 
 import utils.DateFormatUtils;
+import utils.ReceiverUtils;
 import utils.SpannableUtils;
 import utils.Tools;
 import widget.titlebar.NavigationView;
@@ -37,8 +38,12 @@ public class RealNameResultActivity extends FMBaseActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 finish();
+                Bundle bundle = new Bundle();
+                ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
             }
         });
+        Bundle bundle = new Bundle();
+        ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
         iv_stauts = (ImageView) findViewById(R.id.iv_stauts);
         tv_status = (TextView) findViewById(R.id.tv_status);
         tv_desc.setText(SpannableUtils.getSpannableStr(getResourcesStr(R.string.text_authorization_1), getResourcesStr(R.string.text_authorization_2), getResourcesColor(R.color.font_main_third), 0f));

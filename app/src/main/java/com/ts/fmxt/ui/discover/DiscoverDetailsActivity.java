@@ -37,6 +37,9 @@ import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.FMNoScrollListView;
 import widget.Share.PopupShareView;
+import widget.popup.BaseDoubleEventPopup;
+import widget.popup.PopupObject;
+import widget.popup.dialog.MessageContentDialog;
 
 /**
  * created by kp at 2017/8/1
@@ -44,23 +47,15 @@ import widget.Share.PopupShareView;
  */
 public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements View.OnClickListener, KeyMapDailog.SendBackListener {
     private int investId;
-    //    private FMNetImageView ivImage;
     private TextView tvWorth, tvNoworth;
     private LinearLayout llTemp, llCollection;
-    //    private ProgressBar pbIndex, pbGreenindex;
     private ConsumerEntity info;
 
     private RedCircleBar ivRedCirclebar;
-//    private FlowLayout flow_layout;
 
     private FMNoScrollListView refresh_lv, reviews_lv, lv_result;
-    //    private ItemBpAdapter adapter;
-//    private BpresultAdapter mBpresultAdapter;
-//    private CommentAdapter mCommentAdapter;
-    private TextView tvAllReviews, tvWorthThrowing, tvNoWorthThrowing;
     private ConsumerCommentEntity mConsumerCommentEntity = null;
     private KeyMapDailog dialog;
-    //    private ArrayList arr;
     private int type = 0;//请求的评论类型0是全部，1是值得投，2是不值得投
 
     private TextView tvCollection, tvWithTheVote, tvBpresult, tvResult;
@@ -68,7 +63,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     private int recLen = 3;
     private int types;
-    public int istype;
     public RecyclerViewAdapter adapter;
     ArrayList<BaseViewItem> list;
     RecyclerView recyclerView;
@@ -79,19 +73,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         setContentView(R.layout.activity_discover_details);
         investId = getIntent().getIntExtra("id", -1);
         types = getIntent().getIntExtra("type", -1);
-
-
-        SharedPreferences share = getSharedPreferences("investinfo", MODE_PRIVATE);
-        int id = share.getInt("investId", 0);
-        boolean isGrade = share.getBoolean("isGrade", false);
-        if (id == investId && isGrade) {
-            TextView tvPrompt = (TextView) findViewById(R.id.tv_prompt);
-            tvPrompt.setVisibility(View.GONE);
-        } else {
-            SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
-            editor.putInt("investId", investId);
-            editor.commit();    //提交数据保存
-        }
 
         initView();
     }
@@ -105,46 +86,18 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         recyclerView.setLayoutManager(wrapContentLinearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-
         //顶部UI
-//        ivImage = (FMNetImageView) findViewById(R.id.iv_image);
-//        tvBrandName = (TextView) findViewById(R.id.tv_brand_name);
-//        tvBrandDetails = (TextView) findViewById(R.id.tv_brand_details);
-//        pbIndex = (ProgressBar) findViewById(R.id.pb_index);
-//        pbGreenindex = (ProgressBar) findViewById(R.id.pb_greenindex);
-//        tvIndex = (TextView) findViewById(R.id.tv_index);
         findViewById(R.id.iv_share).setOnClickListener(this);
         findViewById(R.id.btn_finish).setOnClickListener(this);
+        findViewById(R.id.tv_report).setOnClickListener(this);
 
         Message message = handler.obtainMessage(1);     // Message
         handler.sendMessageDelayed(message, 3000);
         //饼图UI
-//        ivCirclebar = (CircleBar) findViewById(R.id.iv_circlebar);
-//        ivRedCirclebar = (RedCircleBar) findViewById(R.id.iv_redcirclebar);
-//        tvWorth = (TextView) findViewById(R.id.tv_worth);
-//        tvNoworth = (TextView) findViewById(R.id.tv_noworth);
         DiscoverDetailsRequest();//顶部的数据获取
         InvestBPListRequest(false);
         CommentRequest(type);
 
-//        //12项BP
-//        refresh_lv = (FMNoScrollListView) findViewById(R.id.lv_bp_item);
-//        llTemp = (LinearLayout) findViewById(R.id.ll_temp2);
-//        flow_layout = (FlowLayout) findViewById(R.id.flow_layout);//标签布局
-//        tvBpresult = (TextView) findViewById(R.id.tv_bpresult);
-//        tvResult = (TextView) findViewById(R.id.tv_result);
-//        tvBpresult.setOnClickListener(this);
-//        lv_result = (FMNoScrollListView) findViewById(R.id.lv_result);
-//        //评论
-//        tvAllReviews = (TextView) findViewById(R.id.tv_all_reviews);
-//        tvWorthThrowing = (TextView) findViewById(R.id.tv_worth_throwing);
-//        tvNoWorthThrowing = (TextView) findViewById(R.id.tv_no_worth_throwing);
-//        reviews_lv = (FMNoScrollListView) findViewById(R.id.lv_comment);
-//        findViewById(R.id.tv_write_comment).setOnClickListener(this);
-//        tvAllReviews.setOnClickListener(this);
-//        tvWorthThrowing.setOnClickListener(this);
-//        tvNoWorthThrowing.setOnClickListener(this);
-//
 //        //底部两个按钮
         llCollection = (LinearLayout) findViewById(R.id.ll_collection);
         tvCollection = (TextView) findViewById(R.id.tv_collection);
@@ -176,45 +129,16 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
          */
         adapter.notifyDataSetChanged();
 
-//        ivCirclebar.startCustomAnimation();
-//        float progress = progressPercentage(info.getVoteNum(), info.getDokels());
-//        float percentage = num(info.getVoteNum(), info.getDokels());
-//        int progres = Math.round(percentage);
-//        ivCirclebar.setText(String.valueOf(progres));//中间的数字
-//        ivCirclebar.setSweepAngle(progress);//进度
-//        ivRedCirclebar.startCustomAnimation();
-//
-//        ivRedCirclebar.startCustomAnimation();
-//        float inxe = progressPercentage(info.getVoteNum(), info.getNotDokels());
-//        float percen = num(info.getVoteNum(), info.getNotDokels());
-//        int progre = Math.round(percen);
-//        ivRedCirclebar.setText(String.valueOf(progre));//中间的数字
-//        ivRedCirclebar.setSweepAngle(inxe);//进度
-//        if (info.getIsVote() == 0) {
-//            findViewById(R.id.ll_dokels).setOnClickListener(this);
-//            findViewById(R.id.ll_notdokels).setOnClickListener(this);
-//        } else if (info.getIsVote() == 1) {
-//            tvWorth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
-//            tvWorth.setTextColor(getResources().getColor(R.color.gray));
-//            tvNoworth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
-//            tvNoworth.setTextColor(getResources().getColor(R.color.gray));
-//            type = 1;
-//        } else if (info.getIsVote() == 2) {
-//            tvWorth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
-//            tvWorth.setTextColor(getResources().getColor(R.color.gray));
-//            tvNoworth.setBackground(getResources().getDrawable(R.drawable.bg_gray_circle));
-//            tvNoworth.setTextColor(getResources().getColor(R.color.gray));
-//            type = 2;
-//        }
-//
+
         Drawable sexDrawble = getResources().getDrawable(info.getIsCollect() == 1 ? R.mipmap.card_detail_s : R.mipmap.card_detail_n);
         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
         tvCollection.setCompoundDrawables(sexDrawble, null, null, null);
-//        if (info.getIsCollect() == 1) {
-//            isCollect = true;
-//        } else {
-//            isCollect = false;
-//        }
+        if(info.getIsCollect() == 1){
+            isCollect=true;
+        }else{
+            isCollect=false;
+        }
+
     }
 
     ArrayList<BaseViewItem> labellist = new ArrayList<>();
@@ -241,6 +165,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             DisBPItem disBPItem = new DisBPItem(entity, investId);
             if (entity.isScore() == 1) {
                 cont++;
+                TextView tvPrompt = (TextView) findViewById(R.id.tv_prompt);
+                tvPrompt.setVisibility(View.GONE);
             }
             labellist.add(disBPItem);
         }
@@ -262,55 +188,43 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 finish();
                 break;
             case R.id.iv_share:
-                if (!checkLogin()) {
-                    return;
-                }
+//                if (!checkLogin()) {
+//                    return;
+//                }
                 showShareDialog(info);
                 break;
-//            case R.id.tv_all_reviews:
-//                if (token.equals("")) {
-//                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-//                    return;
-//                }
-//                tvAllReviews.setTextColor(this.getResources().getColor(R.color.orange));
-//                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-//                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-//                istype = 0;
-//                CommentRequest(istype);
-//                break;
-//            case R.id.tv_worth_throwing:
-//                if (token.equals("")) {
-//                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-//                    return;
-//                }
-//                tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
-//                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
-//                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-//                istype = 1;
-//                CommentRequest(istype);
-//                break;
-//            case R.id.tv_no_worth_throwing:
-//                if (token.equals("")) {
-//                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-//                    return;
-//                }
-//                tvAllReviews.setTextColor(this.getResources().getColor(R.color.black));
-//                tvWorthThrowing.setTextColor(this.getResources().getColor(R.color.black));
-//                tvNoWorthThrowing.setTextColor(this.getResources().getColor(R.color.orange));
-//                istype = 2;
-//                CommentRequest(istype);
-//                break;
-//            case R.id.tv_write_comment:
-//                if (token.equals("")) {
-//                    UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
-//                    return;
-//                }
-//
-//                dialog = new KeyMapDailog("评论是疯蜜范的最大动力", DiscoverDetailsActivity.this);
-//                dialog.show(getSupportFragmentManager(), "评论");
-//                break;
+            case R.id.tv_report://举报
+                if (!checkLogin()) {
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+
+                    return;
+                }
+                UISKipUtils.startReportActivity(DiscoverDetailsActivity.this,investId);
+                break;
             case R.id.ll_collection:
                 if (!checkLogin()) {
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+
                     return;
                 }
                 if (isCollect) {
@@ -321,16 +235,41 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     isCollect = true;
                 }
                 break;
-//            case R.id.tv_bpresult:
-//                tvBpresult.setVisibility(View.GONE);
-//                tvResult.setVisibility(View.VISIBLE);
-//                InvestBPListRequest();
-//                break;
             case R.id.tv_top:
                 RequestTop();
                 break;
             case R.id.tv_with_the_vote:
+                SharedPreferences sharedPreferences= getSharedPreferences("user",
+                        MODE_PRIVATE);
+                String token=sharedPreferences.getString("token", "");
+                int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
                 if (!checkLogin()) {
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+
+                    return;
+                }
+                if(isTruenameAuthen==0){
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还实名认证，是否去认证？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                UISKipUtils.startRealNameActivity(DiscoverDetailsActivity.this);
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
                     return;
                 }
                 UISKipUtils.startProjectReturnActivity(DiscoverDetailsActivity.this, investId);
@@ -353,12 +292,17 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     private void DiscoverDetailsRequest() {
-        if (!checkLogin()) {
-            return;
-        }
+//        if (!checkLogin()) {
+//            return;
+//        }
+        SharedPreferences sharedPreferences = getSharedPreferences("user",
+                MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
-        staff.put("tokenId", String.valueOf(token));
+        if(token!=null){
+            staff.put("tokenId", String.valueOf(token));
+        }
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.INVESTDETAIL,
                 new OkHttpClientManager.ResultCallback<String>() {
 
@@ -400,12 +344,17 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     //12项BP
     public void InvestBPListRequest(final boolean oncheckBP) {//
         this.oncheckBP = oncheckBP;
-        if (!checkLogin()) {
-            return;
-        }
+//        if (!checkLogin()) {
+//            return;
+//        }
+        SharedPreferences sharedPreferences = getSharedPreferences("user",
+                MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
         final Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
-        staff.put("tokenId", String.valueOf(token));
+        if(token!=null){
+            staff.put("tokenId", String.valueOf(token));
+        }
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.INVESTBPLIST,
                 new OkHttpClientManager.ResultCallback<String>() {
 
@@ -465,13 +414,18 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     //评论
     public void CommentRequest(final int type) {
-        if (!checkLogin()) {
-            return;
-        }
+//        if (!checkLogin()) {
+//            return;
+//        }
+        SharedPreferences sharedPreferences = getSharedPreferences("user",
+                MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("commentType", String.valueOf(type));
-        staff.put("tokenId", String.valueOf(token));
+        if(token!=null){
+            staff.put("tokenId", String.valueOf(token));
+        }
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.INVESTCOMMENTLIST,
                 new OkHttpClientManager.ResultCallback<String>() {
 
@@ -532,6 +486,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if (!checkLogin()) {
             return;
         }
+        SharedPreferences sharedPreferences = getSharedPreferences("user",
+                MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("commentType", String.valueOf(type));
@@ -578,6 +535,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if (!checkLogin()) {
             return;
         }
+        SharedPreferences sharedPreferences = getSharedPreferences("user",
+                MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("enabled", String.valueOf(enabled));
@@ -635,6 +595,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if (!checkLogin()) {
             return;
         }
+        SharedPreferences sharedPreferences = getSharedPreferences("user",
+                MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("voteType", String.valueOf(voteType));
@@ -681,7 +644,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if (info == null) return;
         String title = info.getInvestName();
         PopupShareView popupShareView = new PopupShareView(DiscoverDetailsActivity.this);
-        popupShareView.setContent(info.getInvestDeion());
+        popupShareView.setContent(getString(R.string.share_consumenr_context));
         popupShareView.setWechatMomentsTitle(title);
         popupShareView.setTitle(title);
         String uri = String.format("%s?id=%d", getString(R.string.html_fm_fmoneyShare_detail), investId);//
@@ -716,39 +679,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         dialog.show(getSupportFragmentManager(), "回复评论");
     }
 
-    private float progressPercentage(float max, float min) {
-        // TODO Auto-generated method stub
-        float percentage = min / max;
-        float progress = percentage * 360;
-        return progress;
-
-    }
-
-    private float num(float max, float min) {
-        // TODO Auto-generated method stub
-        float percentage = min / max;
-        float progress = percentage * 100;
-        return progress;
-
-    }
 
     @Override
     public void sendBack(String inputText) {
         consumerContentRequest(inputText, mConsumerCommentEntity, type, investId);
     }
-
-//    public static abstract interface OnClickListener {
-//        public abstract void onClick(); //单击事件处理接口
-//    }
-//
-//    OnClickListener listener = null;   //监听器类对象
-//
-//    //实现这个View的监听器
-//    public void setOnClickListener(OnClickListener listener) {
-//
-//        this.listener = listener;   //引用监听器类对象,在这里可以使用监听器类的对象
-//
-//    }
 
     @Override
     public void onReload() {
@@ -774,11 +709,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
     private void RequestTop() {
         recyclerView.smoothScrollToPosition(0);
-
     }
 
     private void RequestBoot() {
         recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
-
     }
 }

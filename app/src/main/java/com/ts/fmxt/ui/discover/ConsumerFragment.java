@@ -149,7 +149,7 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
         popupShareView.setTitle(title);
         String uri = String.format(getString( R.string.html_fm_fmoneyShare_user));//
         popupShareView.setUrl(uri);
-        popupShareView.setLogo("https://oixnydddk.qnssl.com/bill/1502790203975.jpg");
+        popupShareView.setLogo("https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG//sys/portrait/item/1f8d4e6f64655f616e64726f69641648.jpg?cdnversion=0022");//
         popupShareView.showPopupWindow();
     }
 

@@ -86,6 +86,7 @@
     <string name="title_edit_password">修改密码</string>
     <string name="title_certified_investor">认证投资人</string>
     <string name="follow_project">想跟投的项目</string>
+    <string name="title_report">想跟投的项目</string>
     <string name="empty">清空</string>
     <string name="del">删除</string>
 
@@ -96,7 +97,7 @@
     <string name="register_psw_hint">密码规则：6-16位字符</string>
 
     <string name="share_consumenr_title">小金额也能投到独角兽【疯蜜小投】</string>
-    <string name="share_consumenr_context">小额跟投独角兽</string>
+    <string name="share_consumenr_context">疯蜜小投：小额跟投独角兽</string>
     <string name="user_agreement">用户协议</string>
     <string name="about_us">关于我们</string>
     <string name="confirm_payment">确认支付</string>

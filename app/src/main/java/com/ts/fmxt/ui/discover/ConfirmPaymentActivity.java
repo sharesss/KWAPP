@@ -22,6 +22,7 @@ import java.util.Map;
 import http.data.WeiXinPayEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.Tools;
 import utils.helper.ToastHelper;
 import widget.titlebar.NavigationView;
@@ -34,7 +35,7 @@ import widget.weixinpay.playUitls;
  * 确认支付
  */
 
-public class ConfirmPaymentActivity extends FMBaseActivity {
+public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUtils.MessageReceiver {
     private TextView tvPercentage,tvTotalAmount,tvReservationMoney,tvConfirm;
     private EditText edtName,edtWechat,edtPhone;
     private int money;
@@ -46,11 +47,17 @@ public class ConfirmPaymentActivity extends FMBaseActivity {
     private WeiXinPayEntity entity;
     private IWXAPI api;
 
-
+    @Override
+    public void onMessage(int receiverType, Bundle bundle) {
+        if(receiverType==ReceiverUtils.WX_PLAY){
+            finish();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_payment);
+        ReceiverUtils.addReceiver(this);
         money = getIntent().getIntExtra("money", -1);
         proportion = getIntent().getStringExtra("proportion");
         investId = getIntent().getIntExtra("investId", -1);
@@ -85,7 +92,6 @@ public class ConfirmPaymentActivity extends FMBaseActivity {
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ToastHelper.toastMessage(getBaseContext(), "此功能开发中，敬请期待");
 
                 if (Tools.isFastDoubleClick()) {
                     ToastHelper.toastMessage(getBaseContext(), "请勿重复操作");
@@ -126,13 +132,13 @@ public class ConfirmPaymentActivity extends FMBaseActivity {
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("tokenId", String.valueOf(token));
-        staff.put("amount", arrmoney);
+        staff.put("amount",arrmoney);
         staff.put("stockRate", ShareRatio);
         staff.put("investPeople", name);
         staff.put("wechatNumber", wechat);
         staff.put("contactWay", phone);
         staff.put("body", "支付预约金");
-        staff.put("totalFee", "1");
+        staff.put("totalFee",  String.valueOf(money*100));//
         staff.put("clientType", "2");
         staff.put("orderType", "1");
 
@@ -171,5 +177,11 @@ public class ConfirmPaymentActivity extends FMBaseActivity {
                 }, staff
         );
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ReceiverUtils.removeReceiver(this);
     }
 }

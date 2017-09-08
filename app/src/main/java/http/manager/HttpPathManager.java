@@ -10,7 +10,7 @@ import com.ts.fmxt.FmxtApplication;
 
 public class HttpPathManager {
 //     public static String HOST = "http://touzhi.tunnel.qydev.com/investment-app-api/";//曾本地服务器
-//    public static String HOST = "http://192.168.1.159:8080/investment-app-api/";//阿峰本地服务器
+//    public static String HOST = "http://192.168.1.187:8080/investment-app-api/";//阿峰本地服务器
 
     public static String HOST = "https://fmb.fmsecret.cn/investment-app-api/";//正式
 //        public static String HOST = "https://wx.fmsecret.cn/investment-app-api/";//测试
@@ -67,6 +67,7 @@ public class HttpPathManager {
     public static String INVESTCOMMENT = "investComment/";
     public static String MESSAGE = "message/";
     public static String ZHIMA = "zhima/";
+    public static String SYSTEM ="system/";
 
     /**
      * 接口方法名
@@ -108,7 +109,8 @@ public class HttpPathManager {
     public static String MESSAGECOUNT =  MESSAGE+"messageCount";
     public static String WEIXINAUTHORIZATION =  USER+"weiXinAuthorization";
     public static String WEIXINBINDMOBILE =  USER+"weiXinBindMobile";
-
+    public static String FINDINFORMINFO =  SYSTEM+"findInformInfo";
+    public static String SAVEINVESTINFORMINFO =  SYSTEM+"saveInvestInformInfo";
     public static String getGenerateParams =  ZHIMA+"getGenerateParams";
     public static String ZHIMASCOREGET =  ZHIMA+"zhimaScoreGet";
     public static String FINDUSERCREDITPROPERTYRECORD =  MY+"findUserCreditPropertyRecord";
