@@ -240,15 +240,10 @@
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
                 <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
                 <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="com.hdl.jpushdemo" />
+                <category android:name="com.ts.fmxt" />
             </intent-filter>
         </receiver>
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="2a9d738509b0348b1cfdce58"/>
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="665d69121981502b7929625c"/> <!--  </>值来自开发者平台取得的AppKey-->
+
     </application>
 
 </manifest>
