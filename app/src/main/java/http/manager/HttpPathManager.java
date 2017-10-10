@@ -10,9 +10,9 @@ import com.ts.fmxt.FmxtApplication;
 
 public class HttpPathManager {
 //     public static String HOST = "http://touzhi.tunnel.qydev.com/investment-app-api/";//曾本地服务器
-//    public static String HOST = "http://192.168.1.187:8080/investment-app-api/";//阿峰本地服务器
-
-    public static String HOST = "https://fmb.fmsecret.cn/investment-app-api/";//正式
+//    public static String HOST = "http://192.168.1.152:8080/investment-app-api/";//阿峰本地服务器
+        public static String HOST = "http://kzf.tunnel.qydev.com/investment-app-api/";//阿峰本地服务器映射
+//    public static String HOST = "https://fmb.fmsecret.cn/investment-app-api/";//正式
 //        public static String HOST = "https://wx.fmsecret.cn/investment-app-api/";//测试
 
     //      public static String HOST = "http://fmb.fmsecret.cn/newfmb-app-server/rest";`
@@ -68,6 +68,7 @@ public class HttpPathManager {
     public static String MESSAGE = "message/";
     public static String ZHIMA = "zhima/";
     public static String SYSTEM ="system/";
+    public static String STOCK ="stock/";
 
     /**
      * 接口方法名
@@ -114,6 +115,11 @@ public class HttpPathManager {
     public static String getGenerateParams =  ZHIMA+"getGenerateParams";
     public static String ZHIMASCOREGET =  ZHIMA+"zhimaScoreGet";
     public static String FINDUSERCREDITPROPERTYRECORD =  MY+"findUserCreditPropertyRecord";
+    public static String FINDSTOCKEQUITYHOME =  STOCK+"findStockEquityHome";
+    public static String FINDSTOCKEQUITYDETAILS =  STOCK+"findStockEquityDetails";
+    public static String FINDSTOCKEQITYSALESROOMINITINFO =  STOCK+"findStockEqitySalesroomInitInfo";
+    public static String FINDSTOCKEQUITYAUCTIONPAYINFO =  STOCK+"findStockEquityAuctionPayInfo";
+    public static String FINDSTOCKEQUITYREALINFO =  STOCK+"findStockEquityRealInfo";
 
 
 

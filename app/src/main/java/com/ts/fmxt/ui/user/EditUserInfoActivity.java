@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.hyphenate.chat.EMClient;
 import com.squareup.okhttp.Request;
 import com.ts.fmxt.FmxtApplication;
 import com.ts.fmxt.R;
@@ -268,6 +269,7 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
 //                    finish();
 //                }else{
                     onLogoutClick();
+
 //                }
                 break;
         }
@@ -444,6 +446,7 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
         sharedPreferences.edit().clear().commit();
         ShortcutBadger.applyCount(FmxtApplication.getContext(), 0);
         UISKipUtils.startMainFrameActivity(this);
+        EMClient.getInstance().logout(true);
         finish();
     }
 

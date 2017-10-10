@@ -25,6 +25,11 @@ public class UserInfoEntity {
     private int investprojectcollectcount;//收藏的项目数量
     private int  isinvestauthen;//是否是投资人  1：是  0 不是
     private int isTruenameAuthen;//实名认证  1：是  0 不是
+    private int cashdeposit;// 冻结保证金
+    private int followNum;// 跟投数量
+    private int makeOverNum; // 转让股权数量
+    private int auctionNum;// 竞拍股权数量
+    private int thinkactioncount; // 想竞拍的项目
 
 
     public UserInfoEntity(JSONObject json) {
@@ -44,6 +49,9 @@ public class UserInfoEntity {
             this.isinvestauthen = json.optInt("isinvestauthen",0);
             this.account = json.optString("account");
             this.isTruenameAuthen = json.optInt("isTruenameAuthen",-1);
+            this.cashdeposit= json.optInt("cashdeposit",0);
+            this.auctionNum = json.optInt("auctionNum",0);
+            this.thinkactioncount = json.optInt("thinkactioncount",0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -167,5 +175,45 @@ public class UserInfoEntity {
 
     public void setIsTruenameAuthen(int isTruenameAuthen) {
         this.isTruenameAuthen = isTruenameAuthen;
+    }
+
+    public int getCashdeposit() {
+        return cashdeposit;
+    }
+
+    public void setCashdeposit(int cashdeposit) {
+        this.cashdeposit = cashdeposit;
+    }
+
+    public int getFollowNum() {
+        return followNum;
+    }
+
+    public void setFollowNum(int followNum) {
+        this.followNum = followNum;
+    }
+
+    public int getMakeOverNum() {
+        return makeOverNum;
+    }
+
+    public void setMakeOverNum(int makeOverNum) {
+        this.makeOverNum = makeOverNum;
+    }
+
+    public int getAuctionNum() {
+        return auctionNum;
+    }
+
+    public void setAuctionNum(int auctionNum) {
+        this.auctionNum = auctionNum;
+    }
+
+    public int getThinkactioncount() {
+        return thinkactioncount;
+    }
+
+    public void setThinkactioncount(int thinkactioncount) {
+        this.thinkactioncount = thinkactioncount;
     }
 }

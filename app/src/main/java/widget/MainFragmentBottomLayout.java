@@ -26,7 +26,7 @@ public class MainFragmentBottomLayout extends RelativeLayout implements OnClickL
 
     private BottomItemOnClick mOnItemClick;
 
-    public MixedTextDrawView mNearby, mAccount, mConsumer;
+    public MixedTextDrawView mNearby, mAccount, mConsumer,btStockAuction;
     private BadgeView mBadgeView;
 
     public MainFragmentBottomLayout(Context context, AttributeSet attrs, int defStyle) {
@@ -48,11 +48,13 @@ public class MainFragmentBottomLayout extends RelativeLayout implements OnClickL
         LayoutInflater.from(getContext()).inflate(R.layout.widget_bottom_view, this);
         mNearby = (MixedTextDrawView) findViewById(R.id.bt_nearby);
         mAccount = (MixedTextDrawView) findViewById(R.id.bt_account);
-        mConsumer = (MixedTextDrawView) findViewById(R.id.bt_consumer);
+        mConsumer = (MixedTextDrawView) findViewById(R.id.bt_consumer);//
+        btStockAuction = (MixedTextDrawView) findViewById(R.id.bt_stock_auction);//
 
         mNearby.setOnClickListener(this);
         mAccount.setOnClickListener(this);
         mConsumer.setOnClickListener(this);
+        btStockAuction.setOnClickListener(this);
 
         mBadgeView = new BadgeView(getContext(), findViewById(R.id.tv_msg_num));
         mBadgeView.setTextColor(getResources().getColor(R.color.white));
@@ -64,24 +66,22 @@ public class MainFragmentBottomLayout extends RelativeLayout implements OnClickL
     @Override
     public void onClick(View v) {
         CallbackInfo info = new CallbackInfo();
+        SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
+                getContext().MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
         switch (v.getId()) {
             case R.id.bt_nearby:
                 changeStatus();
                 info.setPosition(0);
                 mNearby.notifyMixedTextDraw(true);
                 break;
-
             case R.id.bt_account:
-                SharedPreferences sharedPreferences= getContext().getSharedPreferences("user",
-                        getContext().MODE_PRIVATE);
-                String token=sharedPreferences.getString("token", "");
                 if (token.equals("")) {
                 UISKipUtils.startLoginActivity((Activity) getContext());
                     return;
                 }
                 changeStatus();
                 info.setPosition(2);//代言
-                //     info.setPosition(1);//F豆
                 mAccount.notifyMixedTextDraw(true);
                 break;
 
@@ -89,6 +89,15 @@ public class MainFragmentBottomLayout extends RelativeLayout implements OnClickL
                 changeStatus();
                 info.setPosition(1);
                 mConsumer.notifyMixedTextDraw(true);
+                break;
+            case R.id.bt_stock_auction:
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity((Activity) getContext());
+                    return;
+                }
+                changeStatus();
+                info.setPosition(3);//代言
+                btStockAuction.notifyMixedTextDraw(true);
                 break;
             default:
                 break;
@@ -103,6 +112,7 @@ public class MainFragmentBottomLayout extends RelativeLayout implements OnClickL
         mNearby.notifyMixedTextDraw(false);
         mAccount.notifyMixedTextDraw(false);
         mConsumer.notifyMixedTextDraw(false);
+        btStockAuction.notifyMixedTextDraw(false);
     }
 
     public void setOnItemClick(BottomItemOnClick mOnItemClick) {

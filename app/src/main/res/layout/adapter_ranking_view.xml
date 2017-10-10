@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="50dp">
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/bg_gray_yuan"
+        android:textColor="@color/white"
+        android:text="1"/>
+    <widget.image.CircleImageView
+        android:id="@+id/iv_portrait"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:gravity="center"
+         />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="center|left"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="老张"/>
+    <TextView
+        android:id="@+id/tv_frequency"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="出价3次"/>
+    <TextView
+        android:id="@+id/tv_highest_price"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="center|right"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="10dp"
+        android:text="最高价¥ 10000"/>
+
+</LinearLayout>

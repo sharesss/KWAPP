@@ -11,6 +11,8 @@ import android.view.View;
 import com.thindo.base.UI.Activity.BaseFragmentActivity;
 import com.thindo.base.Utils.AppManager;
 import com.ts.fmxt.R;
+import com.ts.fmxt.ui.HomePage.HomePageFragment;
+import com.ts.fmxt.ui.StockAuction.StockAuctionFrament;
 import com.ts.fmxt.ui.discover.ConsumerFragment;
 import com.ts.fmxt.ui.user.fragment.UserFragment;
 
@@ -68,7 +70,7 @@ public class MainFrameActivity extends BaseFragmentActivity implements MainFragm
     private void initFragmentManager() {
         mFragmentMap = new HashMap<Integer, Fragment>();
         mFragmentManager = getSupportFragmentManager();
-        setCurrentFragment(1);
+        setCurrentFragment(0);
     }
 
     /**/
@@ -97,7 +99,7 @@ public class MainFrameActivity extends BaseFragmentActivity implements MainFragm
 
         switch (index) {
             case 0:
-//                mFragmentMap.put(index, new NearByFragment());
+                mFragmentMap.put(index, new HomePageFragment());
                 break;
             case 1:
                 mFragmentMap.put(index, new ConsumerFragment());
@@ -106,6 +108,9 @@ public class MainFrameActivity extends BaseFragmentActivity implements MainFragm
                 //
                 user = new UserFragment();
                 mFragmentMap.put(index, user);
+                break;
+            case 3:
+                mFragmentMap.put(index, new StockAuctionFrament());
                 break;
             default:
                 break;

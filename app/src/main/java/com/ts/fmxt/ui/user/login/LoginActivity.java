@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.squareup.okhttp.Request;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -118,7 +120,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
             switch (response.getRequestType()) {
                 case 1:
 //                    FMWession.getInstance().setUserAccount(edtAccount.getText().toString());
-                    loginIM();
+
 //                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH_INDEX, null);
                     finish();
                     break;
@@ -154,7 +156,6 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
                     ToastHelper.toastMessage(this, getResourcesStr(R.string.toast_wx_login));
                     return;
                 }
-//               FMWession.getInstance().setWxLogin(true);
                 SendAuth.Req req = new SendAuth.Req();
                 req.scope = "snsapi_userinfo";
                 api.sendReq(req);
@@ -168,7 +169,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
 
 
     //登录
-    private void loginRequest(String account, String password) {
+    private void loginRequest(final String account, String password) {
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("account",account);
         staff.put("passWord",password);
@@ -196,6 +197,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
                                         editor.putString("token", token);
                                         editor.putString("phone", edtAccount.getText().toString());
                                         editor.commit();    //提交数据保存
+                                        loginIM(account);
                                     }
                                     ToastHelper.toastMessage(LoginActivity.this,msg);
                                     UISKipUtils.startMainFrameActivity(LoginActivity.this,2);
@@ -237,63 +239,32 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
 
     }
 
-    private void login(){
-        OkHttpClientManager.postAsyn("http://192.168.12.233:8080/investment-app-api/user/weiXinLogin", new OkHttpClientManager.ResultCallback<String>() {
+
+    private void loginIM(String account) {
+        EMClient.getInstance().logout(true);
+        EMClient.getInstance().login(account, FmxtApplication.IM_PSW, new EMCallBack() {//回调
             @Override
-            public void onError(Request request, Exception e) {
-                e.printStackTrace();
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
             }
 
             @Override
-            public void onResponse(String u) {
-//                mTv.setText(u);//注意这里是UI线程
-                ToastHelper.toastMessage(LoginActivity.this, u);
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                final String msg = "第三方登录失败,请联系疯蜜客服!错误码[" + message + "]";
+                LoginActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastHelper.toastMessage(getBaseContext(), msg);
+                    }
+                });
             }
         });
-//        Map<String, String> staff = new HashMap<String, String>();
-//        staff.put("telephoneint","13652424735");
-//        staff.put("type","1");
-//        OkHttpClientManager.postAsyn(HttpPathManager.HOST+HttpPathManager.SENTOBTAIN,
-//                new OkHttpClientManager.ResultCallback<String>() {
-//
-//                    @Override
-//                    public void onError(Request request, Exception e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String result) {
-//                        ToastHelper.toastMessage(LoginActivity.this, "返回数据为"+result);
-//                    }
-//                },staff
-//        );
-    }
-
-    private void loginIM() {
-//        EMClient.getInstance().logout(true);
-//        EMClient.getInstance().login(FMWession.getInstance().getFMIdentity(), FMBApplication.IM_PSW, new EMCallBack() {//回调
-//            @Override
-//            public void onSuccess() {
-//                EMClient.getInstance().groupManager().loadAllGroups();
-//                EMClient.getInstance().chatManager().loadAllConversations();
-//            }
-//
-//            @Override
-//            public void onProgress(int progress, String status) {
-//
-//            }
-//
-//            @Override
-//            public void onError(int code, String message) {
-//                final String msg = "第三方登录失败,请联系疯蜜客服!错误码[" + message + "]";
-//                LoginActivity.this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        ToastHelper.toastMessage(getBaseContext(), msg);
-//                    }
-//                });
-//            }
-//        });
     }
 
 

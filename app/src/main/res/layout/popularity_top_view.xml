@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_popularity_top_view"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            style="@style/base_wrap"
+            android:layout_below="@id/tv_name"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:textColor="@color/orange"
+            android:text="人气TOP3跟投"/>
+    </RelativeLayout>
+
+    <widget.image.FMNetImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_180"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_brand_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="奢分期"/>
+
+    <TextView
+        android:id="@+id/tv_brand_details"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="12sp"
+        android:text="奢分期"/>
+
+    <ProgressBar
+        android:id="@+id/pb_index"
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:progress="65"
+        android:max="100"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:progressDrawable="@drawable/barcolor"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="5dp"
+        android:visibility="gone"
+        android:indeterminate="false" />
+    <ProgressBar
+        android:id="@+id/pb_greenindex"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:progress="85"
+        android:max="100"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:progressDrawable="@drawable/greencolor"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="5dp"
+        android:visibility="gone"
+        android:indeterminate="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="可投指数"/>
+
+        <TextView
+            android:id="@+id/tv_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            android:text="65%"
+            />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_yellowindex"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:progress="0"
+        android:max="100"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:progressDrawable="@drawable/yellowcolor"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="5dp"
+        android:visibility="gone"
+        android:indeterminate="false" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="已预约"/>
+
+        <TextView
+            android:id="@+id/tv_reservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            android:text="65%"
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+</LinearLayout>

@@ -39,9 +39,6 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
     private ConsumerEntity info;
 
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.include_navigation_refresh_list_view, container, false);
@@ -86,6 +83,7 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
     public void stopRefreshState(){
         stop();
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

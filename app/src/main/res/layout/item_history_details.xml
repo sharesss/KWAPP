@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_stockName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="18dp"
+        />
+    <TextView
+        android:id="@+id/tv_earnestMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="15dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="18dp"
+        android:visibility="invisible"
+        />
+    <TextView
+        android:id="@+id/tv_payTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="@dimen/dp_12"
+        />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F9F5E5">
+        <TextView
+            android:id="@+id/tv_payType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="15dp"
+            />
+        <TextView
+            android:id="@+id/tv_fundFinallyFlow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="20dp"
+            />
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_red"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="15dp"
+            />
+        <TextView
+            android:id="@+id/tv_fundFinallyFlowDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="15dp"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

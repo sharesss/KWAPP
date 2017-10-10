@@ -8,7 +8,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.squareup.okhttp.Request;
+import com.ts.fmxt.FmxtApplication;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.base.activity.FMBaseActivity;
 
@@ -47,7 +50,7 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
     private boolean registerPhoneFlg = false;
     private boolean registerSmsCodeFlg = false;
     private String info;
-    private String headpic,nickname,unionId;
+    private String headpic,nickname,unionId,openId;
     private int sex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,7 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
             headpic =  js.getString("headpic");
             nickname =  js.getString("nickname");
             unionId =  js.getString("unionId");
+            openId =  js.getString("openId");
             sex =  js.getInt("sex");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -178,7 +182,7 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
     }
 
     private void weiXinBindMobileRequest(){
-        String phone = etdRegisterPhone.getText().toString().trim();
+        final String phone = etdRegisterPhone.getText().toString().trim();
         String  code = edtRegisteSmsCode.getText().toString().trim();
         String  passWord = edtRegisterPsw.getText().toString().trim();
         Map<String, String> staff = new HashMap<String, String>();
@@ -188,6 +192,7 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
         staff.put("sex",String.valueOf(sex));
         staff.put("headPhoto", headpic);
         staff.put("unionId", unionId);
+        staff.put("openId", openId);
         staff.put("nickName", nickname);
         staff.put("accountType", "1");
 
@@ -216,6 +221,7 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
                                     editor.putString("token", token);
                                     editor.putString("phone", account);
                                     editor.commit();    //提交数据保存
+                                    loginIM(phone);
                                     ToastHelper.toastMessage(WeChatCompleteInformation.this, msg);
                                     finish();
                                 } else {
@@ -239,6 +245,31 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
             tvSendCode.setTextColor(getResourcesColor(R.color.orange));
         }
     }
+    private void loginIM(String account) {
+        EMClient.getInstance().logout(true);
+        EMClient.getInstance().login(account, FmxtApplication.IM_PSW, new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+            }
 
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                final String msg = "第三方登录失败,请联系疯蜜客服!错误码[" + message + "]";
+                WeChatCompleteInformation.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastHelper.toastMessage(getBaseContext(), msg);
+                    }
+                });
+            }
+        });
+    }
 
 }

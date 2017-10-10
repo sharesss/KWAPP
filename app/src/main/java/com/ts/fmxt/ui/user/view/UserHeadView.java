@@ -3,6 +3,7 @@ package com.ts.fmxt.ui.user.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
@@ -13,13 +14,18 @@ import android.widget.TextView;
 
 import com.ts.fmxt.R;
 
+import java.math.BigDecimal;
+
 import http.data.UserInfoEntity;
 import utils.StringUtils;
 import utils.UISKipUtils;
+import utils.helper.ToastHelper;
 import widget.image.CircleImageView;
 import widget.popup.BaseDoubleEventPopup;
 import widget.popup.PopupObject;
 import widget.popup.dialog.MessageContentDialog;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 用户头部
@@ -28,8 +34,11 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
     private Context context;
     private CircleImageView iv_portrait;
     private TextView tv_user_name, tv_fm_identity, tv_user_signature, tv_consumere,tv_place,tv_salary,tv_age,tv_realname;
-    private TextView tv_asset, tv_fb, tv_gift_num, tv_profile,tv_privilege_securities_num,tv_company_name,tv_investor,tv_phone;
+    private TextView tv_asset, tv_fb, tv_gift_num, tv_profile,tv_privilege_securities_num,tv_company_name,tv_investor,tv_phone,tv_money,tv_auction_num;
     private UserInfoEntity info;
+    private int auctionNum;
+    private String  cashdeposit;
+    /**金额为分的格式 */
 
     public UserHeadView(Context context) {
         super(context);
@@ -67,6 +76,8 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         tv_gift_num = (TextView) findViewById(R.id.tv_gift_num);
         findViewById(R.id.ll_callphone).setOnClickListener(this);
         tv_phone  = (TextView) findViewById(R.id.tv_phone);
+        tv_money = (TextView) findViewById(R.id.tv_money);
+        tv_auction_num = (TextView) findViewById(R.id.tv_auction_num);
         tv_company_name = (TextView) findViewById(R.id.tv_company_name);//公司名称
         findViewById(R.id.rl_consumere).setOnClickListener(this);//认证投资人
         findViewById(R.id.rl_asset).setOnClickListener(this);//想跟投的项目
@@ -75,6 +86,14 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         findViewById(R.id.rl_gift).setOnClickListener(this);//关于我们
         findViewById(R.id.rl_user_real_name).setOnClickListener(this);//实名认证
         findViewById(R.id.rly_paren).setOnClickListener(this);//整个头部
+
+        //头部以下的四个按钮
+        findViewById(R.id.bt_share_option).setOnClickListener(this);//我的跟投
+        findViewById(R.id.bt_stake_in).setOnClickListener(this);//拍得股权
+        findViewById(R.id.bt_transfer_record).setOnClickListener(this);//转账记录
+        findViewById(R.id.bt_issue_equity).setOnClickListener(this);//发布股权
+        findViewById(R.id.rl_frozen_deposit).setOnClickListener(this);//冻结保证金
+        findViewById(R.id.rl_auction_project).setOnClickListener(this);//想竞拍的项目
 
     }
 
@@ -87,6 +106,15 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         if(!info.getNickname().equals("")) {
             tv_user_name.setText(info.getNickname());
         }
+        cashdeposit = BigDecimal.valueOf(Integer.valueOf(info.getCashdeposit())).divide(new BigDecimal(100)).toString();
+        auctionNum = info.getThinkactioncount();//竞拍数
+        tv_money.setText(cashdeposit+"");
+        tv_auction_num.setText(auctionNum+"");
+        SharedPreferences share = context.getSharedPreferences("ImInfo",MODE_PRIVATE);
+        SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+        editor.putString("headpic", info.getHeadpic());
+        editor.putString("name", info.getNickname());
+        editor.commit();    //提交数据保存
         Drawable sexDrawble = getResources().getDrawable(info.getSex() == 1 ? R.mipmap.icon_nearby_sex_man : R.mipmap.icon_nearby_sex_woman);
         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
         tv_user_name.setCompoundDrawables(sexDrawble, null, null, null);
@@ -169,6 +197,25 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
                     }
                 });
                 mPopupDialogWidget.showPopupWindow();
+                break;
+
+            case R.id.bt_share_option://我的跟投
+                UISKipUtils.startMyHeelShotActivity((Activity) getContext());
+                break;
+            case R.id.bt_stake_in://拍得股权
+                UISKipUtils.startStakeInActivity((Activity) getContext());
+                break;
+            case R.id.bt_transfer_record://转账记录
+                UISKipUtils.startTransferRecordActivity((Activity) getContext());
+                break;
+            case R.id.bt_issue_equity://发布股权
+                ToastHelper.toastMessage(getContext(),"功能开发中，敬请期待");
+                break;
+            case R.id.rl_frozen_deposit://冻结保证金
+                UISKipUtils.startFrozenDepositActivity((Activity) getContext(),cashdeposit);
+                break;
+            case R.id.rl_auction_project://想竞拍的项目
+                UISKipUtils.startAuctionProjectActivity((Activity) getContext());
                 break;
         }
     }

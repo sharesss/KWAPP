@@ -79,6 +79,7 @@
     <string name="user_info_nodata">未填写</string>
     <string name="title_edit_nick_name">昵称</string>
     <string name="title_edit_compay_name">公司名称</string>
+    <string name="title_edit_frozen_deposit">当前冻结保证金</string>
     <string name="title_edit_position_name">职称</string>
     <string name="title_personalized_signature">个性签名</string>
     <string name="title_erificationv_phone_num">验证当前手机号</string>
@@ -89,8 +90,8 @@
     <string name="title_report">想跟投的项目</string>
     <string name="empty">清空</string>
     <string name="del">删除</string>
-
-
+    <string name="text_comment">写评论...</string>
+    <string name="ok"> 同意</string>
     <string name="notice">通知</string>
 
     <string name="collection_project">收藏的项目</string>

@@ -26,6 +26,16 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <!-- 环信 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <application
         android:name=".FmxtApplication"
         android:allowBackup="true"
@@ -157,6 +167,42 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
+            android:name="com.ts.fmxt.ui.StockAuction.AuctionDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.im.ChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.FrozenDepositActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.AuctionProjectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.MyHeelShotActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.TransferRecordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.StakeInActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.HistoryDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.HomePage.SmallThrowRuleActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
             android:name="com.android.moblie.zmxy.antgroup.creditsdk.app.SDKActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -178,6 +224,31 @@
             android:exported="true"
             android:label="@string/title_activity_wxentry"
             android:launchMode="singleTop" />
+
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1194161008115809#fmxt-develop" />
+
+        <receiver
+            android:name="com.ts.fmxt.ui.StockAuction.Receiver.MyReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.hdl.jpushdemo" />
+            </intent-filter>
+        </receiver>
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="2a9d738509b0348b1cfdce58"/>
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="665d69121981502b7929625c"/> <!--  </>值来自开发者平台取得的AppKey-->
     </application>
 
 </manifest>

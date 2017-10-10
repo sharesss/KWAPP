@@ -24,8 +24,6 @@ public class ConsumerCommentEntity {
     private int isFounder;//评论人是否项目创始人
     private int isInvestAuthen;//评论人是否投资认证
 
-    public ConsumerCommentEntity() {
-    }
 
     public ConsumerCommentEntity(JSONObject jsonObj) {
         this.id = jsonObj.optInt("id", 0);

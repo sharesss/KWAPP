@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/color_f5f5f5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <widget.titlebar.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_c8c8c8"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_white_5_shape"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/tv_in_audit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_orange_5_shape"
+            android:text="审核中"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_audited"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="审核通过"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_audit_failure"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="审核失败"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <com.thindo.base.Widget.refresh.RefreshListView
+        android:id="@id/refresh_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@null"
+        android:descendantFocusability="beforeDescendants"
+        android:divider="@color/line_bg"
+        android:dividerHeight="@dimen/px_1"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:layout_marginTop="10dp"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:listSelector="@color/none"
+        android:overScrollMode="never"
+        android:smoothScrollbar="true"
+        app:ptrHeaderBackground="@color/ui_bgs"
+        app:ptrMode="both"
+        app:ptrShowIndicator="false" />
+
+    <widget.NetworkView
+        android:id="@id/network"
+        style="@style/base_wrap"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+    <widget.EmptyView
+        android:id="@+id/empty_view"
+        style="@style/base_wrap"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+</LinearLayout>

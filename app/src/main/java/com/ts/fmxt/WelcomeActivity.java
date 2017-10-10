@@ -11,6 +11,7 @@ import com.thindo.base.NetworkAPI.BaseResponse;
 import com.thindo.base.NetworkAPI.OnResponseListener;
 import com.thindo.base.UI.Activity.BaseActivity;
 
+import cn.jpush.android.api.JPushInterface;
 import utils.UISKipUtils;
 
 
@@ -74,6 +75,18 @@ public class WelcomeActivity extends BaseActivity implements OnResponseListener 
     public void onSuccess(BaseResponse response) {
 
     }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
 }

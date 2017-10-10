@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.thindo.base.Utils.AppManager;
+import com.ts.fmxt.ui.HomePage.SmallThrowRuleActivity;
 import com.ts.fmxt.ui.MainFrameActivity;
+import com.ts.fmxt.ui.StockAuction.AuctionDetailsActivity;
 import com.ts.fmxt.ui.discover.ConfirmPaymentActivity;
 import com.ts.fmxt.ui.discover.DiscoverDetailsActivity;
 import com.ts.fmxt.ui.discover.ReportActivity;
 import com.ts.fmxt.ui.user.AboutusActivity;
+import com.ts.fmxt.ui.user.AuctionProjectActivity;
 import com.ts.fmxt.ui.user.BindNewPhoneActivity;
 import com.ts.fmxt.ui.user.CertifiedInvestorActivity;
 import com.ts.fmxt.ui.user.CollectionProjectActivity;
@@ -21,9 +24,14 @@ import com.ts.fmxt.ui.user.EditPassWordActivity;
 import com.ts.fmxt.ui.user.EditPhoneActivity;
 import com.ts.fmxt.ui.user.EditUserInfoActivity;
 import com.ts.fmxt.ui.user.FollowProjectActivity;
+import com.ts.fmxt.ui.user.FrozenDepositActivity;
+import com.ts.fmxt.ui.user.HistoryDetailsActivity;
 import com.ts.fmxt.ui.user.MessageActivity;
+import com.ts.fmxt.ui.user.MyHeelShotActivity;
 import com.ts.fmxt.ui.user.OtherInfomationActivity;
 import com.ts.fmxt.ui.user.ProjectReturnActivity;
+import com.ts.fmxt.ui.user.StakeInActivity;
+import com.ts.fmxt.ui.user.TransferRecordActivity;
 import com.ts.fmxt.ui.user.UserAgreementActivity;
 import com.ts.fmxt.ui.user.authentication.RealNameActivity;
 import com.ts.fmxt.ui.user.authentication.RealNameResultActivity;
@@ -231,13 +239,47 @@ public class UISKipUtils {
         intent.putExtra("type", type);
         context.startActivity(intent);
     }
+    public static void startFrozenDepositActivity(Activity context,String cashdeposit){
+        Intent intent = new Intent(context, FrozenDepositActivity.class);
+        intent.putExtra("cashdeposit", cashdeposit);
+        context.startActivity(intent);
+    }
+    public static void startAuctionProjectActivity(Activity context){
+        Intent intent = new Intent(context, AuctionProjectActivity.class);
+        context.startActivity(intent);
+    }
+    public static void startStakeInActivity(Activity context){
+        Intent intent = new Intent(context, StakeInActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startMyHeelShotActivity(Activity context){
+        Intent intent = new Intent(context, MyHeelShotActivity.class);
+        context.startActivity(intent);
+    }
+    public static void startTransferRecordActivity(Activity context){
+        Intent intent = new Intent(context, TransferRecordActivity.class);
+        context.startActivity(intent);
+    }
+    public static void startHistoryDetailsActivity(Activity context){
+        Intent intent = new Intent(context, HistoryDetailsActivity.class);
+        context.startActivity(intent);
+    }
     public static void startMessageActivity(Activity context){
         Intent intent = new Intent(context, MessageActivity.class);
         context.startActivity(intent);
     }
-
+    public static void statrSmallThrowRuleActivity(Activity context){
+        Intent intent = new Intent(context, SmallThrowRuleActivity.class);
+        context.startActivity(intent);
+    }
     public static void startDiscoverDetailsActivity(Activity context,int id){
         Intent intent = new Intent(context, DiscoverDetailsActivity.class);
+        intent.putExtra("id", id);
+        context.startActivity(intent);
+    }
+    public static void startAuctionDetailsActivity(Activity context,int id){
+        Intent intent = new Intent(context, AuctionDetailsActivity.class);
         intent.putExtra("id", id);
         context.startActivity(intent);
     }

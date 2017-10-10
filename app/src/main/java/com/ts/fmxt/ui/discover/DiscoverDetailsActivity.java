@@ -426,6 +426,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if(token!=null){
             staff.put("tokenId", String.valueOf(token));
         }
+        staff.put("moduleType", String.valueOf(1));
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.INVESTCOMMENTLIST,
                 new OkHttpClientManager.ResultCallback<String>() {
 

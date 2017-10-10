@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:hyphenate="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/AppWidget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/black">
+
+    <com.ts.fmxt.ui.im.widget.EaseTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        hyphenate:titleBarLeftImage="@mipmap/ease_mm_title_back" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="结束时间"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/title_bar"
+        android:textColor="@color/viewfinder_laser"/>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_host_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gray3232_shape"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/tv_time">
+        <widget.image.CircleImageView
+            android:id="@+id/iv_portrait"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_2" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/base_wrap"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/iv_portrait"
+            android:text="zhang"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tv_founder"
+            style="@style/base_wrap"
+            android:layout_below="@id/tv_name"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toRightOf="@id/iv_portrait"
+            android:textSize="12sp"
+            android:textColor="@color/viewfinder_laser"
+            android:text="主持人" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_follw_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/sp_12"
+        android:layout_below="@id/tv_time"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentRight="true"
+        android:text="112人关注"/>
+
+    <TextView
+        android:id="@+id/iv_suction_starting_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_host_view"
+        android:layout_centerHorizontal="true"
+        android:text="起拍价0元"
+        android:gravity="center"
+        android:textSize="@dimen/dp_15"
+        android:visibility="gone"
+        android:textColor="@color/color_theme_yellow"
+        android:background="@mipmap/auction_starting_price"/>
+    <TextView
+        android:id="@+id/tv_auction_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_suction_starting_price"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"
+        android:text="拍品【胡桃里公司股权1%】"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="@dimen/dp_15"
+        android:textColor="@color/gray"/>
+    <RelativeLayout
+        android:id="@+id/rl_highest_bid_view"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_below="@id/rl_host_view"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_gray493_shape"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            >
+            <widget.image.CircleImageView
+                android:id="@+id/iv_highest_bid"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_31"
+                 />
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                style="@style/base_wrap"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:paddingRight="30dp"
+                android:layout_toRightOf="@id/iv_highest_bid"
+                android:text="zhang"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/base_wrap"
+                android:layout_below="@id/tv_nickname"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:paddingRight="30dp"
+                android:layout_toRightOf="@id/iv_highest_bid"
+                android:textSize="12sp"
+                android:textColor="@color/color_theme_yellow"
+                android:text="1000元" />
+
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_lead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/lead"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/input_menu"
+        android:layout_below="@id/rl_highest_bid_view">
+
+        <com.ts.fmxt.ui.im.widget.EaseChatMessageList
+            android:id="@+id/message_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:id="@+id/ll_count_down"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/viewfinder_laser"
+                    android:text="拍卖即将开始"
+                    android:textSize="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/viewfinder_laser"
+                android:text="倒计时"
+                android:textSize="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/viewfinder_laser"
+                android:text="..."
+                android:textSize="@dimen/dp_20"/>
+
+            <TextView
+                android:id="@+id/tv_count_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/viewfinder_laser"
+                android:gravity="center"
+                android:text="4"
+                android:background="@mipmap/circle_count_down"
+                android:textSize="@dimen/dp_80"/>
+
+
+        </LinearLayout>
+        <com.ts.fmxt.ui.im.widget.EaseVoiceRecorderView
+            android:id="@+id/voice_recorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_quit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/auction_quit" />
+    <com.ts.fmxt.ui.im.widget.EaseChatInputMenu
+        android:id="@+id/input_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <RelativeLayout
+        android:id="@+id/rl_gif_animation"
+        style="@style/base_wrap"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_120">
+
+
+        <widget.image.FMNetImageView
+            android:id="@+id/iv_gif"
+            style="@style/base_wrap" />
+
+        <TextView
+            android:id="@+id/tv_send_gif_num"
+            style="@style/base_wrap"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_toRightOf="@id/iv_gif"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/sp_18" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -156,17 +156,116 @@
             android:textColor="@color/white" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_user_down"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/rly_paren"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bt_share_option"
+                style="@style/main_fragment_mixed"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="我的跟投"
+                android:drawableTop="@mipmap/share_option"
+                 />
+
+
+            <TextView
+                android:id="@+id/bt_stake_in"
+                style="@style/main_fragment_mixed"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="拍得股权"
+                android:drawableTop="@mipmap/stake_in"
+                 />
+
+
+            <TextView
+                android:id="@+id/bt_transfer_record"
+                style="@style/main_fragment_mixed"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="转让记录"
+                android:drawableTop="@mipmap/transfer_record"
+               />
+
+            <TextView
+                android:id="@+id/bt_issue_equity"
+                style="@style/main_fragment_mixed"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="发布股权"
+                android:drawableTop="@mipmap/issue_equity"
+                 />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_frozen_deposit"
+        style="@style/text_user_item_style"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/ll_user_down"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="@color/line_bg" />
+
+        <TextView
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textColor="@color/font_main"
+            android:text="冻结保证金"
+            android:textSize="@dimen/sp_15" />
+
+
+        <TextView
+            android:id="@+id/tv_money"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_bg" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_consumere"
         style="@style/text_user_item_style"
-        android:layout_below="@id/rly_paren"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/rl_frozen_deposit"
         >
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_1"
-            android:layout_marginLeft="@dimen/dp_20"
             android:background="@color/line_bg" />
 
         <TextView
@@ -237,18 +336,22 @@
             android:gravity="center"
             android:textColor="@color/font_main_secondary"
             android:textSize="@dimen/sp_15" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_bg" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_asset"
         style="@style/text_user_item_style"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/rl_user_real_name"
         >
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/px_1"
-            android:layout_marginLeft="20dp"
             android:background="@color/line_bg" />
 
         <TextView
@@ -273,12 +376,50 @@
             android:textSize="@dimen/sp_15" />
 
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_auction_project"
+        style="@style/text_user_item_style"
+        android:layout_below="@id/rl_asset"
+        android:layout_marginTop="-3dp">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:background="@color/line_bg" />
+
+        <TextView
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:gravity="center"
+            android:text="想竞拍的项目"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/sp_16" />
+
+
+        <TextView
+            android:id="@+id/tv_auction_num"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_bg" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_fmb"
         style="@style/text_user_item_style"
-        android:layout_below="@id/rl_asset"
+        android:layout_below="@id/rl_auction_project"
         android:layout_marginTop="-3dp">
 
         <View
