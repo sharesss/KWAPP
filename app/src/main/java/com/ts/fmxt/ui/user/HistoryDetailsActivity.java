@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.squareup.okhttp.Request;
 import com.thindo.base.Widget.refresh.RefreshListView;
@@ -35,6 +36,7 @@ public class HistoryDetailsActivity extends FMBaseTableActivity {
     private EmptyView mEmptyView;
     private RefreshListView refresh_lv;
     private HistoryDetailsAdapter adapter;
+    private LinearLayout ll_audited;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,8 @@ public class HistoryDetailsActivity extends FMBaseTableActivity {
         EmptyView mEmptyView = new EmptyView(this);
         setEmptyView(mEmptyView);
         startRefreshState();
+        ll_audited = (LinearLayout) findViewById(R.id.ll_audited);
+        ll_audited.setVisibility(View.GONE);
     }
 
 

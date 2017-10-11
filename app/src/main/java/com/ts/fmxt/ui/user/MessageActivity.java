@@ -55,7 +55,6 @@ public class MessageActivity  extends FMBaseTableActivity implements  CstSwipeDe
         navigationView.showRightButtomAndTextColor(R.string.empty, R.color.black, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //现金明细
                 cleanNotifyRequest();
             }
         });
@@ -146,7 +145,29 @@ public class MessageActivity  extends FMBaseTableActivity implements  CstSwipeDe
         ((MessageEntity) arrays.get(position)).setReadFlag(1);
         DelReadFlagRequest(info);
         adapter.notifyDataSetChanged();
-        UISKipUtils.startDiscoverDetailsActivity(MessageActivity.this,info.getRealId(),1);
+        if(info.getType()==1){
+            //评论
+            if(info.getSkipType() ==1){
+               // 则1是项目跟投
+                UISKipUtils.startDiscoverDetailsActivity(MessageActivity.this,info.getRealId(),1);
+            }else if(info.getSkipType() ==2){
+                //、2是股权拍卖
+                UISKipUtils.startAuctionDetailsActivity(MessageActivity.this,info.getRealId());
+            }
+        }else if(info.getType()==2){
+            //股权拍卖
+            if(info.getSkipType() ==1){
+                // 则1股权拍卖详情页、、
+                UISKipUtils.startAuctionDetailsActivity(MessageActivity.this,info.getRealId());
+            }else if(info.getSkipType() ==2){
+                //、2保证金历史页
+                UISKipUtils.startHistoryDetailsActivity(MessageActivity.this);
+            }else if(info.getSkipType() ==3){
+                //、3股权转让记录
+                UISKipUtils.startTransferRecordActivity(MessageActivity.this);
+            }
+        }
+
 
     }
 

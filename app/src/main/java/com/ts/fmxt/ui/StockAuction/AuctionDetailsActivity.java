@@ -2,6 +2,7 @@ package com.ts.fmxt.ui.StockAuction;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -76,7 +77,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
     private TextView tv_auction_type,tv_attention_number,tv_name,tv_isfounder,tv_founder,tv_isVfounder,tv_praise;
     private TextView tv_follow_up_project,tv_transfer_project,tv_auction_project,tv_starting_price,tv_fare_increase,tv_company_equity,tv_equity;
     private TextView tv_starting_prices,tv_round,tv_type,tv_names,tv_bonus,tv_stockDesc,tv_disclaimer,tv_transaction_price;
-    private TextView tv_auction_evaluation,tv_V_evaluation;
+    private TextView tv_auction_evaluation,tv_V_evaluation,tv_set_remind;
     private FMNoScrollListView lv_ranking,lv_comment;
     private LinearLayout ll_type1,ll_ranking_list;
     private RankingAdapter mRankingAdapter;
@@ -166,7 +167,9 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         ll_ranking_list = (LinearLayout) findViewById(R.id.ll_ranking_list);
         tv_transaction_price = (TextView) findViewById(R.id.tv_transaction_price);
         tv_praise = (TextView) findViewById(R.id.tv_praise);
+        tv_set_remind = (TextView) findViewById(R.id.tv_set_remind);
         tv_praise.setOnClickListener(this);
+        tv_set_remind.setOnClickListener(this);
     }
     /**
      * 初始化数据
@@ -192,6 +195,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
             ll_ranking_list.setVisibility(View.GONE);
         }else if(info.getAuctionState()==1||info.getAuctionState()==2){
             tv_auction_type.setText("拍卖结束");
+            tv_set_remind.setVisibility(View.GONE);
         }else{
             tv_auction_type.setText("拍卖中");
         }
@@ -249,6 +253,10 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
                 tv_praise.setText("拍卖中");
             }
         }
+        tv_set_remind.setText(info.getIsRemind()==0 ? "开启提醒":"提醒已开启");
+        Drawable sexDrawble = getResources().getDrawable(tv_set_remind.getText().toString().equals("开启提醒") ? R.mipmap.stock_detail_icon_alarm_n : R.mipmap.stock_detail_icon_alarm_s);
+        sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
+        tv_set_remind.setCompoundDrawables(null, sexDrawble, null, null);
         timer = new Timer();//创建Timer对象
         //执行定时任务
         timer.schedule(new TimerTask() {
@@ -313,8 +321,18 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
                 dialog.show(getSupportFragmentManager(), "评论");
                 break;
             case R.id.tv_auction_house://拍卖场
-                startActivity(new Intent(AuctionDetailsActivity.this, ChatActivity.class).putExtra("chatType", 3).
-                        putExtra("userId", info.getChatRoomId()));
+//                if(!tv_auction_type.getText().toString().equals("拍卖结束")){
+                    startActivity(new Intent(AuctionDetailsActivity.this, ChatActivity.class).putExtra("chatType", 3).
+                            putExtra("userId", info.getChatRoomId()));
+//                }else {
+//                    ToastHelper.toastMessage(this,"拍卖已结束");
+//                }
+
+                break;
+            case R.id.tv_set_remind://开启提现
+                if(tv_set_remind.getText().toString().equals("开启提醒")){
+                    RemindRequest();
+                }
                 break;
             case R.id.tv_praise://预交保证金
                 if(tv_praise.getText().equals("预交保证金")){
@@ -328,6 +346,9 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
                         return;
                     }
                     WechatPay();
+                }else if(!tv_praise.getText().toString().equals("拍卖结束")){
+                    startActivity(new Intent(AuctionDetailsActivity.this, ChatActivity.class).putExtra("chatType", 3).
+                            putExtra("userId", info.getChatRoomId()));
                 }
 
                 break;
@@ -511,6 +532,48 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         );
     }
 
+    private void RemindRequest(){
+        SharedPreferences sharedPreferences = getSharedPreferences("user",
+                MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("stockId", String.valueOf(investId));
+        staff.put("tokenId", String.valueOf(token));
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.SAVEUSERSTOCKEQUITYREMIND,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+                                    tv_set_remind.setText("提醒已开启");
+                                    Drawable sexDrawble = getResources().getDrawable(tv_set_remind.getText().toString().equals("开启提醒") ? R.mipmap.stock_detail_icon_alarm_n : R.mipmap.stock_detail_icon_alarm_s);
+                                    sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
+                                    tv_set_remind.setCompoundDrawables(null, sexDrawble, null, null);
+                                } else {
+                                    ToastHelper.toastMessage(AuctionDetailsActivity.this, "拍卖时间已过，请选择其他未开拍的项目");
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
+
+    }
+
     private void WechatPay(){
         SharedPreferences sharedPreferences= getSharedPreferences("user",
                 MODE_PRIVATE);
@@ -523,7 +586,6 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         staff.put("roleType", "2");
         staff.put("clientType", "2");
         staff.put("orderType", "2");
-
 
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.SAVEUSERINVESTPROJECTFOLLOW,
                 new OkHttpClientManager.ResultCallback<String>() {

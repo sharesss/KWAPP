@@ -12,12 +12,15 @@ public class MessageEntity {
     private String count;// 内容
     private int userId;//用户id
     private int readFlag;//是否已阅读：0否，1是
-    private int type;//消息类型：1评论
+    private int type;//消息类型：1评论,2 股权拍卖
     private String userName;//用户昵称
     private String tiem;//发布内容时间
     private int  messageId;//本消息来源id
     private int  isInvestAuthen;//是否已是投资人
-    private int  realId;
+    private int  realId;//通过该id跳转对应信息
+    private int  skipType;//消息类型  跳转类型:如果type=1,则1是项目跟投、2是股权拍卖，如果type=2,则1股权拍卖详情页、2保证金历史页、3股权拍卖审核页
+    private String  picture;//图片
+
 
     public MessageEntity(JSONObject json) {
         this.count = json.optString("content");
@@ -29,6 +32,8 @@ public class MessageEntity {
         this.isInvestAuthen=json.optInt("isInvestAuthen", 0);
         this.tiem= DateFormatUtils.longToDate("yyyy-MM-dd", json.optLong("createTime", 0));
         this.realId = json.optInt("realId");
+        this.skipType =json.optInt("skipType");
+        this.picture = json.optString("picture");
     }
 
     public String getCount() {
@@ -103,5 +108,21 @@ public class MessageEntity {
 
     public void setRealId(int realId) {
         this.realId = realId;
+    }
+
+    public int getSkipType() {
+        return skipType;
+    }
+
+    public void setSkipType(int skipType) {
+        this.skipType = skipType;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

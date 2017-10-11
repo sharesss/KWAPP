@@ -42,6 +42,7 @@ public class FindStockEquityHomeEntity {
     private int topPrice;
     private int reserveNum;
     private int isApply;
+    private int isRemind;//是否提醒 0未提醒 ，1已提醒
     private String  forthoseName;
     private String forthoseHeadPic;
     //个人信息
@@ -82,6 +83,7 @@ public class FindStockEquityHomeEntity {
         this.disclaimer = jsonObj.optString("disclaimer");
         this.chatRoomId = jsonObj.optString("chatRoomId");
         this.isApply = jsonObj.optInt("isApply",0);
+        this.isRemind = jsonObj.optInt("isRemind",0);
         this.forthoseName = jsonObj.optString("forthoseName");
         this.forthoseHeadPic = jsonObj.optString("forthoseHeadPic");
         this.auctionEndTime = jsonObj.optLong("auctionEndTime");
@@ -500,6 +502,14 @@ public class FindStockEquityHomeEntity {
 
     public void setIsApply(int isApply) {
         this.isApply = isApply;
+    }
+
+    public int getIsRemind() {
+        return isRemind;
+    }
+
+    public void setIsRemind(int isRemind) {
+        this.isRemind = isRemind;
     }
 
     public String getForthoseName() {
