@@ -933,6 +933,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             sendAtMessage(content);
         } else {
             EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
+            message.setAttribute("headimg", "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1762973822,121126736&fm=27&gp=0.jpg");
             sendMessage(message);
         }
     }

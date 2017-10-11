@@ -18,6 +18,7 @@ import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.Direct;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.DateUtils;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.im.adapter.EaseMessageAdapter;
@@ -132,7 +133,14 @@ public abstract class EaseChatRow extends LinearLayout {
             EaseUserUtils.setUserAvatar(context, headpic, userAvatarView);
             EaseUserUtils.setUserNick(name, usernickView);
         } else {
-            EaseUserUtils.setUserAvatar(context, uri, userAvatarView, true);
+
+            String headimage = null;
+            try {
+                headimage = message.getStringAttribute("headimg");
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
+            EaseUserUtils.setUserAvatar(context, headimage, userAvatarView, true);
             EaseUserUtils.setUserNick(message.getFrom(), usernickView);
         }
         if (deliveredView != null) {
@@ -291,10 +299,10 @@ public abstract class EaseChatRow extends LinearLayout {
             userAvatarView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        if (message.direct() == Direct.SEND) {
+                    if (message.direct() == Direct.SEND) {
 //                            UISKipUtils.startOtherUserActivity((Activity) getContext(), FMWession.getInstance().getUserId(), 1, "0");
-                        } else {
-                          //  UISkipUtils.startOtherUserActivity((Activity) getContext(), FMWession.getInstance().getUserId(), 1, "0");
+                    } else {
+                        //  UISkipUtils.startOtherUserActivity((Activity) getContext(), FMWession.getInstance().getUserId(), 1, "0");
 
 //                            Intent intent = new Intent(context, UserInfoActivity.class);
 //                            String userId= FMWession.getInstance().getIMOtherId(message.getFrom());
@@ -303,7 +311,7 @@ public abstract class EaseChatRow extends LinearLayout {
 //                            intent.putExtra("isReadMessage", "0");
 //                            intent.putExtra("isIM", 1);
 //                            context.startActivity(intent);
-                        }
+                    }
                 }
             });
             userAvatarView.setOnLongClickListener(new OnLongClickListener() {
