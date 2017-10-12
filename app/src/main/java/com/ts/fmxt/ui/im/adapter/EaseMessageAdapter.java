@@ -27,10 +27,10 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.exceptions.HyphenateException;
 import com.ts.fmxt.ui.im.EaseConstant;
-import com.ts.fmxt.ui.im.domain.PrivilegeOfSecuritiesEntity;
+import com.ts.fmxt.ui.im.domain.AuctionBiddingEntity;
 import com.ts.fmxt.ui.im.utils.EaseCommonUtils;
 import com.ts.fmxt.ui.im.widget.EaseChatMessageList;
-import com.ts.fmxt.ui.im.widget.chatrow.ChatRowPrivilegeOfSecurities;
+import com.ts.fmxt.ui.im.widget.chatrow.ChatRowAuctionBidding;
 import com.ts.fmxt.ui.im.widget.chatrow.EaseChatRow;
 import com.ts.fmxt.ui.im.widget.chatrow.EaseChatRowBigExpression;
 import com.ts.fmxt.ui.im.widget.chatrow.EaseChatRowFile;
@@ -69,8 +69,8 @@ public class EaseMessageAdapter extends BaseAdapter {
     private static final int MESSAGE_TYPE_SENT_EXPRESSION = 12;
     private static final int MESSAGE_TYPE_RECV_EXPRESSION = 13;
 
-    private static final int MESSAGE_TYPE_RECV_PROJECT = 14;
-    private static final int MESSAGE_TYPE_SENT_PROJECT = 15;
+    private static final int MESSAGE_TYPE_RECV_AuctionBidding = 14;
+    private static final int MESSAGE_TYPE_SENT_AuctionBidding = 15;
 
 
     public int itemTypeCount;
@@ -207,8 +207,10 @@ public class EaseMessageAdapter extends BaseAdapter {
                 return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
             }
             try {
-                if (message.getStringAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccess).equals("kSendCouponMessageSuccessTip")) {
-                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_PROJECT : MESSAGE_TYPE_SENT_PROJECT;
+                if (message.getStringAttribute(AuctionBiddingEntity.auction_MsgType).equals("0")) {
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_AuctionBidding : MESSAGE_TYPE_SENT_AuctionBidding;
+                }else if(message.getStringAttribute(AuctionBiddingEntity.auction_MsgType).equals("1")){
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
                 }
             } catch (HyphenateException e) {
                 e.printStackTrace();
@@ -254,9 +256,15 @@ public class EaseMessageAdapter extends BaseAdapter {
 //                    } else {
                         chatRow = new EaseChatRowBigExpression(context, message, position, this);
                    //  }
-                }else if("kSendCouponMessageSuccessTip".equals(message.getStringAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccess, ""))){
-                    chatRow=new ChatRowPrivilegeOfSecurities(context, message, position, this);
-                }else {
+                }else if("0".equals(message.getStringAttribute(AuctionBiddingEntity.auction_MsgType, ""))){
+                    chatRow = new EaseChatRowText(context, message, position, this);
+                }else if("1".equals(message.getStringAttribute(AuctionBiddingEntity.auction_MsgType, ""))){
+                    //出价
+                    chatRow=new ChatRowAuctionBidding(context, message, position, this);
+                }else if("2".equals(message.getStringAttribute(AuctionBiddingEntity.auction_MsgType, ""))){
+//                    chatRow=new ChatRowAuctionBidding(context, message, position, this);
+                    //结束拍卖
+                }else{
                     chatRow = new EaseChatRowText(context, message, position, this);
                 }
                 break;
@@ -278,7 +286,7 @@ public class EaseMessageAdapter extends BaseAdapter {
             default:
                 break;
         }
-        chatRow.setUri(uri);
+        chatRow.setUri("http://www.imgeek.org/uploads/article/20160713/ebfe4e94f2e844766672b447f0794899.png");
         return chatRow;
     }
 

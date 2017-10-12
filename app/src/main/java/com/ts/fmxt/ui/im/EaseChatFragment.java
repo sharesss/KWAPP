@@ -855,7 +855,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             super.onPostExecute(result);
             String otherAvatarUri = String.format("im_avatar_%s", toChatUsername);
             String uri = FMWession.getInstance().getIM(otherAvatarUri);
-            messageList.refresh(uri);
+            messageList.refresh("http://www.imgeek.org/uploads/article/20160713/ebfe4e94f2e844766672b447f0794899.png");
         }
     }
 
@@ -932,6 +932,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             String headpic = sharedPreferences.getString("headpic", "");
             EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
             message.setAttribute("headimg", headpic);
+            message.setAttribute("name", name);
             sendMessage(message);
         }
     }

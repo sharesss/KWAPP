@@ -43,6 +43,7 @@ import com.ts.fmxt.ui.im.domain.EmojiconExampleGroupData;
 import com.ts.fmxt.ui.im.domain.EmojiconFMGroupData;
 import com.ts.fmxt.ui.im.domain.PrivilegeOfSecuritiesEntity;
 import com.ts.fmxt.ui.im.domain.RobotUser;
+import com.ts.fmxt.ui.im.widget.chatrow.ChatRowAuctionBidding;
 import com.ts.fmxt.ui.im.widget.chatrow.ChatRowPrivilegeOfSecurities;
 import com.ts.fmxt.ui.im.widget.chatrow.EaseChatRow;
 import com.ts.fmxt.ui.im.widget.chatrow.EaseCustomChatRowProvider;
@@ -92,6 +93,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     static final int REQUEST_CODE_SELEST_ITEM_PRIVILEGE_OF_SECURITIES = 91;
     static final int MESSAGE_ITEM_RECV_PRIVILEGE_OF_SECURITIES = 92;
     static final int MESSAGE_ITEM_SENT_PRIVILEGE_OF_SECURITIES = 93;
+    /**
+     * 出价
+     */
+    static final int MESSAGE_TYPE_RECV_AuctionBidding = 94;
+    static final int MESSAGE_TYPE_SENT_AuctionBidding = 95;
     /**
      * if it is chatBot
      */
@@ -545,6 +551,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                 }else if(IMHelper.getInstance().isPrivilegeOfSecurities(message)){
 //                    发送特权卷
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_ITEM_RECV_PRIVILEGE_OF_SECURITIES : MESSAGE_ITEM_SENT_PRIVILEGE_OF_SECURITIES;
+                } else if(IMHelper.getInstance().isAuctionBidding(message)){
+//                    出价
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_AuctionBidding : MESSAGE_TYPE_SENT_AuctionBidding;
                 }
 
                 //red packet code : 红包消息和红包回执消息的chat row type
@@ -565,6 +574,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             if (message.getType() == EMMessage.Type.TXT) {
                 if(IMHelper.getInstance().isPrivilegeOfSecurities(message)){
                     return new ChatRowPrivilegeOfSecurities(getActivity(), message, position, adapter);
+                }else if(IMHelper.getInstance().isAuctionBidding(message)){
+                    return new ChatRowAuctionBidding(getActivity(), message, position, adapter);
                 }
 
 //                // voice call or video call

@@ -31,6 +31,7 @@ import com.ts.fmxt.ui.MainFrameActivity;
 import com.ts.fmxt.ui.im.db.IMDBManager;
 import com.ts.fmxt.ui.im.db.InviteMessgeDao;
 import com.ts.fmxt.ui.im.db.UserDao;
+import com.ts.fmxt.ui.im.domain.AuctionBiddingEntity;
 import com.ts.fmxt.ui.im.domain.EaseEmojicon;
 import com.ts.fmxt.ui.im.domain.EaseEmojiconGroupEntity;
 import com.ts.fmxt.ui.im.domain.EaseUser;
@@ -1175,6 +1176,23 @@ public class IMHelper {
         for (DataSyncListener listener : syncBlackListListeners) {
             listener.onSyncComplete(success);
         }
+    }
+
+    public boolean isAuctionBidding(EMMessage message) {
+        String TYPE =message.getStringAttribute(AuctionBiddingEntity.auction_MsgType,null);
+        if(TYPE==null){
+            return false;
+        }
+        if(TYPE.equals("1")){
+            message.getStringAttribute(AuctionBiddingEntity.auction_MsgType, null);
+            message.getStringAttribute(AuctionBiddingEntity.auction_addPrice,null);
+            message.getStringAttribute(AuctionBiddingEntity.auction_end, null);
+            message.getStringAttribute(AuctionBiddingEntity.auction_userNickName, null);
+            message.getStringAttribute(AuctionBiddingEntity.auction_userHeadPic, null);
+
+            return true;
+        }
+        return false;
     }
 
     public boolean isPrivilegeOfSecurities(EMMessage message) {

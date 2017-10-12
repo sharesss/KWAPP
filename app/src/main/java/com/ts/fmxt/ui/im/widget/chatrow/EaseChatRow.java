@@ -133,15 +133,16 @@ public abstract class EaseChatRow extends LinearLayout {
             EaseUserUtils.setUserAvatar(context, headpic, userAvatarView);
             EaseUserUtils.setUserNick(name, usernickView);
         } else {
-
             String headimage = null;
+            String name  = null;
             try {
                 headimage = message.getStringAttribute("headimg");
+                name= message.getStringAttribute("name");
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
             EaseUserUtils.setUserAvatar(context, headimage, userAvatarView, true);
-            EaseUserUtils.setUserNick(message.getFrom(), usernickView);
+            EaseUserUtils.setUserNick(name, usernickView);
         }
         if (deliveredView != null) {
             if (message.isDelivered()) {
