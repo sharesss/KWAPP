@@ -17,7 +17,6 @@ import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -161,28 +160,27 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                         initData();
                     }else{
                         ll_count_down.setVisibility(View.GONE);
-                }
+                    }
                     break;
                 case 2:
                     long lasttime = (long) msg.obj;
-                    Log.i("===", showtime(lasttime));
+                    if(lasttime<0){
+                        return;
+                    }
                     tv_time.setText("距离开始："+showtime(lasttime));
-                    lasttime--;
-                    initData();
-//                    Message msg0 = handler.obtainMessage(2);
-//                    msg0.obj = --lasttime;
-//                    initData();
-//                    handler.sendMessageDelayed(msg0, 1000);
+                    Message msg0 = handlers.obtainMessage(2);
+                    msg0.obj = --lasttime;
+                    handlers.sendMessageDelayed(msg0, 1000);
                     break;
                 case 3:
                     long lasttimes = (long) msg.obj;
-                    Log.i("===", showtime(lasttimes));
+                    if(lasttimes<0){
+                        return;
+                    }
                     tv_time.setText("距离结束："+showtime(lasttimes));
-                    lasttimes--;
-                    initData();
-//                    Message msgs = handler.obtainMessage(3);
-//                    msgs.obj = --lasttimes;
-//                    handler.sendMessageDelayed(msgs, 1000);
+                    Message msgs = handlers.obtainMessage(3);
+                    msgs.obj = --lasttimes;
+                    handlers.sendMessageDelayed(msgs, 1000);
                     break;
 
             }
@@ -330,25 +328,25 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         );
     }
 
-    private void initData(){
-        if(mChatRoomInfoEntity==null){
+    private void initData() {
+        if (mChatRoomInfoEntity == null) {
             return;
         }
         time = Integer.parseInt(String.valueOf(mChatRoomInfoEntity.getStockStartTime()));
         lasttime = mChatRoomInfoEntity.getStockStartTime();
-        if(mChatRoomInfoEntity.getUserHeadpic()!=null){
+        if (mChatRoomInfoEntity.getUserHeadpic() != null) {
             iv_portrait.loadImage(mChatRoomInfoEntity.getUserHeadpic());
         }
         tv_name.setText(mChatRoomInfoEntity.getUserNickname());
-        if(mChatRoomInfoEntity.getHeadpic()!=null){
+        if (mChatRoomInfoEntity.getHeadpic() != null) {
             iv_highest_bid.loadImage(mChatRoomInfoEntity.getHeadpic());
         }
 
         tv_nickname.setText(mChatRoomInfoEntity.getNickname());
-        tv_price.setText(mChatRoomInfoEntity.getOfferPrice()+"元");
-        if(mChatRoomInfoEntity.getStockEquityState()==0){
-                //拍卖未开始
-            if(mChatRoomInfoEntity.getStockStartTime()<=60){
+        tv_price.setText(mChatRoomInfoEntity.getOfferPrice() + "元");
+        if (mChatRoomInfoEntity.getStockEquityState() == 0) {
+            //拍卖未开始
+            if (mChatRoomInfoEntity.getStockStartTime() <= 60) {
                 ll_count_down.setVisibility(View.VISIBLE);
 
                 Message message = handlers.obtainMessage(1);     // Message
@@ -357,29 +355,24 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             rl_highest_bid_view.setVisibility(View.GONE);
             iv_suction_starting_price.setVisibility(View.VISIBLE);
             tv_auction_name.setVisibility(View.VISIBLE);
-//            long lasttime =mChatRoomInfoEntity.getStockStartTime();
-//            time =  Integer.parseInt(String.valueOf(mChatRoomInfoEntity.getStockStartTime()));
-            tv_time.setText("距离开始："+showtime(lasttime));
-//            Message msg = handlers.obtainMessage(2);
-//            msg.obj = lasttime;
-//            handlers.sendMessage(msg);
-        }else if(mChatRoomInfoEntity.getStockEquityState()==1){
+            Message msg = handlers.obtainMessage(2);
+            msg.obj = lasttime;
+            handlers.sendMessage(msg);
+        } else if (mChatRoomInfoEntity.getStockEquityState() == 1) {
             //拍卖进行中
             rl_highest_bid_view.setVisibility(View.VISIBLE);
             iv_suction_starting_price.setVisibility(View.GONE);
             tv_auction_name.setVisibility(View.GONE);
-            tv_time.setText("距离开始："+showtime(lasttime));
-//            Message msg = handlers.obtainMessage(3);
-//            msg.obj = lasttime;
-//            handlers.sendMessage(msg);
+            Message msg = handlers.obtainMessage(3);
+            msg.obj = lasttime;
+            handlers.sendMessage(msg);
             ll_count_down.setVisibility(View.GONE);
-        }else if(mChatRoomInfoEntity.getStockEquityState()==2){
-         //拍卖已结束
+        } else if (mChatRoomInfoEntity.getStockEquityState() == 2) {
+            //拍卖已结束
             tv_time.setVisibility(View.GONE);
             ll_count_down.setVisibility(View.GONE);
         }
     }
-
     public String showtime(long lasttime) {
         int day = (int) (lasttime / (3600 * 24));
         lasttime = (lasttime % (3600 * 24));
@@ -430,10 +423,11 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
      * register extend menu, item id need > 3 if you override this method and keep exist item
      */
     protected void registerExtendMenuItem() {
-        for (int i = 0; i < itemStrings.length; i++) {
-            inputMenu.registerExtendMenuItem(itemStrings[i], itemdrawables[i], itemIds[i], extendMenuItemClickListener);
-        }
+//        for (int i = 0; i < itemStrings.length; i++) {
+//            inputMenu.registerExtendMenuItem(itemStrings[i], itemdrawables[i], itemIds[i], extendMenuItemClickListener);
+//        }
 //        inputMenu.registerExtendMenuItem("特权卷",R.drawable.ic_launcher,ITEM_PRIVILEGE_OF_SECURITIES,extendMenuItemClickListener);
+
     }
 
 
@@ -897,7 +891,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     /**
      * input @
-     *
+     *      昵称
      * @param username
      */
     protected void inputAtUsername(String username, boolean autoAddAtSymbol) {
@@ -919,7 +913,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     /**
      * input @
-     *
+     *      头像
      * @param username
      */
     protected void inputAtUsername(String username) {

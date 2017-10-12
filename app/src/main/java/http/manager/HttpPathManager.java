@@ -121,6 +121,7 @@ public class HttpPathManager {
     public static String FINDSTOCKEQUITYAUCTIONPAYINFO =  STOCK+"findStockEquityAuctionPayInfo";
     public static String FINDSTOCKEQUITYREALINFO =  STOCK+"findStockEquityRealInfo";
     public static String SAVEUSERSTOCKEQUITYREMIND =  STOCK+"saveUserStockEquityRemind";
+    public static String  SAVESTOCKEQUITYAUCTIONBID = STOCK+"saveStockEquityAuctionBid";
 
 
 

@@ -1,6 +1,8 @@
 package com.ts.fmxt.ui.im.widget;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,7 +17,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.squareup.okhttp.Request;
 import com.ts.fmxt.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import http.manager.HttpPathManager;
+import http.manager.OkHttpClientManager;
+import utils.helper.ToastHelper;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -174,8 +189,16 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
             edittext_layout.setVisibility(View.VISIBLE);
             buttonPressToSpeak.setVisibility(View.GONE);
             showNormalFaceImage();
-            if(listener != null)
-                listener.onToggleExtendClicked();
+            Price_Dialog price_dialog = new Price_Dialog();
+            price_dialog.show((Activity) getContext(), 100000, 1000, new Price_Dialog.PostLinstener() {
+                @Override
+                public void post(int price) {
+                    saveStockEquityAuctionBidRequest(price);
+
+                }
+            });
+//            if(listener != null)
+//                listener.onToggleExtendClicked();
         } else if (id == R.id.et_sendmessage) {
             edittext_layout.setBackgroundResource(R.mipmap.ease_input_bar_bg_active);
             faceNormal.setVisibility(View.VISIBLE);
@@ -268,4 +291,48 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
         return editText;
     }
 
+    private void saveStockEquityAuctionBidRequest(final int price){
+        SharedPreferences sharedPreferences= getContext().getSharedPreferences("ImInfo",
+                MODE_PRIVATE);
+        int stockId=sharedPreferences.getInt("stockId", 0);
+        SharedPreferences sharedPreference= getContext().getSharedPreferences("user",
+                MODE_PRIVATE);
+        String token=sharedPreference.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("stockId", String.valueOf(stockId));
+        staff.put("tokenId", String.valueOf(token));
+        staff.put("offerPrice", String.valueOf(price));
+
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.SAVESTOCKEQUITYAUCTIONBID,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if(stats.equals("1")){
+                                    if(listener != null){
+                                        listener.onSendBtnClicked("出价"+price+"元");
+                                    }
+                                }else{
+                                    ToastHelper.toastMessage(getContext(),msg);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
+    }
 }
