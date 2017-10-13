@@ -21,6 +21,7 @@ import com.hyphenate.chat.EMMessage.Direct;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.DateUtils;
 import com.ts.fmxt.R;
+import com.ts.fmxt.ui.im.EaseConstant;
 import com.ts.fmxt.ui.im.adapter.EaseMessageAdapter;
 import com.ts.fmxt.ui.im.utils.EaseUserUtils;
 import com.ts.fmxt.ui.im.widget.EaseChatMessageList;
@@ -131,13 +132,13 @@ public abstract class EaseChatRow extends LinearLayout {
             String name = sharedPreferences.getString("name", "");
             String headpic = sharedPreferences.getString("headpic", "");
             EaseUserUtils.setUserAvatar(context, headpic, userAvatarView);
-            EaseUserUtils.setUserNick(name, usernickView);
+//            EaseUserUtils.setUserNick(name, usernickView);
         } else {
             String headimage = null;
-            String name  = null;
+            String name = null;
             try {
-                headimage = message.getStringAttribute("headimg");
-                name= message.getStringAttribute("name");
+                headimage = message.getStringAttribute(EaseConstant.EXTRA_USER_IMG);
+                name = message.getStringAttribute(EaseConstant.EXTRA_USER_NAME);
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }

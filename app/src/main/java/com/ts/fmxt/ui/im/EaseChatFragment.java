@@ -926,13 +926,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         if (EaseAtMessageHelper.get().containsAtUsername(content)) {
             sendAtMessage(content);
         } else {
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences("ImInfo",
-                    MODE_PRIVATE);
-            String name = sharedPreferences.getString("name", "");
-            String headpic = sharedPreferences.getString("headpic", "");
             EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
-            message.setAttribute("headimg", headpic);
-            message.setAttribute("name", name);
             sendMessage(message);
         }
     }

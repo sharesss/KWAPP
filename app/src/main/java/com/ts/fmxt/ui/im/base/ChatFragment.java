@@ -27,8 +27,6 @@ import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.util.PathUtil;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.im.Constant;
 import com.ts.fmxt.ui.im.ContextMenuActivity;
@@ -54,12 +52,12 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 
-import utils.DateFormatUtils;
-import utils.FileUtil;
 import utils.ReceiverUtils;
 import utils.sharePreferences.FMWession;
 
-public class ChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper, ReceiverUtils.MessageReceiver{
+import static android.content.Context.MODE_PRIVATE;
+
+public class ChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper, ReceiverUtils.MessageReceiver {
     // constant start from 11 to avoid conflict with constant in base class
     private static final int ITEM_VIDEO = 11;
     private static final int ITEM_FILE = 12;
@@ -114,8 +112,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     @Override
     public void onAttach(Activity context) {
         super.onAttach(context);
-        this.mActivity =context;
+        this.mActivity = context;
     }
+
     @Override
     public void onMessage(int receiverType, Bundle bundle) {
 //        if (receiverType == ReceiverUtils.IMFMNUM) {
@@ -125,6 +124,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 //        }
 
     }
+
     @Override
     protected void setUpView() {
         setChatFragmentListener(this);
@@ -147,7 +147,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             }
         });
         ((EaseEmojiconMenu) inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconExampleGroupData.getData());
-         //疯蜜自定义表情
+        //疯蜜自定义表情
         ((EaseEmojiconMenu) inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconFMGroupData.getData());
         if (chatType == EaseConstant.CHATTYPE_GROUP) {
             inputMenu.getPrimaryMenu().getEditText().addTextChangedListener(new TextWatcher() {
@@ -178,52 +178,52 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 //        }
     }
 
-    private void sendSysImageMsg(final String path) {
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().loadImage(path, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                String imagePath = FileUtil.saveBitmap(loadedImage, DateFormatUtils.formatDateStr("yyyyMMHHddmmss"));
-                EMMessage imageMsg = EMMessage.createImageSendMessage(imagePath, false, toChatUsername);
-                imageMsg.setAttribute("kSendGiftMessageSuccessURLTip", path);
-                imageMsg.setAttribute("kSendGiftMessageSuccessNumberTip", FMWession.getInstance().getSendGifNum());
-                EMClient.getInstance().chatManager().sendMessage(imageMsg);
-                FMWession.getInstance().setSendGifUri("");
-                new AsyncMainTask().execute();
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-            }
-        });
-
-    }
+//    private void sendSysImageMsg(final String path) {
+//        com.nostra13.universalimageloader.core.ImageLoader.getInstance().loadImage(path, new ImageLoadingListener() {
+//            @Override
+//            public void onLoadingStarted(String imageUri, View view) {
+//            }
+//
+//            @Override
+//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//            }
+//
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                String imagePath = FileUtil.saveBitmap(loadedImage, DateFormatUtils.formatDateStr("yyyyMMHHddmmss"));
+//                EMMessage imageMsg = EMMessage.createImageSendMessage(imagePath, false, toChatUsername);
+//                imageMsg.setAttribute("kSendGiftMessageSuccessURLTip", path);
+//                imageMsg.setAttribute("kSendGiftMessageSuccessNumberTip", FMWession.getInstance().getSendGifNum());
+//                EMClient.getInstance().chatManager().sendMessage(imageMsg);
+//                FMWession.getInstance().setSendGifUri("");
+//                new AsyncMainTask().execute();
+//            }
+//
+//            @Override
+//            public void onLoadingCancelled(String imageUri, View view) {
+//            }
+//        });
+//
+//    }
 
     private void sendPrivilegeOfSecuritiesMsg() {
-        isHaveData=false;
+        isHaveData = false;
         SharedPreferences share = mActivity.getSharedPreferences("ee",
                 Context.MODE_PRIVATE);
-        if(share!=null){
-        EMMessage imageMsg = EMMessage.createTxtSendMessage("特权卷", toChatUsername);
-        imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccess, "kSendCouponMessageSuccessTip");
-        imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessStoreIdIdKey, share.getInt("storeId", 0));
-        imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessLocationKey, share.getString("storeAddress", ""));
-        imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessDiscountMoneyKey, share.getInt("couponBackMoney", 0));
-        imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessTotalMoneyKey, share.getInt("couponFullMoney", 0));
-        imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessCashCouponIdKey, share.getInt("userCashCouponId", 0));
-        imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessLogoKey, share.getString("brandLogo", ""));
-        EMClient.getInstance().chatManager().sendMessage(imageMsg);
+        if (share != null) {
+            EMMessage imageMsg = EMMessage.createTxtSendMessage("特权卷", toChatUsername);
+            imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccess, "kSendCouponMessageSuccessTip");
+            imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessStoreIdIdKey, share.getInt("storeId", 0));
+            imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessLocationKey, share.getString("storeAddress", ""));
+            imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessDiscountMoneyKey, share.getInt("couponBackMoney", 0));
+            imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessTotalMoneyKey, share.getInt("couponFullMoney", 0));
+            imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessCashCouponIdKey, share.getInt("userCashCouponId", 0));
+            imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccessLogoKey, share.getString("brandLogo", ""));
+            EMClient.getInstance().chatManager().sendMessage(imageMsg);
             SharedPreferences.Editor editor = share.edit();
             editor.clear();
-         FMWession.getInstance().setSendGifName("");
-        new AsyncMainTask().execute();
+            FMWession.getInstance().setSendGifName("");
+            new AsyncMainTask().execute();
 
         }
     }
@@ -348,7 +348,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             }
         }
 
-        if(resultCode==REQUEST_CODE_SELEST_ITEM_PRIVILEGE_OF_SECURITIES){// 特权劵回调
+        if (resultCode == REQUEST_CODE_SELEST_ITEM_PRIVILEGE_OF_SECURITIES) {// 特权劵回调
 
 //            ExpiredEntity eeinfo = (ExpiredEntity) data.getSerializableExtra("ee");
 //            EMMessage message = EMMessage.createTxtSendMessage("特权卷",toChatUsername);
@@ -369,6 +369,13 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     @Override
     public void onSetMessageAttributes(EMMessage message) {
         if (isRobot) {
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("ImInfo",
+                    MODE_PRIVATE);
+            String name = sharedPreferences.getString("name", "");
+            String headpic = sharedPreferences.getString("headpic", "");
+            message.setAttribute(EaseConstant.EXTRA_USER_IMG, headpic);
+            message.setAttribute(EaseConstant.EXTRA_USER_NAME, name);
+
             //set message extension
             message.setAttribute("em_robot_message", isRobot);
         }
@@ -548,10 +555,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                 } else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)) {
                     //video call
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
-                }else if(IMHelper.getInstance().isPrivilegeOfSecurities(message)){
+                } else if (IMHelper.getInstance().isPrivilegeOfSecurities(message)) {
 //                    发送特权卷
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_ITEM_RECV_PRIVILEGE_OF_SECURITIES : MESSAGE_ITEM_SENT_PRIVILEGE_OF_SECURITIES;
-                } else if(IMHelper.getInstance().isAuctionBidding(message)){
+                } else if (IMHelper.getInstance().isAuctionBidding(message)) {
 //                    出价
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_AuctionBidding : MESSAGE_TYPE_SENT_AuctionBidding;
                 }
@@ -572,9 +579,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         @Override
         public EaseChatRow getCustomChatRow(EMMessage message, int position, BaseAdapter adapter) {
             if (message.getType() == EMMessage.Type.TXT) {
-                if(IMHelper.getInstance().isPrivilegeOfSecurities(message)){
+                if (IMHelper.getInstance().isPrivilegeOfSecurities(message)) {
                     return new ChatRowPrivilegeOfSecurities(getActivity(), message, position, adapter);
-                }else if(IMHelper.getInstance().isAuctionBidding(message)){
+                } else if (IMHelper.getInstance().isAuctionBidding(message)) {
                     return new ChatRowAuctionBidding(getActivity(), message, position, adapter);
                 }
 
