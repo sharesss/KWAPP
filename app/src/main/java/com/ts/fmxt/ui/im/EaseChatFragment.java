@@ -75,6 +75,7 @@ import java.util.Map;
 import http.data.ChatRoomInfoEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.StringUtils;
 import utils.helper.ToastHelper;
 import utils.sharePreferences.FMWession;
@@ -91,7 +92,7 @@ import static android.content.Context.MODE_PRIVATE;
  * <br/>
  * you can see ChatActivity in demo for your reference
  */
-public class EaseChatFragment extends EaseBaseFragment implements EMMessageListener{
+public class EaseChatFragment extends EaseBaseFragment implements EMMessageListener, ReceiverUtils.MessageReceiver {
     protected static final String TAG = "EaseChatFragment";
     protected static final int REQUEST_CODE_MAP = 1;
     protected static final int REQUEST_CODE_CAMERA = 2;
@@ -159,12 +160,14 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                         time--;
                         initData();
                     }else{
+                        findStockEqitySalesroomInitInfoRequest();
                         ll_count_down.setVisibility(View.GONE);
                     }
                     break;
                 case 2:
                     long lasttime = (long) msg.obj;
                     if(lasttime<0){
+                        findStockEqitySalesroomInitInfoRequest();
                         return;
                     }
                     tv_time.setText("距离开始："+showtime(lasttime));
@@ -175,6 +178,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 case 3:
                     long lasttimes = (long) msg.obj;
                     if(lasttimes<0){
+                        findStockEqitySalesroomInitInfoRequest();
                         return;
                     }
                     tv_time.setText("距离结束："+showtime(lasttimes));
@@ -187,8 +191,21 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             super.handleMessage(msg);
         }
     };
+
+    @Override
+    public void onMessage(int receiverType, Bundle bundle) {
+        if (receiverType == ReceiverUtils.IMREFRESH) {
+            findStockEqitySalesroomInitInfoRequest();
+//                if(bundle.getString("type").equals("1")){
+//                    isRobot=true;
+//                }
+//                price = bundle.getString("price");
+        }
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ReceiverUtils.addReceiver(this);
         return inflater.inflate(R.layout.ease_fragment_chat, container, false);
     }
 

@@ -3,6 +3,7 @@ package com.ts.fmxt.ui.im.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -17,11 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMMessage;
 import com.squareup.okhttp.Request;
 import com.ts.fmxt.R;
-import com.ts.fmxt.ui.im.domain.AuctionBiddingEntity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +29,7 @@ import java.util.Map;
 
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.helper.ToastHelper;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -323,18 +322,26 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
                                 String stats = json.getString("stats");
                                 String msg = json.getString("msg");
                                 if(stats.equals("1")){
+                                    SharedPreferences sharedPreferencesw = getContext().getSharedPreferences("ImInfo",
+                                            MODE_PRIVATE);
+                                    int userId = sharedPreferencesw.getInt("userId",0);
                                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("ImInfo",
                                             MODE_PRIVATE);
                                     String name = sharedPreferences.getString("name", "");
                                     String headpic = sharedPreferences.getString("headpic", "");
                                     if(listener != null){
-                                        EMMessage message = EMMessage.createTxtSendMessage("出价",null);
-                                        message.setAttribute(AuctionBiddingEntity.auction_MsgType, "1");
-                                        message.setAttribute(AuctionBiddingEntity.auction_addPrice,"出价"+price+"元");
-                                        message.setAttribute(AuctionBiddingEntity.auction_end, "");
-                                        message.setAttribute(AuctionBiddingEntity.auction_userNickName, name);
-                                        message.setAttribute(AuctionBiddingEntity.auction_userHeadPic, headpic);
-                                        EMClient.getInstance().chatManager().sendMessage(message);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("type", "1");
+                                        bundle.putString("price", "出价"+price+"元");
+                                        ReceiverUtils.sendReceiver(ReceiverUtils.IMREFRESH,bundle);
+//                                        EMMessage message = EMMessage.createTxtSendMessage("出价",null);
+//                                        message.setAttribute(AuctionBiddingEntity.auction_MsgType, "1");
+//                                        message.setAttribute(AuctionBiddingEntity.auction_addPrice,"出价"+price+"元");
+//                                        message.setAttribute(AuctionBiddingEntity.auction_end, "");
+//                                        message.setAttribute(AuctionBiddingEntity.auction_userNickName, name);
+//                                        message.setAttribute(AuctionBiddingEntity.auction_userHeadPic, headpic);
+//                                        message.setAttribute(AuctionBiddingEntity.auction_userID, userId+"");
+//                                        EMClient.getInstance().chatManager().sendMessage(message);
                                         listener.onSendBtnClicked("出价"+price+"元");
                                     }
                                 }else{

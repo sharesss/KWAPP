@@ -35,6 +35,7 @@ public class ReceiverUtils {
     public final static int WX_PLAY =16;//微信支付完成
     public final static int REPORT =17;//展示举报的其他输入框
     public final static int GONE =18;//取消展示举报的其他输入框
+    public final static int IMREFRESH = 19;     //出价成功
 
 
 

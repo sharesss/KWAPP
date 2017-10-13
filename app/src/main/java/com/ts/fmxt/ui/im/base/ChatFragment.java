@@ -2,7 +2,6 @@ package com.ts.fmxt.ui.im.base;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -37,6 +36,7 @@ import com.ts.fmxt.ui.im.IMHelper;
 import com.ts.fmxt.ui.im.ImageGridActivity;
 import com.ts.fmxt.ui.im.VideoCallActivity;
 import com.ts.fmxt.ui.im.VoiceCallActivity;
+import com.ts.fmxt.ui.im.domain.AuctionBiddingEntity;
 import com.ts.fmxt.ui.im.domain.EmojiconExampleGroupData;
 import com.ts.fmxt.ui.im.domain.EmojiconFMGroupData;
 import com.ts.fmxt.ui.im.domain.PrivilegeOfSecuritiesEntity;
@@ -102,6 +102,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     private boolean isRobot;
     private Activity mActivity;
     private Boolean isHaveData = true;//为了避免多次收到广播加的判断
+    String price ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,11 +118,12 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     public void onMessage(int receiverType, Bundle bundle) {
-//        if (receiverType == ReceiverUtils.IMFMNUM) {
-//            if(isHaveData) {
-//                sendPrivilegeOfSecuritiesMsg();
-//            }
-//        }
+        if (receiverType == ReceiverUtils.IMREFRESH) {
+                if(bundle.getString("type").equals("1")){
+                    isRobot=true;
+                }
+            price = bundle.getString("price");
+        }
 
     }
 
@@ -133,7 +135,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         if (chatType == Constant.CHATTYPE_SINGLE) {
             Map<String, RobotUser> robotMap = IMHelper.getInstance().getRobotList();
             if (robotMap != null && robotMap.containsKey(toChatUsername)) {
-                isRobot = true;
+//                isRobot = true;
             }
         }
         super.setUpView();
@@ -209,7 +211,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     private void sendPrivilegeOfSecuritiesMsg() {
         isHaveData = false;
         SharedPreferences share = mActivity.getSharedPreferences("ee",
-                Context.MODE_PRIVATE);
+                MODE_PRIVATE);
         if (share != null) {
             EMMessage imageMsg = EMMessage.createTxtSendMessage("特权卷", toChatUsername);
             imageMsg.setAttribute(PrivilegeOfSecuritiesEntity.kSendCouponMessageSuccess, "kSendCouponMessageSuccessTip");
@@ -368,16 +370,24 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     public void onSetMessageAttributes(EMMessage message) {
+        SharedPreferences sharedPreferencesw = getContext().getSharedPreferences("ImInfo",
+                MODE_PRIVATE);
+        int userId = sharedPreferencesw.getInt("userId",0);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("ImInfo",
+                MODE_PRIVATE);
+        String name = sharedPreferences.getString("name", "");
+        String headpic = sharedPreferences.getString("headpic", "");
+        message.setAttribute(AuctionBiddingEntity.auction_userID, userId+"");
+        message.setAttribute(EaseConstant.EXTRA_USER_IMG, headpic);
+        message.setAttribute(EaseConstant.EXTRA_USER_NAME, name);
+        if(price!=null){
+            message.setAttribute(AuctionBiddingEntity.auction_addPrice,"出价"+price+"元");
+        }
         if (isRobot) {
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences("ImInfo",
-                    MODE_PRIVATE);
-            String name = sharedPreferences.getString("name", "");
-            String headpic = sharedPreferences.getString("headpic", "");
-            message.setAttribute(EaseConstant.EXTRA_USER_IMG, headpic);
-            message.setAttribute(EaseConstant.EXTRA_USER_NAME, name);
-
             //set message extension
-            message.setAttribute("em_robot_message", isRobot);
+            message.setAttribute(AuctionBiddingEntity.auction_MsgType, "1");
+        }else{
+            message.setAttribute(AuctionBiddingEntity.auction_MsgType, "0");
         }
     }
 

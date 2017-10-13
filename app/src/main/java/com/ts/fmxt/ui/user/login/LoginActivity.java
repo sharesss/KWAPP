@@ -217,6 +217,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
                                         SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
                                         editor.putString("token", token);
                                         editor.putString("phone", edtAccount.getText().toString());
+                                        editor.putInt("userId", userId);
                                         editor.commit();    //提交数据保存
                                         mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, String.valueOf(userId)));
                                         loginIM(account);
