@@ -71,6 +71,8 @@ public class EaseMessageAdapter extends BaseAdapter {
 
     private static final int MESSAGE_TYPE_RECV_AuctionBidding = 14;
     private static final int MESSAGE_TYPE_SENT_AuctionBidding = 15;
+    private static final int MESSAGE_TYPE_RECV_TEXT = 16;
+    private static final int MESSAGE_TYPE_SENT_TEXT = 17;
 
 
     public int itemTypeCount;
@@ -208,9 +210,9 @@ public class EaseMessageAdapter extends BaseAdapter {
             }
             try {
                 if (message.getStringAttribute(AuctionBiddingEntity.auction_MsgType).equals("0")) {
-                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_AuctionBidding : MESSAGE_TYPE_SENT_AuctionBidding;
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TEXT : MESSAGE_TYPE_SENT_TEXT;
                 }else if(message.getStringAttribute(AuctionBiddingEntity.auction_MsgType).equals("1")){
-                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_AuctionBidding : MESSAGE_TYPE_SENT_AuctionBidding;
                 }
             } catch (HyphenateException e) {
                 e.printStackTrace();

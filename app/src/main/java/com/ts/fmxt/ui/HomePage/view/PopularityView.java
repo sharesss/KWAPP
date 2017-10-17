@@ -30,8 +30,8 @@ public class PopularityView  extends RelativeLayout implements View.OnClickListe
     private TextView tv_name,tv_time;
     private TextView tv_brand_name,tv_index;
     private TextView tv_brand_details,tv_money,tv_reservation;
-    private ProgressBar pb_index,pb_greenindex;
-    private LinearLayout ll_consumer_info,ll_money,ll_popularity_top_view;
+    private ProgressBar pb_index,pb_greenindex,pb_yellowindex;
+    private LinearLayout ll_consumer_info,ll_money,ll_popularity_top_view,ll_reservation;
 
 
     public PopularityView(Context context) {
@@ -63,7 +63,9 @@ public class PopularityView  extends RelativeLayout implements View.OnClickListe
         pb_index = (ProgressBar) findViewById(R.id.pb_index);
         pb_greenindex = (ProgressBar) findViewById(R.id.pb_greenindex);
         ll_money = (LinearLayout) findViewById(R.id.ll_money);
-        tv_reservation= (TextView) findViewById(R.id.tv_index);
+        tv_reservation= (TextView) findViewById(R.id.tv_reservation);
+        ll_reservation = (LinearLayout) findViewById(R.id.ll_reservation);
+        pb_yellowindex = (ProgressBar) findViewById(R.id.pb_yellowindex);
         findViewById(R.id.ll_popularity_top_view).setOnClickListener(this);
     }
 
@@ -86,7 +88,11 @@ public class PopularityView  extends RelativeLayout implements View.OnClickListe
             pb_greenindex.setVisibility(View.VISIBLE);
             pb_index.setVisibility(View.GONE);
         }
+        Double indexs = info.getHoldRatios()*100;
+        int exponents = (new Double(indexs)).intValue();
+        pb_yellowindex.setProgress(exponents);
         tv_index.setText(exponent+"%");
+        tv_reservation.setText(exponents+"%");
 
     }
 

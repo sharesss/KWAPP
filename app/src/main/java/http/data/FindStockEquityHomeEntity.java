@@ -26,7 +26,8 @@ public class FindStockEquityHomeEntity {
     private int priceRisingRate;//加价幅度
     private int transactionPrice;//成交价
     private String time;//起始倒计时auctionStartTime
-    private Long auctionStartTime;
+    private Long auctionStartTime;// 拍卖开始时间
+    private Long  currentTime;
     private Long auctionEndTime;
     private String branch;//fen
     private String second;//miao
@@ -87,7 +88,8 @@ public class FindStockEquityHomeEntity {
         this.forthoseName = jsonObj.optString("forthoseName");
         this.forthoseHeadPic = jsonObj.optString("forthoseHeadPic");
         this.auctionEndTime = jsonObj.optLong("auctionEndTime");
-        this.auctionStartTime = jsonObj.optLong("currentTime");
+        this.auctionStartTime = jsonObj.optLong("auctionStartTime");
+        this.currentTime = jsonObj.optLong("currentTime");
         //解析个人信息
             try {
                 if (!jsonObj.isNull("information")) {
@@ -448,6 +450,14 @@ public class FindStockEquityHomeEntity {
 
     public void setChatRoomId(String chatRoomId) {
         this.chatRoomId = chatRoomId;
+    }
+
+    public Long getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(Long currentTime) {
+        this.currentTime = currentTime;
     }
 
     public class RankingEntity {

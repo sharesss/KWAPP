@@ -243,15 +243,17 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                         MODE_PRIVATE);
                 String token=sharedPreferences.getString("token", "");
                 int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
-                if (!checkLogin()) {
+                if (token.equals("")) {
                     MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
                     mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
                     mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
 
                         @Override
                         public void onEventClick(PopupObject obj) {
-                            if (obj.getWhat() == 1)
+                            if (obj.getWhat() == 1){
                                 UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                            }
+
                         }
                     });
                     mPopupDialogWidget.showPopupWindow();

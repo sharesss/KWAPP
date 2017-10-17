@@ -29,6 +29,9 @@ import utils.helper.ToastHelper;
 import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
 
+import static com.ts.fmxt.R.id.tv_likeCount;
+import static com.ts.fmxt.R.id.tv_replys;
+
 /**
  * Created by kp on 2017/8/11.
  */
@@ -36,10 +39,12 @@ public class CommentAdapter extends FMBaseAdapter implements KeyMapDailog.SendBa
     private KeyMapDailog dialog;
     private AuctionDetailsActivity activity;
     private int type;
-    public CommentAdapter(Activity mContext, List<Object> data,int type) {
+    private int isAuction;
+    public CommentAdapter(Activity mContext, List<Object> data,int type,int isAuction) {
         super(mContext, data);
         this.activity = (AuctionDetailsActivity) mContext;
         this.type= type;
+        this.isAuction = isAuction;
     }
 
 
@@ -55,10 +60,11 @@ public class CommentAdapter extends FMBaseAdapter implements KeyMapDailog.SendBa
             mHolder.tv_reply = (TextView) convertView.findViewById(R.id.tv_reply);
             mHolder.tv_comment = (TextView) convertView.findViewById(R.id.tv_comment);
             mHolder.iv_cat = (FMNetImageView) convertView.findViewById(R.id.iv_cat);
-            mHolder.tv_likeCount = (TextView) convertView.findViewById(R.id.tv_likeCount);
+            mHolder.tv_likeCount = (TextView) convertView.findViewById(tv_likeCount);
             mHolder.tv_isInvestAuthen = (TextView) convertView.findViewById(R.id.tv_isInvestAuthen);
+            mHolder.tv_VInvestAuthen= (TextView) convertView.findViewById(R.id.tv_VInvestAuthen);
             mHolder.tv_isfounder = (TextView) convertView.findViewById(R.id.tv_isfounder);
-            mHolder.tv_replys = (TextView) convertView.findViewById(R.id.tv_replys);
+            mHolder.tv_replys = (TextView) convertView.findViewById(tv_replys);
             convertView.setTag(mHolder);
         } else {
             mHolder = (CommentAdapter.ViewHolder) convertView.getTag();
@@ -73,7 +79,8 @@ public class CommentAdapter extends FMBaseAdapter implements KeyMapDailog.SendBa
         mHolder.tv_comment.setText(item.getContent());
         mHolder.iv_portrait.setOnClickListener(new onItemClick(position));
         mHolder.tv_likeCount.setText(String.valueOf(item.getLikeCount()));
-        mHolder.tv_isInvestAuthen.setVisibility(item.getIsInvestAuthen() > 0 ? View.VISIBLE : View.GONE);
+        mHolder.tv_isInvestAuthen.setVisibility(item.getIsInvestAuthen() == 1 ? View.VISIBLE : View.GONE);
+        mHolder.tv_VInvestAuthen.setVisibility(item.getIsInvestAuthen() == 2 ? View.VISIBLE : View.GONE);
         mHolder.tv_isfounder.setVisibility(item.getIsFounder() > 0 ? View.VISIBLE : View.GONE);
         Drawable likeDrawble = getContext().getResources().getDrawable(item.getIsLike() == 1 ? R.mipmap.like_icon_s : R.mipmap.like_icon_n);
         likeDrawble.setBounds(0, 0, likeDrawble.getMinimumWidth(), likeDrawble.getMinimumHeight());
@@ -87,6 +94,10 @@ public class CommentAdapter extends FMBaseAdapter implements KeyMapDailog.SendBa
             }
         });
         mHolder.tv_likeCount.setOnClickListener( new ClickListener(position));
+        if(isAuction==1){
+            mHolder.tv_likeCount.setVisibility(View.GONE);
+            mHolder.tv_replys.setVisibility(View.GONE);
+        }
         return convertView;
     }
 
@@ -188,6 +199,6 @@ public class CommentAdapter extends FMBaseAdapter implements KeyMapDailog.SendBa
         private TextView tv_comment, tv_name, tv_time, tv_reply;
         private CircleImageView iv_portrait;
         private FMNetImageView iv_cat;
-        private TextView tv_likeCount,tv_isInvestAuthen,tv_isfounder,tv_replys;
+        private TextView tv_likeCount,tv_isInvestAuthen,tv_isfounder,tv_replys,tv_VInvestAuthen;
     }
 }

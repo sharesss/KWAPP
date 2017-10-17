@@ -97,7 +97,7 @@
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/ease_chatting_biaoqing_btn_normal"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/iv_face_checked"
@@ -106,7 +106,7 @@
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/ease_chatting_biaoqing_btn_enable"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
             </RelativeLayout>
         </RelativeLayout>
@@ -117,17 +117,17 @@
             android:layout_height="32dip"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/bg_gray"
             android:text="拍卖结束"
-            android:textColor="@color/white"
-            android:background="@drawable/bg_gray" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btn_send"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/dp_60"
             android:layout_height="32dp"
             android:layout_marginRight="4dp"
             android:background="@drawable/ease_chat_send_btn_selector"
-            style="?android:attr/borderlessButtonStyle"
             android:text="@string/button_send"
             android:textColor="@color/orange"
             android:textSize="16sp"

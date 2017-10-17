@@ -15,7 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_chat_activity" >
+        android:layout_marginTop="@dimen/margin_chat_activity">
 
         <ImageView
             android:id="@+id/iv_userhead"
@@ -31,85 +31,92 @@
             android:id="@+id/bubble"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_userid"
             android:layout_marginLeft="@dimen/margin_chat_activity"
             android:layout_toRightOf="@id/iv_userhead"
-            android:layout_below="@+id/tv_userid"
-            android:background="@drawable/ease_chatfrom_bg" >
+            android:background="@drawable/ease_chatfrom_bg">
 
             <LinearLayout
                 android:id="@+id/ll_brand_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-            <widget.image.CircleImageView
-                android:id="@+id/iv_brand_icon"
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:scaleType="centerCrop" />
+
+                <widget.image.CircleImageView
+                    android:id="@+id/iv_brand_icon"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:scaleType="centerCrop" />
+
                 <TextView
                     android:id="@+id/tv_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textSize="20dp"
-                    android:text="满"/>
+                    android:text="满"
+                    android:textSize="20dp" />
+
                 <TextView
                     android:id="@+id/tv_maxmoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="100"
                     android:textColor="@color/orange"
-                    android:textSize="21dp"
-                    android:text="100"/>
+                    android:textSize="21dp" />
+
                 <TextView
                     android:id="@+id/tv_mo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:text="减"/>
+                    android:text="减"
+                    android:textSize="20dp" />
+
                 <TextView
                     android:id="@+id/tv_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf= "@id/tv_mo"
+                    android:layout_toRightOf="@id/tv_mo"
+                    android:text="10"
                     android:textColor="@color/orange"
-                    android:textSize="21dp"
-                    android:text="10"/>
+                    android:textSize="21dp" />
             </LinearLayout>
+
             <View
                 android:id="@+id/v_line"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_alignRight="@id/ll_brand_icon"
                 android:layout_below="@id/ll_brand_icon"
-                android:background="#dcdcdc"
-                />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="#dcdcdc" />
+
             <TextView
                 android:id="@+id/tv_addres"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/v_line"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
-                android:textColor="#969696"
-                android:text="hahah"/>
+                android:layout_marginTop="5dp"
+                android:text="hahah"
+                android:textColor="#969696" />
         </RelativeLayout>
-         <TextView
+
+        <TextView
             android:id="@+id/tv_userid"
             style="@style/chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/chat_nick_margin_left"
-            android:textSize="@dimen/chat_nick_text_size"
             android:layout_toRightOf="@id/iv_userhead"
+            android:textSize="@dimen/chat_nick_text_size"
             android:visibility="gone" />
     </RelativeLayout>
 

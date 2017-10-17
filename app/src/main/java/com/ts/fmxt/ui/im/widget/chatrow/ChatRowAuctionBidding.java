@@ -2,7 +2,6 @@ package com.ts.fmxt.ui.im.widget.chatrow;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Spannable;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -13,10 +12,8 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.LatLng;
 import com.ts.fmxt.R;
-import com.ts.fmxt.ui.im.utils.EaseSmileUtils;
 
-import utils.StringUtils;
-import widget.image.CircleImageView;
+import utils.ReceiverUtils;
 
 /**
  * Created by kp on 2017/10/12.
@@ -25,8 +22,6 @@ import widget.image.CircleImageView;
 
 public class ChatRowAuctionBidding extends EaseChatRow{
 
-    private TextView tvMaxmoney,tvMoney,tvAddres;
-    private CircleImageView ivBrandIcon;
     private Activity context;
     private int cashCouponId;
     private EMTextMessageBody locBody;
@@ -46,10 +41,6 @@ public class ChatRowAuctionBidding extends EaseChatRow{
 
     @Override
     protected void onFindViewById() {
-        ivBrandIcon = (CircleImageView) findViewById(R.id.iv_brand_icon);
-        tvMaxmoney = (TextView) findViewById(R.id.tv_maxmoney);
-        tvMoney = (TextView) findViewById(R.id.tv_money);
-        tvAddres = (TextView) findViewById(R.id.tv_addres);
         contentView = (TextView) findViewById(R.id.tv_chatcontent);
     }
 
@@ -59,27 +50,9 @@ public class ChatRowAuctionBidding extends EaseChatRow{
         EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
         String msg = "";
         String auction_MsgType = message.getStringAttribute("auction_MsgType", "");
-        if (!StringUtils.isEmpty(auction_MsgType)) {
-            tv_sys_msg.setVisibility(View.VISIBLE);
-            contentView.setVisibility(View.GONE);
-            userAvatarView.setVisibility(View.GONE);
-            bubbleLayout.setVisibility(View.GONE);
-            if (ackedView != null)
-                ackedView.setVisibility(View.GONE);
-            tv_sys_msg.setText(message.direct() == EMMessage.Direct.SEND ? "聊天通道已开启,快去liao一liao" : "咦,又有小伙伴想认识你~");
-        } else {
-            if (ackedView != null)
-                ackedView.setVisibility(View.GONE);
-            tv_sys_msg.setVisibility(View.GONE);
-            contentView.setVisibility(View.VISIBLE);
-            userAvatarView.setVisibility(View.VISIBLE);
-            bubbleLayout.setVisibility(View.VISIBLE);
-            msg = txtBody.getMessage();
-            Spannable span = EaseSmileUtils.getSmiledText(context, msg);
-            // 设置内容
-            contentView.setText(span, TextView.BufferType.SPANNABLE);
-
-        }
+        String auction_addPrice= message.getStringAttribute("auction_addPrice", "");
+        contentView.setText(auction_addPrice);
+        ReceiverUtils.sendReceiver(ReceiverUtils.IMREFRESH,null);
         // handle sending message
         if (message.direct() == EMMessage.Direct.SEND) {
             setMessageSendCallback();

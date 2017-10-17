@@ -43,6 +43,17 @@
         android:visibility="gone"
         android:background="@drawable/bg_gray_label_shape"
         android:textSize="@dimen/sp_15"/>
+    <TextView
+        android:id="@+id/tv_VInvestAuthen"
+        style="@style/base_wrap"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@id/tv_isInvestAuthen"
+        android:textColor="@color/font_main_secondary"
+        android:text="大V投资人"
+        android:visibility="gone"
+        android:background="@drawable/bg_gray_label_shape"
+        android:textSize="@dimen/sp_15"/>
 
     <widget.image.FMNetImageView
         android:id="@+id/iv_cat"
@@ -56,7 +67,7 @@
         style="@style/base_wrap"
         android:layout_marginLeft="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_10"
-        android:layout_toRightOf="@id/tv_isInvestAuthen">
+        android:layout_toRightOf="@id/tv_VInvestAuthen">
 
         <TextView
             android:id="@+id/tv_reply"

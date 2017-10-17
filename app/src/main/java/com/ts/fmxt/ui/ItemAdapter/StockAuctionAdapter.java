@@ -95,7 +95,12 @@ public class StockAuctionAdapter extends FMBaseAdapter {
             ViewHolder.tv_founder.setText(info.getCompany()+info.getPosition());
         }
         if(info.getAuctionState()==0){
-            ViewHolder.tv_time.setText("未开始");
+            if(info.getAuctionStartTime()<info.getCurrentTime()){
+                ViewHolder.tv_time.setText("拍卖中");
+            }else{
+                ViewHolder.tv_time.setText("未开始");
+            }
+
         }else if(info.getAuctionState()==1||info.getAuctionState()==2){
             ViewHolder.tv_time.setText("已结束");
         }else{

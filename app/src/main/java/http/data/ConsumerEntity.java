@@ -21,12 +21,14 @@ public class ConsumerEntity {
     private String  investDeion;//简介
     private String  createTime;//发起时间
     private Double  exponent;//可投指数
+    private Double  holdRatios;//预约比例
     private int  dokels;//值得投票数
     private int   notDokels;//不值得投票数
     private int   isVote;//0表示当前用户并未投票，大于0表示当成用户
     private int   isCollect;//是否收藏：0否 ，1是
     private int   voteNum;//投票总数
     private String amount;
+
     public ConsumerEntity(JSONObject jsonObject) {
         this.id = jsonObject.optInt("id",0);
         this.nickName = jsonObject.optString("nickName");
@@ -39,6 +41,7 @@ public class ConsumerEntity {
             this.createTime = DateFormatUtils.longToDate("yyyy-MM-dd", jsonObject.optLong("createTime", 0));
         }
         this.exponent = jsonObject.optDouble("exponent");
+        this.holdRatios= jsonObject.optDouble("holdRatios");
         this.dokels = jsonObject.optInt("dokels");
         this.notDokels = jsonObject.optInt("notDokels");
         this.isVote = jsonObject.optInt("isVote");
@@ -189,5 +192,13 @@ public class ConsumerEntity {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public Double getHoldRatios() {
+        return holdRatios;
+    }
+
+    public void setHoldRatios(Double holdRatios) {
+        this.holdRatios = holdRatios;
     }
 }

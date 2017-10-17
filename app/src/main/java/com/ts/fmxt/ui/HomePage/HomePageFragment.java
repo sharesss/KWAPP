@@ -164,7 +164,7 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
                 //首先判断是否需要轮播，是的话我们才发消息
                     mHandler.sendEmptyMessage(1);
             }
-        },2000,2000);//延迟2秒，每隔2秒发一次消息
+        },5000,2000);//延迟2秒，每隔2秒发一次消息
         initPoint();
     }
 
@@ -209,7 +209,7 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
                 //首先判断是否需要轮播，是的话我们才发消息
                 mHandler.sendEmptyMessage(2);
             }
-        },2000,2000);//延迟2秒，每隔2秒发一次消息
+        },3000,2000);//延迟2秒，每隔2秒发一次消息
         initPointTop();
     }
 

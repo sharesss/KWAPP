@@ -148,7 +148,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_type1"
+        android:id="@+id/ll_auction_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -156,7 +156,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:orientation="vertical"
         android:background="@color/white">
 
@@ -167,11 +167,40 @@
             android:background="@mipmap/auction_result_success"/>
 
         <TextView
+            android:id="@+id/tv_auction_failure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
+            android:visibility="gone"
             android:text="由于没人出价，此次拍品流拍"/>
+        <LinearLayout
+            android:id="@+id/ll_auction_successful"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <widget.image.CircleImageView
+                android:id="@+id/iv_auction_result_portrait"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_marginTop="@dimen/dp_5" />
+
+            <TextView
+                android:id="@+id/tv_auction_result_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
+                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:text="竟拍成功"
+                android:textColor="@color/text_red" />
+        </LinearLayout>
 
     </LinearLayout>
 

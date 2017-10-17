@@ -36,6 +36,7 @@ public class ReceiverUtils {
     public final static int REPORT =17;//展示举报的其他输入框
     public final static int GONE =18;//取消展示举报的其他输入框
     public final static int IMREFRESH = 19;     //出价成功
+    public final static int AUCTION_STATUS = 20;     //出价成功
 
 
 

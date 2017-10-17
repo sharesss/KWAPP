@@ -111,14 +111,15 @@
         android:progressDrawable="@drawable/yellowcolor"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_height="5dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:indeterminate="false" />
     <LinearLayout
+        android:id="@+id/ll_reservation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="horizontal">
 
         <TextView

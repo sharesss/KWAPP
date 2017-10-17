@@ -119,10 +119,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     @Override
     public void onMessage(int receiverType, Bundle bundle) {
         if (receiverType == ReceiverUtils.IMREFRESH) {
-                if(bundle.getString("type").equals("1")){
-                    isRobot=true;
-                }
-            price = bundle.getString("price");
+//                if(bundle.getString("type").equals("1")){
+//                    isRobot=true;
+//                }
+//            price = bundle.getString("price");
+//            sendMsg();
         }
 
     }
@@ -370,11 +371,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     public void onSetMessageAttributes(EMMessage message) {
-        SharedPreferences sharedPreferencesw = getContext().getSharedPreferences("ImInfo",
+
+        SharedPreferences sharedPreferences =getActivity().getSharedPreferences("ImInfo",
                 MODE_PRIVATE);
-        int userId = sharedPreferencesw.getInt("userId",0);
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("ImInfo",
-                MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId",0);
         String name = sharedPreferences.getString("name", "");
         String headpic = sharedPreferences.getString("headpic", "");
         message.setAttribute(AuctionBiddingEntity.auction_userID, userId+"");
@@ -389,6 +389,26 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         }else{
             message.setAttribute(AuctionBiddingEntity.auction_MsgType, "0");
         }
+    }
+
+    public void sendMsg() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("ImInfo",
+                getActivity().MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId",0);
+        String name = sharedPreferences.getString("name", "");
+        String headpic = sharedPreferences.getString("headpic", "");
+        EMMessage message = EMMessage.createTxtSendMessage("出价",toChatUsername);
+        message.setAttribute(AuctionBiddingEntity.auction_userID, userId+"");
+        message.setAttribute(EaseConstant.EXTRA_USER_IMG, headpic);
+        message.setAttribute(EaseConstant.EXTRA_USER_NAME, name);
+        if(price!=null){
+            message.setAttribute(AuctionBiddingEntity.auction_addPrice,"出价"+price+"元");
+        }
+        message.setAttribute(AuctionBiddingEntity.auction_MsgType, "1");
+        //send message
+        EMClient.getInstance().chatManager().sendMessage(message);
+//            messageList.refreshSelectLast();
+
     }
 
     @Override

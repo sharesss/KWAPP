@@ -41,7 +41,9 @@ import http.data.TableList;
 import http.data.WeiXinPayEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.Tools;
+import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.FMNoScrollListView;
 import widget.guidepage.GuideViewPagerAdapter;
@@ -57,7 +59,7 @@ import static com.ts.fmxt.R.id.bt_comment;
  * 拍卖详情
  */
 
-public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements ViewPager.OnPageChangeListener,View.OnClickListener , KeyMapDailog.SendBackListener{
+public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements ViewPager.OnPageChangeListener,View.OnClickListener , KeyMapDailog.SendBackListener,  ReceiverUtils.MessageReceiver{
     private int investId;//股票ID
     private LinearLayout ll_guida_button;
     private ViewPager viewpager;
@@ -73,13 +75,14 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
     private int currentIndex;
     //当前索引位置以及上一个索引位置
     private int index = 0,preIndex = 0;
-    private CircleImageView iv_portrait;
+    private CircleImageView iv_portrait,iv_auction_result_portrait;
     private TextView tv_auction_type,tv_attention_number,tv_name,tv_isfounder,tv_founder,tv_isVfounder,tv_praise;
     private TextView tv_follow_up_project,tv_transfer_project,tv_auction_project,tv_starting_price,tv_fare_increase,tv_company_equity,tv_equity;
     private TextView tv_starting_prices,tv_round,tv_type,tv_names,tv_bonus,tv_stockDesc,tv_disclaimer,tv_transaction_price;
+    private TextView tv_auction_failure,tv_auction_result_name;
     private TextView tv_auction_evaluation,tv_V_evaluation,tv_set_remind;
     private FMNoScrollListView lv_ranking,lv_comment;
-    private LinearLayout ll_type1,ll_ranking_list;
+    private LinearLayout ll_ranking_list,ll_auction_successful,ll_auction_result;
     private RankingAdapter mRankingAdapter;
     private CommentAdapter mCommentAdapter;
     private ConsumerCommentEntity mConsumerCommentEntity;
@@ -107,10 +110,21 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         }
     };
     @Override
+    public void onMessage(int receiverType, Bundle bundle) {
+        if (receiverType == ReceiverUtils.WX_PLAY) {
+            findStockEquityHomeRequest();
+        }
+
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auction_details);
         investId = getIntent().getIntExtra("id", -1);
+        SharedPreferences share = getSharedPreferences("ImInfo",MODE_PRIVATE);
+        SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+        editor.putInt("investId", investId);
+        editor.commit();    //提交数据保存
         bindRefreshScrollAdapter(R.id.refresh_scroll, R.layout.auction_details_view, true);
         startRefreshState();
         api = WXAPIFactory.createWXAPI(this, FmxtApplication.APP_ID, true);
@@ -142,6 +156,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         ll_guida_button = (LinearLayout) findViewById(R.id.ll_guida_button);
         tv_auction_type = (TextView) findViewById(R.id.tv_auction_type);
         iv_portrait = (CircleImageView) findViewById(R.id.iv_portrait);
+        iv_auction_result_portrait = (CircleImageView) findViewById(R.id.iv_auction_result_portrait);
         tv_attention_number = (TextView) findViewById(R.id.tv_attention_number);
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_isfounder= (TextView) findViewById(R.id.tv_isfounder);
@@ -163,11 +178,14 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         tv_stockDesc = (TextView) findViewById(R.id.tv_stockDesc);
         lv_comment = (FMNoScrollListView) findViewById(R.id.lv_comment);
         tv_disclaimer = (TextView) findViewById(R.id.tv_disclaimer);
-        ll_type1 = (LinearLayout) findViewById(R.id.ll_type1);
         ll_ranking_list = (LinearLayout) findViewById(R.id.ll_ranking_list);
+        ll_auction_result = (LinearLayout) findViewById(R.id.ll_auction_result);
+        ll_auction_successful = (LinearLayout) findViewById(R.id.ll_auction_successful);
         tv_transaction_price = (TextView) findViewById(R.id.tv_transaction_price);
         tv_praise = (TextView) findViewById(R.id.tv_praise);
         tv_set_remind = (TextView) findViewById(R.id.tv_set_remind);
+        tv_auction_failure= (TextView) findViewById(R.id.tv_auction_failure);
+        tv_auction_result_name= (TextView) findViewById(R.id.tv_auction_result_name);
         tv_praise.setOnClickListener(this);
         tv_set_remind.setOnClickListener(this);
     }
@@ -190,14 +208,30 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         viewpager.setAdapter(vpAdapter);
         viewpager.setOnPageChangeListener(this);
         if(info.getAuctionState()==0){
-            tv_auction_type.setText("拍卖未开始");
-            ll_type1.setVisibility(View.GONE);
-            ll_ranking_list.setVisibility(View.GONE);
+            if(info.getAuctionStartTime()<info.getCurrentTime()){
+                tv_auction_type.setText("出价竞拍");
+                tv_set_remind.setVisibility(View.GONE);
+                ll_auction_result.setVisibility(View.GONE);
+            }else{
+                tv_auction_type.setText("等待开拍");
+                ll_ranking_list.setVisibility(View.GONE);
+                ll_auction_result.setVisibility(View.GONE);
+            }
+
         }else if(info.getAuctionState()==1||info.getAuctionState()==2){
             tv_auction_type.setText("拍卖结束");
             tv_set_remind.setVisibility(View.GONE);
+            if(!info.getForthoseName().equals("null")||!info.getForthoseHeadPic().equals("null")){
+                tv_auction_failure.setVisibility(View.GONE);
+                iv_auction_result_portrait.loadImage(info.getForthoseHeadPic());
+                tv_auction_result_name.setText(info.getForthoseName());
+            }else{
+                tv_auction_failure.setVisibility(View.VISIBLE);
+                ll_auction_successful.setVisibility(View.GONE);
+                ll_ranking_list.setVisibility(View.GONE);
+            }
         }else{
-            tv_auction_type.setText("拍卖中");
+            tv_auction_type.setText("出价竞拍");
         }
 
         tv_attention_number.setText(info.getAttentionNum()+"人关注");
@@ -211,7 +245,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
             tv_isfounder.setVisibility(View.GONE);
             tv_isVfounder.setVisibility(View.GONE);
         }
-        if(info.getCompany()!="null"&&info.getPosition()!="null"){
+        if(!info.getCompany().equals("null")&&!info.getPosition().equals("null")){
             tv_founder.setText(info.getCompany()+info.getPosition());
         }
         tv_follow_up_project.setText("跟投项目："+info.getFollowNum());
@@ -221,12 +255,15 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         tv_fare_increase.setText("¥ "+info.getPriceRisingRate());//加价幅度
         mRankingAdapter = new RankingAdapter(this, info.getRankingarr());
         lv_ranking.setAdapter(mRankingAdapter);
-        tv_company_equity.setText(info.getStockName()+info.getStockSellRate()+"%");
+        tv_company_equity.setText(info.getStockName());
         SharedPreferences share = getSharedPreferences("ImInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
-        editor.putString("title", info.getStockName()+info.getStockSellRate()+"%");
+        editor.putString("title", info.getStockName());
         editor.putInt("stockId", info.getId());
         editor.putInt("attentionNumber",info.getAttentionNum());
+        editor.putInt("startingPrice",info.getStartingPrice());
+        editor.putInt("priceRisingRate",info.getPriceRisingRate());
+        editor.putInt("isApply",info.getIsApply());
         editor.commit();    //提交数据保存
         tv_equity.setText(info.getStockSellRate()+"% ");
         tv_starting_prices.setText("¥ "+info.getStartingPrice());
@@ -241,18 +278,25 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         }
         tv_stockDesc.setText(info.getStockDesc()+"");
         tv_disclaimer.setText(info.getDisclaimer());
-        if(info.getIsApply()==0){
-            tv_praise.setText("预交保证金");
-        }else{
             if(info.getAuctionState()==0){
-                tv_praise.setText("拍卖未开始");
+                if(info.getAuctionStartTime()<info.getCurrentTime()){
+                    if(info.getIsApply()==0){
+                        tv_praise.setText("预交保证金");
+                    }else{
+                        tv_praise.setText("出价竞拍");
+                    }
 
+                }else{
+                    if(info.getIsApply()==0){
+                        tv_praise.setText("预交保证金");
+                    }else {
+                        tv_praise.setText("等待开拍");
+                    }
+                }
             }else if(info.getAuctionState()==1||info.getAuctionState()==2){
                 tv_praise.setText("拍卖结束");
-            }else{
-                tv_praise.setText("拍卖中");
             }
-        }
+
         tv_set_remind.setText(info.getIsRemind()==0 ? "开启提醒":"提醒已开启");
         Drawable sexDrawble = getResources().getDrawable(tv_set_remind.getText().toString().equals("开启提醒") ? R.mipmap.stock_detail_icon_alarm_n : R.mipmap.stock_detail_icon_alarm_s);
         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
@@ -264,7 +308,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
                 //首先判断是否需要轮播，是的话我们才发消息
                 mHandler.sendEmptyMessage(1);
             }
-        },2000,2000);//延迟2秒，每隔2秒发一次消息
+        },5000,2000);//延迟5秒，每隔2秒发一次消息
         initPoint();
     }
     /**
@@ -276,6 +320,10 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         }
 
         for(int i = 0;i<info.getArr().size();i++){
+            SharedPreferences share = getSharedPreferences("ImInfo",MODE_PRIVATE);
+            SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+            editor.putString("picture", info.getArr().get(0));
+            editor.commit();    //提交数据保存
             ImageView imageview = new ImageView(this);
             imageview.setImageResource(R.drawable.point);//设置背景选择器
             imageview.setPadding(20,0,0,0);//设置每个按钮之间的间距
@@ -302,6 +350,10 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
 
     @Override
     public void onClick(View view) {
+        SharedPreferences sharedPreferences= getSharedPreferences("user",
+                MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
         switch (view.getId()){
             case R.id.btn_finish:
                 finish();
@@ -317,10 +369,19 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
                 CommentRequest(3);
                 break;
             case R.id.bt_comment:
+                if (token.equals("")) {
+                                UISKipUtils.startLoginActivity(AuctionDetailsActivity.this);
+
+                    return;
+                }
                 KeyMapDailog dialog = new KeyMapDailog("评论是我们的最大动力", this);
                 dialog.show(getSupportFragmentManager(), "评论");
                 break;
             case R.id.tv_auction_house://拍卖场
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(AuctionDetailsActivity.this);
+                    return;
+                }
 //                if(!tv_auction_type.getText().toString().equals("拍卖结束")){
                     startActivity(new Intent(AuctionDetailsActivity.this, ChatActivity.class).putExtra("chatType", 3).
                             putExtra("userId", info.getChatRoomId()));
@@ -330,11 +391,19 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
 
                 break;
             case R.id.tv_set_remind://开启提现
+                if (token.equals("")) {
+                    UISKipUtils.startLoginActivity(AuctionDetailsActivity.this);
+                    return;
+                }
                 if(tv_set_remind.getText().toString().equals("开启提醒")){
                     RemindRequest();
                 }
                 break;
             case R.id.tv_praise://预交保证金
+                if (token.equals("")) {
+                                UISKipUtils.startLoginActivity(AuctionDetailsActivity.this);
+                    return;
+                }
                 if(tv_praise.getText().equals("预交保证金")){
                     if (Tools.isFastDoubleClick()) {
                         ToastHelper.toastMessage(getBaseContext(), "请勿重复操作");
@@ -468,7 +537,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
                                             tableList.getArrayList().add(new ConsumerCommentEntity(array.getJSONObject(i)));
                                         }
                                         arrayList.addAll(tableList.getArrayList());
-                                        mCommentAdapter = new CommentAdapter (AuctionDetailsActivity.this,arrayList,type);
+                                        mCommentAdapter = new CommentAdapter (AuctionDetailsActivity.this,arrayList,type,1);
                                         lv_comment.setAdapter(mCommentAdapter);
                                     }
                                 } else {
@@ -582,7 +651,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         staff.put("investId", String.valueOf(investId));
         staff.put("tokenId", String.valueOf(token));
         staff.put("body", "支付保证金");
-        staff.put("totalFee",String.valueOf(2000*100));//
+        staff.put("totalFee",String.valueOf(1));//2000*100
         staff.put("roleType", "2");
         staff.put("clientType", "2");
         staff.put("orderType", "2");

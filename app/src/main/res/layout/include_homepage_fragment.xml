@@ -94,7 +94,7 @@
     <RelativeLayout
         android:id="@+id/rl_popularity"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_below="@id/rl_stock_auction">
@@ -102,7 +102,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/popularity_viewpager"
             android:layout_width="wrap_content"
-            android:layout_height="400dp"
+            android:layout_height="450dp"
             android:layout_gravity="center" />
 
             <!--用来填充圆点指示器的容器-->
