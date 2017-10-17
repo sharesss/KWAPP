@@ -573,7 +573,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 //                //发送特权卷
 //                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_ITEM_RECV_PRIVILEGE_OF_SECURITIES : MESSAGE_ITEM_SENT_PRIVILEGE_OF_SECURITIES;
 //            }
-            return 8;
+            return 1000;
         }
 
         @Override
