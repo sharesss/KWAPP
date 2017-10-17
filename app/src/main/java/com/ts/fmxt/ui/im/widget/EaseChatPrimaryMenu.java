@@ -443,7 +443,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
 //                                        message.setAttribute(AuctionBiddingEntity.auction_userHeadPic, headpic);
 //                                        message.setAttribute(AuctionBiddingEntity.auction_userID, userId+"");
 //                                        EMClient.getInstance().chatManager().sendMessage(message);
-                                        listener.onSendBtnClicked("出价"+price+"元");
+                                        listener.onSendPriceMessage("出价"+price+"元");
                                     }
                                 }else{
                                     ToastHelper.toastMessage(getContext(),msg);

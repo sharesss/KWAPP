@@ -85,7 +85,8 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout {
          * @param content
          */
         void onSendBtnClicked(String content);
-        
+        void onSendPriceMessage(String content);
+
         /**
          * when speak button is touched
          * @return

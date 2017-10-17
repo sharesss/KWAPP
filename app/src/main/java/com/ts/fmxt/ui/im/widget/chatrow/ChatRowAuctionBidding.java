@@ -12,6 +12,7 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.LatLng;
 import com.ts.fmxt.R;
+import com.ts.fmxt.ui.im.domain.AuctionBiddingEntity;
 
 import utils.ReceiverUtils;
 
@@ -49,8 +50,8 @@ public class ChatRowAuctionBidding extends EaseChatRow{
     protected void onSetUpView() {
         EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
         String msg = "";
-        String auction_MsgType = message.getStringAttribute("auction_MsgType", "");
-        String auction_addPrice= message.getStringAttribute("auction_addPrice", "");
+        String auction_MsgType = message.getStringAttribute(AuctionBiddingEntity.auction_MsgType, "");
+        String auction_addPrice= message.getStringAttribute(AuctionBiddingEntity.auction_addPrice, "");
         contentView.setText(auction_addPrice);
         ReceiverUtils.sendReceiver(ReceiverUtils.IMREFRESH,null);
         // handle sending message

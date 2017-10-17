@@ -184,6 +184,12 @@ public class EaseChatInputMenu extends LinearLayout {
             }
 
             @Override
+            public void onSendPriceMessage(String content) {
+                if (listener != null)
+                    listener.onSendPriceMessage(content);
+            }
+
+            @Override
             public void onToggleVoiceBtnClicked() {
                 hideExtendMenuContainer();
             }
@@ -341,7 +347,8 @@ public class EaseChatInputMenu extends LinearLayout {
          *            message content
          */
         void onSendMessage(String content);
-        
+        void onSendPriceMessage(String content);
+
         /**
          * when big icon pressed
          * @param emojicon

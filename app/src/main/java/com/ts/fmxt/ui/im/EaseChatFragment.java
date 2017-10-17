@@ -268,6 +268,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
             @Override
             public void onSendMessage(String content) {
+                sendTextMessage(content);
+            }
+            @Override
+            public void onSendPriceMessage(String content) {
                 sendPriceMessage(content);
             }
 

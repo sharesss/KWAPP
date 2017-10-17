@@ -77,7 +77,7 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
     private void initView() {
         mPopupUploadDialog=new PopupUploadDialog(this);
         mPopupUploadDialog.setContext(R.string.text_image_upload);
-        iv_image = (FMNetImageView) findViewById(R.id.iv_image);//上传照片
+//        iv_image = (FMNetImageView) findViewById(R.id.iv_image);//上传照片
         btn_nexts = (TextView) findViewById(R.id.btn_nexts);//完成按钮
         tv_isAdopt = (TextView) findViewById(R.id.tv_isAdopt);//是否通过
         tv_authentication_privilege = (TextView) findViewById(R.id.tv_authentication_privilege);
