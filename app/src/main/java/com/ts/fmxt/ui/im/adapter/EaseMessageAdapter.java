@@ -244,8 +244,12 @@ public class EaseMessageAdapter extends BaseAdapter {
 
     protected EaseChatRow createChatRow(Context context, EMMessage message, int position) {
         EaseChatRow chatRow = null;
-        if (customRowProvider != null && customRowProvider.getCustomChatRow(message, position, this) != null) {
-            return customRowProvider.getCustomChatRow(message, position, this);
+        if (customRowProvider != null) {
+            chatRow = customRowProvider.getCustomChatRow(message, position, this);
+            if (chatRow != null) {
+
+                return chatRow;
+            }
         }
         switch (message.getType()) {
             case TXT:
