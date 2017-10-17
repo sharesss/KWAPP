@@ -52,6 +52,7 @@ import com.hyphenate.util.PathUtil;
 import com.squareup.okhttp.Request;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.im.base.EaseBaseFragment;
+import com.ts.fmxt.ui.im.domain.AuctionBiddingEntity;
 import com.ts.fmxt.ui.im.domain.EaseEmojicon;
 import com.ts.fmxt.ui.im.domain.EaseUser;
 import com.ts.fmxt.ui.im.model.EaseAtMessageHelper;
@@ -267,7 +268,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
             @Override
             public void onSendMessage(String content) {
-                sendTextMessage(content);
+                sendPriceMessage(content);
             }
 
             @Override
@@ -1046,7 +1047,17 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         EMMessage message = EMMessage.createFileSendMessage(filePath, toChatUsername);
         sendMessage(message);
     }
-
+    /**
+     * 出价的消息
+     *
+     * @param content
+     */
+    protected void sendPriceMessage(String content) {
+        EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
+        message.setAttribute(AuctionBiddingEntity.auction_addPrice, content);
+        message.setAttribute(AuctionBiddingEntity.auction_MsgType, "1");
+        sendMessage(message);
+    }
 
     protected void sendMessage(EMMessage message) {
         if (message == null) {

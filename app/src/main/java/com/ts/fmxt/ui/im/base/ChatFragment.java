@@ -380,15 +380,15 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         message.setAttribute(AuctionBiddingEntity.auction_userID, userId+"");
         message.setAttribute(EaseConstant.EXTRA_USER_IMG, headpic);
         message.setAttribute(EaseConstant.EXTRA_USER_NAME, name);
-        if(price!=null){
-            message.setAttribute(AuctionBiddingEntity.auction_addPrice,"出价"+price+"元");
-        }
-        if (isRobot) {
-            //set message extension
-            message.setAttribute(AuctionBiddingEntity.auction_MsgType, "1");
-        }else{
-            message.setAttribute(AuctionBiddingEntity.auction_MsgType, "0");
-        }
+//        if(price!=null){
+//            message.setAttribute(AuctionBiddingEntity.auction_addPrice,"出价"+price+"元");
+//        }
+//        if (isRobot) {
+//            //set message extension
+//            message.setAttribute(AuctionBiddingEntity.auction_MsgType, "1");
+//        }else{
+//            message.setAttribute(AuctionBiddingEntity.auction_MsgType, "0");
+//        }
     }
 
     public void sendMsg() {
