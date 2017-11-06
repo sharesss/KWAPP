@@ -55,10 +55,10 @@ public class TransferRecordActivity extends FMBaseTableActivity implements View.
         });
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new StockAuctionAdapter(this, arrayList,1));
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
-        mEmptyView.setEmptyText("拍得股权，及时跟踪项目动态");
+        mEmptyView.setEmptyText("什么也没有");
         refresh_lv = (RefreshListView) findViewById(R.id.refresh_lv);
         EmptyView mEmptyView = new EmptyView(this);
-        mEmptyView.setEmptyText("拍得股权，及时跟踪项目动态");
+        mEmptyView.setEmptyText("什么也没有");
         setEmptyView(mEmptyView);
         startRefreshState();
 

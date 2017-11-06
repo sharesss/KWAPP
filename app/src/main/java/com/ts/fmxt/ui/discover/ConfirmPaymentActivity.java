@@ -39,8 +39,8 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
     private TextView tvPercentage,tvTotalAmount,tvReservationMoney,tvConfirm;
     private EditText edtName,edtWechat,edtPhone;
     private int money;
-    private String proportion;
-    private int investId;
+//    private String proportion;
+    private int investId,rewardId;
     private String arrmoney;
     private String ShareRatio;
     private String CompanyName;
@@ -59,11 +59,12 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
         setContentView(R.layout.activity_confirm_payment);
         ReceiverUtils.addReceiver(this);
         money = getIntent().getIntExtra("money", -1);
-        proportion = getIntent().getStringExtra("proportion");
+//        proportion = getIntent().getStringExtra("proportion");
         investId = getIntent().getIntExtra("investId", -1);
+        rewardId = getIntent().getIntExtra("id", -1);
         CompanyName= getIntent().getStringExtra("CompanyName");
-        arrmoney = proportion.substring(0,proportion.indexOf("万"));
-        ShareRatio = proportion.substring(proportion.indexOf("股")+1,proportion.indexOf("%"));
+//        arrmoney = proportion.substring(0,proportion.indexOf("万"));
+//        ShareRatio = proportion.substring(proportion.indexOf("股")+1,proportion.indexOf("%"));
 
         api = WXAPIFactory.createWXAPI(this, FmxtApplication.APP_ID, true);
         //将应用appid注册到微信
@@ -85,8 +86,8 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
         edtWechat = (EditText) findViewById(R.id.edt_wechat);
         edtPhone= (EditText) findViewById(R.id.edt_phone);
         tvReservationMoney = (TextView) findViewById(R.id.tv_reservation_money);
-        tvPercentage.setText(CompanyName+"股权("+ShareRatio+"%)");
-        tvTotalAmount.setText("¥"+arrmoney+"0000");
+        tvPercentage.setText(CompanyName);
+//        tvTotalAmount.setText("¥"+arrmoney+"0000");
         tvReservationMoney.setText("¥"+money);
         tvConfirm = (TextView) findViewById(R.id.tv_wxconfirm);
         tvConfirm.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +133,9 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
         Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
         staff.put("tokenId", String.valueOf(token));
-        staff.put("amount",arrmoney);
-        staff.put("stockRate", ShareRatio);
+        staff.put("rewardId", String.valueOf(rewardId));
+        staff.put("amount","1");
+        staff.put("stockRate", "1");
         staff.put("investPeople", name);
         staff.put("wechatNumber", wechat);
         staff.put("contactWay", phone);

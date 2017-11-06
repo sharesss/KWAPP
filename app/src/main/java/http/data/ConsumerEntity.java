@@ -2,7 +2,12 @@ package http.data;/**
  * Created by A1 on 2017/8/4.
  */
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import utils.DateFormatUtils;
 
@@ -28,6 +33,11 @@ public class ConsumerEntity {
     private int   isCollect;//是否收藏：0否 ，1是
     private int   voteNum;//投票总数
     private String amount;
+    private Long  reserveFinishTime;//预约截止时间
+    private int reservedAmount;//已预约金额
+    private int reserveTargetAmount;//目标金额
+    private int reservedPeopleNum;//已预约人数
+    private List<Ceil> ceils=new ArrayList<>();
 
     public ConsumerEntity(JSONObject jsonObject) {
         this.id = jsonObject.optInt("id",0);
@@ -42,11 +52,42 @@ public class ConsumerEntity {
         }
         this.exponent = jsonObject.optDouble("exponent");
         this.holdRatios= jsonObject.optDouble("holdRatios");
+        this.reserveFinishTime = jsonObject.optLong("reserveFinishTime");
         this.dokels = jsonObject.optInt("dokels");
         this.notDokels = jsonObject.optInt("notDokels");
         this.isVote = jsonObject.optInt("isVote");
         this.isCollect = jsonObject.optInt("isCollect");
         this.voteNum = jsonObject.optInt("voteNum");
+        this.reservedAmount = jsonObject.optInt("reservedAmount",0);
+        this.reserveTargetAmount = jsonObject.optInt("reserveTargetAmount",0);
+        this.reservedPeopleNum = jsonObject.optInt("reservedPeopleNum",0);
+        String projectReward = jsonObject.optString("projectReward");
+        try {
+            JSONObject bpdeionObj = new JSONObject(projectReward);
+            //里面是json
+            Iterator<String> keys = bpdeionObj.keys();
+            while (keys.hasNext()) {
+                //cell0  cell1   cell2
+                String key = keys.next();
+                JSONObject value = bpdeionObj.getJSONObject(key);
+
+                int imageWidth = value.optInt("imageWidth", 0);
+                int imageHeight = value.optInt("imageHeight", 0);
+                String imageUrl = value.optString("imageUrl", "");
+                String text = value.optString("text", "");
+                Ceil ceil = new Ceil();
+                ceil.setImageHeight(imageHeight);
+                ceil.setImageWidth(imageWidth);
+                ceil.setImageUrl(imageUrl);
+                ceil.setText(text);
+                ceils.add(ceil);
+            }
+
+        } catch (JSONException e) {
+            //里面是字符串
+//            Ceil ceil = new Ceil(projectReward,0);
+//            ceils.add(ceil);
+        }
 
     }
     public ConsumerEntity(JSONObject jsonObject,String amount) {
@@ -62,11 +103,55 @@ public class ConsumerEntity {
             this.createTime = DateFormatUtils.longToDate("yyyy-MM-dd", jsonObject.optLong("createTime", 0));
         }
         this.exponent = jsonObject.optDouble("exponent");
+        this.holdRatios= jsonObject.optDouble("holdRatios");
+        this.reserveFinishTime = jsonObject.optLong("reserveFinishTime");
         this.dokels = jsonObject.optInt("dokels");
         this.notDokels = jsonObject.optInt("notDokels");
         this.isVote = jsonObject.optInt("isVote");
         this.isCollect = jsonObject.optInt("isCollect");
         this.voteNum = jsonObject.optInt("voteNum");
+        this.reservedAmount = jsonObject.optInt("reservedAmount",0);
+        this.reserveTargetAmount = jsonObject.optInt("reserveTargetAmount",0);
+        this.reservedPeopleNum = jsonObject.optInt("reservedPeopleNum",0);
+        String projectReward = jsonObject.optString("projectReward");
+        try {
+            JSONObject bpdeionObj = new JSONObject(projectReward);
+            //里面是json
+            Iterator<String> keys = bpdeionObj.keys();
+            while (keys.hasNext()) {
+                //cell0  cell1   cell2
+                String key = keys.next();
+                JSONObject value = bpdeionObj.getJSONObject(key);
+
+                int imageWidth = value.optInt("imageWidth", 0);
+                int imageHeight = value.optInt("imageHeight", 0);
+                String imageUrl = value.optString("imageUrl", "");
+                String text = value.optString("text", "");
+                Ceil ceil = new Ceil();
+                ceil.setImageHeight(imageHeight);
+                ceil.setImageWidth(imageWidth);
+                ceil.setImageUrl(imageUrl);
+                ceil.setText(text);
+                ceils.add(ceil);
+            }
+
+        } catch (JSONException e) {
+            //里面是字符串
+//            Ceil ceil = new Ceil(projectReward,0);
+//            ceils.add(ceil);
+        }
+//        try {
+//            JSONObject jsn =jsonObject.getJSONObject("investProject");
+//            this.holdRatios= jsn.optDouble("holdRatios");
+//            this.reservedAmount = jsn.optInt("reservedAmount",0);
+//            this.reserveFinishTime = jsn.optLong("reserveFinishTime");
+//            this.isVote = jsn.optInt("isVote");
+//            this.notDokels = jsn.optInt("notDokels");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+
 
     }
 
@@ -200,5 +285,102 @@ public class ConsumerEntity {
 
     public void setHoldRatios(Double holdRatios) {
         this.holdRatios = holdRatios;
+    }
+
+    public List<Ceil> getCeils() {
+        return ceils;
+    }
+
+    public Long getReserveFinishTime() {
+        return reserveFinishTime;
+    }
+
+    public void setReserveFinishTime(Long reserveFinishTime) {
+        this.reserveFinishTime = reserveFinishTime;
+    }
+
+
+    public void setCeils(List<Ceil> ceils) {
+        this.ceils = ceils;
+    }
+
+    public int getReservedAmount() {
+        return reservedAmount;
+    }
+
+    public void setReservedAmount(int reservedAmount) {
+        this.reservedAmount = reservedAmount;
+    }
+
+    public int getReserveTargetAmount() {
+        return reserveTargetAmount;
+    }
+
+    public void setReserveTargetAmount(int reserveTargetAmount) {
+        this.reserveTargetAmount = reserveTargetAmount;
+    }
+
+    public int getReservedPeopleNum() {
+        return reservedPeopleNum;
+    }
+
+    public void setReservedPeopleNum(int reservedPeopleNum) {
+        this.reservedPeopleNum = reservedPeopleNum;
+    }
+
+    public static class Ceil{
+        private int   imageHeight;
+        private int   imageWidth;
+        private String   imageUrl;
+        private String   text;
+        private int type; // 0/1 文本/图片
+
+        public Ceil(String text, int type) {
+            this.text = text;
+            this.type = type;
+        }
+
+        public Ceil() {
+        }
+
+        public int getImageHeight() {
+            return imageHeight;
+        }
+
+        public void setImageHeight(int imageHeight) {
+            this.imageHeight = imageHeight;
+        }
+
+        public int getImageWidth() {
+            return imageWidth;
+        }
+
+        public void setImageWidth(int imageWidth) {
+            this.imageWidth = imageWidth;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
     }
 }

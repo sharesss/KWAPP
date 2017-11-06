@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,10 +35,11 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
     private Context context;
     private CircleImageView iv_portrait;
     private TextView tv_user_name, tv_fm_identity, tv_user_signature, tv_consumere,tv_place,tv_salary,tv_age,tv_realname;
-    private TextView tv_asset, tv_fb, tv_gift_num, tv_profile,tv_privilege_securities_num,tv_company_name,tv_investor,tv_phone,tv_money,tv_auction_num;
+    private TextView tv_asset, tv_fb, tv_gift_num, tv_profile,tv_privilege_securities_num,tv_company_name,tv_investor,tv_phone,tv_money,tv_auction_num,tv_isVfounder;
     private UserInfoEntity info;
     private int auctionNum;
     private String  cashdeposit;
+    private ImageView iv_v;
     /**金额为分的格式 */
 
     public UserHeadView(Context context) {
@@ -71,9 +73,11 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         tv_salary= (TextView) findViewById(R.id.tv_salary);//工资
         tv_age = (TextView) findViewById(R.id.tv_age);//年龄
         tv_investor = (TextView) findViewById(R.id.tv_investor);
+        tv_isVfounder = (TextView) findViewById(R.id.tv_isVfounder);
         tv_profile = (TextView) findViewById(R.id.tv_profile);
         tv_realname = (TextView)findViewById(R.id.tv_realname);
         tv_gift_num = (TextView) findViewById(R.id.tv_gift_num);
+        iv_v = (ImageView) findViewById(R.id.iv_v);
         findViewById(R.id.ll_callphone).setOnClickListener(this);
         tv_phone  = (TextView) findViewById(R.id.tv_phone);
         tv_money = (TextView) findViewById(R.id.tv_money);
@@ -94,6 +98,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         findViewById(R.id.bt_issue_equity).setOnClickListener(this);//发布股权
         findViewById(R.id.rl_frozen_deposit).setOnClickListener(this);//冻结保证金
         findViewById(R.id.rl_auction_project).setOnClickListener(this);//想竞拍的项目
+        findViewById(R.id.rl_user_investment_preference).setOnClickListener(this);
 
     }
 
@@ -143,6 +148,8 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
             tv_consumere.setText("未审核");
         }
         tv_investor.setVisibility(info.getIsinvestauthen()==1 ? View.VISIBLE :View.GONE);
+        tv_isVfounder.setVisibility(info.getIsinvestauthen()==2 ? View.VISIBLE :View.GONE);
+        iv_v.setVisibility(info.getIsinvestauthen()==2 ? View.VISIBLE :View.GONE);
         tv_asset.setText(info.getInvestprojectcount()+"");
         tv_fb.setText(info.getInvestprojectcollectcount()+"");
         if(!info.getCompany().equals("null")){
@@ -176,7 +183,12 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
                 UISKipUtils.satrtUserAgreement((Activity) getContext(), getResources().getString(R.string.html_fm_user_agreement), getResources().getString(R.string.user_agreement));
                 break;
             case R.id.rl_consumere://认证
-                UISKipUtils.startCertifiedInvestorActivity((Activity) getContext(),info.getAuditstate());
+                if(info.getAuditstate()==0){
+                    UISKipUtils.startInvestmentRecordActivity((Activity) getContext());
+                }else{
+                    UISKipUtils.startCertifiedInvestorActivity((Activity) getContext(),info.getAuditstate(),1);
+                }
+
                 break;
             case R.id.ll_callphone://呼叫客服
                 MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) getContext());
@@ -216,6 +228,9 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
                 break;
             case R.id.rl_auction_project://想竞拍的项目
                 UISKipUtils.startAuctionProjectActivity((Activity) getContext());
+                break;
+            case R.id.rl_user_investment_preference://投资偏好
+                UISKipUtils.startSettingInvestmentPreferenceActivity((Activity) getContext(),1);
                 break;
         }
     }

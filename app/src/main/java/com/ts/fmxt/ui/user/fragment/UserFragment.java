@@ -171,6 +171,8 @@ public class UserFragment extends FMBaseScrollFragment implements View.OnClickLi
                                          SharedPreferences share = getActivity().getSharedPreferences("user",MODE_PRIVATE);
                                          SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
                                          editor.putInt("isTruenameAuthen", userInfo.getIsTruenameAuthen());
+                                         editor.putInt("isinvestauthen", userInfo.getIsinvestauthen());
+                                         editor.putInt("auditstate", userInfo.getAuditstate());
 
                                          editor.commit();    //提交数据保存
 

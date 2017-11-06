@@ -53,7 +53,7 @@
         android:paddingTop="8dp"
         app:drawable="@mipmap/tab_mine_icon_0ff"
         app:drawableLight="@mipmap/tab_mine_on"
-        app:text="我的" />
+        app:text="个人中心" />
 
     </LinearLayout>
     <TextView

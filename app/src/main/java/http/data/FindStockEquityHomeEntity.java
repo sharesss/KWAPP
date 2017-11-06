@@ -85,6 +85,7 @@ public class FindStockEquityHomeEntity {
         this.chatRoomId = jsonObj.optString("chatRoomId");
         this.isApply = jsonObj.optInt("isApply",0);
         this.isRemind = jsonObj.optInt("isRemind",0);
+        this.reserveNum = jsonObj.optInt("reserveNum",0);
         this.forthoseName = jsonObj.optString("forthoseName");
         this.forthoseHeadPic = jsonObj.optString("forthoseHeadPic");
         this.auctionEndTime = jsonObj.optLong("auctionEndTime");

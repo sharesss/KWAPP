@@ -583,7 +583,7 @@
                 android:gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="查拍卖规则与免责"/>
+                android:text="拍卖规则与免责"/>
             <View
                 android:layout_width="50dp"
                 android:layout_height="1px"

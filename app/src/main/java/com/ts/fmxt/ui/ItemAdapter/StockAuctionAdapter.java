@@ -18,6 +18,7 @@ import utils.UISKipUtils;
 import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
 
+import static com.ts.fmxt.R.id.tv_founder;
 
 
 /**
@@ -46,7 +47,7 @@ public class StockAuctionAdapter extends FMBaseAdapter {
             ViewHolder.iv_image  = (FMNetImageView) convertView.findViewById(R.id.iv_image);
             ViewHolder.tv_follow_num = (TextView) convertView.findViewById(R.id.tv_attention_number);
             ViewHolder.tv_isfounder= (TextView) convertView.findViewById(R.id.tv_isfounder);
-            ViewHolder.tv_founder= (TextView) convertView.findViewById(R.id.tv_founder);
+            ViewHolder.tv_founder= (TextView) convertView.findViewById(tv_founder);
             ViewHolder.tv_isVfounder = (TextView) convertView.findViewById(R.id.tv_isVfounder);
             ViewHolder.tv_type= (TextView) convertView.findViewById(R.id.tv_type);
             ViewHolder.tv_round= (TextView) convertView.findViewById(R.id.tv_round);
@@ -83,29 +84,38 @@ public class StockAuctionAdapter extends FMBaseAdapter {
         }
         ViewHolder.iv_portrait.loadImage(info.getHeadpic());
         ViewHolder.tv_name.setText(info.getNickname());
-        if( info.getIsinvestauthen()==1){
-            ViewHolder.tv_isfounder.setVisibility(View.VISIBLE);
-        }else if(info.getIsinvestauthen()==2){
-            ViewHolder.tv_isVfounder.setVisibility(View.VISIBLE);
-        }else{
-            ViewHolder.tv_isfounder.setVisibility(View.GONE);
-            ViewHolder.tv_isVfounder.setVisibility(View.GONE);
+        ViewHolder.tv_isfounder.setVisibility(info.getIsinvestauthen()==1? View.VISIBLE:View.GONE);
+            ViewHolder.tv_isVfounder.setVisibility(info.getIsinvestauthen()==2 ? View.VISIBLE:View.GONE);
+        StringBuilder inf =  new StringBuilder().append(!info.getCompany().equals("")&&!info.getCompany().equals("null")  ? info.getCompany()+"/":"").append(!info.getPosition().equals("")&&!info.getPosition().equals("null")? info.getPosition()+"/":"");
+        if(inf.length()>1){
+            inf.delete(inf.length()-1, inf.length());
         }
-        if(info.getCompany()!="null"&&info.getPosition()!="null"){
-            ViewHolder.tv_founder.setText(info.getCompany()+info.getPosition());
-        }
-        if(info.getAuctionState()==0){
-            if(info.getAuctionStartTime()<info.getCurrentTime()){
-                ViewHolder.tv_time.setText("拍卖中");
-            }else{
-                ViewHolder.tv_time.setText("未开始");
-            }
 
-        }else if(info.getAuctionState()==1||info.getAuctionState()==2){
-            ViewHolder.tv_time.setText("已结束");
-        }else{
-            ViewHolder.tv_time.setText("拍卖中");
+        ViewHolder.tv_founder.setText(inf);
+        long time  =  info.getAuctionStartTime()/1000-info.getCurrentTime()/1000;
+        if(time<0){
+            //竞拍成功
+            ViewHolder.tv_time.setText("已结拍");
+        }else if(info.getAuctionState()==0){
+            //未开始
+            if(info.getCurrentTime()/1000<info.getAuctionStartTime()/1000){
+                ViewHolder.tv_time.setText("未开始");
+            }else if(time>0){
+                ViewHolder.tv_time.setText("拍卖中");
+            }
         }
+//        if(info.getAuctionState()==0){
+//            if(info.getAuctionStartTime()<info.getCurrentTime()){
+//                ViewHolder.tv_time.setText("拍卖中");
+//            }else{
+//                ViewHolder.tv_time.setText("未开始");
+//            }
+//
+//        }else if(info.getAuctionState()==1||info.getAuctionState()==2){
+//            ViewHolder.tv_time.setText("已结束");
+//        }else{
+//            ViewHolder.tv_time.setText("拍卖中");
+//        }
         ViewHolder.tv_follow_up_project.setText("跟投项目："+info.getFollowNum());
         ViewHolder.tv_transfer_project.setText("转让项目："+info.getMakeOverNum());
         ViewHolder.tv_auction_project.setText("竞拍项目："+info.getAuctionNum());

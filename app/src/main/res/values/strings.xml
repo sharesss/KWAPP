@@ -50,6 +50,7 @@
     <string name="text_no_login">未登录</string>
     <string name="toast_login_out">是否退出登录</string>
     <string name="user_realname">实名认证</string>
+    <string name="investment_preference">投资偏好</string>
     <string name="user_realname_hide">支付宝芝麻信用实名认证</string>
     <string name="user_consumere_hide">(优先跟投好项目)</string>
     <string name="text_withdrawals_tip">我们注重信息保护，所填信息仅供提现使用</string>

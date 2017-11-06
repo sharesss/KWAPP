@@ -127,6 +127,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
             if(type==0){
                 if(isApply==0){
                     buttonMore.setText("预交保证金");
+                    buttonMore.setBackground(getContext().getResources().getDrawable(R.drawable.bg_orange_5_shape));
                 }else{
                     buttonMore.setText("等待开拍");
                     editText.clearFocus();
@@ -135,8 +136,10 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
             }else if(type==1){
                 if(isApply==0){
                     buttonMore.setText("预交保证金");
+                    buttonMore.setBackground(getContext().getResources().getDrawable(R.drawable.bg_orange_5_shape));
                 }else{
                     buttonMore.setText("出价竞拍");
+                    buttonMore.setBackground(getContext().getResources().getDrawable(R.drawable.bg_orange_5_shape));
                 }
 
             }else if(type==2){

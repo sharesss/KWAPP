@@ -17,6 +17,10 @@ import com.ts.fmxt.ui.user.AboutusActivity;
 import com.ts.fmxt.ui.user.AuctionProjectActivity;
 import com.ts.fmxt.ui.user.BindNewPhoneActivity;
 import com.ts.fmxt.ui.user.CertifiedInvestorActivity;
+import com.ts.fmxt.ui.user.Certifiedinvestor.InvestmentRecordActivity;
+import com.ts.fmxt.ui.user.Certifiedinvestor.ModifyAuditDataActivity;
+import com.ts.fmxt.ui.user.Certifiedinvestor.SettingInvestmentPreferenceActivity;
+import com.ts.fmxt.ui.user.Certifiedinvestor.UploadPhotoActivity;
 import com.ts.fmxt.ui.user.CollectionProjectActivity;
 import com.ts.fmxt.ui.user.EditActivity;
 import com.ts.fmxt.ui.user.EditAutographActivity;
@@ -234,9 +238,40 @@ public class UISKipUtils {
      * @param context
      *
      */
-    public static void startCertifiedInvestorActivity(Activity context,int type){
+    public static void startCertifiedInvestorActivity(Activity context,int type,int state){
         Intent intent = new Intent(context, CertifiedInvestorActivity.class);
         intent.putExtra("type", type);
+        intent.putExtra("state", state);
+        context.startActivity(intent);
+    }
+    /**
+     * 认证投资人--投资记录
+     * @param context
+     *
+     */
+    public static void startInvestmentRecordActivity (Activity context){
+        Intent intent = new Intent(context, InvestmentRecordActivity.class);
+        context.startActivity(intent);
+    }
+    /**
+     *设置投资偏好
+     * @param context
+     *
+     */
+    public static void startSettingInvestmentPreferenceActivity (Activity context,int type){
+        Intent intent = new Intent(context, SettingInvestmentPreferenceActivity.class);
+        intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+    /**
+     *修改审核资料
+     * @param context
+     *
+     */
+    public static void startModifyAuditDataActivity (Activity context,int type,int id){
+        Intent intent = new Intent(context, ModifyAuditDataActivity.class);
+        intent.putExtra("type", type);
+        intent.putExtra("id", id);
         context.startActivity(intent);
     }
     public static void startFrozenDepositActivity(Activity context,String cashdeposit){
@@ -304,16 +339,17 @@ public class UISKipUtils {
         context.startActivity(intent);
     }
 
-    public static void startProjectReturnActivity(Activity context,int investId){
+    public static void startProjectReturnActivity(Activity context,int investId,int isOver){
         Intent intent = new Intent(context, ProjectReturnActivity.class);
         intent.putExtra("investId", investId);
+        intent.putExtra("isOver", isOver);
         context.startActivity(intent);
     }
 
-    public static void startConfirmPayment(Activity context,int money,String proportion,int investId,String CompanyName){
+    public static void startConfirmPayment(Activity context,int money,int investId,String CompanyName,int id){
         Intent intent = new Intent(context, ConfirmPaymentActivity.class);
         intent.putExtra("money", money);
-        intent.putExtra("proportion", proportion);
+        intent.putExtra("id", id);
         intent.putExtra("investId", investId);
         intent.putExtra("CompanyName", CompanyName);
         context.startActivity(intent);
@@ -353,6 +389,16 @@ public class UISKipUtils {
     public static void startRealNameResultActivity(Activity context, int type) {
         Intent intent = new Intent(context, RealNameResultActivity.class);
         intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+    /**
+     * 认证上传图片
+     *
+     * @param context
+     * @param
+     */
+    public static void startUploadPhotoActivity(Activity context) {
+        Intent intent = new Intent(context, UploadPhotoActivity.class);
         context.startActivity(intent);
     }
 

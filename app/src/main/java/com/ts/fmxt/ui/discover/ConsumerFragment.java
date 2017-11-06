@@ -1,6 +1,7 @@
 package com.ts.fmxt.ui.discover;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.thindo.base.Widget.refresh.RefreshListView;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.ItemAdapter.FollowProjectAdapter;
 import com.ts.fmxt.ui.base.frameng.FMBaseTableFragment;
+import com.ts.fmxt.ui.discover.view.ReleaseProjectWin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +37,7 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
     private EmptyView mEmptyView;
     private RefreshListView refresh_lv;
     private FollowProjectAdapter adapter;
+    private ReleaseProjectWin win;
     private TextView iv_share;
     private ConsumerEntity info;
 
@@ -50,14 +53,18 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
     }
 
     //初始化头部
-    private void initTitle(View inflate) {
+    private void initTitle(final View inflate) {
         mEmptyView = (EmptyView) inflate.findViewById(R.id.empty_view);
         refresh_lv = (RefreshListView) inflate.findViewById(R.id.refresh_lv);
         iv_share = (TextView) inflate.findViewById(R.id.iv_share);
         iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showShareDialog();
+//                showShareDialog();  //分享功能
+                win =new ReleaseProjectWin(getActivity());
+                win.showAtLocation(
+                        inflate.findViewById(R.id.AppWidget),
+                        Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
             }
         });
 

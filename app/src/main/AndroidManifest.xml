@@ -213,6 +213,23 @@
             android:name="com.ts.fmxt.ui.HomePage.SmallThrowRuleActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <!--2.0版本新加界面-->
+        <activity
+            android:name="com.ts.fmxt.ui.user.Certifiedinvestor.InvestmentRecordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.Certifiedinvestor.UploadPhotoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.Certifiedinvestor.SettingInvestmentPreferenceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.user.Certifiedinvestor.ModifyAuditDataActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name="com.android.moblie.zmxy.antgroup.creditsdk.app.SDKActivity"
             android:screenOrientation="portrait" />
@@ -239,6 +256,7 @@
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="1194161008115809#fmxt-develop" />
+        <!--  正式1194161008115809#fmxt  测试1194161008115809#fmxt-develop-->
 
         <receiver
             android:name="com.ts.fmxt.ui.StockAuction.Receiver.MyReceiver"

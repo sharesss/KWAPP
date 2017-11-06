@@ -15,6 +15,8 @@ import utils.UISKipUtils;
 import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
 
+import static com.ts.fmxt.R.id.tv_place;
+
 /**
  * Created by A1 on 2017/9/11.
  */
@@ -26,7 +28,7 @@ public class StockAuctionView extends RelativeLayout implements View.OnClickList
     private FMNetImageView iv_image;
     private CircleImageView iv_portrait;
     private TextView tv_company_name,tv_follow_num,tv_type,tv_round,tv_bonus,tv_name,tv_isfounder,tv_founder,tv_isVfounder;
-    private TextView tv_follow_up_project,tv_transfer_project,tv_auction_project,tv_selling_shares,tv_starting_price,tv_appointments,tv_highest_bid,tv_isCandid;
+    private TextView tv_follow_up_project,tv_transfer_project,tv_auction_project,tv_selling_shares,tv_starting_price,tv_appointments,tv_highest_bid,tv_highest_bid_no,tv_isCandid;
 
     public StockAuctionView(Context context) {
         super(context);
@@ -67,8 +69,9 @@ public class StockAuctionView extends RelativeLayout implements View.OnClickList
         tv_starting_price= (TextView) findViewById(R.id.tv_starting_price);
         tv_appointments= (TextView) findViewById(R.id.tv_appointments);
         tv_highest_bid= (TextView) findViewById(R.id.tv_highest_bid);
+        tv_highest_bid_no = (TextView) findViewById(R.id.tv_highest_bid_no);
         tv_isCandid= (TextView) findViewById(R.id.tv_isCandid);
-        tv_isCandid.setOnClickListener(this);
+//        tv_isCandid.setOnClickListener(this);
         findViewById(R.id.ll_stock_auction_view).setOnClickListener(this);
     }
 
@@ -96,26 +99,47 @@ public class StockAuctionView extends RelativeLayout implements View.OnClickList
             tv_isfounder.setVisibility(View.GONE);
             tv_isVfounder.setVisibility(View.GONE);
         }
-        if(info.getCompany()!="null"&&info.getPosition()!="null"){
-            tv_founder.setText(info.getCompany()+info.getPosition());
+        StringBuilder inf =  new StringBuilder().append(!info.getCompany().equals("")&&!info.getCompany().equals("null")  ? info.getCompany()+"/":"").append(!info.getPosition().equals("")&&!info.getPosition().equals("null")? info.getPosition()+"/":"");
+        if(inf.length()>1){
+            inf.delete(inf.length()-1, inf.length());
         }
+
+        tv_founder.setText(inf);
         tv_follow_up_project.setText("跟投项目："+info.getFollowNum());
         tv_transfer_project.setText("转让项目："+info.getMakeOverNum());
         tv_auction_project.setText("竞拍项目："+info.getAuctionNum());
         tv_selling_shares.setText("出让股权："+info.getStockSellRate()+"%");
         tv_starting_price.setText("¥ "+info.getStartingPrice());
         tv_appointments.setText("预约人数: "+info.getReserveNum());
-        tv_highest_bid.setText("¥ "+info.getTopPrice());
-        if(info.getAuctionState()==0){
-            //未开始
-            tv_isCandid.setText("立即预约");
-        }else if(info.getAuctionState()==1||info.getAuctionState()==2){
-            //竞拍成功
-            tv_isCandid.setText("已结拍");
-
-        }else if(info.getAuctionState()==3){
-            tv_isCandid.setText("立即抢拍");
+        if(info.getTransactionPrice()==0){
+            tv_highest_bid.setVisibility(View.GONE);
+            tv_highest_bid_no.setVisibility(View.VISIBLE);
+        }else{
+            tv_highest_bid.setText("¥ "+info.getTransactionPrice());
+            tv_highest_bid_no.setVisibility(View.GONE);
         }
+
+        Long time  =  info.getAuctionStartTime()/1000-info.getCurrentTime()/1000;
+            //未开始
+            if (time < 0) {
+                //竞拍成功
+                tv_isCandid.setText("已结拍");
+            } else if (info.getAuctionState() == 0) {
+                if (info.getCurrentTime() / 1000 < info.getAuctionStartTime() / 1000) {
+                    tv_isCandid.setText("立即预约");
+                } else if (time > 0) {
+                    tv_isCandid.setText("立即抢拍");
+                }
+            }
+//        if(info.getAuctionState()==0){
+//            //未开始
+//            tv_isCandid.setText("立即预约");
+//        }else if(info.getAuctionState()==1||info.getAuctionState()==2){
+//            //竞拍成功
+//            tv_isCandid.setText("已结拍");
+//        }else if(info.getAuctionState()==3){
+//            tv_isCandid.setText("立即抢拍");
+//        }
 
     }
 

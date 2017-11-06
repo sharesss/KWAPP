@@ -51,7 +51,7 @@ public class PopupWheelAgeView extends BaseEventPopup implements OnClickListener
         for (int i = year - 18; i > year - 101; i--) {
             mYearArrayList.add(String.format("%s年", String.valueOf(i)));
         }
-        for (int i = 1; i <= 18; i++) {
+        for (int i = 1; i <= 12; i++) {
             mMonthArrayList.add(String.format("%s月", String.valueOf(i)));
         }
 

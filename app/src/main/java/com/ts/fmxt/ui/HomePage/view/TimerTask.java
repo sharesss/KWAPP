@@ -50,15 +50,45 @@ public class TimerTask extends RelativeLayout {
                 minute = minute % 60;
             }
             if(day>0){
-                tv_day.setText(day+"");
+                if (day<10) {
+                    tv_day.setText("0"+day+"");
+                }else{
+                    tv_day.setText(day+"");
+                }
+
                 ll_day.setVisibility(View.VISIBLE);
                 ll_second.setVisibility(View.GONE);
             }else{
                 ll_day.setVisibility(View.GONE);
             }
-            tv_time.setText(hour+"");
-            tv_branch.setText(minute+"");
-            tv_second.setText(second+"");
+            if(tv_is_start.getText().toString().equals("立即预约")){
+                tv_time.setBackground(getContext().getResources().getDrawable(R.drawable.bg_orange));
+                tv_branch.setBackground(getContext().getResources().getDrawable(R.drawable.bg_orange));
+                tv_second.setBackground(getContext().getResources().getDrawable(R.drawable.bg_orange));
+                tv_day.setBackground(getContext().getResources().getDrawable(R.drawable.bg_orange));
+            }
+            if(tv_is_start.getText().toString().equals("竞拍中")){
+                tv_time.setBackground(getContext().getResources().getDrawable(R.drawable.bg_red));
+                tv_branch.setBackground(getContext().getResources().getDrawable(R.drawable.bg_red));
+                tv_second.setBackground(getContext().getResources().getDrawable(R.drawable.bg_red));
+                tv_day.setBackground(getContext().getResources().getDrawable(R.drawable.bg_red));
+            }
+            if (hour<10) {
+                tv_time.setText("0"+hour+"");
+            }else{
+                tv_time.setText(hour+"");
+            }
+            if (minute<10) {
+                tv_branch.setText("0"+minute+"");
+            }else{
+                tv_branch.setText(minute+"");
+            }
+            if (second<10) {
+                tv_second.setText("0"+second+"");
+            }else{
+                tv_second.setText(second+"");
+            }
+
 
             if(time>0){
                 handler.postDelayed(this, 1000);
@@ -101,18 +131,21 @@ public class TimerTask extends RelativeLayout {
             return;
         }
         this.info =info;
-         time  = info.getAuctionEndTime() - info.getAuctionStartTime();
-        handler.postDelayed(runnable, 1000);
-        if(info.getAuctionState()==0){
-            //未开始
-            tv_is_start.setText("立即预约");
-        }else if(info.getAuctionState()==1||info.getAuctionState()==2){
+        time  =  info.getAuctionStartTime()/1000-info.getCurrentTime()/1000;
+        if(time<0){
             //竞拍成功
             tv_is_start.setText("已结拍");
-
-        }else if(info.getAuctionState()==3){
-            tv_is_start.setText("立即抢拍");
+        }else if(info.getAuctionState()==0){
+            //未开始
+            if(info.getCurrentTime()/1000<info.getAuctionStartTime()/1000){
+                tv_is_start.setText("立即预约");
+            }else if(time>0){
+                tv_is_start.setText("竞拍中");
+            }
+            handler.postDelayed(runnable, 1000);
         }
+
+
     }
 
 }

@@ -120,6 +120,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auction_details);
+        ReceiverUtils.addReceiver(this);
         investId = getIntent().getIntExtra("id", -1);
         SharedPreferences share = getSharedPreferences("ImInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
@@ -205,20 +206,13 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
             iv.loadImage(info.getArr().get(i));
             views.add(iv);
         }
+        info.getArr().clear();
         viewpager.setAdapter(vpAdapter);
         viewpager.setOnPageChangeListener(this);
-        if(info.getAuctionState()==0){
-            if(info.getAuctionStartTime()<info.getCurrentTime()){
-                tv_auction_type.setText("出价竞拍");
-                tv_set_remind.setVisibility(View.GONE);
-                ll_auction_result.setVisibility(View.GONE);
-            }else{
-                tv_auction_type.setText("等待开拍");
-                ll_ranking_list.setVisibility(View.GONE);
-                ll_auction_result.setVisibility(View.GONE);
-            }
+        Long time  =  info.getAuctionStartTime()/1000-info.getCurrentTime()/1000;
+        //未开始
 
-        }else if(info.getAuctionState()==1||info.getAuctionState()==2){
+        if(time < 0){
             tv_auction_type.setText("拍卖结束");
             tv_set_remind.setVisibility(View.GONE);
             if(!info.getForthoseName().equals("null")||!info.getForthoseHeadPic().equals("null")){
@@ -230,8 +224,19 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
                 ll_auction_successful.setVisibility(View.GONE);
                 ll_ranking_list.setVisibility(View.GONE);
             }
-        }else{
-            tv_auction_type.setText("出价竞拍");
+
+        }else if(info.getAuctionState()==0){
+            if(info.getCurrentTime() / 1000 < info.getAuctionStartTime() / 1000){
+                tv_auction_type.setText("等待开拍");
+                ll_ranking_list.setVisibility(View.GONE);
+                ll_auction_result.setVisibility(View.GONE);
+            }else if (time > 0){
+                tv_auction_type.setText("出价竞拍");
+                tv_set_remind.setVisibility(View.GONE);
+                ll_auction_result.setVisibility(View.GONE);
+                ll_ranking_list.setVisibility(View.GONE);
+            }
+
         }
 
         tv_attention_number.setText(info.getAttentionNum()+"人关注");
@@ -245,9 +250,11 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
             tv_isfounder.setVisibility(View.GONE);
             tv_isVfounder.setVisibility(View.GONE);
         }
-        if(!info.getCompany().equals("null")&&!info.getPosition().equals("null")){
-            tv_founder.setText(info.getCompany()+info.getPosition());
+        StringBuilder inf =  new StringBuilder().append(!info.getCompany().equals("")&&!info.getCompany().equals("null")  ? info.getCompany()+"/":"").append(!info.getPosition().equals("")&&!info.getPosition().equals("null")? info.getPosition()+"/":"");
+        if(inf.length()>1){
+            inf.delete(inf.length()-1, inf.length());
         }
+        tv_founder.setText(inf);
         tv_follow_up_project.setText("跟投项目："+info.getFollowNum());
         tv_transfer_project.setText("转让项目："+info.getMakeOverNum());
         tv_auction_project.setText("竞拍项目："+info.getAuctionNum());
@@ -278,24 +285,26 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         }
         tv_stockDesc.setText(info.getStockDesc()+"");
         tv_disclaimer.setText(info.getDisclaimer());
-            if(info.getAuctionState()==0){
-                if(info.getAuctionStartTime()<info.getCurrentTime()){
-                    if(info.getIsApply()==0){
-                        tv_praise.setText("预交保证金");
-                    }else{
-                        tv_praise.setText("出价竞拍");
-                    }
 
-                }else{
-                    if(info.getIsApply()==0){
-                        tv_praise.setText("预交保证金");
-                    }else {
-                        tv_praise.setText("等待开拍");
-                    }
+        //未开始
+        if (time < 0) {
+            //竞拍成功
+            tv_praise.setText("已结拍");
+        } else if (info.getAuctionState() == 0) {
+            if (info.getCurrentTime() / 1000 < info.getAuctionStartTime() / 1000) {
+                if(info.getIsApply()==0){
+                    tv_praise.setText("预交保证金");
+                }else {
+                    tv_praise.setText("等待开拍");
                 }
-            }else if(info.getAuctionState()==1||info.getAuctionState()==2){
-                tv_praise.setText("拍卖结束");
+            } else if (time > 0) {
+                if(info.getIsApply()==0){
+                    tv_praise.setText("预交保证金");
+                }else{
+                    tv_praise.setText("出价竞拍");
+                }
             }
+        }
 
         tv_set_remind.setText(info.getIsRemind()==0 ? "开启提醒":"提醒已开启");
         Drawable sexDrawble = getResources().getDrawable(tv_set_remind.getText().toString().equals("开启提醒") ? R.mipmap.stock_detail_icon_alarm_n : R.mipmap.stock_detail_icon_alarm_s);
@@ -630,7 +639,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
                                     sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
                                     tv_set_remind.setCompoundDrawables(null, sexDrawble, null, null);
                                 } else {
-                                    ToastHelper.toastMessage(AuctionDetailsActivity.this, "拍卖时间已过，请选择其他未开拍的项目");
+                                    ToastHelper.toastMessage(AuctionDetailsActivity.this, "拍卖即将开始，请选择其他未开拍的项目");
                                 }
                             }
 
@@ -651,7 +660,7 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         staff.put("investId", String.valueOf(investId));
         staff.put("tokenId", String.valueOf(token));
         staff.put("body", "支付保证金");
-        staff.put("totalFee",String.valueOf(1));//2000*100
+        staff.put("totalFee",String.valueOf(2000*100));//2000*100
         staff.put("roleType", "2");
         staff.put("clientType", "2");
         staff.put("orderType", "2");

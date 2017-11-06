@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-
         android:background="@color/white"
         >
         <ImageView
@@ -34,17 +33,16 @@
             android:layout_marginTop="5dp"
             android:textColor="@color/orange"/>
 
-    <WebView
-        android:id="@+id/refresh_web_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="20dp"
-        android:overScrollMode="never"
-        android:smoothScrollbar="true"
-        android:layout_marginTop="20dp"
-         />
+        <WebView
+            android:id="@+id/refresh_web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:overScrollMode="never"
+            android:smoothScrollbar="true" />
     </LinearLayout>
 
     <LinearLayout

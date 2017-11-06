@@ -50,10 +50,10 @@ public class MyHeelShotActivity extends FMBaseTableActivity {
         });
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new FollowProjectAdapter(this, arrayList));
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
-        mEmptyView.setEmptyText("我的跟投，及时跟踪项目动态");
+        mEmptyView.setEmptyText("什么也没有");
         refresh_lv = (RefreshListView) findViewById(R.id.refresh_lv);
         EmptyView mEmptyView = new EmptyView(this);
-        mEmptyView.setEmptyText("我的跟投，及时跟踪项目动态");
+        mEmptyView.setEmptyText("什么也没有");
         setEmptyView(mEmptyView);
         startRefreshState();
     }
@@ -82,7 +82,7 @@ public class MyHeelShotActivity extends FMBaseTableActivity {
             staff.put("userId", String.valueOf(userid));
         }else
             staff.put("tokenId", String.valueOf(token));
-
+        staff.put("queryType", String.valueOf(2));
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.GETINVESTPROJECTFOLLOW,
                 new OkHttpClientManager.ResultCallback<String>() {
 

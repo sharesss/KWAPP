@@ -29,13 +29,29 @@
         android:gravity="center"
         android:textSize="@dimen/sp_17" />
 
+    <TextView
+        android:id="@+id/btn_nexts"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_orange_5_shape"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="进行投资人认证"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
+
 
     <TextView
         android:id="@+id/tv_desc"
         style="@style/base_height_wrap"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_100"
         android:paddingBottom="@dimen/dp_5"
         android:paddingTop="@dimen/dp_5"
         android:paddingLeft="@dimen/dp_5"

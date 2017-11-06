@@ -126,7 +126,7 @@ public class MainFragmentBottomLayout extends RelativeLayout implements OnClickL
 
     public void currentIndex() {
         changeStatus();
-        mConsumer.notifyMixedTextDraw(true);
+        mAccount.notifyMixedTextDraw(true);
     }
 
     //新消息切换背景

@@ -279,7 +279,7 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
 
             @Override
             public void onError(int code, String message) {
-                final String msg = "第三方登录失败,请联系疯蜜客服!错误码[" + message + "]";
+                final String msg = "聊天登录失败,请联系疯蜜客服!错误码[" + message + "]";
                 LoginActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

@@ -18,6 +18,7 @@ import com.squareup.okhttp.Request;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.base.activity.FMBaseScrollActivityV2;
 import com.ts.fmxt.ui.discover.view.KeyMapDailog;
+import com.ts.fmxt.ui.discover.view.ProjectReturnItem;
 import com.ts.fmxt.ui.discover.view.RedCircleBar;
 
 import org.json.JSONArray;
@@ -62,7 +63,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private boolean isCollect;
 
     private int recLen = 3;
-    private int types;
+    private int types,isOver=0;
     public RecyclerViewAdapter adapter;
     ArrayList<BaseViewItem> list;
     RecyclerView recyclerView;
@@ -96,6 +97,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         //饼图UI
         DiscoverDetailsRequest();//顶部的数据获取
         InvestBPListRequest(false);
+
         CommentRequest(type);
 
 //        //底部两个按钮
@@ -116,14 +118,27 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
         headlist.add(0, discoverHeadItem);
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info, DiscoverDetailsActivity.this, investId);
+        ProjectReturnItem projectReturnItem = new ProjectReturnItem(info, DiscoverDetailsActivity.this);
         list.addAll(0, headlist);
         if (listcomment.isEmpty()) {
+            if(info.getCeils().size()!=0){
+                list.add(projectReturnItem);
+            }
             list.add(discoverCircleItem);
+
         } else {
+            if(info.getCeils().size()!=0){
+                list.add(list.size() - listcomment.size(), projectReturnItem);
+            }
             list.add(list.size() - listcomment.size(), discoverCircleItem);
+
         }
-
-
+        Long currenttime=System.currentTimeMillis()/1000;//获取系统时间的10位的时间戳
+        Long finishtime =info.getReserveFinishTime()/1000;
+        Long time =finishtime-currenttime;
+        if(time>0) {
+            isOver=1;
+        }
         /**
          * 这里可以添加各种Item,参照以上代码
          */
@@ -162,7 +177,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         labellist.add(labelItem);
         int cont = 0;
         for (InvestBPListEntity entity : arr) {
-            DisBPItem disBPItem = new DisBPItem(entity, investId);
+            DisBPItem disBPItem = new DisBPItem(entity, investId,this);
             if (entity.isScore() == 1) {
                 cont++;
                 TextView tvPrompt = (TextView) findViewById(R.id.tv_prompt);
@@ -239,10 +254,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 RequestTop();
                 break;
             case R.id.tv_with_the_vote:
-                SharedPreferences sharedPreferences= getSharedPreferences("user",
+                final SharedPreferences sharedPreferences= getSharedPreferences("user",
                         MODE_PRIVATE);
                 String token=sharedPreferences.getString("token", "");
                 int isTruenameAuthen=sharedPreferences.getInt("isTruenameAuthen", -1);
+                int isinvestauthen=sharedPreferences.getInt("isinvestauthen", -1);
+                final int auditstate=sharedPreferences.getInt("auditstate", -1);
                 if (token.equals("")) {
                     MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
                     mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
@@ -262,7 +279,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 }
                 if(isTruenameAuthen==0){
                     MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
-                    mPopupDialogWidget.setMessage("您还实名认证，是否去认证？");
+                    mPopupDialogWidget.setMessage("您还未实名认证，是否去认证？");
                     mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
 
                         @Override
@@ -274,7 +291,26 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     mPopupDialogWidget.showPopupWindow();
                     return;
                 }
-                UISKipUtils.startProjectReturnActivity(DiscoverDetailsActivity.this, investId);
+                if(isinvestauthen==0){
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
+                    mPopupDialogWidget.setMessage("您还未认证投资人，是否去认证？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1)
+                                if(auditstate==0){
+                                    UISKipUtils.startInvestmentRecordActivity(DiscoverDetailsActivity.this);
+                                }else{
+                                    UISKipUtils.startCertifiedInvestorActivity(DiscoverDetailsActivity.this,auditstate,1);//1是外面进去的，展示查看我的投资偏好，0是设计我的投资偏好
+                                }
+
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+                    return;
+                }
+                UISKipUtils.startProjectReturnActivity(DiscoverDetailsActivity.this, investId,isOver);
                 break;
             case R.id.ll_dokels://值得投
                 if (!checkLogin()) {

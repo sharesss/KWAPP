@@ -54,6 +54,46 @@ public class DiscoverHeadItem implements BaseViewItem {
             viewHolder.pbIndex.setVisibility(View.GONE);
         }
         viewHolder.tvIndex.setText(exponent + "%");
+        if(info.getHoldRatios()!=null){
+            Double indexs = info.getHoldRatios()*100;
+            int exponents = (new Double(indexs)).intValue();
+            viewHolder.pb_yellowindex.setProgress(exponents);
+            viewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
+            Double holdRatios = info.getHoldRatios()*100;
+            int holdRatio = (new Double(holdRatios)).intValue();
+            viewHolder.tv_schedule.setText(holdRatio+"%");
+            viewHolder.tv_target_amount.setText("目标金额¥"+info.getReserveTargetAmount());
+            viewHolder.tv_subscription_number.setText("认购人数"+info.getReservedPeopleNum());
+            Long currenttime=System.currentTimeMillis()/1000;//获取系统时间的10位的时间戳
+            Long finishtime =info.getReserveFinishTime()/1000;
+            Long time =finishtime-currenttime;
+            int hour = 0;
+            int minute = 0;
+            int second = 0;
+            second = time.intValue() ;
+
+            int day = (int) (time / (3600 * 24));
+            if (second > 60) {
+                minute = second / 60;         //取整
+                second = second % 60;         //取余
+            }
+
+            if (minute > 60) {
+                hour = minute / 3600;
+                minute = minute % 60;
+            }
+
+            if(time<0){
+                viewHolder.tv_remaining_days.setText("已结束");
+            }else{
+                if(day>0){
+                    viewHolder.tv_remaining_days.setText("剩余天数"+day+"");
+                }else{
+                    viewHolder.tv_remaining_days.setText("剩余天数"+"1");
+                }
+
+            }
+        }
 
     }
 
@@ -71,7 +111,8 @@ public class DiscoverHeadItem implements BaseViewItem {
         TextView tv_name,tv_time;
         TextView tvIndex;
         ProgressBar pbIndex;
-        ProgressBar pbGreenindex;
+        ProgressBar pbGreenindex,pb_yellowindex;
+        TextView tv_reservation,tv_schedule,tv_target_amount,tv_subscription_number,tv_remaining_days;
 
         private ViewHolder(View view) {
             super(view);
@@ -83,7 +124,14 @@ public class DiscoverHeadItem implements BaseViewItem {
             tvBrandDetails = (TextView) view.findViewById(R.id.tv_brand_details);
             pbIndex = (ProgressBar) view.findViewById(R.id.pb_index);
             pbGreenindex = (ProgressBar) view.findViewById(R.id.pb_greenindex);
+            pb_yellowindex = (ProgressBar) view.findViewById(R.id.pb_yellowindex);
             tvIndex = (TextView) view.findViewById(R.id.tv_index);
+            tv_reservation = (TextView) view.findViewById(R.id.tv_reservation);
+            tv_schedule = (TextView) view.findViewById(R.id.tv_schedule);
+            tv_target_amount = (TextView) view.findViewById(R.id.tv_target_amount);
+            tv_subscription_number = (TextView) view.findViewById(R.id.tv_subscription_number);
+            tv_remaining_days = (TextView) view.findViewById(R.id.tv_remaining_days);
+
         }
     }
 }

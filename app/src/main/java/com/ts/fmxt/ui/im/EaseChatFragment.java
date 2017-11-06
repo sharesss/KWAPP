@@ -154,6 +154,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     private RelativeLayout rl_highest_bid_view;//拍卖开始UI
     private TextView tv_auction_result_project_name,tv_deal_price,tv_auction_failure;
     String price ;
+    private Activity mActivity;
     final Handler handlers = new Handler() {
 
         public void handleMessage(Message msg) {         // handle message
@@ -162,7 +163,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     if(time>0){
                         tv_count_down.setText(time+"");
                         time--;
-                        initData();
+                        Message msg0 = handlers.obtainMessage(1);
+                        handlers.sendMessageDelayed(msg0, 1000);
                     }else{
                         findStockEqitySalesroomInitInfoRequest();
                         ll_count_down.setVisibility(View.GONE);
@@ -174,6 +176,12 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                         findStockEqitySalesroomInitInfoRequest();
                         return;
                     }
+                    if(lasttime<= 10){
+                        ll_count_down.setVisibility(View.VISIBLE);
+                            time = 10;
+                            Message message = handlers.obtainMessage(1);     // Message
+                            handlers.sendMessageDelayed(message, 1000);
+                    }
                     tv_time.setText("距离开始："+showtime(lasttime));
                     Message msg0 = handlers.obtainMessage(2);
                     msg0.obj = --lasttime;
@@ -181,7 +189,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     break;
                 case 3:
                     long lasttimes = (long) msg.obj;
-                    if(lasttimes<0){
+                    if(lasttimes<=0){
                         findStockEqitySalesroomInitInfoRequest();
                         return;
                     }
@@ -202,6 +210,11 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         return inflater.inflate(R.layout.ease_fragment_chat, container, false);
     }
 
+    @Override
+    public void onAttach(Activity context) {
+        super.onAttach(context);
+        this.mActivity = context;
+    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
@@ -261,6 +274,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         ll_auction_result = (LinearLayout) getView().findViewById(R.id.ll_auction_result);
         ll_auction_successful = (LinearLayout) getView().findViewById(R.id.ll_auction_successful);
         tv_auction_result_project_name = (TextView) getView().findViewById(R.id.tv_auction_result_project_name);
+
 //        registerExtendMenuItem();
         // init input menu
         inputMenu.init(null);
@@ -315,8 +329,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     }
 
     private void findStockEqitySalesroomInitInfoRequest(){
-        SharedPreferences sharedPreferences= getActivity().getSharedPreferences("ImInfo",
-                MODE_PRIVATE);
+        SharedPreferences sharedPreferences= mActivity.getSharedPreferences("ImInfo",
+               MODE_PRIVATE);
         int stockId=sharedPreferences.getInt("stockId", 0);
         Map<String, String> staff = new HashMap<String, String>();
             staff.put("stockId", String.valueOf(stockId));
@@ -357,7 +371,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         );
     }
 
-    private void initData() {
+    private void initData()  {
         if (mChatRoomInfoEntity == null) {
             return;
         }
@@ -373,11 +387,16 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             iv_auction_result_portrait.loadImage(mChatRoomInfoEntity.getHeadpic());
         }
         tv_auction_result_name.setText(mChatRoomInfoEntity.getNickname());
-
         tv_nickname.setText(mChatRoomInfoEntity.getNickname());
         tv_price.setText(mChatRoomInfoEntity.getOfferPrice() + "元");
-
-        SharedPreferences sharedPreferences= getContext().getSharedPreferences("ImInfo",
+        try {
+            EMCursorResult<EMChatRoom> result = EMClient.getInstance().chatroomManager().fetchPublicChatRoomsFromServer(100, null);
+            int attentionNumber = result.getData().size();
+            tv_follw_num.setText(attentionNumber+"人关注");
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
+        SharedPreferences sharedPreferences= mActivity.getSharedPreferences("ImInfo",
                 MODE_PRIVATE);
         int startingPrice=sharedPreferences.getInt("startingPrice", 0);
         String picture = sharedPreferences.getString("picture", "");
@@ -389,25 +408,28 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         if (mChatRoomInfoEntity.getStockEquityState() == 0) {
             ll_auction_result.setVisibility(View.GONE);
             //拍卖未开始
-            if (mChatRoomInfoEntity.getStockStartTime() <= 60) {
-                ll_count_down.setVisibility(View.VISIBLE);
-
-                Message message = handlers.obtainMessage(1);     // Message
-                handlers.sendMessageDelayed(message, 1000);
-            }
             rl_highest_bid_view.setVisibility(View.GONE);
+            iv_suction_starting_price.setText("起拍价"+startingPrice+"元");
             iv_suction_starting_price.setVisibility(View.VISIBLE);
             tv_auction_name.setVisibility(View.VISIBLE);
-            iv_suction_starting_price.setText("起拍价"+startingPrice+"元");
-            Message msg = handlers.obtainMessage(2);
-            msg.obj = lasttime;
-            handlers.sendMessage(msg);
+            if(lasttime<=360){
+                Message msg = handlers.obtainMessage(2);
+                msg.obj = lasttime;
+                handlers.sendMessage(msg);
+            }
+
         } else if (mChatRoomInfoEntity.getStockEquityState() == 1) {
             //拍卖进行中
-            rl_highest_bid_view.setVisibility(View.VISIBLE);
-            ll_auction_result.setVisibility(View.GONE);
-            iv_suction_starting_price.setVisibility(View.GONE);
-            tv_auction_name.setVisibility(View.GONE);
+            if(mChatRoomInfoEntity.getOfferPrice()==0){
+                iv_suction_starting_price.setText("起拍价"+startingPrice+"元");
+                iv_suction_starting_price.setVisibility(View.VISIBLE);
+                tv_auction_name.setVisibility(View.VISIBLE);
+                rl_highest_bid_view.setVisibility(View.GONE);
+            }else{
+                iv_suction_starting_price.setVisibility(View.GONE);
+                tv_auction_name.setVisibility(View.GONE);
+                rl_highest_bid_view.setVisibility(View.VISIBLE);
+            }
             Message msg = handlers.obtainMessage(3);
             msg.obj = lasttime;
             handlers.sendMessage(msg);
@@ -429,7 +451,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 //        Bundle bundle = new Bundle();
 //        bundle.putInt("type", mChatRoomInfoEntity.getStockEquityState());
 //        ReceiverUtils.sendReceiver(ReceiverUtils.AUCTION_STATUS,bundle);
-        SharedPreferences shares = getContext().getSharedPreferences("ImInfo",MODE_PRIVATE);
+        SharedPreferences shares = mActivity.getSharedPreferences("ImInfo",MODE_PRIVATE);
         SharedPreferences.Editor editors = shares.edit(); //使处于可编辑状态
         editors.putInt("type",  mChatRoomInfoEntity.getStockEquityState());
         editors.putInt("offerPrice",mChatRoomInfoEntity.getOfferPrice());
@@ -442,8 +464,15 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         lasttime = (lasttime % (3600));
         int min = (int) (lasttime / (60));
         int second = (int) (lasttime % (60));
-        String text = ( min + "分" + second + "秒");//day + "天" + hour + "时" +
-        return text;
+//      if(hour>0){
+//            String text = (hour + "时"+ min + "分" + second + "秒");
+//            return text;
+//        }else{
+            String text = ( min + "分" + second + "秒");
+            return text;
+//        }
+        //day + "天" +  +
+
     }
 
 
@@ -732,17 +761,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                         pd.dismiss();
                         EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(toChatUsername);
                         if (room != null) {
-                            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("ImInfo",
+                            SharedPreferences sharedPreferences = mActivity.getSharedPreferences("ImInfo",
                                     MODE_PRIVATE);
                             String title = sharedPreferences.getString("title", "");
                             tv_auction_name.setText("拍品【"+title+"】");
-                            try {
-                                EMCursorResult<EMChatRoom> result = EMClient.getInstance().chatroomManager().fetchPublicChatRoomsFromServer(1, null);
-                                int attentionNumber = result.getData().size();
-                                tv_follw_num.setText(attentionNumber+"人关注");
-                            } catch (HyphenateException e) {
-                                e.printStackTrace();
-                            }
 
                             titleBar.setTitle(title);
                             titleBar.setLeftLayoutClickListener(new OnClickListener() {

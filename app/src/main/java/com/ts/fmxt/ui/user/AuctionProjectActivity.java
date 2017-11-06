@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.squareup.okhttp.Request;
 import com.thindo.base.Widget.refresh.RefreshListView;
@@ -35,6 +36,7 @@ public class AuctionProjectActivity extends FMBaseTableActivity {
     private EmptyView mEmptyView;
     private RefreshListView refresh_lv;
     private StockAuctionAdapter adapter;
+    private LinearLayout ll_audited;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +54,12 @@ public class AuctionProjectActivity extends FMBaseTableActivity {
         });
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new StockAuctionAdapter(this, arrayList,1));
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
-        mEmptyView.setEmptyText("想竞拍的项目，及时跟踪项目动态");
+        mEmptyView.setEmptyText("什么也没有");
         refresh_lv = (RefreshListView) findViewById(R.id.refresh_lv);
+        ll_audited = (LinearLayout) findViewById(R.id.ll_audited);
+        ll_audited.setVisibility(View.GONE);
         EmptyView mEmptyView = new EmptyView(this);
-        mEmptyView.setEmptyText("想竞拍的项目，及时跟踪项目动态");
+        mEmptyView.setEmptyText("什么也没有");
         setEmptyView(mEmptyView);
         startRefreshState();
     }

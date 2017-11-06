@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="预约股权"
+            android:text="预约份额"
             android:textColor="@color/gray"/>
 
     </LinearLayout>
@@ -35,6 +35,7 @@
     <RelativeLayout
         android:id="@+id/rl_phone_num"
         style="@style/text_user_item_style"
+        android:visibility="visible"
         >
 
         <View
@@ -60,6 +61,7 @@
             android:layout_marginRight="@dimen/dp_15"
             android:gravity="center"
             android:text="¥ 70000"
+            android:visibility="gone"
             android:textColor="@color/font_main_secondary"
             android:textSize="@dimen/sp_15" />
 

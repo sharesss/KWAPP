@@ -1,6 +1,7 @@
 package com.ts.fmxt.ui.StockAuction;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.thindo.base.Widget.refresh.RefreshListView;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.ItemAdapter.StockAuctionAdapter;
 import com.ts.fmxt.ui.base.frameng.FMBaseTableFragment;
+import com.ts.fmxt.ui.discover.view.ReleaseProjectWin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +40,7 @@ public class StockAuctionFrament extends FMBaseTableFragment implements View.OnC
     private StockAuctionAdapter adapter;
     private TextView iv_share;
     private ConsumerEntity info;
-
+    private ReleaseProjectWin win;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class StockAuctionFrament extends FMBaseTableFragment implements View.OnC
     }
 
     //初始化头部
-    private void initTitle(View inflate) {
+    private void initTitle(final View inflate) {
         mEmptyView = (EmptyView) inflate.findViewById(R.id.empty_view);
         refresh_lv = (RefreshListView) inflate.findViewById(R.id.refresh_lv);
         iv_share = (TextView) inflate.findViewById(R.id.iv_share);
@@ -59,7 +61,10 @@ public class StockAuctionFrament extends FMBaseTableFragment implements View.OnC
             @Override
             public void onClick(View view) {
                 //添加项目
-                ToastHelper.toastMessage(getActivity(),"功能开发中，敬请期待");
+                win =new ReleaseProjectWin(getActivity());
+                win.showAtLocation(
+                        inflate.findViewById(R.id.AppWidget),
+                        Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
             }
         });
 

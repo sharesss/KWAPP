@@ -52,6 +52,7 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/dp_8"
             android:text="@string/text_clean"
+            android:visibility="gone"
             android:textColor="@color/font_main"
             android:textSize="@dimen/sp_16" />
 

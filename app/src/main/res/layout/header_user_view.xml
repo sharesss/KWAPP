@@ -19,6 +19,14 @@
             android:layout_centerHorizontal="true"
             android:src="@mipmap/def_02" />
 
+        <ImageView
+            android:id="@+id/iv_v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom= "@id/iv_portrait"
+            android:layout_alignRight= "@id/iv_portrait"
+            android:background="@mipmap/img_v"/>
+
         <RelativeLayout
             style="@style/base_wrap"
             android:layout_marginTop="@dimen/dp_10"
@@ -52,7 +60,7 @@
                     android:text="创始人"
                     android:visibility="gone"
                     android:textColor="@color/orange"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_10" />
                 <TextView
                     android:id="@+id/tv_investor"
                     style="@style/base_wrap"
@@ -63,7 +71,16 @@
                     android:layout_marginLeft="3dp"
                     android:background="@drawable/bg_orange_kongyuan"
                     android:textColor="@color/orange"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_10" />
+                <TextView
+                    android:id="@+id/tv_isVfounder"
+                    style="@style/base_wrap"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:textColor="@color/orange"
+                    android:text="大V投资人"
+                    android:visibility="gone"
+                    android:background="@drawable/bg_orange_kongyuan"
+                    android:textSize="@dimen/sp_10"/>
 
             </LinearLayout>
 
@@ -344,10 +361,49 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_user_investment_preference"
+        style="@style/text_user_item_style"
+        android:layout_below="@id/rl_user_real_name"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_temp_investment_preference"
+            style="@style/text_user__style"
+            android:text="@string/investment_preference" />
+
+        <TextView
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/tv_temp_investment_preference"
+            android:text="@string/user_realname_hide"
+            android:textColor="@color/line_bg"
+            android:visibility="gone"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/tv_investment_preference"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_bg" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/rl_asset"
         style="@style/text_user_item_style"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/rl_user_real_name"
+        android:layout_below="@id/rl_user_investment_preference"
         >
         <View
             android:layout_width="match_parent"

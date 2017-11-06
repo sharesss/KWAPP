@@ -90,12 +90,55 @@
 
     </LinearLayout>
 
+    <!--5张照片用这个-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_image_layout"
+                style="@style/base_height_wrap"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:visibility="gone"
+                android:orientation="vertical"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
+                android:background="@mipmap/upload_line_img"
+                android:visibility="visible"
+                android:layout_height="150dp">
+
+                <widget.image.FMNetImageView
+                    android:id="@+id/iv_upimage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@mipmap/upload_img"
+                    android:scaleType="centerCrop" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <!--2.0版本之前一张照片用这个-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="50dp"
         android:background="@mipmap/upload_line_img"
+        android:visibility="gone"
         android:layout_height="150dp">
 
         <widget.image.FMNetImageView
@@ -108,19 +151,32 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/btn_nexts"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginLeft="@dimen/dp_40"
-        android:layout_marginRight="@dimen/dp_40"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/bg_gray_dcdc_hape"
-        android:clickable="true"
-        android:gravity="center"
-        android:text="@string/bt_complete"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_16" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/iv_audit_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/iv_audit"/>
+        <TextView
+            android:id="@+id/tv_audit_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="提交成功，等待审核"
+            />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交时间：2017-02-08"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -150,6 +206,40 @@
             android:layout_marginLeft="5dp"
             android:text="认证投资人后可向官方提交意向投资金额"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/btn_nexts"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_orange_5_shape"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/bt_complete"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/btn_cancel_update"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="@dimen/dp_40"
+            android:background="@drawable/bg_orange_5_shape"
+            android:clickable="true"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="取消更新"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
 </LinearLayout>

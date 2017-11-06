@@ -24,7 +24,7 @@ public class AuctionPayInfoEntity {
         this.stockPic = json.optString("stockPic","");
         this.earnestMoney = json.optInt("earnestMoney");
         if (!json.isNull("payTime")) {
-            this.payTime = DateFormatUtils.longToDate("yyyy-MM-dd", json.optLong("createTime", 0));
+            this.payTime = DateFormatUtils.longToDate("yyyy-MM-dd", json.optLong("payTime", 0));
         }
         this.payType = json.optInt("payType");
         this.fundFinallyFlow = json.optInt("fundFinallyFlow");

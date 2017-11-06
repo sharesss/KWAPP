@@ -10,5 +10,7 @@
 
     <padding
         android:left="@dimen/dp_3"
-        android:right="@dimen/dp_3" />
+        android:right="@dimen/dp_3"
+        android:top="3dp"
+        android:bottom="3dp"/>
 </shape>

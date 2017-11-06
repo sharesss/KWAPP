@@ -1,5 +1,6 @@
 package com.ts.fmxt.ui.user.authentication;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import utils.DateFormatUtils;
 import utils.ReceiverUtils;
 import utils.SpannableUtils;
 import utils.Tools;
+import utils.UISKipUtils;
 import widget.titlebar.NavigationView;
 
 
@@ -51,6 +53,7 @@ public class RealNameResultActivity extends FMBaseActivity implements View.OnCli
         String error="认证失败，请稍后再试";
         tv_status.setText(type == 1 ? success : error);
         iv_stauts.setImageDrawable(getResources().getDrawable(type == 1 ? R.mipmap.icon_authorization_on : R.mipmap.icon_authorization_off));
+        findViewById(R.id.btn_nexts).setOnClickListener(this);
     }
 
 
@@ -69,6 +72,22 @@ public class RealNameResultActivity extends FMBaseActivity implements View.OnCli
             case R.id.bt_authorization:
                 if (Tools.isFastDoubleClick())
                     return;
+
+                break;
+            case R.id.btn_nexts:
+                final SharedPreferences sharedPreferences= getSharedPreferences("user",
+                        MODE_PRIVATE);
+                int isinvestauthen=sharedPreferences.getInt("isTruenameAuthen", -1);
+                final int auditstate=sharedPreferences.getInt("auditstate", -1);
+                if(isinvestauthen!=2){
+                     if(auditstate==0){
+                           UISKipUtils.startInvestmentRecordActivity(RealNameResultActivity.this);
+                            }else{
+                                 UISKipUtils.startCertifiedInvestorActivity(RealNameResultActivity.this,auditstate,1);//1是外面进去的，展示查看我的投资偏好，0是设计我的投资偏好
+                             }
+
+                    return;
+                }
 
                 break;
         }

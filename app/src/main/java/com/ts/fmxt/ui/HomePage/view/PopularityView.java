@@ -29,7 +29,7 @@ public class PopularityView  extends RelativeLayout implements View.OnClickListe
     private CircleImageView iv_portrait;
     private TextView tv_name,tv_time;
     private TextView tv_brand_name,tv_index;
-    private TextView tv_brand_details,tv_money,tv_reservation;
+    private TextView tv_brand_details,tv_money,tv_reservation,tv_schedule,tv_remaining_days,tv_remaining_day;
     private ProgressBar pb_index,pb_greenindex,pb_yellowindex;
     private LinearLayout ll_consumer_info,ll_money,ll_popularity_top_view,ll_reservation;
 
@@ -64,6 +64,9 @@ public class PopularityView  extends RelativeLayout implements View.OnClickListe
         pb_greenindex = (ProgressBar) findViewById(R.id.pb_greenindex);
         ll_money = (LinearLayout) findViewById(R.id.ll_money);
         tv_reservation= (TextView) findViewById(R.id.tv_reservation);
+        tv_schedule = (TextView) findViewById(R.id.tv_schedule);
+        tv_remaining_days = (TextView) findViewById(R.id.tv_remaining_days);
+        tv_remaining_day = (TextView) findViewById(R.id.tv_remaining_day);
         ll_reservation = (LinearLayout) findViewById(R.id.ll_reservation);
         pb_yellowindex = (ProgressBar) findViewById(R.id.pb_yellowindex);
         findViewById(R.id.ll_popularity_top_view).setOnClickListener(this);
@@ -92,7 +95,41 @@ public class PopularityView  extends RelativeLayout implements View.OnClickListe
         int exponents = (new Double(indexs)).intValue();
         pb_yellowindex.setProgress(exponents);
         tv_index.setText(exponent+"%");
-        tv_reservation.setText(exponents+"%");
+        tv_reservation.setText("¥"+info.getReservedAmount());
+
+        Double holdRatios = info.getHoldRatios()*100;
+        int holdRatio = (new Double(holdRatios)).intValue();
+        tv_schedule.setText(holdRatio+"%");
+        Long currenttime=System.currentTimeMillis()/1000;//获取系统时间的10位的时间戳
+        Long finishtime =info.getReserveFinishTime()/1000;
+        Long time =finishtime-currenttime;
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        second = time.intValue() ;
+
+        int day = (int) (time / (3600 * 24));
+        if (second > 60) {
+            minute = second / 60;         //取整
+            second = second % 60;         //取余
+        }
+
+        if (minute > 60) {
+            hour = minute / 3600;
+            minute = minute % 60;
+        }
+
+        if(time<0){
+            tv_remaining_days.setVisibility(View.GONE);
+            tv_remaining_day.setText("已结束");
+        }else{
+            if(day>0){
+                tv_remaining_days.setText(day+"");
+            }else{
+                tv_remaining_days.setText("1");
+            }
+
+        }
 
     }
 

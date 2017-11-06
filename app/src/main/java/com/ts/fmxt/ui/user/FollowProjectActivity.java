@@ -83,7 +83,7 @@ public class FollowProjectActivity extends FMBaseTableActivity {
             staff.put("userId", String.valueOf(userid));
         }else
         staff.put("tokenId", String.valueOf(token));
-
+        staff.put("queryType", String.valueOf(1));
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.GETINVESTPROJECTFOLLOW,
                 new OkHttpClientManager.ResultCallback<String>() {
 
