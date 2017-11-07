@@ -9,8 +9,17 @@ public class ConsumerImageEntity {
     private String qiniuToken;
     private int position;
     private String url;
+    private String path;
     private String context;
     private String locatstion;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public String getQiniuToken() {
         return qiniuToken;

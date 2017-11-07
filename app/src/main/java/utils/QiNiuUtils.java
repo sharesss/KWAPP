@@ -40,7 +40,7 @@ public class QiNiuUtils {
     }
 
     //图片上传到七牛
-    public void uploadImageRequest(String dirPath, String token) {
+    public void uploadImageRequest(final String dirPath, String token) {
         try {
             UploadManager mUploadManager = new UploadManager();
             mUploadManager.put(dirPath, String.format("fm_%s", DateFormatUtils.formatDateStr("yyyyMMddHHmmss")), token,
@@ -50,6 +50,7 @@ public class QiNiuUtils {
                             String uri = String.format("%s%s", serviceUri, key);
                             Bundle bundle = new Bundle();
                             bundle.putString("data", uri);
+                            bundle.putString("dirPath", dirPath);
                             ReceiverUtils.sendReceiver(ReceiverUtils.REGISTER_IMAGE_UPLOADER, bundle);
                             Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res + "uri=" + uri);
                         }

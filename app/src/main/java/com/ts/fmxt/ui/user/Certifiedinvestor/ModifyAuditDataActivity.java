@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +76,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
     private PopupUploadDialog mPopupUploadDialog;
     private ConsumerImageAdapter mConsumerImageAdapter;
     private String token;
-    private String path;
+//    private String path;
     private FMNetImageView iv_upimage;
     private int onSelectTag = -1;
     private int conten =-1;
@@ -88,10 +89,13 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
         if (receiverType == ReceiverUtils.REGISTER_IMAGE_UPLOADER) {
             if(mPopupUploadDialog!=null)
                 mPopupUploadDialog.dismiss();
-            path = bundle.getString("data");
-            iv_upimage.loadImage(path);
-            ((ConsumerImageEntity) imageList.get(onSelectTag)).setUrl(path);
+            String url = bundle.getString("data");
+            String dirPath = "file://" + bundle.getString("dirPath");
+//            iv_upimage.loadImage(path);
+            ((ConsumerImageEntity) imageList.get(onSelectTag)).setPath(dirPath);
+            ((ConsumerImageEntity) imageList.get(onSelectTag)).setUrl(url);
             mConsumerImageAdapter.notifyDataSetChanged();
+
         }
     }
 
@@ -393,7 +397,11 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
             }
             ConsumerImageEntity info = (ConsumerImageEntity) getItem(position);
             if (!StringUtils.isEmpty(info.getUrl())){
-                iv.loadImage(info.getUrl());
+                if (TextUtils.isEmpty(info.getPath())){
+                    iv.loadImage(info.getUrl());
+                }else {
+                    iv.loadImage(info.getPath());
+                }
                 Log.i("url",info.getUrl());
                 iv.setVisibility(View.VISIBLE);
                 rl_picture.setVisibility(View.VISIBLE);
