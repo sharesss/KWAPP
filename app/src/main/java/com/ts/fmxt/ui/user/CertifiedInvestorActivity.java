@@ -127,7 +127,7 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
             tv_details.setText("（三个工作日内完成审核）");
             tv_reason.setText("成为认证投资人，优先跟投好项目");
             btn_cancel_update.setVisibility(View.GONE);
-            tv_time.setText("提交时间："+info.getCaseProjectTime());
+            tv_time.setText("提交时间："+info.getCreatetime());
             iv_audit_status.setBackground(getResources().getDrawable(R.mipmap.iv_audit));
             tv_audit_status.setText("提交成功，等待审核");
         }else if(info.getAuditstate()==2){
@@ -135,10 +135,10 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
             ll_authentication.setVisibility(View.VISIBLE);
             isexamine.setText("已认证");
             tv_details.setText("");
-            tv_time.setText("提交时间："+info.getCaseProjectTime());
+            tv_time.setText("提交时间："+info.getCreatetime());
             iv_audit_status.setBackground(getResources().getDrawable(R.mipmap.iv_have_passed));
             tv_audit_status.setText("审核成功");
-            tv_reason.setText("成为认证投资人，优先跟投好项目");
+            tv_reason.setText(info.getAuditdesc());
             btn_register.setVisibility(View.GONE);
             btn_cancel_update.setVisibility(View.GONE);
             btn_nexts.setText("更新认证内容");
@@ -160,7 +160,7 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
 
             iv_audit_status.setBackground(getResources().getDrawable(R.mipmap.iv_not_pass));
             btn_nexts.setText("重新提交认证");
-            tv_time.setText("提交时间："+info.getCaseProjectTime());
+            tv_time.setText("提交时间："+info.getCreatetime());
         }
     }
 
@@ -212,11 +212,11 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
     public void nextButton() {
         if (ivPictureFlg ) {//&&
             btn_nexts.setTextColor(getResourcesColor(R.color.white));
-            btn_nexts.setBackground(getResources().getDrawable(R.drawable.bg_orange_shape));
+            btn_nexts.setBackground(getResources().getDrawable(R.drawable.bg_orange_5_shape));
 
         }else{
             btn_nexts.setTextColor(getResourcesColor(R.color.font_main_secondary));
-            btn_nexts.setBackground(getResources().getDrawable(R.drawable.bg_gray_shape));
+            btn_nexts.setBackground(getResources().getDrawable(R.drawable.bg_gray_5_shape));
         }
     }
 

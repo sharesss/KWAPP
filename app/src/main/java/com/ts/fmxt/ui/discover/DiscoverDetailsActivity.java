@@ -538,6 +538,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             staff.put("parentUserId", String.valueOf(mConsumerCommentEntity.getUserId()));
             staff.put("parentUserName", String.valueOf(mConsumerCommentEntity.getNickName()));
         }
+        staff.put("moduleType", String.valueOf(1));
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.SAVEINVESTCOMMENT,
                 new OkHttpClientManager.ResultCallback<String>() {
 

@@ -71,6 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,17 +82,16 @@
                 style="@style/base_height_wrap"
                 android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
-                android:orientation="vertical"
-                />
+                android:orientation="vertical" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginRight="50dp"
+                android:layout_height="150dp"
                 android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@mipmap/upload_line_img"
-                android:visibility="visible"
-                android:layout_height="150dp">
+                android:visibility="visible">
 
                 <widget.image.FMNetImageView
                     android:id="@+id/iv_upimage"
@@ -100,16 +100,17 @@
                     android:layout_margin="10dp"
                     android:background="@mipmap/upload_img"
                     android:scaleType="centerCrop" />
+
                 <TextView
                     android:id="@+id/tv_next_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:layout_centerHorizontal ="true"
-                    android:layout_alignParentBottom ="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="20dp"
-                    android:visibility="gone"
-                    android:text="继续添加"/>
+                    android:text="继续添加"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -117,10 +118,10 @@
                 android:id="@+id/btn_nexts"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="50dp"
                 android:layout_marginLeft="@dimen/dp_40"
                 android:layout_marginRight="@dimen/dp_40"
                 android:layout_marginTop="100dp"
-                android:layout_marginBottom="50dp"
                 android:background="@drawable/bg_orange_5_shape"
                 android:clickable="true"
                 android:gravity="center"

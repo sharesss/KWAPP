@@ -2,6 +2,8 @@ package http.data;
 
 import org.json.JSONObject;
 
+import utils.DateFormatUtils;
+
 /**
  * Created by 认证 on 2017/8/19.
  */
@@ -31,7 +33,10 @@ public class AuthenticationEntity {
     public AuthenticationEntity(JSONObject jsonObject) {
         this.id = jsonObject.optInt("id");
         this.propertyphoto = jsonObject.optString("propertyphoto");
-        this.createtime = jsonObject.optString("createtime");
+        if (!jsonObject.isNull("createtime")) {
+            this.createtime = DateFormatUtils.longToDate("yyyy-MM-dd", jsonObject.optLong("createtime", 0));
+
+        }
         this.auditdesc = jsonObject.optString("auditdesc");
         this.auditstate = jsonObject.optInt("auditstate");
         this.investProjectSum = jsonObject.optInt("investProjectSum");
