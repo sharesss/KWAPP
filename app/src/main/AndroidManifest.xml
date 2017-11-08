@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
 
     <!-- Optional. Required for location feature -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -29,8 +28,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 分享 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -213,9 +210,13 @@
             android:name="com.ts.fmxt.ui.HomePage.SmallThrowRuleActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <!--2.0版本新加界面-->
+        <!--2.0版本新加界面-->widget.picturebrows
         <activity
             android:name="com.ts.fmxt.ui.user.Certifiedinvestor.InvestmentRecordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="widget.picturebrows.PictureBrowseActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity

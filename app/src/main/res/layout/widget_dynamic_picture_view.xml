@@ -1,0 +1,27 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <widget.image.FMNetImageView
+        android:id="@+id/net_image"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dp_120"
+        android:layout_marginRight="@dimen/dp_10"
+        android:focusable="false"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/stock_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/net_image"
+        android:layout_centerHorizontal="true"
+        android:text="--"
+        android:textColor="@color/font_secondary"
+        android:textSize="@dimen/sp_14" />
+
+    <LinearLayout
+        android:id="@+id/ll_page_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+</merge>

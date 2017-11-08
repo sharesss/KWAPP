@@ -47,6 +47,7 @@ import com.ts.fmxt.ui.user.login.RandomCodeActivity;
 import com.ts.fmxt.ui.user.login.WeChatCompleteInformation;
 
 import http.data.RegisterEntity;
+import widget.picturebrows.PictureBrowseActivity;
 
 /**
  * created by kp at 2017/7/20
@@ -409,6 +410,21 @@ public class UISKipUtils {
     public static void startReportActivity(Activity context,int investId) {
         Intent intent = new Intent(context, ReportActivity.class);
         intent.putExtra("investId", investId);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 图片查看器
+     *
+     * @param context
+     * @param url
+     * @param position
+     */
+    public static void startPictureBrowseActivity(Activity context, String url, int position, String name) {
+        Intent intent = new Intent(context, PictureBrowseActivity.class);
+        intent.putExtra("urls", url);
+        intent.putExtra("position", position);
+        intent.putExtra("name", name);
         context.startActivity(intent);
     }
 }

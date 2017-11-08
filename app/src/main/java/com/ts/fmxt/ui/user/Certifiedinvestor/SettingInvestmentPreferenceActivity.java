@@ -368,7 +368,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                     ToastHelper.toastMessage(SettingInvestmentPreferenceActivity.this,"请输入最大值");
                     return;
                 }
-                if(Integer.valueOf(edt_maxi_num.getText().toString())>Integer.valueOf(edt_maxi_num.getText().toString())){
+                if(Integer.valueOf(edt_mini_num.getText().toString())>Integer.valueOf(edt_maxi_num.getText().toString())){
                     ToastHelper.toastMessage(SettingInvestmentPreferenceActivity.this,"最小值不能大于最大值");
                     return;
                 }

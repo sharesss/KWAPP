@@ -1,23 +1,26 @@
 package com.ts.fmxt.ui.HomePage;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.squareup.okhttp.Request;
 import com.thindo.base.Widget.refresh.RefreshListView;
+import com.thindo.base.Widget.refresh.RefreshScrollView;
+import com.thindo.base.Widget.refresh.base.RefreshBase;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.HomePage.view.PopularityView;
 import com.ts.fmxt.ui.HomePage.view.StockAuctionView;
 import com.ts.fmxt.ui.ItemAdapter.FollowProjectAdapter;
-import com.ts.fmxt.ui.base.frameng.FMBaseTableFragment;
+import com.ts.fmxt.ui.base.frameng.FMBaseScrollFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,7 +49,7 @@ import static com.ts.fmxt.R.id.btn_finish;
  * 小投首页
  */
 
-public class HomePageFragment extends FMBaseTableFragment implements View.OnClickListener {
+public class HomePageFragment extends FMBaseScrollFragment implements View.OnClickListener {
     private EmptyView mEmptyView;
     private RefreshListView refresh_lv;
     private FollowProjectAdapter adapter;
@@ -57,19 +60,19 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
     // 定义ViewPager适配器
     private GuideViewPagerAdapter vpAdapter,gvAdapter;
     // 定义一个ArrayList来存放View
-    private ArrayList<View> views;
+    private ArrayList<View> views = new ArrayList<View>();
     // 引导图片资源
     private static final int[] pics = {R.mipmap.one, R.mipmap.two, R.mipmap.three};
-    private ArrayList arrays;
+    private ArrayList arrays = new ArrayList();
     // 记录当前选中位置
     private int currentIndex;
     //当前索引位置以及上一个索引位置
     private int index = 0,preIndex = 0;
 
     // 定义一个ArrayList来存放View
-    private ArrayList<View> viewdow;
+    private ArrayList<View> viewdow = new ArrayList<View>();;
     // 引导图片资源
-    private ArrayList arraysdow;
+    private ArrayList arraysdow = new ArrayList();
     // 底部小点的图片
     private ImageView[] pointsdow;
     // 记录当前选中位置
@@ -78,6 +81,7 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
     private int indextop = 0,preIndextop = 0;
     //定时器，用于实现轮播
     private Timer timer;
+    private Activity mActivity;
 
     Handler mHandler  = new Handler(){
         @Override
@@ -102,36 +106,68 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
             }
         }
     };
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.include_homepage_fragment, container, false);
         initTitle(inflate);
-        findStockEquityHomeRequest();
-        investListRequest();
+
         return inflate;
+    }
+
+    @Override
+    public void onAttach(Activity context) {
+        super.onAttach(context);
+        this.mActivity =context;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        bindRefreshScrollAdapter((RefreshScrollView) getView().findViewById(R.id.refresh_scroll),
+                R.layout.include_home_page);
+        getRefreshScrollView().setMode(RefreshBase.Mode.PULL_FROM_START);
+        stock_auction_viewpager = (ViewPager) getView().findViewById(R.id.stock_auction_viewpager);
+        popularity_viewpager = (ViewPager) getView().findViewById(R.id.popularity_viewpager);
+        linearLayout = (LinearLayout) getView().findViewById(R.id.point_container);
+        linearLayouts = (LinearLayout) getView().findViewById(R.id.point_position);
+        startRefreshState();
+
     }
 
     //初始化头部
     private void initTitle(View inflate) {
-        mEmptyView = (EmptyView) inflate.findViewById(R.id.empty_view);
         refresh_lv = (RefreshListView) inflate.findViewById(R.id.refresh_lv);
         inflate.findViewById(R.id.iv_message).setOnClickListener(this);
         inflate.findViewById(btn_finish).setOnClickListener(this);
-        stock_auction_viewpager = (ViewPager) inflate.findViewById(R.id.stock_auction_viewpager);
-        popularity_viewpager = (ViewPager) inflate.findViewById(R.id.popularity_viewpager);
-        linearLayout = (LinearLayout) inflate.findViewById(R.id.point_container);
-        linearLayouts = (LinearLayout) inflate.findViewById(R.id.point_position);
 
+
+    }
+
+    @Override
+    public void onReload() {
+        findStockEquityHomeRequest();
+        investListRequest();
+    }
+
+    @Override
+    public void loadMore() {
+
+    }
+
+    public void stopRefreshState(){
+        stop();
     }
     /**
      * 初始化数据
      */
     private void initData() {
-        views = new ArrayList<View>();
         vpAdapter = new GuideViewPagerAdapter(views);
         LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.FILL_PARENT,
                 LinearLayout.LayoutParams.FILL_PARENT);
+
         for (int i = 0; i < arrays.size(); i++) {
             StockAuctionView iv = new StockAuctionView(getContext());
             iv.setLayoutParams(mParams);
@@ -139,7 +175,6 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
             views.add(iv);
         }
         stock_auction_viewpager.setAdapter(vpAdapter);
-
         stock_auction_viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -172,7 +207,6 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
      * 初始化数据
      */
     private void initDataTop() {
-        viewdow = new ArrayList<View>();
         gvAdapter = new GuideViewPagerAdapter(viewdow);
         LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.FILL_PARENT,
@@ -229,6 +263,7 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
             //默认选中第一个按钮，因为默认显示第一张图片
             linearLayout.getChildAt(0).setEnabled(false);
         }
+
     }
 
     /**
@@ -298,7 +333,7 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
                     @Override
                     public void onError(Request request, Exception e) {
                         e.printStackTrace();
-                        mEmptyView.setVisibility(View.VISIBLE);
+                        stopRefreshState();
                     }
 
                     @Override
@@ -313,21 +348,29 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
                                     TableList tableList = new TableList();
                                     if (!js.isNull("equities")) {
                                         JSONArray array = js.optJSONArray("equities");
+                                        if(arrays.size()>=0){
+                                            arrays.clear();
+                                            views.clear();
+                                            linearLayout.removeAllViews();
+                                            tableList.getArrayList().clear();
+                                        }
                                         for (int i = 0; i < array.length(); i++) {
                                             tableList.getArrayList().add(new FindStockEquityHomeEntity(array.getJSONObject(i)));
                                         }
                                         arrays = tableList.getArrayList();
                                         initData();
+
                                     }
-                                    mEmptyView.setVisibility(View.GONE);
+                                    stopRefreshState();
                                 } else {
                                     ToastHelper.toastMessage(getActivity(), msg);
-                                    mEmptyView.setVisibility(View.VISIBLE);
+                                    stopRefreshState();
                                 }
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            stopRefreshState();
                         }
                     }
                 }, staff
@@ -344,7 +387,7 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
                     @Override
                     public void onError(Request request, Exception e) {
                         e.printStackTrace();
-                        mEmptyView.setVisibility(View.VISIBLE);
+                        stopRefreshState();
                     }
 
                     @Override
@@ -359,40 +402,32 @@ public class HomePageFragment extends FMBaseTableFragment implements View.OnClic
                                     TableList tableList = new TableList();
                                     if (!js.isNull("projects")) {
                                         JSONArray array = js.optJSONArray("projects");
+                                        if(arraysdow.size()>=0){
+                                            arraysdow.clear();
+                                            viewdow.clear();
+                                            linearLayouts.removeAllViews();
+                                            tableList.getArrayList().clear();
+                                        }
                                         for (int i = 0; i < array.length(); i++) {
                                             tableList.getArrayList().add(new ConsumerEntity(array.getJSONObject(i)));
                                         }
                                         arraysdow = tableList.getArrayList();
                                         initDataTop();
                                     }
-                                    mEmptyView.setVisibility(View.GONE);
+                                    stopRefreshState();
                                 } else {
                                     ToastHelper.toastMessage(getActivity(), msg);
-                                    mEmptyView.setVisibility(View.VISIBLE);
+                                    stopRefreshState();
                                 }
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            stopRefreshState();
                         }
                     }
                 }, staff
         );
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-
-    }
-
-    @Override
-    public void onReload() {
-
-    }
-
-    @Override
-    public void loadMore() {
-
-    }
 }

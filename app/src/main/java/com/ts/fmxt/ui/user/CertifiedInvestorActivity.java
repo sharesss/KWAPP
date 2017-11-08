@@ -133,11 +133,12 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
         }else if(info.getAuditstate()==2){
             tv_isAdopt.setVisibility(View.GONE);
             ll_authentication.setVisibility(View.VISIBLE);
-            isexamine.setText("已认证");
-            tv_details.setText("");
+            isexamine.setText("审核成功");
+            tv_details.setText("您已成为认证投资人");
             tv_time.setText("提交时间："+info.getCreatetime());
             iv_audit_status.setBackground(getResources().getDrawable(R.mipmap.iv_have_passed));
             tv_audit_status.setText("审核成功");
+            tv_authentication_privilege.setText("审核成功原因");
             tv_reason.setText(info.getAuditdesc());
             btn_register.setVisibility(View.GONE);
             btn_cancel_update.setVisibility(View.GONE);
@@ -145,9 +146,9 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
         }else if(info.getAuditstate()==3){
             tv_isAdopt.setVisibility(View.GONE);
             ll_authentication.setVisibility(View.VISIBLE);
-            isexamine.setText("未通过");
-            tv_details.setText("（请删除后重新认证）");
-            tv_authentication_privilege.setText("不通过原因");
+            isexamine.setText("审核失败");
+            tv_details.setText("（请重新提交认证）");
+            tv_authentication_privilege.setText("审核失败原因");
             tv_audit_status.setText("审核失败");
             tv_reason.setText(info.getAuditdesc());
             btn_register.setVisibility(View.GONE);

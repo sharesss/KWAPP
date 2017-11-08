@@ -85,6 +85,7 @@
                 android:orientation="vertical" />
 
             <RelativeLayout
+                android:id="@+id/rl_upimage"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginLeft="50dp"

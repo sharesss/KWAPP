@@ -86,7 +86,7 @@ public class RealNameSuccessActivity extends FMBaseActivity {
                                     JSONObject jsonobj = js.optJSONObject("record");
                                     String name = jsonobj.optString("realName");
                                     String no = jsonobj.optString("identityCard");
-                                    name = "*"+name.substring(0, 1);
+                                    name = "*"+name.substring(1, name.length());
                                     ed_name.setText(name);
                                     no = no.substring(0, 2) + "**************" + no.substring(16, 18);
                                     ed_no.setText(no);

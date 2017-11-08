@@ -55,77 +55,23 @@
         android:background="@color/gray_line"
         />
 
-    <ScrollView
-        android:layout_width="match_parent"
+
+    <com.thindo.base.Widget.refresh.RefreshScrollView
+        android:id="@+id/refresh_scroll"
+        style="@style/base_match"
         android:layout_below="@id/view"
-        android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <RelativeLayout
-        android:id="@+id/rl_stock_auction"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="10dp"
-        >
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/stock_auction_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:visibility="visible"
-            android:layout_gravity="center" />
-
-            <!--用来填充圆点指示器的容器-->
-            <LinearLayout
-                android:id="@+id/point_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-            </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_popularity"
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@id/rl_stock_auction">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/popularity_viewpager"
-            android:layout_width="wrap_content"
-            android:layout_height="450dp"
-            android:layout_gravity="center" />
-
-            <!--用来填充圆点指示器的容器-->
-            <LinearLayout
-                android:id="@+id/point_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-            </LinearLayout>
-    </RelativeLayout>
-
-
-    <widget.EmptyView
-        android:id="@+id/empty_view"
+        android:background="@color/activity_ui_bgs"
+        android:cacheColorHint="@color/none"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        app:ptrAnimationStyle="flip"
+        app:ptrHeaderBackground="@color/activity_ui_bgs"
+        app:ptrMode="both"
+        app:ptrShowIndicator="false" />
+    <widget.NetworkView
+        android:id="@+id/network"
         style="@style/base_wrap"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:visibility="gone" />
-</LinearLayout>
-    </ScrollView>
 </RelativeLayout>

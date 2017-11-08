@@ -59,8 +59,9 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
     private String path;
     private FMNetImageView iv_upimage;
     private int onSelectTag = -1;
-    private int conten =-1;
+    private int conten =0;
     private LinearLayout ll_image_layout;
+    private RelativeLayout rl_upimage;
     private List<Object> imageList = new ArrayList<>();
     private TextView tv_next_add;
 
@@ -93,6 +94,7 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
         ll_image_layout = (LinearLayout) findViewById(R.id.ll_image_layout);
         tv_next_add = (TextView) findViewById(R.id.tv_next_add);
         iv_upimage.setOnClickListener(this);
+        rl_upimage = (RelativeLayout) findViewById(R.id.rl_upimage);
         findViewById(R.id.btn_nexts).setOnClickListener(this);
 
     }
@@ -117,14 +119,14 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.iv_upimage:
-                if(onSelectTag>=5){
+                if(onSelectTag>=4){
                     ToastHelper.toastMessage(this,"最多只能上传5张图片");
                     return;
                 }
                 selectDrawable();
                 break;
             case R.id.btn_nexts:
-                if(onSelectTag<0){
+                if(imageList.size()<=0){
                     ToastHelper.toastMessage(this,"至少上传1张照片");
                     return;
                 }
@@ -248,22 +250,20 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case 0:
-                    conten++;
-                    onSelectTag = conten;
-                    ConsumerImageEntity info = (ConsumerImageEntity) imageList.get(onSelectTag);
-                    if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
-                        qiNiuTokenRequest();
                     startPhotoZoom(data.getData());
+                    onSelectTag = conten;
+                    ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(onSelectTag);
+                    if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
+                        qiNiuTokenRequest();
                     break;
                 case 1:
                     if (Tools.hasSdcard()) {
                         File tempFile = new File(FileUtils.getRootPath() + PopupPhotoView.IMAGE_FILE_NAME);
-                        conten++;
-                        onSelectTag = conten;
-                        ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(onSelectTag);
-                        if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
-                            qiNiuTokenRequest();
                         startPhotoZoom(Uri.fromFile(tempFile));
+                        onSelectTag = conten;
+                        ConsumerImageEntity info = (ConsumerImageEntity) imageList.get(onSelectTag);
+                        if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
+                            qiNiuTokenRequest();
                     }
                     break;
                 case 2:
@@ -281,6 +281,7 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
                             mPopupUploadDialog.dismiss();
                         mPopupUploadDialog.showPopupWindow();
                         QiNiuUtils.getInstance().uploadImageRequest(path, token);
+                        conten++;
                     }
                     break;
             }
@@ -307,6 +308,9 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
                 rl_picture.setVisibility(View.VISIBLE);
                 iv_del.setOnClickListener(new onImageItemClick(position));
                 tv_next_add.setVisibility(View.VISIBLE);
+                if(position==4){
+                    rl_upimage.setVisibility(View.GONE);
+                }
             }else{
                 iv.setVisibility(View.GONE);
                 rl_picture.setVisibility(View.GONE);
@@ -342,6 +346,7 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
                             name = name + item.getContext() + ",";
                         }
                     }
+
 //                    if (!StringUtils.isEmpty(uri))
                     MessageContentDialog mPopupDialogWidget = new MessageContentDialog(UploadPhotoActivity.this);
 
@@ -359,6 +364,9 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
                                 conten--;
                                 if(onSelectTag<0){
                                     tv_next_add.setVisibility(View.GONE);
+                                }
+                                if(onSelectTag<4){
+                                    rl_upimage.setVisibility(View.VISIBLE);
                                 }
                             }
 
