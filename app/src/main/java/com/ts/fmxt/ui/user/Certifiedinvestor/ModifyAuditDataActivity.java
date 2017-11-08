@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -342,13 +343,13 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     }
                 });
     }
-
+    String path;
     //图片结果
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
-                case 0:
+                case 0:{
                     if (data.getData() == null)
                         return;
                     conten++;
@@ -364,10 +365,16 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                             e.printStackTrace();
                         }
                     }
-                    String fileName = ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion();
+                    if (!TextUtils.isEmpty(path)) {
+                        File file = new File(path);
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                    }
+                    String fileName = System.currentTimeMillis()+".png";
                     Bitmap photo = photoBmp;
                     ImageCacheUitl imageCacheUitl = ImageCacheUitl.getInstetn();
-                    String path = imageCacheUitl.getSDCarPath() + fileName;
+                    path = imageCacheUitl.getSDCarPath() + fileName;
                     Boolean flg = imageCacheUitl.savaImage(fileName, photo);
                     if (flg) {
                         if (mPopupUploadDialog != null)
@@ -377,8 +384,8 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                         QiNiuUtils.getInstance().uploadImageRequest(path, token);
 
                     }
-                    break;
-                case 1:
+                    break;}
+                case 1:{
                     if (Tools.hasSdcard()) {
                         File tempFile = new File(FileUtils.getRootPath() +"tempImage.jpg"); //+ ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion());
                         if (tempFile == null)
@@ -396,21 +403,28 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                                 e.printStackTrace();
                             }
                         }
-                        String fileNames = ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion();
+                        if (!TextUtils.isEmpty(path)) {
+                            File file = new File(path);
+                            if (file.exists()) {
+                                file.delete();
+                            }
+                        }
+                        String fileName = System.currentTimeMillis()+".png";
                         Bitmap photos = photoBmps;
                         ImageCacheUitl imageCacheUitls = ImageCacheUitl.getInstetn();
-                        String paths = imageCacheUitls.getSDCarPath() + fileNames;
-                        Boolean flgs = imageCacheUitls.savaImage(fileNames, photos);
+                        path = imageCacheUitls.getSDCarPath() + fileName;
+                        Boolean flgs = imageCacheUitls.savaImage(fileName, photos);
                         if (flgs) {
                             if (mPopupUploadDialog != null)
                                 mPopupUploadDialog.dismiss();
                             mPopupUploadDialog.showPopupWindow();
                             ((ConsumerImageEntity) imageList.get(onSelectTag)).setPath("");
-                            QiNiuUtils.getInstance().uploadImageRequest(paths, token);
+                            QiNiuUtils.getInstance().uploadImageRequest(path, token);
 
                         }
                     }
                     break;
+                }
             }
         }
     }
