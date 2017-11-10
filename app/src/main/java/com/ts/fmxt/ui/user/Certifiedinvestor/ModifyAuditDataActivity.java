@@ -80,13 +80,13 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
     PopupWheelCurrencyTypeView mpopupWheelCurrencyTypeView;
     private AuthenticationEntity info;
     private PopupUploadDialog mPopupUploadDialog;
-    private ConsumerImageAdapter mConsumerImageAdapter;
+//    private ConsumerImageAdapter mConsumerImageAdapter;
     private String token;
 //    private String path;
     private FMNetImageView iv_upimage;
-    private int conten =-1;
+//    private int conten =-1;
     private LinearLayout ll_image_layout;
-    private List<Object> imageList = new ArrayList<>();
+//    private List<ConsumerImageEntity> imageList = new ArrayList<>();
     private RelativeLayout rl_upimage;
 
     @Override
@@ -96,9 +96,12 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                 mPopupUploadDialog.dismiss();
             String url = bundle.getString("data");
             String dirPath = "file://" + bundle.getString("dirPath");
-            ((ConsumerImageEntity) imageList.get(conten)).setPath(dirPath);
-            ((ConsumerImageEntity) imageList.get(conten)).setUrl(url);
-            mConsumerImageAdapter.notifyDataSetChanged();
+//            ConsumerImageEntity info = new ConsumerImageEntity();
+//            info.setUrl(url);
+//            info.setPath(dirPath);
+//            imageList.add(info);
+//            mConsumerImageAdapter.notifyDataSetChanged();
+            addImageView(url,dirPath);
 
         }
     }
@@ -180,16 +183,9 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
     }
 
     private void initImage() {
-        imageList.clear();
-        String[] imageUrls =getResources().getStringArray(R.array.consuer_image_list);//new  String [9];
-        for (int i = 0; i <imageUrls.length; i++) {
-            ConsumerImageEntity info = new ConsumerImageEntity();
-            info.setPosition(i);
-            info.setContext(imageUrls[i]);
-            imageList.add(info);
-        }
-        mConsumerImageAdapter = new ConsumerImageAdapter(this, imageList);
-        mConsumerImageAdapter.setAdapter(ll_image_layout);
+//        imageList.clear();
+//        mConsumerImageAdapter = new ConsumerImageAdapter(this, imageList);
+//        mConsumerImageAdapter.setAdapter(ll_image_layout);
     }
 
     private void formatData(){
@@ -217,14 +213,17 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
             String[] sArray=photos.split("\\,") ;
             for (int i = 0; i <sArray.length; i++) {
                 String photo = sArray[i].trim();
-                ((ConsumerImageEntity) imageList.get(i)).setUrl(photo);
-                conten = i;
+//                ConsumerImageEntity info = new ConsumerImageEntity();
+//                info.setUrl(photo);
+//                imageList.add(info);
+                addImageView(photo,"");
                 if(i==4){
-                    rl_upimage.setVisibility(View.GONE);
+                    break;
+//                    rl_upimage.setVisibility(View.GONE);
                 }
             }
             tv_next_add.setVisibility(View.VISIBLE);
-            mConsumerImageAdapter.notifyDataSetChanged();
+//            mConsumerImageAdapter.notifyDataSetChanged();
         }
 
     }
@@ -257,7 +256,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                 mPopupWheelIvestmentRundView.showPopupWindow();
                 break;
             case R.id.iv_upimage:
-                if(conten>=4){
+                if(ll_image_layout.getChildCount()>5){
                     ToastHelper.toastMessage(this,"最多只能上传5张图片");
                     return;
                 }
@@ -301,7 +300,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     ToastHelper.toastMessage(this,"请输入投资回报倍数");
                     return;
                 }
-                if(conten<0){
+                if(ll_image_layout.getChildCount()==0){
                     ToastHelper.toastMessage(this,"至少上传1张照片");
                     return;
                 }
@@ -346,10 +345,10 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                 case 0:{
                     if (data.getData() == null)
                         return;
-                    conten++;
-                    ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(conten);
-                    if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
-                        qiNiuTokenRequest();
+//                    conten++;
+//                    ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(imageList.size());
+//                    if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
+//                        qiNiuTokenRequest();
                     Uri mImageCaptureUri = data.getData();
                     ll_image_layout.setVisibility(View.VISIBLE);
                     Bitmap photoBmp = null;
@@ -361,23 +360,24 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                             e.printStackTrace();
                         }
                     }
-                    String path = ((ConsumerImageEntity) imageList.get(conten)).getPath();
-                    if (!TextUtils.isEmpty(path)) {
-                        File file = new File(path);
-                        if (file.exists()) {
-                            file.delete();
-                        }
-                    }
+//                    String path = ((ConsumerImageEntity) imageList.get(imageList.size())).getPath();
+//                    if (!TextUtils.isEmpty(path)) {
+//                        File file = new File(path);
+//                        if (file.exists()) {
+//                            file.delete();
+//                        }
+//                    }
                     String fileName = System.currentTimeMillis()+".png";
                     Bitmap photo = photoBmp;
                     ImageCacheUitl imageCacheUitl = ImageCacheUitl.getInstetn();
-                    path = imageCacheUitl.getSDCarPath() + fileName;
+                    String path = imageCacheUitl.getSDCarPath() + fileName;
                     Boolean flg = imageCacheUitl.savaImage(fileName, photo);
                     if (flg) {
                         if (mPopupUploadDialog != null)
                             mPopupUploadDialog.dismiss();
                         mPopupUploadDialog.showPopupWindow();
-                        ((ConsumerImageEntity) imageList.get(conten)).setPath("");
+//                        ((ConsumerImageEntity) imageList.get(conten)).setPath("");
+
                         QiNiuUtils.getInstance().uploadImageRequest(path, token);
 
                     }
@@ -387,10 +387,10 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                         File tempFile = new File(FileUtils.getRootPath() +"tempImage.jpg"); //+ ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion());
                         if (tempFile == null)
                             return;
-                        conten++;
-                        ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(conten);
-                        if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
-                            qiNiuTokenRequest();
+//                        conten++;
+//                        ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(conten);
+//                        if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
+//                            qiNiuTokenRequest();
                         ll_image_layout.setVisibility(View.VISIBLE);
                         Uri mImageUri = Uri.fromFile(tempFile);
                         Bitmap photoBmps = null;
@@ -402,23 +402,23 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                                 e.printStackTrace();
                             }
                         }
-                        String path = ((ConsumerImageEntity) imageList.get(conten)).getPath();
-                        if (!TextUtils.isEmpty(path)) {
-                            File file = new File(path);
-                            if (file.exists()) {
-                                file.delete();
-                            }
-                        }
+//                        String path = ((ConsumerImageEntity) imageList.get(conten)).getPath();
+//                        if (!TextUtils.isEmpty(path)) {
+//                            File file = new File(path);
+//                            if (file.exists()) {
+//                                file.delete();
+//                            }
+//                        }
                         String fileName = System.currentTimeMillis()+".png";
                         Bitmap photos = photoBmps;
                         ImageCacheUitl imageCacheUitls = ImageCacheUitl.getInstetn();
-                        path = imageCacheUitls.getSDCarPath() + fileName;
+                        String  path = imageCacheUitls.getSDCarPath() + fileName;
                         Boolean flgs = imageCacheUitls.savaImage(fileName, photos);
                         if (flgs) {
                             if (mPopupUploadDialog != null)
                                 mPopupUploadDialog.dismiss();
                             mPopupUploadDialog.showPopupWindow();
-                            ((ConsumerImageEntity) imageList.get(conten)).setPath("");
+//                            ((ConsumerImageEntity) imageList.get(conten)).setPath("");
                             QiNiuUtils.getInstance().uploadImageRequest(path, token);
 
                         }
@@ -492,184 +492,221 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
         return bitmap;
     }
 
-    class ConsumerImageAdapter extends FMBaseGroupAdapter {
+    private void addImageView(String url,String path) {
+        View convertView = LayoutInflater.from(ModifyAuditDataActivity.this).inflate(R.layout.adapter_release_consumer_image_view,
+                null, false);
+        ll_image_layout.addView(convertView);
+        convertView.setTag(url);
+        int position = ll_image_layout.getChildCount()-1;
+        FMNetImageView iv = (FMNetImageView) convertView.findViewById(R.id.iv_picture);
+        RelativeLayout rl_picture = (RelativeLayout) convertView.findViewById(R.id.rl_picture);
+        ImageView iv_del = (ImageView) convertView.findViewById(R.id.iv_del);
+        if (!StringUtils.isEmpty(url)){
+            if(!StringUtils.isEmpty(path)){
+                iv.loadImage(path);
+            }else{
+                iv.loadImage(url);
+            }
+            iv.setVisibility(View.VISIBLE);
+            rl_picture.setVisibility(View.VISIBLE);
+            iv_del.setOnClickListener(new onImageItemClick(position));
+            iv.setOnClickListener(new onImageItemClicks(position));
+            tv_next_add.setVisibility(View.VISIBLE);
 
-        public ConsumerImageAdapter(Context context, List<Object> arrayList) {
-            super(context, arrayList);
+            if(ll_image_layout.getChildCount()==4){
+                rl_upimage.setVisibility(View.GONE);
+            }
+        }
+
+    }
+//    class ConsumerImageAdapter extends FMBaseGroupAdapter {
+//
+//        public ConsumerImageAdapter(Context context, List<ConsumerImageEntity> arrayList) {
+//            super(context, arrayList);
+//        }
+//
+//        @Override
+//        protected View getView(int position, View convertView, ViewGroup parent) {
+//
+//            convertView = LayoutInflater.from(getContext()).inflate(R.layout.adapter_release_consumer_image_view,
+//                    null);
+//            FMNetImageView iv = (FMNetImageView) convertView.findViewById(R.id.iv_picture);
+//            RelativeLayout rl_picture = (RelativeLayout) convertView.findViewById(R.id.rl_picture);
+//            ImageView iv_del = (ImageView) convertView.findViewById(R.id.iv_del);
+//            if(type==3){
+//                iv_del.setVisibility(View.GONE);
+//            }
+//            ConsumerImageEntity info = (ConsumerImageEntity) getItem(position);
+//            if (!StringUtils.isEmpty(info.getUrl())){
+//               if(!StringUtils.isEmpty(info.getPath())){
+//                   iv.loadImage(info.getPath());
+//               }else{
+//                   iv.loadImage(info.getUrl());
+//               }
+//                iv.setVisibility(View.VISIBLE);
+//                rl_picture.setVisibility(View.VISIBLE);
+//                iv_del.setOnClickListener(new onImageItemClick(position));
+//                iv.setOnClickListener(new onImageItemClicks(position));
+//                tv_next_add.setVisibility(View.VISIBLE);
+//                if(position==4){
+//                    rl_upimage.setVisibility(View.GONE);
+//                }
+//            }else{
+//                iv.setVisibility(View.GONE);
+//                rl_picture.setVisibility(View.GONE);
+//            }
+//
+//            return convertView;
+//        }
+////        String name = "";
+////        String p ="";
+////        List<Object> photo = new ArrayList<>();
+//
+//
+//
+//
+//    }
+
+    class onImageItemClicks implements View.OnClickListener {
+        private int position;
+
+        public onImageItemClicks(int position) {
+            this.position = position;
+
         }
 
         @Override
-        protected View getView(int position, View convertView, ViewGroup parent) {
-
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.adapter_release_consumer_image_view,
-                    null);
-            FMNetImageView iv = (FMNetImageView) convertView.findViewById(R.id.iv_picture);
-            RelativeLayout rl_picture = (RelativeLayout) convertView.findViewById(R.id.rl_picture);
-            ImageView iv_del = (ImageView) convertView.findViewById(R.id.iv_del);
-            if(type==3){
-                iv_del.setVisibility(View.GONE);
-            }
-            ConsumerImageEntity info = (ConsumerImageEntity) getItem(position);
-            if (!StringUtils.isEmpty(info.getUrl())){
-               if(!StringUtils.isEmpty(info.getPath())){
-                   iv.loadImage(info.getPath());
-               }else{
-                   iv.loadImage(info.getUrl());
-               }
-                iv.setVisibility(View.VISIBLE);
-                rl_picture.setVisibility(View.VISIBLE);
-                iv_del.setOnClickListener(new onImageItemClick(position));
-                iv.setOnClickListener(new onImageItemClicks(position));
-                tv_next_add.setVisibility(View.VISIBLE);
-                if(position==4){
-                    rl_upimage.setVisibility(View.GONE);
-                }
-            }else{
-                iv.setVisibility(View.GONE);
-                rl_picture.setVisibility(View.GONE);
-            }
-
-            return convertView;
-        }
-        String name = "";
-        String p ="";
-        List<Object> photo = new ArrayList<>();
-        class onImageItemClick implements View.OnClickListener {
-            private int position;
-
-            public onImageItemClick(int position) {
-                this.position = position;
-
-            }
-
-            @Override
-            public void onClick(View v) {
-                ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
-                if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
-                    qiNiuTokenRequest();
-                if (StringUtils.isEmpty(info.getUrl())) {
-                    PopupPhotoView popup = new PopupPhotoView(ModifyAuditDataActivity.this, false,
-                            info.getLocatstion());
-                    popup.showPopupWindow();
-                } else {
-                    String uri = "";
-
-                    for (int i = 0; i < imageList.size(); i++) {
-                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
-                        if (!StringUtils.isEmpty(item.getUrl())) {
-                            uri = uri + item.getUrl() + ",";
-                            name = name + item.getContext() + ",";
-                        }
-                    }
-//                    if (!StringUtils.isEmpty(uri))
-                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog
-                            (ModifyAuditDataActivity.this);
-
-                    mPopupDialogWidget.setMessage("确定删除吗？");
-                    mPopupDialogWidget.setRithButtonText(R.string.dl_ok);
-                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
-
-                        @Override
-                        public void onEventClick(PopupObject obj) {
-                            if (obj.getWhat() == 1) {
-                                //删除单张照片
-                                for (int i = 0; i < imageList.size(); i++) {
-                                    ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
-                                    if (item.getContext().equals(position+"")){
-                                        ((ConsumerImageEntity) imageList.get(position)).setUrl("");
-                                        ((ConsumerImageEntity) imageList.get(position)).setPath("");
-                                    }
-
-                                }
-                                if(imageList.size()>=0){
-                                    p = "";
-                                    photo.clear();
-                                    for (int i = 0; i < imageList.size(); i++) {
-                                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
-                                        photo.add(item.getUrl());
-                                        p =photo.toString();
-                                    }
-                                    String ss = p.substring(1,p.length() - 1).trim();
-                                    String figure = ss.replaceAll(" ,","").trim();
-
-                                    String[] sArray=figure.split("\\,") ;
-                                    for (int i = 0; i <sArray.length; i++) {
-                                        String photo = sArray[i].trim();
-                                        if(!photo.equals("")){
-                                            ((ConsumerImageEntity) imageList.get(i)).setUrl(photo);
-
-                                        }
-
-                                    }
-
-                                    if(sArray.length==4){
-                                        ((ConsumerImageEntity) imageList.get(sArray.length)).setUrl("");
-                                    }
-                                    if(sArray.length==3){
-                                        ((ConsumerImageEntity) imageList.get(3)).setUrl("");
-                                    }
-                                    if(sArray.length==2){
-                                        ((ConsumerImageEntity) imageList.get(2)).setUrl("");
-                                    }
-                                    if(sArray.length==1){
-                                        ((ConsumerImageEntity) imageList.get(1)).setUrl("");
-                                    }
-                                }
-                                conten--;
-                                mConsumerImageAdapter.notifyDataSetChanged();
-
-                                if(position<0){
-                                    tv_next_add.setVisibility(View.GONE);
-                                }
-                                if(position<4){
-                                    rl_upimage.setVisibility(View.VISIBLE);
-                                }
-                            }
-
-                        }
-                    });
-                    mPopupDialogWidget.showPopupWindow();
-                }
-            }
-        }
-
-        class onImageItemClicks implements View.OnClickListener {
-            private int position;
-
-            public onImageItemClicks(int position) {
-                this.position = position;
-
-            }
-
-            @Override
-            public void onClick(View v) {
-                ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
-                if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
-                    qiNiuTokenRequest();
-                if (StringUtils.isEmpty(info.getUrl())) {
-                    PopupPhotoView popup = new PopupPhotoView(ModifyAuditDataActivity.this, false,
-                            info.getLocatstion());
-                    popup.showPopupWindow();
-                } else {
-                    String uri = "";
-                    String name = "";
-                    for (int i = 0; i < imageList.size(); i++) {
-                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
-                        if (!StringUtils.isEmpty(item.getUrl())) {
-                            uri = uri + item.getUrl() + ",";
-                            name = name + item.getContext() + ",";
+        public void onClick(View v) {
+//            ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
+//            if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
+//                qiNiuTokenRequest();
+//            if (StringUtils.isEmpty(info.getUrl())) {
+//                PopupPhotoView popup = new PopupPhotoView(ModifyAuditDataActivity.this, false,
+//                        info.getLocatstion());
+//                popup.showPopupWindow();
+//            } else {
+                String uri = "";
+                String name = "";
+                    for (int i = 0; i < ll_image_layout.getChildCount(); i++) {
+//                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+                        View view = ll_image_layout.getChildAt(i);
+                        if (view.getTag() != null && !StringUtils.isEmpty((String) view.getTag())) {
+                            uri = uri + view.getTag() + ",";
+                            name = name + i + ",";
                         }
                     }
                     if (!StringUtils.isEmpty(uri))
                         UISKipUtils.startPictureBrowseActivity(ModifyAuditDataActivity.this, uri, position, name);
 
-                }
-            }
+//            }
+        }
+    }
+    class onImageItemClick implements View.OnClickListener {
+        private int position;
+
+        public onImageItemClick(int position) {
+            this.position = position;
+
         }
 
+        @Override
+        public void onClick(View v) {
+//            ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
+//            if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
+//                qiNiuTokenRequest();
+//            if (StringUtils.isEmpty(info.getUrl())) {
+//                PopupPhotoView popup = new PopupPhotoView(ModifyAuditDataActivity.this, false,
+//                        info.getLocatstion());
+//                popup.showPopupWindow();
+//            } else {
+//                    String uri = "";
 
+//                    for (int i = 0; i < imageList.size(); i++) {
+//                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+//                        if (!StringUtils.isEmpty(item.getUrl())) {
+//                            uri = uri + item.getUrl() + ",";
+////                            name = name + item.getContext() + ",";
+//                        }
+//                    }
+//                    if (!StringUtils.isEmpty(uri))
+                MessageContentDialog mPopupDialogWidget = new MessageContentDialog
+                        (ModifyAuditDataActivity.this);
+
+                mPopupDialogWidget.setMessage("确定删除吗？");
+                mPopupDialogWidget.setRithButtonText(R.string.dl_ok);
+                mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                    @Override
+                    public void onEventClick(PopupObject obj) {
+                        if (obj.getWhat() == 1) {
+//                                ll_image_layout.getChildCount()
+                            ll_image_layout.removeViewAt(position);
+//                                ConsumerImageEntity entity = imageList.remove(position);
+//                                mConsumerImageAdapter.notifyDataSetChanged();
+//                                if (!TextUtils.isEmpty(entity.getPath())) {
+//                                    File file = new File(entity.getPath());
+//                                    file.delete();
+//                                }
+                            //删除单张照片
+////                                for (int i = 0; i < imageList.size(); i++) {
+////                                    ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+////                                    if (item.getContext().equals(position+"")){
+//                                        ((ConsumerImageEntity) imageList.get(position)).setUrl("");
+//                                        ((ConsumerImageEntity) imageList.get(position)).setPath("");
+////                                    }
+//
+////                                }
+//                                if(imageList.size()>=0){
+//                                    p = "";
+//                                    photo.clear();
+//                                    for (int i = 0; i < imageList.size(); i++) {
+//                                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+//                                        photo.add(item.getUrl());
+//                                        p =photo.toString();
+//                                    }
+//                                    String ss = p.substring(1,p.length() - 1).trim();
+//                                    String figure = ss.replaceAll(" ,","").trim();
+//
+//                                    String[] sArray=figure.split("\\,") ;
+//                                    for (int i = 0; i <sArray.length; i++) {
+//                                        String photo = sArray[i].trim();
+//                                        if(!photo.equals("")){
+//                                            ((ConsumerImageEntity) imageList.get(i)).setUrl(photo);
+//
+//                                        }
+//
+//                                    }
+//
+//                                    if(sArray.length==4){
+//                                        ((ConsumerImageEntity) imageList.get(sArray.length)).setUrl("");
+//                                    }
+//                                    if(sArray.length==3){
+//                                        ((ConsumerImageEntity) imageList.get(3)).setUrl("");
+//                                    }
+//                                    if(sArray.length==2){
+//                                        ((ConsumerImageEntity) imageList.get(2)).setUrl("");
+//                                    }
+//                                    if(sArray.length==1){
+//                                        ((ConsumerImageEntity) imageList.get(1)).setUrl("");
+//                                    }
+//                                }
+//                                conten--;
+//                                mConsumerImageAdapter.notifyDataSetChanged();
+
+//                                if(position<0){
+//                                    tv_next_add.setVisibility(View.GONE);
+//                                }
+//                                if(position<4){
+//                                    rl_upimage.setVisibility(View.VISIBLE);
+//                                }
+                        }
+
+                    }
+                });
+                mPopupDialogWidget.showPopupWindow();
+
+        }
     }
-
 
 
 
@@ -756,7 +793,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
         );
     }
 
-    List<Object> Figure = new ArrayList<>();
+    List<String> Figure = new ArrayList<>();
     private void authenticationRequest() {
         SharedPreferences sharedPreferences= getSharedPreferences("user",
                 Activity.MODE_PRIVATE);
@@ -776,9 +813,16 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
         staff.put("caseInvestMoney",edt_input_money.getText().toString());
         staff.put("caseFinancingState", tv_investment_round.getText().toString());
         staff.put("caseInvestReward",edt_return_multiples.getText().toString());
-        for (int i = 0; i < imageList.size(); i++) {
-            ConsumerImageEntity info = (ConsumerImageEntity) imageList.get(i);
-            Figure.add(info.getUrl());
+//        for (int i = 0; i < imageList.size(); i++) {
+//            ConsumerImageEntity info = (ConsumerImageEntity) imageList.get(i);
+//            Figure.add(info.getUrl());
+//        }
+        for (int i = 0; i < ll_image_layout.getChildCount(); i++) {
+//                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+            View view = ll_image_layout.getChildAt(i);
+            if (view.getTag() != null && !StringUtils.isEmpty((String) view.getTag())) {
+                Figure.add((String) view.getTag());
+            }
         }
         String s = Figure.toString();
         String ss = s.substring(1,s.length() - 1).replaceAll(", null","").trim();
