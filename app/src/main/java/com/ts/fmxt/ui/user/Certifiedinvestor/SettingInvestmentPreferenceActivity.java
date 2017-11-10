@@ -57,12 +57,12 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
     FlowLayout flow_layout,flow_round_layout,flow_return_layout,flow_iswell_known_layout;
     private int fieldSecond=0,roundSecond=0;
     private int type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_investment_preference);
         type = getIntent().getIntExtra("type",-1);
-//        ReceiverUtils.addReceiver(this);
         initView();
 
     }
@@ -100,12 +100,13 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
             view.setBackground(btnDrawable);
-            if(view.getText().toString().equals("定期分红")){
-                view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                view.setTextColor(Color.WHITE);
-                checktext3 = view.getText().toString();
-            }
-            if(info!=null){
+            if(info==null){
+                if(view.getText().toString().equals("定期分红")){
+                    view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
+                    view.setTextColor(Color.WHITE);
+                    checktext3 = view.getText().toString();
+                }
+            }else if(info!=null){
                 if(info.getReturnWay()==1){
                     if(view.getText().toString().equals("定期分红")){
                         view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
@@ -120,10 +121,8 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                     }
             }
 
-
             }
             // 设置点击事件
-//            final int finalI = i;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -161,12 +160,13 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
             view.setBackground(btnDrawable);
-            if (view.getText().toString().equals("是")) {
-                view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                view.setTextColor(Color.WHITE);
-                checktext4 = view.getText().toString();
-            }
-            if(info!=null){
+            if(info==null){
+                if (view.getText().toString().equals("是")) {
+                    view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
+                    view.setTextColor(Color.WHITE);
+                    checktext4 = view.getText().toString();
+                }
+            }else if(info!=null){
                 if(info.getIsFamousInvestor()==0){
                     if(view.getText().toString().equals("否")){
                         view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
@@ -238,9 +238,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                 }
             }
 
-
             // 设置点击事件
-//            final int finalI = i;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
