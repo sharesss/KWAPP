@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,8 @@ import widget.popup.BaseDoubleEventPopup;
 import widget.popup.PopupObject;
 import widget.popup.dialog.MessageContentDialog;
 import widget.popup.dialog.PopupUploadDialog;
+
+import static com.ts.fmxt.ui.user.Certifiedinvestor.ModifyAuditDataActivity.getBitmapFormUri;
 
 /**
  * Created by kp on 2017/10/24.
@@ -250,38 +253,65 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case 0:
-                    startPhotoZoom(data.getData());
+                    if (data.getData() == null)
+                        return;
+                    conten++;
                     onSelectTag = conten;
-                    ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(onSelectTag);
-                    if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
-                        qiNiuTokenRequest();
-                    break;
-                case 1:
-                    if (Tools.hasSdcard()) {
-                        File tempFile = new File(FileUtils.getRootPath() + PopupPhotoView.IMAGE_FILE_NAME);
-                        startPhotoZoom(Uri.fromFile(tempFile));
-                        onSelectTag = conten;
-                        ConsumerImageEntity info = (ConsumerImageEntity) imageList.get(onSelectTag);
-                        if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
-                            qiNiuTokenRequest();
+                    Uri mImageCaptureUri = data.getData();
+                    ll_image_layout.setVisibility(View.VISIBLE);
+                    Bitmap photoBmp = null;
+
+                    if (mImageCaptureUri != null) {
+                        try {
+                            photoBmp = getBitmapFormUri(UploadPhotoActivity.this, mImageCaptureUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    break;
-                case 2:
-                    if (data == null)
-                        return;
-                    Bundle extras = data.getExtras();
-                    if (extras == null)
-                        return;
-                    Bitmap photo = extras.getParcelable("data");
+                    String fileName = ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion();
+                    Bitmap photo = photoBmp;
                     ImageCacheUitl imageCacheUitl = ImageCacheUitl.getInstetn();
-                    String path = imageCacheUitl.getSDCarPath() + PopupPhotoView.IMAGE_FILE_NAME;
-                    Boolean flg = imageCacheUitl.savaImage(PopupPhotoView.IMAGE_FILE_NAME, photo);
+                    String path = imageCacheUitl.getSDCarPath() + fileName;
+                    Boolean flg = imageCacheUitl.savaImage(fileName, photo);
                     if (flg) {
-                        if(mPopupUploadDialog!=null)
+                        if (mPopupUploadDialog != null)
                             mPopupUploadDialog.dismiss();
                         mPopupUploadDialog.showPopupWindow();
                         QiNiuUtils.getInstance().uploadImageRequest(path, token);
+                        QiNiuUtils.getInstance().uploadImageRequest(path, token);
+
+                    }
+                    break;
+                case 1:
+                    if (Tools.hasSdcard()) {
+                        File tempFile = new File(FileUtils.getRootPath() +"tempImage.jpg"); //+ ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion());
+                        if (tempFile == null)
+                            return;
                         conten++;
+                        onSelectTag = conten;
+                        ll_image_layout.setVisibility(View.VISIBLE);
+                        Uri mImageUri = Uri.fromFile(tempFile);
+                        Bitmap photoBmps = null;
+
+                        if (mImageUri != null) {
+                            try {
+                                photoBmps = getBitmapFormUri(UploadPhotoActivity.this, mImageUri);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        String fileNames = ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion();
+                        Bitmap photos = photoBmps;
+                        ImageCacheUitl imageCacheUitls = ImageCacheUitl.getInstetn();
+                        String paths = imageCacheUitls.getSDCarPath() + fileNames;
+                        Boolean flgs = imageCacheUitls.savaImage(fileNames, photos);
+                        if (flgs) {
+                            if (mPopupUploadDialog != null)
+                                mPopupUploadDialog.dismiss();
+                            mPopupUploadDialog.showPopupWindow();
+                            QiNiuUtils.getInstance().uploadImageRequest(paths, token);
+                            QiNiuUtils.getInstance().uploadImageRequest(paths, token);
+                        }
                     }
                     break;
             }
