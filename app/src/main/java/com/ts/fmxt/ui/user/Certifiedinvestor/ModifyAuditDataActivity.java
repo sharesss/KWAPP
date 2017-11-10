@@ -61,6 +61,7 @@ import widget.popup.PopupObject;
 import widget.popup.dialog.MessageContentDialog;
 import widget.popup.dialog.PopupUploadDialog;
 
+
 /**
  * Created by kp on 2017/10/26.
  * 修改审核资料
@@ -83,7 +84,6 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
     private String token;
 //    private String path;
     private FMNetImageView iv_upimage;
-    private int onSelectTag = -1;
     private int conten =-1;
     private LinearLayout ll_image_layout;
     private List<Object> imageList = new ArrayList<>();
@@ -96,8 +96,8 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                 mPopupUploadDialog.dismiss();
             String url = bundle.getString("data");
             String dirPath = "file://" + bundle.getString("dirPath");
-            ((ConsumerImageEntity) imageList.get(onSelectTag)).setPath(dirPath);
-            ((ConsumerImageEntity) imageList.get(onSelectTag)).setUrl(url);
+            ((ConsumerImageEntity) imageList.get(conten)).setPath(dirPath);
+            ((ConsumerImageEntity) imageList.get(conten)).setUrl(url);
             mConsumerImageAdapter.notifyDataSetChanged();
 
         }
@@ -218,7 +218,6 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
             for (int i = 0; i <sArray.length; i++) {
                 String photo = sArray[i].trim();
                 ((ConsumerImageEntity) imageList.get(i)).setUrl(photo);
-                onSelectTag =i;
                 conten = i;
                 if(i==4){
                     rl_upimage.setVisibility(View.GONE);
@@ -258,14 +257,10 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                 mPopupWheelIvestmentRundView.showPopupWindow();
                 break;
             case R.id.iv_upimage:
-                onSelectTag++;
                 if(conten>=4){
                     ToastHelper.toastMessage(this,"最多只能上传5张图片");
                     return;
                 }
-                ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(onSelectTag);
-                if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
-                    qiNiuTokenRequest();
                 selectDrawable();
                 break;
             case R.id.btn_nexts://下一步
@@ -306,7 +301,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     ToastHelper.toastMessage(this,"请输入投资回报倍数");
                     return;
                 }
-                if(onSelectTag<0){
+                if(conten<0){
                     ToastHelper.toastMessage(this,"至少上传1张照片");
                     return;
                 }
@@ -352,7 +347,9 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     if (data.getData() == null)
                         return;
                     conten++;
-                    onSelectTag = conten;
+                    ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(conten);
+                    if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
+                        qiNiuTokenRequest();
                     Uri mImageCaptureUri = data.getData();
                     ll_image_layout.setVisibility(View.VISIBLE);
                     Bitmap photoBmp = null;
@@ -364,7 +361,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                             e.printStackTrace();
                         }
                     }
-                    String path = ((ConsumerImageEntity) imageList.get(onSelectTag)).getPath();
+                    String path = ((ConsumerImageEntity) imageList.get(conten)).getPath();
                     if (!TextUtils.isEmpty(path)) {
                         File file = new File(path);
                         if (file.exists()) {
@@ -380,7 +377,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                         if (mPopupUploadDialog != null)
                             mPopupUploadDialog.dismiss();
                         mPopupUploadDialog.showPopupWindow();
-                        ((ConsumerImageEntity) imageList.get(onSelectTag)).setPath("");
+                        ((ConsumerImageEntity) imageList.get(conten)).setPath("");
                         QiNiuUtils.getInstance().uploadImageRequest(path, token);
 
                     }
@@ -391,7 +388,9 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                         if (tempFile == null)
                             return;
                         conten++;
-                        onSelectTag = conten;
+                        ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(conten);
+                        if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
+                            qiNiuTokenRequest();
                         ll_image_layout.setVisibility(View.VISIBLE);
                         Uri mImageUri = Uri.fromFile(tempFile);
                         Bitmap photoBmps = null;
@@ -403,7 +402,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                                 e.printStackTrace();
                             }
                         }
-                        String path = ((ConsumerImageEntity) imageList.get(onSelectTag)).getPath();
+                        String path = ((ConsumerImageEntity) imageList.get(conten)).getPath();
                         if (!TextUtils.isEmpty(path)) {
                             File file = new File(path);
                             if (file.exists()) {
@@ -419,7 +418,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                             if (mPopupUploadDialog != null)
                                 mPopupUploadDialog.dismiss();
                             mPopupUploadDialog.showPopupWindow();
-                            ((ConsumerImageEntity) imageList.get(onSelectTag)).setPath("");
+                            ((ConsumerImageEntity) imageList.get(conten)).setPath("");
                             QiNiuUtils.getInstance().uploadImageRequest(path, token);
 
                         }
@@ -532,7 +531,9 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
 
             return convertView;
         }
-
+        String name = "";
+        String p ="";
+        List<Object> photo = new ArrayList<>();
         class onImageItemClick implements View.OnClickListener {
             private int position;
 
@@ -543,7 +544,6 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
 
             @Override
             public void onClick(View v) {
-                onSelectTag = position;
                 ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
                 if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
                     qiNiuTokenRequest();
@@ -553,7 +553,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     popup.showPopupWindow();
                 } else {
                     String uri = "";
-                    String name = "";
+
                     for (int i = 0; i < imageList.size(); i++) {
                         ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
                         if (!StringUtils.isEmpty(item.getUrl())) {
@@ -573,15 +573,55 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                         public void onEventClick(PopupObject obj) {
                             if (obj.getWhat() == 1) {
                                 //删除单张照片
-                                ((ConsumerImageEntity) imageList.get(onSelectTag)).setUrl("");
-                                ((ConsumerImageEntity) imageList.get(onSelectTag)).setPath("");
-                                mConsumerImageAdapter.notifyDataSetChanged();
-                                onSelectTag--;
+                                for (int i = 0; i < imageList.size(); i++) {
+                                    ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+                                    if (item.getContext().equals(position+"")){
+                                        ((ConsumerImageEntity) imageList.get(position)).setUrl("");
+                                        ((ConsumerImageEntity) imageList.get(position)).setPath("");
+                                    }
+
+                                }
+                                if(imageList.size()>=0){
+                                    p = "";
+                                    photo.clear();
+                                    for (int i = 0; i < imageList.size(); i++) {
+                                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+                                        photo.add(item.getUrl());
+                                        p =photo.toString();
+                                    }
+                                    String ss = p.substring(1,p.length() - 1).trim();
+                                    String figure = ss.replaceAll(" ,","").trim();
+
+                                    String[] sArray=figure.split("\\,") ;
+                                    for (int i = 0; i <sArray.length; i++) {
+                                        String photo = sArray[i].trim();
+                                        if(!photo.equals("")){
+                                            ((ConsumerImageEntity) imageList.get(i)).setUrl(photo);
+
+                                        }
+
+                                    }
+
+                                    if(sArray.length==4){
+                                        ((ConsumerImageEntity) imageList.get(sArray.length)).setUrl("");
+                                    }
+                                    if(sArray.length==3){
+                                        ((ConsumerImageEntity) imageList.get(3)).setUrl("");
+                                    }
+                                    if(sArray.length==2){
+                                        ((ConsumerImageEntity) imageList.get(2)).setUrl("");
+                                    }
+                                    if(sArray.length==1){
+                                        ((ConsumerImageEntity) imageList.get(1)).setUrl("");
+                                    }
+                                }
                                 conten--;
-                                if(onSelectTag<0){
+                                mConsumerImageAdapter.notifyDataSetChanged();
+
+                                if(position<0){
                                     tv_next_add.setVisibility(View.GONE);
                                 }
-                                if(onSelectTag<4){
+                                if(position<4){
                                     rl_upimage.setVisibility(View.VISIBLE);
                                 }
                             }
@@ -603,7 +643,6 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
 
             @Override
             public void onClick(View v) {
-                onSelectTag = position;
                 ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
                 if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
                     qiNiuTokenRequest();
