@@ -343,7 +343,6 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     }
                 });
     }
-    String path;
     //图片结果
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -365,6 +364,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                             e.printStackTrace();
                         }
                     }
+                    String path = ((ConsumerImageEntity) imageList.get(onSelectTag)).getPath();
                     if (!TextUtils.isEmpty(path)) {
                         File file = new File(path);
                         if (file.exists()) {
@@ -403,6 +403,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                                 e.printStackTrace();
                             }
                         }
+                        String path = ((ConsumerImageEntity) imageList.get(onSelectTag)).getPath();
                         if (!TextUtils.isEmpty(path)) {
                             File file = new File(path);
                             if (file.exists()) {
