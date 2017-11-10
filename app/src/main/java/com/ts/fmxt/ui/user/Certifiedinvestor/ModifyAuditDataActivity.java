@@ -793,7 +793,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
         );
     }
 
-    List<String> Figure = new ArrayList<>();
+//    List<String> Figure = new ArrayList<>();
     private void authenticationRequest() {
         SharedPreferences sharedPreferences= getSharedPreferences("user",
                 Activity.MODE_PRIVATE);
@@ -817,17 +817,21 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
 //            ConsumerImageEntity info = (ConsumerImageEntity) imageList.get(i);
 //            Figure.add(info.getUrl());
 //        }
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < ll_image_layout.getChildCount(); i++) {
 //                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
             View view = ll_image_layout.getChildAt(i);
             if (view.getTag() != null && !StringUtils.isEmpty((String) view.getTag())) {
-                Figure.add((String) view.getTag());
+                if (stringBuilder.length()>0){
+                    stringBuilder.append(",");
+                }
+                stringBuilder.append((String) view.getTag());
             }
         }
-        String s = Figure.toString();
-        String ss = s.substring(1,s.length() - 1).replaceAll(", null","").trim();
-        String figure = ss.replaceAll(" ,","").trim();
-        staff.put("assetsPhotos",figure);
+//        String s = Figure.toString();
+//        String ss = s.substring(1,s.length() - 1).replaceAll(", null","").trim();
+//        String figure = ss.replaceAll(" ,","").trim();
+        staff.put("assetsPhotos",stringBuilder.toString());
 
 
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.AUTHENTICATIONV2,
