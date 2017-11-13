@@ -34,7 +34,7 @@ public class AuthenticationEntity {
         this.id = jsonObject.optInt("id");
         this.propertyphoto = jsonObject.optString("propertyphoto");
         if (!jsonObject.isNull("createtime")) {
-            this.createtime = DateFormatUtils.longToDate("yyyy-MM-dd", jsonObject.optLong("createtime", 0));
+            this.createtime = DateFormatUtils.longToDate("yyyy-MM", jsonObject.optLong("createtime", 0));
 
         }
         this.auditdesc = jsonObject.optString("auditdesc");

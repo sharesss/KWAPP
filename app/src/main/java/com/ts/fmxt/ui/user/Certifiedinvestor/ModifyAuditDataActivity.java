@@ -190,7 +190,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
         edt_out_num.setText(String.valueOf(info.getExitProjectSum()+""));
         edt_project_name.setText(info.getCaseProjectName());
         tv_industry.setText(info.getCaseIndustryName());
-        tv_time.setText(info.getCreatetime());
+        tv_time.setText(info.getCaseProjectTime());
         edt_input_money.setText(String.valueOf(info.getCaseInvestMoney()+""));
         tv_investment_round.setText(info.getCaseFinancingState());
         edt_return_multiples.setText(info.getCaseInvestReward()+"");

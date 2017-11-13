@@ -1,7 +1,6 @@
 package com.ts.fmxt.ui.user.Certifiedinvestor;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -9,14 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
-import com.thindo.base.Adapter.FMBaseGroupAdapter;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.base.activity.FMBaseActivity;
 import com.ts.fmxt.ui.user.login.dialog.PopupPhotoView;
@@ -31,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import http.data.ConsumerImageEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
 import utils.FileUtils;
@@ -57,15 +53,14 @@ import static com.ts.fmxt.ui.user.Certifiedinvestor.ModifyAuditDataActivity.getB
 
 public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClickListener, ReceiverUtils.MessageReceiver{
     private PopupUploadDialog mPopupUploadDialog;
-    private ConsumerImageAdapter mConsumerImageAdapter;
+//    private ConsumerImageAdapter mConsumerImageAdapter;
     private String token;
-    private String path;
+//    private String path;
     private FMNetImageView iv_upimage;
-    private int onSelectTag = -1;
-    private int conten =0;
+    private int conten =-1;
     private LinearLayout ll_image_layout;
     private RelativeLayout rl_upimage;
-    private List<Object> imageList = new ArrayList<>();
+//    private List<Object> imageList = new ArrayList<>();
     private TextView tv_next_add;
 
     @Override
@@ -73,9 +68,15 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
         if (receiverType == ReceiverUtils.REGISTER_IMAGE_UPLOADER) {
             if(mPopupUploadDialog!=null)
                 mPopupUploadDialog.dismiss();
-            path = bundle.getString("data");
-            ((ConsumerImageEntity) imageList.get(onSelectTag)).setUrl(path);
-            mConsumerImageAdapter.notifyDataSetChanged();
+            String url = bundle.getString("data");
+            String dirPath = "file://" + bundle.getString("dirPath");
+//            ConsumerImageEntity info = new ConsumerImageEntity();
+//            info.setUrl(url);
+//            info.setPath(dirPath);
+//            imageList.add(info);
+//            mConsumerImageAdapter.notifyDataSetChanged();
+            addImageView(url,dirPath);
+
         }else if(receiverType == ReceiverUtils.CERTIFIEDINVESTOR_FINISH){
             finish();
         }
@@ -103,16 +104,16 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
     }
 
     private void initImage() {
-        imageList.clear();
-        String[] imageUrls =getResources().getStringArray(R.array.consuer_image_list);//new  String [9];
-        for (int i = 0; i <imageUrls.length; i++) {
-            ConsumerImageEntity info = new ConsumerImageEntity();
-            info.setPosition(i);
-            info.setContext(imageUrls[i]);
-            imageList.add(info);
-        }
-        mConsumerImageAdapter = new ConsumerImageAdapter(this, imageList);
-        mConsumerImageAdapter.setAdapter(ll_image_layout);
+//        imageList.clear();
+//        String[] imageUrls =getResources().getStringArray(R.array.consuer_image_list);//new  String [9];
+//        for (int i = 0; i <imageUrls.length; i++) {
+//            ConsumerImageEntity info = new ConsumerImageEntity();
+//            info.setPosition(i);
+//            info.setContext(imageUrls[i]);
+//            imageList.add(info);
+//        }
+//        mConsumerImageAdapter = new ConsumerImageAdapter(this, imageList);
+//        mConsumerImageAdapter.setAdapter(ll_image_layout);
     }
 
     @Override
@@ -122,14 +123,14 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.iv_upimage:
-                if(onSelectTag>=4){
+                if(conten>=4){
                     ToastHelper.toastMessage(this,"最多只能上传5张图片");
                     return;
                 }
                 selectDrawable();
                 break;
             case R.id.btn_nexts:
-                if(imageList.size()<=0){
+                if(ll_image_layout.getChildCount()==0){
                     ToastHelper.toastMessage(this,"至少上传1张照片");
                     return;
                 }
@@ -143,7 +144,7 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
         popup.showPopupWindow();
     }
 
-    private void qiNiuTokenRequest() {
+    private void qiNiuTokenRequest(final Runnable runnable) {
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.TOKEN, new OkHttpClientManager.ResultCallback<String>() {
 
             @Override
@@ -157,6 +158,9 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
                     try {
                         JSONObject js = new JSONObject(u);
                         token = js.optString("token");
+                        if (runnable!=null){
+                            runnable.run();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -205,14 +209,21 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
 
 
         staff.put("caseInvestReward",returnMultiples);
-        for (int i = 0; i < imageList.size(); i++) {
-            ConsumerImageEntity info = (ConsumerImageEntity) imageList.get(i);
-            Figure.add(info.getUrl());
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < ll_image_layout.getChildCount(); i++) {
+//                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+            View view = ll_image_layout.getChildAt(i);
+            if (view.getTag() != null && !StringUtils.isEmpty((String) view.getTag())) {
+                if (stringBuilder.length()>0){
+                    stringBuilder.append(",");
+                }
+                stringBuilder.append((String) view.getTag());
+            }
         }
-        String s = Figure.toString();
-        String ss = s.substring(1,s.length() - 1).replaceAll(", null","").trim();
-        String figure = ss.replaceAll(" ,","").trim();
-        staff.put("assetsPhotos",figure);
+//        String s = Figure.toString();
+//        String ss = s.substring(1,s.length() - 1).replaceAll(", null","").trim();
+//        String figure = ss.replaceAll(" ,","").trim();
+        staff.put("assetsPhotos",stringBuilder.toString());
 
 
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.AUTHENTICATIONV2,
@@ -249,164 +260,293 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
 
     //图片结果
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
-                case 0:
+                case 0: {
                     if (data.getData() == null)
                         return;
-                    conten++;
-                    onSelectTag = conten;
-                    Uri mImageCaptureUri = data.getData();
-                    ll_image_layout.setVisibility(View.VISIBLE);
-                    Bitmap photoBmp = null;
+//                    conten++;
+//                    ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(imageList.size());
+//                    if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
+                    qiNiuTokenRequest(new Runnable() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Uri mImageCaptureUri = data.getData();
+                                    ll_image_layout.setVisibility(View.VISIBLE);
+                                    Bitmap photoBmp = null;
 
-                    if (mImageCaptureUri != null) {
-                        try {
-                            photoBmp = getBitmapFormUri(UploadPhotoActivity.this, mImageCaptureUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                                    if (mImageCaptureUri != null) {
+                                        try {
+                                            photoBmp = getBitmapFormUri(UploadPhotoActivity.this, mImageCaptureUri);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+//                    String path = ((ConsumerImageEntity) imageList.get(imageList.size())).getPath();
+//                    if (!TextUtils.isEmpty(path)) {
+//                        File file = new File(path);
+//                        if (file.exists()) {
+//                            file.delete();
+//                        }
+//                    }
+                                    String fileName = System.currentTimeMillis() + ".png";
+                                    Bitmap photo = photoBmp;
+                                    ImageCacheUitl imageCacheUitl = ImageCacheUitl.getInstetn();
+                                    String path = imageCacheUitl.getSDCarPath() + fileName;
+                                    Boolean flg = imageCacheUitl.savaImage(fileName, photo);
+                                    if (flg) {
+                                        if (mPopupUploadDialog != null)
+                                            mPopupUploadDialog.dismiss();
+                                        mPopupUploadDialog.showPopupWindow();
+//                        ((ConsumerImageEntity) imageList.get(conten)).setPath("");
+
+                                        QiNiuUtils.getInstance().uploadImageRequest(path, token);
+
+                                    }
+                                }
+                            });
                         }
-                    }
-                    String fileName = ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion();
-                    Bitmap photo = photoBmp;
-                    ImageCacheUitl imageCacheUitl = ImageCacheUitl.getInstetn();
-                    String path = imageCacheUitl.getSDCarPath() + fileName;
-                    Boolean flg = imageCacheUitl.savaImage(fileName, photo);
-                    if (flg) {
-                        if (mPopupUploadDialog != null)
-                            mPopupUploadDialog.dismiss();
-                        mPopupUploadDialog.showPopupWindow();
-                        QiNiuUtils.getInstance().uploadImageRequest(path, token);
-                        QiNiuUtils.getInstance().uploadImageRequest(path, token);
+                    });
 
-                    }
                     break;
-                case 1:
+                }
+                case 1:{
                     if (Tools.hasSdcard()) {
-                        File tempFile = new File(FileUtils.getRootPath() +"tempImage.jpg"); //+ ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion());
+                        final File tempFile = new File(FileUtils.getRootPath() +"tempImage.jpg"); //+ ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion());
                         if (tempFile == null)
                             return;
-                        conten++;
-                        onSelectTag = conten;
-                        ll_image_layout.setVisibility(View.VISIBLE);
-                        Uri mImageUri = Uri.fromFile(tempFile);
-                        Bitmap photoBmps = null;
+//                        conten++;
+//                        ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(conten);
+//                        if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
+                        qiNiuTokenRequest(new Runnable() {
+                            @Override
+                            public void run() {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ll_image_layout.setVisibility(View.VISIBLE);
+                                        Uri mImageUri = Uri.fromFile(tempFile);
+                                        Bitmap photoBmps = null;
 
-                        if (mImageUri != null) {
-                            try {
-                                photoBmps = getBitmapFormUri(UploadPhotoActivity.this, mImageUri);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                        if (mImageUri != null) {
+                                            try {
+                                                photoBmps = getBitmapFormUri(UploadPhotoActivity.this, mImageUri);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+//                        String path = ((ConsumerImageEntity) imageList.get(conten)).getPath();
+//                        if (!TextUtils.isEmpty(path)) {
+//                            File file = new File(path);
+//                            if (file.exists()) {
+//                                file.delete();
+//                            }
+//                        }
+                                        String fileName = System.currentTimeMillis()+".png";
+                                        Bitmap photos = photoBmps;
+                                        ImageCacheUitl imageCacheUitls = ImageCacheUitl.getInstetn();
+                                        String  path = imageCacheUitls.getSDCarPath() + fileName;
+                                        Boolean flgs = imageCacheUitls.savaImage(fileName, photos);
+                                        if (flgs) {
+                                            if (mPopupUploadDialog != null)
+                                                mPopupUploadDialog.dismiss();
+                                            mPopupUploadDialog.showPopupWindow();
+//                            ((ConsumerImageEntity) imageList.get(conten)).setPath("");
+                                            QiNiuUtils.getInstance().uploadImageRequest(path, token);
+
+                                        }
+                                    }
+                                });
                             }
-                        }
-                        String fileNames = ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion();
-                        Bitmap photos = photoBmps;
-                        ImageCacheUitl imageCacheUitls = ImageCacheUitl.getInstetn();
-                        String paths = imageCacheUitls.getSDCarPath() + fileNames;
-                        Boolean flgs = imageCacheUitls.savaImage(fileNames, photos);
-                        if (flgs) {
-                            if (mPopupUploadDialog != null)
-                                mPopupUploadDialog.dismiss();
-                            mPopupUploadDialog.showPopupWindow();
-                            QiNiuUtils.getInstance().uploadImageRequest(paths, token);
-                            QiNiuUtils.getInstance().uploadImageRequest(paths, token);
-                        }
+                        });
+
                     }
                     break;
+                }
             }
         }
     }
 
-    class ConsumerImageAdapter extends FMBaseGroupAdapter {
+    private void addImageView(String url,String path) {
+        View convertView = LayoutInflater.from(UploadPhotoActivity.this).inflate(R.layout.adapter_release_consumer_image_view,
+                null, false);
+        ll_image_layout.addView(convertView);
+        convertView.setTag(url);
+//        int position = ll_image_layout.getChildCount()-1;
+        FMNetImageView iv = (FMNetImageView) convertView.findViewById(R.id.iv_picture);
+        RelativeLayout rl_picture = (RelativeLayout) convertView.findViewById(R.id.rl_picture);
+        ImageView iv_del = (ImageView) convertView.findViewById(R.id.iv_del);
+        if (!StringUtils.isEmpty(url)){
+            if(!StringUtils.isEmpty(path)){
+                iv.loadImage(path);
+            }else{
+                iv.loadImage(url);
+            }
+            iv.setVisibility(View.VISIBLE);
+            rl_picture.setVisibility(View.VISIBLE);
+            iv_del.setOnClickListener(new onImageItemClick(convertView));
+            iv.setOnClickListener(new onImageItemClicks(convertView));
+            tv_next_add.setVisibility(View.VISIBLE);
 
-        public ConsumerImageAdapter(Context context, List<Object> arrayList) {
-            super(context, arrayList);
+            if(ll_image_layout.getChildCount()>=5){
+                rl_upimage.setVisibility(View.GONE);
+            }
+//            if(type==3){
+//                iv_del.setVisibility(View.GONE);
+//            }
+        }
+
+    }
+
+    class onImageItemClicks implements View.OnClickListener {
+        //        private int position;
+        View convertView;
+
+        public onImageItemClicks(View convertView) {
+            this.convertView = convertView;
+
         }
 
         @Override
-        protected View getView(int position, View convertView, ViewGroup parent) {
-
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.adapter_release_consumer_image_view, null);
-            FMNetImageView iv = (FMNetImageView) convertView.findViewById(R.id.iv_picture);
-            RelativeLayout rl_picture = (RelativeLayout) convertView.findViewById(R.id.rl_picture);
-            ImageView iv_del = (ImageView) convertView.findViewById(R.id.iv_del);
-            ConsumerImageEntity info = (ConsumerImageEntity) getItem(position);
-            if (!StringUtils.isEmpty(info.getUrl())){
-                iv.loadImage(info.getUrl());
-                iv.setVisibility(View.VISIBLE);
-                rl_picture.setVisibility(View.VISIBLE);
-                iv_del.setOnClickListener(new onImageItemClick(position));
-                tv_next_add.setVisibility(View.VISIBLE);
-                if(position==4){
-                    rl_upimage.setVisibility(View.GONE);
-                }
-            }else{
-                iv.setVisibility(View.GONE);
-                rl_picture.setVisibility(View.GONE);
-            }
-
-            return convertView;
-        }
-
-        class onImageItemClick implements View.OnClickListener {
-            private int position;
-
-            public onImageItemClick(int position) {
-                this.position = position;
-
-            }
-
-            @Override
-            public void onClick(View v) {
-                onSelectTag = position;
-                ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
-                if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
-                    qiNiuTokenRequest();
-                if (StringUtils.isEmpty(info.getUrl())) {
-                    PopupPhotoView popup = new PopupPhotoView(UploadPhotoActivity.this, false, info.getLocatstion());
-                    popup.showPopupWindow();
-                } else {
-                    String uri = "";
-                    String name = "";
-                    for (int i = 0; i < imageList.size(); i++) {
-                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
-                        if (!StringUtils.isEmpty(item.getUrl())) {
-                            uri = uri + item.getUrl() + ",";
-                            name = name + item.getContext() + ",";
-                        }
-                    }
-
-//                    if (!StringUtils.isEmpty(uri))
-                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(UploadPhotoActivity.this);
-
-                    mPopupDialogWidget.setMessage("确定删除吗？");
-                   mPopupDialogWidget.setRithButtonText(R.string.dl_ok);
-                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
-
-                        @Override
-                        public void onEventClick(PopupObject obj) {
-                            if (obj.getWhat() == 1) {
-                                //删除单张照片
-                                ((ConsumerImageEntity) imageList.get(onSelectTag)).setUrl("");
-                                mConsumerImageAdapter.notifyDataSetChanged();
-                                onSelectTag--;
-                                conten--;
-                                if(onSelectTag<0){
-                                    tv_next_add.setVisibility(View.GONE);
-                                }
-                                if(onSelectTag<4){
-                                    rl_upimage.setVisibility(View.VISIBLE);
-                                }
-                            }
-
-                        }
-                    });
-                    mPopupDialogWidget.showPopupWindow();
+        public void onClick(View v) {
+//            ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
+//            if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
+//                qiNiuTokenRequest();
+//            if (StringUtils.isEmpty(info.getUrl())) {
+//                PopupPhotoView popup = new PopupPhotoView(ModifyAuditDataActivity.this, false,
+//                        info.getLocatstion());
+//                popup.showPopupWindow();
+//            } else {
+            String uri = "";
+            String name = "";
+            for (int i = 0; i < ll_image_layout.getChildCount(); i++) {
+//                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+                View view = ll_image_layout.getChildAt(i);
+                if (view.getTag() != null && !StringUtils.isEmpty((String) view.getTag())) {
+                    uri = uri + view.getTag() + ",";
+                    name = name + i + ",";
                 }
             }
+            if (!StringUtils.isEmpty(uri)) {
+                int position = ll_image_layout.indexOfChild(convertView) ;
+                UISKipUtils.startPictureBrowseActivity(UploadPhotoActivity.this, uri, position, name);
+            }
+
+//            }
         }
     }
+    class onImageItemClick implements View.OnClickListener {
+        View convertView;
+
+        public onImageItemClick(View convertView ) {
+            this.convertView = convertView;
+
+        }
+
+        @Override
+        public void onClick(View v) {
+//            ConsumerImageEntity info = (ConsumerImageEntity) getList().get(position);
+//            if (StringUtils.isEmpty(info.getQiniuToken()))//获取七牛Token
+//                qiNiuTokenRequest();
+//            if (StringUtils.isEmpty(info.getUrl())) {
+//                PopupPhotoView popup = new PopupPhotoView(ModifyAuditDataActivity.this, false,
+//                        info.getLocatstion());
+//                popup.showPopupWindow();
+//            } else {
+//                    String uri = "";
+
+//                    for (int i = 0; i < imageList.size(); i++) {
+//                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+//                        if (!StringUtils.isEmpty(item.getUrl())) {
+//                            uri = uri + item.getUrl() + ",";
+////                            name = name + item.getContext() + ",";
+//                        }
+//                    }
+//                    if (!StringUtils.isEmpty(uri))
+            MessageContentDialog mPopupDialogWidget = new MessageContentDialog
+                    (UploadPhotoActivity.this);
+
+            mPopupDialogWidget.setMessage("确定删除吗？");
+            mPopupDialogWidget.setRithButtonText(R.string.dl_ok);
+            mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                @Override
+                public void onEventClick(PopupObject obj) {
+                    if (obj.getWhat() == 1) {
+//                                ll_image_layout.getChildCount()
+                        ll_image_layout.removeView(convertView);
+                        rl_upimage.setVisibility(View.VISIBLE);
+//                                ConsumerImageEntity entity = imageList.remove(position);
+//                                mConsumerImageAdapter.notifyDataSetChanged();
+//                                if (!TextUtils.isEmpty(entity.getPath())) {
+//                                    File file = new File(entity.getPath());
+//                                    file.delete();
+//                                }
+                        //删除单张照片
+////                                for (int i = 0; i < imageList.size(); i++) {
+////                                    ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+////                                    if (item.getContext().equals(position+"")){
+//                                        ((ConsumerImageEntity) imageList.get(position)).setUrl("");
+//                                        ((ConsumerImageEntity) imageList.get(position)).setPath("");
+////                                    }
+//
+////                                }
+//                                if(imageList.size()>=0){
+//                                    p = "";
+//                                    photo.clear();
+//                                    for (int i = 0; i < imageList.size(); i++) {
+//                                        ConsumerImageEntity item = (ConsumerImageEntity) imageList.get(i);
+//                                        photo.add(item.getUrl());
+//                                        p =photo.toString();
+//                                    }
+//                                    String ss = p.substring(1,p.length() - 1).trim();
+//                                    String figure = ss.replaceAll(" ,","").trim();
+//
+//                                    String[] sArray=figure.split("\\,") ;
+//                                    for (int i = 0; i <sArray.length; i++) {
+//                                        String photo = sArray[i].trim();
+//                                        if(!photo.equals("")){
+//                                            ((ConsumerImageEntity) imageList.get(i)).setUrl(photo);
+//
+//                                        }
+//
+//                                    }
+//
+//                                    if(sArray.length==4){
+//                                        ((ConsumerImageEntity) imageList.get(sArray.length)).setUrl("");
+//                                    }
+//                                    if(sArray.length==3){
+//                                        ((ConsumerImageEntity) imageList.get(3)).setUrl("");
+//                                    }
+//                                    if(sArray.length==2){
+//                                        ((ConsumerImageEntity) imageList.get(2)).setUrl("");
+//                                    }
+//                                    if(sArray.length==1){
+//                                        ((ConsumerImageEntity) imageList.get(1)).setUrl("");
+//                                    }
+//                                }
+//                                conten--;
+//                                mConsumerImageAdapter.notifyDataSetChanged();
+
+//                                if(position<0){
+//                                    tv_next_add.setVisibility(View.GONE);
+//                                }
+//                                if(position<4){
+//                                    rl_upimage.setVisibility(View.VISIBLE);
+//                                }
+                    }
+
+                }
+            });
+            mPopupDialogWidget.showPopupWindow();
+
+        }
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -414,22 +554,7 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
         ReceiverUtils.removeReceiver(this);
     }
 
-    /**
-     * 裁剪图片方法实现
-     */
-    public void startPhotoZoom(Uri uri) {
-//       String url= uri.toString();
-//       url= url.replaceAll("content","file");
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");// 设置裁剪
-        intent.putExtra("aspectX", 1);// aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 320);// outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputY", 320);
-        intent.putExtra("return-data", true);
-        startActivityForResult(intent, 2);
-    }
+
 
 
 }

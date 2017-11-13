@@ -81,6 +81,7 @@ public class HomePageFragment extends FMBaseScrollFragment implements View.OnCli
     private int indextop = 0,preIndextop = 0;
     //定时器，用于实现轮播
     private Timer timer;
+    private Timer Toptimer;
     private Activity mActivity;
 
     Handler mHandler  = new Handler(){
@@ -192,7 +193,13 @@ public class HomePageFragment extends FMBaseScrollFragment implements View.OnCli
 
             }
         });
-        timer = new Timer();//创建Timer对象
+        if(timer==null){
+            timer = new Timer();//创建Timer对象
+        }else{
+            timer.cancel();
+            timer = new Timer();//创建Timer对象
+        }
+
         //执行定时任务
         timer.schedule(new TimerTask() {
             public void run() {
@@ -236,9 +243,14 @@ public class HomePageFragment extends FMBaseScrollFragment implements View.OnCli
 
             }
         });
-        timer = new Timer();//创建Timer对象
+        if(Toptimer==null){
+            Toptimer = new Timer();//创建Timer对象
+        }else{
+            Toptimer.cancel();
+            Toptimer = new Timer();//创建Timer对象
+        }
         //执行定时任务
-        timer.schedule(new TimerTask() {
+        Toptimer.schedule(new TimerTask() {
             public void run() {
                 //首先判断是否需要轮播，是的话我们才发消息
                 mHandler.sendEmptyMessage(2);
