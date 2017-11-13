@@ -253,7 +253,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     ToastHelper.toastMessage(this,"最多只能上传5张图片");
                     return;
                 }
-                qiNiuTokenRequest();
+                qiNiuTokenRequest(null);
                 selectDrawable();
                 break;
             case R.id.btn_nexts://下一步
@@ -308,7 +308,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
         popup.showPopupWindow();
     }
 
-    private void qiNiuTokenRequest() {
+    private void qiNiuTokenRequest(final Runnable runnable) {
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.TOKEN, new
                 OkHttpClientManager.ResultCallback<String>() {
 
@@ -323,6 +323,10 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                             try {
                                 JSONObject js = new JSONObject(u);
                                 token = js.optString("token");
+
+                                if (runnable!=null){
+                                    runnable.run();
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -333,27 +337,32 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
     }
     //图片结果
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
-                case 0:{
+                case 0: {
                     if (data.getData() == null)
                         return;
 //                    conten++;
 //                    ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(imageList.size());
 //                    if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
-//                        qiNiuTokenRequest();
-                    Uri mImageCaptureUri = data.getData();
-                    ll_image_layout.setVisibility(View.VISIBLE);
-                    Bitmap photoBmp = null;
+                    qiNiuTokenRequest(new Runnable() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Uri mImageCaptureUri = data.getData();
+                                    ll_image_layout.setVisibility(View.VISIBLE);
+                                    Bitmap photoBmp = null;
 
-                    if (mImageCaptureUri != null) {
-                        try {
-                            photoBmp = getBitmapFormUri(ModifyAuditDataActivity.this, mImageCaptureUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                                    if (mImageCaptureUri != null) {
+                                        try {
+                                            photoBmp = getBitmapFormUri(ModifyAuditDataActivity.this, mImageCaptureUri);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
 //                    String path = ((ConsumerImageEntity) imageList.get(imageList.size())).getPath();
 //                    if (!TextUtils.isEmpty(path)) {
 //                        File file = new File(path);
@@ -361,41 +370,52 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
 //                            file.delete();
 //                        }
 //                    }
-                    String fileName = System.currentTimeMillis()+".png";
-                    Bitmap photo = photoBmp;
-                    ImageCacheUitl imageCacheUitl = ImageCacheUitl.getInstetn();
-                    String path = imageCacheUitl.getSDCarPath() + fileName;
-                    Boolean flg = imageCacheUitl.savaImage(fileName, photo);
-                    if (flg) {
-                        if (mPopupUploadDialog != null)
-                            mPopupUploadDialog.dismiss();
-                        mPopupUploadDialog.showPopupWindow();
+                                    String fileName = System.currentTimeMillis() + ".png";
+                                    Bitmap photo = photoBmp;
+                                    ImageCacheUitl imageCacheUitl = ImageCacheUitl.getInstetn();
+                                    String path = imageCacheUitl.getSDCarPath() + fileName;
+                                    Boolean flg = imageCacheUitl.savaImage(fileName, photo);
+                                    if (flg) {
+                                        if (mPopupUploadDialog != null)
+                                            mPopupUploadDialog.dismiss();
+                                        mPopupUploadDialog.showPopupWindow();
 //                        ((ConsumerImageEntity) imageList.get(conten)).setPath("");
 
-                        QiNiuUtils.getInstance().uploadImageRequest(path, token);
+                                        QiNiuUtils.getInstance().uploadImageRequest(path, token);
 
-                    }
-                    break;}
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    break;
+                }
                 case 1:{
                     if (Tools.hasSdcard()) {
-                        File tempFile = new File(FileUtils.getRootPath() +"tempImage.jpg"); //+ ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion());
+                        final File tempFile = new File(FileUtils.getRootPath() +"tempImage.jpg"); //+ ((ConsumerImageEntity) imageList.get(onSelectTag)).getLocatstion());
                         if (tempFile == null)
                             return;
 //                        conten++;
 //                        ConsumerImageEntity infos = (ConsumerImageEntity) imageList.get(conten);
 //                        if (StringUtils.isEmpty(infos.getQiniuToken()))//获取七牛Token
-//                            qiNiuTokenRequest();
-                        ll_image_layout.setVisibility(View.VISIBLE);
-                        Uri mImageUri = Uri.fromFile(tempFile);
-                        Bitmap photoBmps = null;
+                            qiNiuTokenRequest(new Runnable() {
+                                @Override
+                                public void run() {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ll_image_layout.setVisibility(View.VISIBLE);
+                                            Uri mImageUri = Uri.fromFile(tempFile);
+                                            Bitmap photoBmps = null;
 
-                        if (mImageUri != null) {
-                            try {
-                                photoBmps = getBitmapFormUri(ModifyAuditDataActivity.this, mImageUri);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                                            if (mImageUri != null) {
+                                                try {
+                                                    photoBmps = getBitmapFormUri(ModifyAuditDataActivity.this, mImageUri);
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
 //                        String path = ((ConsumerImageEntity) imageList.get(conten)).getPath();
 //                        if (!TextUtils.isEmpty(path)) {
 //                            File file = new File(path);
@@ -403,19 +423,24 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
 //                                file.delete();
 //                            }
 //                        }
-                        String fileName = System.currentTimeMillis()+".png";
-                        Bitmap photos = photoBmps;
-                        ImageCacheUitl imageCacheUitls = ImageCacheUitl.getInstetn();
-                        String  path = imageCacheUitls.getSDCarPath() + fileName;
-                        Boolean flgs = imageCacheUitls.savaImage(fileName, photos);
-                        if (flgs) {
-                            if (mPopupUploadDialog != null)
-                                mPopupUploadDialog.dismiss();
-                            mPopupUploadDialog.showPopupWindow();
+                                            String fileName = System.currentTimeMillis()+".png";
+                                            Bitmap photos = photoBmps;
+                                            ImageCacheUitl imageCacheUitls = ImageCacheUitl.getInstetn();
+                                            String  path = imageCacheUitls.getSDCarPath() + fileName;
+                                            Boolean flgs = imageCacheUitls.savaImage(fileName, photos);
+                                            if (flgs) {
+                                                if (mPopupUploadDialog != null)
+                                                    mPopupUploadDialog.dismiss();
+                                                mPopupUploadDialog.showPopupWindow();
 //                            ((ConsumerImageEntity) imageList.get(conten)).setPath("");
-                            QiNiuUtils.getInstance().uploadImageRequest(path, token);
+                                                QiNiuUtils.getInstance().uploadImageRequest(path, token);
 
-                        }
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+
                     }
                     break;
                 }
