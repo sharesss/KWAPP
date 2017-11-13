@@ -1,17 +1,14 @@
 package com.ts.fmxt.ui.user.Certifiedinvestor;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
-import com.thindo.base.Adapter.FMBaseGroupAdapter;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.base.activity.FMBaseActivity;
 import com.ts.fmxt.ui.user.login.dialog.PopupPhotoView;
@@ -38,13 +34,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import http.data.AuthenticationEntity;
-import http.data.ConsumerImageEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
 import utils.FileUtils;
@@ -260,6 +253,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     ToastHelper.toastMessage(this,"最多只能上传5张图片");
                     return;
                 }
+                qiNiuTokenRequest();
                 selectDrawable();
                 break;
             case R.id.btn_nexts://下一步
@@ -513,8 +507,11 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
             iv.setOnClickListener(new onImageItemClicks(convertView));
             tv_next_add.setVisibility(View.VISIBLE);
 
-            if(ll_image_layout.getChildCount()==4){
+            if(ll_image_layout.getChildCount()>=5){
                 rl_upimage.setVisibility(View.GONE);
+            }
+            if(type==3){
+                iv_del.setVisibility(View.GONE);
             }
         }
 
@@ -597,7 +594,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                         }
                     }
             if (!StringUtils.isEmpty(uri)) {
-                int position = ll_image_layout.indexOfChild(convertView) + 1;
+                int position = ll_image_layout.indexOfChild(convertView) ;
                 UISKipUtils.startPictureBrowseActivity(ModifyAuditDataActivity.this, uri, position, name);
             }
 
@@ -644,6 +641,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                         if (obj.getWhat() == 1) {
 //                                ll_image_layout.getChildCount()
                             ll_image_layout.removeView(convertView);
+                            rl_upimage.setVisibility(View.VISIBLE);
 //                                ConsumerImageEntity entity = imageList.remove(position);
 //                                mConsumerImageAdapter.notifyDataSetChanged();
 //                                if (!TextUtils.isEmpty(entity.getPath())) {
