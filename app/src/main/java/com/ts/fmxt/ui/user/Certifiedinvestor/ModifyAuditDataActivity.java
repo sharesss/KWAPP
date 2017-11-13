@@ -497,7 +497,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                 null, false);
         ll_image_layout.addView(convertView);
         convertView.setTag(url);
-        int position = ll_image_layout.getChildCount()-1;
+//        int position = ll_image_layout.getChildCount()-1;
         FMNetImageView iv = (FMNetImageView) convertView.findViewById(R.id.iv_picture);
         RelativeLayout rl_picture = (RelativeLayout) convertView.findViewById(R.id.rl_picture);
         ImageView iv_del = (ImageView) convertView.findViewById(R.id.iv_del);
@@ -509,8 +509,8 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
             }
             iv.setVisibility(View.VISIBLE);
             rl_picture.setVisibility(View.VISIBLE);
-            iv_del.setOnClickListener(new onImageItemClick(position));
-            iv.setOnClickListener(new onImageItemClicks(position));
+            iv_del.setOnClickListener(new onImageItemClick(convertView));
+            iv.setOnClickListener(new onImageItemClicks(convertView));
             tv_next_add.setVisibility(View.VISIBLE);
 
             if(ll_image_layout.getChildCount()==4){
@@ -568,10 +568,11 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
 //    }
 
     class onImageItemClicks implements View.OnClickListener {
-        private int position;
+//        private int position;
+        View convertView;
 
-        public onImageItemClicks(int position) {
-            this.position = position;
+        public onImageItemClicks(View convertView) {
+            this.convertView = convertView;
 
         }
 
@@ -595,17 +596,19 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                             name = name + i + ",";
                         }
                     }
-                    if (!StringUtils.isEmpty(uri))
-                        UISKipUtils.startPictureBrowseActivity(ModifyAuditDataActivity.this, uri, position, name);
+            if (!StringUtils.isEmpty(uri)) {
+                int position = ll_image_layout.indexOfChild(convertView) + 1;
+                UISKipUtils.startPictureBrowseActivity(ModifyAuditDataActivity.this, uri, position, name);
+            }
 
 //            }
         }
     }
     class onImageItemClick implements View.OnClickListener {
-        private int position;
+        View convertView;
 
-        public onImageItemClick(int position) {
-            this.position = position;
+        public onImageItemClick(View convertView ) {
+            this.convertView = convertView;
 
         }
 
@@ -640,7 +643,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                     public void onEventClick(PopupObject obj) {
                         if (obj.getWhat() == 1) {
 //                                ll_image_layout.getChildCount()
-                            ll_image_layout.removeViewAt(position);
+                            ll_image_layout.removeView(convertView);
 //                                ConsumerImageEntity entity = imageList.remove(position);
 //                                mConsumerImageAdapter.notifyDataSetChanged();
 //                                if (!TextUtils.isEmpty(entity.getPath())) {
