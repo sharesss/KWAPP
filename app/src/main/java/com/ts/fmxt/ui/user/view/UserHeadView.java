@@ -35,7 +35,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
     private Context context;
     private CircleImageView iv_portrait;
     private TextView tv_user_name, tv_fm_identity, tv_user_signature, tv_consumere,tv_place,tv_salary,tv_age,tv_realname;
-    private TextView tv_asset, tv_fb, tv_gift_num, tv_profile,tv_privilege_securities_num,tv_company_name,tv_investor,tv_phone,tv_money,tv_auction_num,tv_isVfounder;
+    private TextView tv_asset, tv_fb, tv_gift_num, tv_profile,tv_privilege_securities_num,tv_company_name,tv_investor,tv_phone,tv_money,tv_auction_num,tv_isVfounder,tv_share_option;
     private UserInfoEntity info;
     private int auctionNum;
     private String  cashdeposit;
@@ -77,6 +77,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         tv_profile = (TextView) findViewById(R.id.tv_profile);
         tv_realname = (TextView)findViewById(R.id.tv_realname);
         tv_gift_num = (TextView) findViewById(R.id.tv_gift_num);
+        tv_share_option = (TextView) findViewById(R.id.tv_share_option);
         iv_v = (ImageView) findViewById(R.id.iv_v);
         findViewById(R.id.ll_callphone).setOnClickListener(this);
         tv_phone  = (TextView) findViewById(R.id.tv_phone);
@@ -90,7 +91,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         findViewById(R.id.rl_gift).setOnClickListener(this);//关于我们
         findViewById(R.id.rl_user_real_name).setOnClickListener(this);//实名认证
         findViewById(R.id.rly_paren).setOnClickListener(this);//整个头部
-
+        findViewById(R.id.rl_share_option).setOnClickListener(this);//我的跟投
         //头部以下的四个按钮
         findViewById(R.id.bt_share_option).setOnClickListener(this);//我的跟投
         findViewById(R.id.bt_stake_in).setOnClickListener(this);//拍得股权
@@ -115,6 +116,7 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
         auctionNum = info.getThinkactioncount();//竞拍数
         tv_money.setText(cashdeposit+"");
         tv_auction_num.setText(auctionNum+"");
+        tv_share_option.setText(info.getMyInvestprojectcount()+"");
         SharedPreferences share = context.getSharedPreferences("ImInfo",MODE_PRIVATE);
         SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
         editor.putString("headpic", info.getHeadpic());
@@ -212,6 +214,9 @@ public class UserHeadView extends RelativeLayout implements View.OnClickListener
                 break;
 
             case R.id.bt_share_option://我的跟投
+//                UISKipUtils.startMyHeelShotActivity((Activity) getContext());
+                break;
+            case R.id.rl_share_option://我的跟投
                 UISKipUtils.startMyHeelShotActivity((Activity) getContext());
                 break;
             case R.id.bt_stake_in://拍得股权

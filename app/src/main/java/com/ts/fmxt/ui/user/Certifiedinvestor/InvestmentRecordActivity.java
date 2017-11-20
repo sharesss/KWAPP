@@ -16,7 +16,6 @@ import com.ts.fmxt.ui.user.view.WheelListener;
 
 import utils.ReceiverUtils;
 import utils.UISKipUtils;
-import utils.helper.ToastHelper;
 
 import static com.ts.fmxt.R.id.ll_currency_type;
 
@@ -95,42 +94,42 @@ public class InvestmentRecordActivity  extends FMBaseActivity implements View.On
                 mPopupWheelIvestmentRundView.showPopupWindow();
                 break;
             case R.id.but_next://下一步
-                if(edt_input_project_num.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入投资项目数量");
-                    return;
-                }
-                if(edt_historical_investment.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入历史投资总金额");
-                    return;
-                }
-                if(edt_out_num.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入退出数量");
-                    return;
-                }
-                if(edt_project_name.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入投资项目名称");
-                    return;
-                }
-                if(tv_industry.getText().toString().equals("")||tv_industry.getText().toString().equals("未填写")){
-                    ToastHelper.toastMessage(this,"请选择行业");
-                    return;
-                }
-                if(tv_time.getText().toString().equals("")||tv_time.getText().toString().equals("未填写")){
-                    ToastHelper.toastMessage(this,"请选择时间");
-                    return;
-                }
-                if(edt_input_money.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入金额");
-                    return;
-                }
-                if(tv_investment_round.getText().toString().equals("")||tv_investment_round.getText().toString().equals("未填写")){
-                    ToastHelper.toastMessage(this,"请选择轮次");
-                    return;
-                }
-                if(edt_return_multiples.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入投资回报倍数");
-                    return;
-                }
+//                if(edt_input_project_num.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入投资项目数量");
+//                    return;
+//                }
+//                if(edt_historical_investment.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入历史投资总金额");
+//                    return;
+//                }
+//                if(edt_out_num.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入退出数量");
+//                    return;
+//                }
+//                if(edt_project_name.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入投资项目名称");
+//                    return;
+//                }
+//                if(tv_industry.getText().toString().equals("")||tv_industry.getText().toString().equals("未填写")){
+//                    ToastHelper.toastMessage(this,"请选择行业");
+//                    return;
+//                }
+//                if(tv_time.getText().toString().equals("")||tv_time.getText().toString().equals("未填写")){
+//                    ToastHelper.toastMessage(this,"请选择时间");
+//                    return;
+//                }
+//                if(edt_input_money.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入金额");
+//                    return;
+//                }
+//                if(tv_investment_round.getText().toString().equals("")||tv_investment_round.getText().toString().equals("未填写")){
+//                    ToastHelper.toastMessage(this,"请选择轮次");
+//                    return;
+//                }
+//                if(edt_return_multiples.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入投资回报倍数");
+//                    return;
+//                }
                 SharedPreferences share = getSharedPreferences("projectInfo",MODE_PRIVATE);
                 SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
                 editor.putString("projectNum", edt_input_project_num.getText().toString());

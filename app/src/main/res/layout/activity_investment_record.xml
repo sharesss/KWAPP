@@ -48,10 +48,21 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="12sp"
+        android:textColor="@color/orange"
+        android:gravity="center"
+        android:text="认证投资人后拥有小额跟投和老股拍卖的特权。"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -59,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:orientation="horizontal">
 
             <View
@@ -314,7 +325,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:hint="请选择时间（月）"
+                    android:hint="请选择时间（年月）"
                     android:textSize="@dimen/dp_13" />
 
                 <TextView
@@ -499,5 +510,5 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/bg_orange_5_shape"/>
     </LinearLayout>
-
+    </ScrollView>
     </LinearLayout>

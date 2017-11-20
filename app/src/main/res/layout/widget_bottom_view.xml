@@ -42,7 +42,7 @@
         android:paddingTop="8dp"
         app:drawable="@mipmap/small_following_off"
         app:drawableLight="@mipmap/small_following_on"
-        app:text="股权拍卖" />
+        app:text="老股拍卖" />
 
     <widget.MixedTextDrawView
         android:id="@+id/bt_account"

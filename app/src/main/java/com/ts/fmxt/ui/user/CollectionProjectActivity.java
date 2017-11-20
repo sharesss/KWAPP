@@ -40,7 +40,7 @@ public class CollectionProjectActivity extends FMBaseTableActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_follow_project);
+        setContentView(R.layout.activity_collection_project);
         userid = getIntent().getIntExtra("userid",0);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setTitle(getResourcesStr(R.string.collection_project), new View.OnClickListener() {

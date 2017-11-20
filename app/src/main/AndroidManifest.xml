@@ -256,7 +256,7 @@
 
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1194161008115809#fmxt-develop" />
+            android:value="1194161008115809#fmxt" />
         <!--  正式1194161008115809#fmxt  测试1194161008115809#fmxt-develop-->
 
         <receiver

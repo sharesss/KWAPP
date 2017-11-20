@@ -243,6 +243,8 @@ public class UploadPhotoActivity  extends FMBaseActivity implements View.OnClick
                                 String stats = json.getString("stats");
                                 if (stats.equals("1")) {
                                     ToastHelper.toastMessage(UploadPhotoActivity.this, "提交成功");
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.CERTIFIEDINVESTOR_FINISH,bundle);
                                     UISKipUtils.startCertifiedInvestorActivity(UploadPhotoActivity.this,1,0);
                                 } else {
                                     String msg = json.getString("msg");

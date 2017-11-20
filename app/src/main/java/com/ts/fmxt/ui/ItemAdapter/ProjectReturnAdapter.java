@@ -44,21 +44,21 @@ public class ProjectReturnAdapter extends FMBaseAdapter {
             ViewHolder = (ViewHolder) convertView.getTag();
         }
         ProjectReturnEntity info = (ProjectReturnEntity) getItem(i);
-        ViewHolder.tv_company_name.setText("份额预约|"+info.getShareTitle());
+        ViewHolder.tv_company_name.setText("投资回报|"+info.getShareTitle());
         ViewHolder.tv_equityReserveExplain.setText(info.getShareContent());
         ViewHolder.tv_confirm.setBackground(info.getIsYetBut()==0? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
         ViewHolder.tv_confirm.setBackground(isOver==1? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
 //        info = (ProjectReturnEntity) getItem(position);
         ViewHolder.tv_reservation_money.setText("预约金：¥"+info.getReserveAmount());
         if(info.getReservePeopleNum().equals("null")){
-            ViewHolder.tv_shares_num.setText(info.getYetReservePropleNum()+"人预约/无限制");
+            ViewHolder.tv_shares_num.setText("预约人数 "+info.getYetReservePropleNum()+"/无限制");
         }else{
            int num = Integer.valueOf(info.getReservePeopleNum())-Integer.valueOf(info.getYetReservePropleNum());
             if(num<0){
                 num=0;
             }
             ViewHolder.tv_confirm.setBackground(num>0&&info.getIsYetBut()==0&&isOver==1? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
-            ViewHolder.tv_shares_num.setText(info.getYetReservePropleNum()+"人预约/剩余名额"+num+"人");
+            ViewHolder.tv_shares_num.setText("预约人数 "+info.getYetReservePropleNum()+"/"+info.getReservePeopleNum()+"");
         }
 
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.thindo.base.Adapter.FMBaseAdapter;
 import com.ts.fmxt.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import http.data.ConsumerEntity;
@@ -87,7 +88,13 @@ public class FollowProjectAdapter extends FMBaseAdapter {
             Double indexs = info.getHoldRatios()*100;
             int exponents = (new Double(indexs)).intValue();
             ViewHolder.pb_yellowindex.setProgress(exponents);
-            ViewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
+            if(info.getReservedAmount()<10000){
+                ViewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
+            }else{
+                double n = (double)info.getReservedAmount()/10000;
+                DecimalFormat  df   = new DecimalFormat("######0.00");
+                ViewHolder.tv_reservation.setText("¥"+df.format(n)+"万");
+            }
             Double holdRatios = info.getHoldRatios()*100;
             int holdRatio = (new Double(holdRatios)).intValue();
             ViewHolder.tv_schedule.setText(holdRatio+"%");

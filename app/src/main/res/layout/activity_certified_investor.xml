@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:text="上传个人资产证明(房产,汽车或银行流水等)"/>
 
     <LinearLayout
@@ -168,14 +168,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="@color/black"
             android:text="提交成功，等待审核"
             />
+
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="提交时间：2017-02-08"
-            />
+            android:textColor="@color/black"
+            android:text="提交时间：2017-02-08" />
+        <TextView
+            android:id="@+id/tv_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/font_main_third"
+            android:text="（三个工作日内完成审核）" />
     </LinearLayout>
 
     <LinearLayout

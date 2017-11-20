@@ -104,7 +104,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         llCollection = (LinearLayout) findViewById(R.id.ll_collection);
         tvCollection = (TextView) findViewById(R.id.tv_collection);
         tvWithTheVote = (TextView) findViewById(R.id.tv_with_the_vote);
-        tvWithTheVote.setOnClickListener(this);
+//        tvWithTheVote.setOnClickListener(this);
         llCollection.setOnClickListener(this);
         findViewById(R.id.tv_top).setOnClickListener(this);
     }
@@ -138,6 +138,15 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         Long time =finishtime-currenttime;
         if(time>0) {
             isOver=1;
+            tvWithTheVote.setOnClickListener(this);
+            tvWithTheVote.setText("继续跟投");
+            tvWithTheVote.setTextColor(getResources().getColor(R.color.white));
+            tvWithTheVote.setBackgroundColor(getResources().getColor(R.color.orange));
+        }else{
+            tvWithTheVote.setOnClickListener(null);
+            tvWithTheVote.setText("跟投已经结束");
+            tvWithTheVote.setTextColor(getResources().getColor(R.color.white));
+            tvWithTheVote.setBackgroundColor(getResources().getColor(R.color.gray));
         }
         /**
          * 这里可以添加各种Item,参照以上代码

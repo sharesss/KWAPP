@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -185,15 +186,37 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
         if (info == null) {
             return;
         }
-        edt_input_project_num.setText(String.valueOf(info.getInvestProjectSum()+""));
-        edt_historical_investment.setText(String.valueOf(info.getHistoryInvestSum()+""));
-        edt_out_num.setText(String.valueOf(info.getExitProjectSum()+""));
+        if(info.getInvestProjectSum()!=0){
+            edt_input_project_num.setText(String.valueOf(info.getInvestProjectSum()+""));
+        }
+        if(info.getHistoryInvestSum()!=0){
+            edt_historical_investment.setText(String.valueOf(info.getHistoryInvestSum()+""));
+        }
+        if(info.getExitProjectSum()!=0){
+            edt_out_num.setText(String.valueOf(info.getExitProjectSum()+""));
+        }
+
         edt_project_name.setText(info.getCaseProjectName());
         tv_industry.setText(info.getCaseIndustryName());
-        tv_time.setText(info.getCaseProjectTime());
-        edt_input_money.setText(String.valueOf(info.getCaseInvestMoney()+""));
+        if(!info.getCaseProjectTime().equals("null")){
+            tv_time.setText(info.getCaseProjectTime());
+        }
+        if(info.getCaseInvestMoney()!=0){
+            edt_input_money.setText(String.valueOf(info.getCaseInvestMoney()+""));
+        }
+
         tv_investment_round.setText(info.getCaseFinancingState());
-        edt_return_multiples.setText(info.getCaseInvestReward()+"");
+        if(info.getCaseInvestReward()-Math.round(info.getCaseInvestReward()) <=0.000000001){//判断是否是整数
+            int i  = (new   Double(info.getCaseInvestReward())).intValue();//是整数，强转成整数
+            if(i!=0){
+                edt_return_multiples.setText(i+"");
+            }
+
+        }else{
+            DecimalFormat df   = new DecimalFormat("######0.00");//展示两位数的倍数
+            edt_return_multiples.setText(df.format(info.getCaseInvestReward())+"");
+        }
+
         industryId = String.valueOf(info.getCaseIndustryId());
         if(info.getCaseInvestMoneyUnit()==1){
             tv_currency_type.setText("RMB¥");
@@ -257,43 +280,43 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                 selectDrawable();
                 break;
             case R.id.btn_nexts://下一步
-                if(edt_input_project_num.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入投资项目数量");
-                    return;
-                }
-                if(edt_historical_investment.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入历史投资总金额");
-                    return;
-                }
-                if(edt_out_num.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入退出数量");
-                    return;
-                }
-                if(edt_project_name.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入投资项目名称");
-                    return;
-                }
-                if(tv_industry.getText().toString().equals("")||tv_industry.getText().toString().equals("未填写")){
-                    ToastHelper.toastMessage(this,"请选择行业");
-                    return;
-                }
-                if(tv_time.getText().toString().equals("")||tv_time.getText().toString().equals("未填写")){
-                    ToastHelper.toastMessage(this,"请选择时间");
-                    return;
-                }
-                if(edt_input_money.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入金额");
-                    return;
-                }
-                if(tv_investment_round.getText().toString().equals("")||tv_investment_round.getText().toString
-                        ().equals("未填写")){
-                    ToastHelper.toastMessage(this,"请选择轮次");
-                    return;
-                }
-                if(edt_return_multiples.getText().toString().equals("")){
-                    ToastHelper.toastMessage(this,"请输入投资回报倍数");
-                    return;
-                }
+//                if(edt_input_project_num.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入投资项目数量");
+//                    return;
+//                }
+//                if(edt_historical_investment.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入历史投资总金额");
+//                    return;
+//                }
+//                if(edt_out_num.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入退出数量");
+//                    return;
+//                }
+//                if(edt_project_name.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入投资项目名称");
+//                    return;
+//                }
+//                if(tv_industry.getText().toString().equals("")||tv_industry.getText().toString().equals("未填写")){
+//                    ToastHelper.toastMessage(this,"请选择行业");
+//                    return;
+//                }
+//                if(tv_time.getText().toString().equals("")||tv_time.getText().toString().equals("未填写")){
+//                    ToastHelper.toastMessage(this,"请选择时间");
+//                    return;
+//                }
+//                if(edt_input_money.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入金额");
+//                    return;
+//                }
+//                if(tv_investment_round.getText().toString().equals("")||tv_investment_round.getText().toString
+//                        ().equals("未填写")){
+//                    ToastHelper.toastMessage(this,"请选择轮次");
+//                    return;
+//                }
+//                if(edt_return_multiples.getText().toString().equals("")){
+//                    ToastHelper.toastMessage(this,"请输入投资回报倍数");
+//                    return;
+//                }
                 if(ll_image_layout.getChildCount()==0){
                     ToastHelper.toastMessage(this,"至少上传1张照片");
                     return;
@@ -878,6 +901,7 @@ public class ModifyAuditDataActivity extends FMBaseActivity implements View.OnCl
                                 if (stats.equals("1")) {
                                     ToastHelper.toastMessage(ModifyAuditDataActivity.this, "提交成功");
                                     UISKipUtils.startCertifiedInvestorActivity(ModifyAuditDataActivity.this,1,1);
+                                    finish();
                                 } else {
                                     String msg = json.getString("msg");
                                     ToastHelper.toastMessage(ModifyAuditDataActivity.this, msg);

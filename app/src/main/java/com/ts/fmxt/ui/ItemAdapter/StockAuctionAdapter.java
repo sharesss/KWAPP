@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.thindo.base.Adapter.FMBaseAdapter;
 import com.ts.fmxt.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import http.data.FindStockEquityHomeEntity;
@@ -120,7 +121,14 @@ public class StockAuctionAdapter extends FMBaseAdapter {
         ViewHolder.tv_transfer_project.setText("转让项目："+info.getMakeOverNum());
         ViewHolder.tv_auction_project.setText("竞拍项目："+info.getAuctionNum());
         ViewHolder.tv_selling_shares.setText(""+info.getStockSellRate()+"%");
-        ViewHolder.tv_starting_price.setText("¥ "+info.getStartingPrice());
+        if(info.getStartingPrice()<10000){
+            ViewHolder.tv_starting_price.setText("¥ "+info.getStartingPrice());
+        }else{
+            double n = (double)info.getStartingPrice()/10000;
+            DecimalFormat  df   = new DecimalFormat("######0.00");
+            ViewHolder.tv_starting_price.setText("¥ "+df.format(n)+"万");
+        }
+//        ViewHolder.tv_starting_price.setText("¥ "+info.getStartingPrice());
         ViewHolder.ll_stock_auction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +142,14 @@ public class StockAuctionAdapter extends FMBaseAdapter {
             ViewHolder.view.setVisibility(View.VISIBLE);
             ViewHolder.ll_participate_transaction.setVisibility(View.VISIBLE);
             ViewHolder.tv_participate_num.setText("参与人数"+info.getReserveNum());
-            ViewHolder.tv_transaction_price.setText("成交价 ¥ "+info.getTransactionPrice());
+            if(info.getTransactionPrice()<10000){
+                ViewHolder.tv_transaction_price.setText("成交价 ¥ "+info.getTransactionPrice());
+            }else{
+                double n = (double)info.getTransactionPrice()/10000;
+                DecimalFormat  df   = new DecimalFormat("######0.00");
+                ViewHolder.tv_transaction_price.setText("成交价 ¥ "+df.format(n)+"万");
+            }
+
         }else if(type ==2){
             ViewHolder.rl_project_create.setVisibility(View.GONE);
             ViewHolder.ll_project_num.setVisibility(View.GONE);

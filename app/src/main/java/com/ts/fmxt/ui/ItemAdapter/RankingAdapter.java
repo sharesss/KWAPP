@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.thindo.base.Adapter.FMBaseAdapter;
 import com.ts.fmxt.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import http.data.FindStockEquityHomeEntity;
@@ -44,7 +45,13 @@ public class RankingAdapter extends FMBaseAdapter {
         FindStockEquityHomeEntity.RankingEntity item = (FindStockEquityHomeEntity.RankingEntity) getItem(position);
         mHolder.iv_portrait.loadImage(item.getHeadPic());
         mHolder.tv_name.setText(item.getNickName());
-        mHolder.tv_highest_price.setText("最高价 ¥ "+item.getTopBidPrice());
+        if(item.getTopBidPrice()<10000){
+            mHolder.tv_highest_price.setText("目标金额¥"+item.getTopBidPrice());
+        }else{
+            double n = (double)item.getTopBidPrice()/10000;
+            DecimalFormat  df   = new DecimalFormat("######0.00");
+            mHolder.tv_highest_price.setText("目标金额¥"+df.format(n)+"万");
+        }
         mHolder.tv_frequency.setText("出价"+item.getBidTime()+"次");
         mHolder.tv_num.setText(position+1+"");
         return convertView;

@@ -30,6 +30,7 @@ import http.data.UserIndustryEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
 import utils.ReceiverUtils;
+import utils.Tools;
 import utils.helper.ToastHelper;
 
 import static com.ts.fmxt.R.id.ll_currency_type;
@@ -386,7 +387,10 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                     ToastHelper.toastMessage(SettingInvestmentPreferenceActivity.this,"关注投资轮次");
                     return;
                 }
-
+                if (Tools.isFastDoubleClick()) {
+                    ToastHelper.toastMessage(getBaseContext(), "请勿重复操作");
+                    return;
+                }
                 addOrUpdateUserInvestPreferenceInfoRequest();
                 break;
         }
@@ -424,6 +428,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
         }
         staff.put("investSumMin", edt_mini_num.getText().toString());//最小值
         staff.put("investSumMax", edt_maxi_num.getText().toString());//最大值
+
         if(checktext3.equals("定期分红")){
             staff.put("returnWay", "1");//回报方式
         }else  if(checktext3.equals("股权增值")){

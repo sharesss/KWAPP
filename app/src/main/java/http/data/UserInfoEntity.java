@@ -23,6 +23,7 @@ public class UserInfoEntity {
     private int auditstate;//审核状态：'状态：0删除，1待审，2审核通过，3审核不通过',
     private int investprojectcount;//想跟投的项目数量
     private int investprojectcollectcount;//收藏的项目数量
+    private int myInvestprojectcount;//我的跟投数量
     private int  isinvestauthen;//是否是投资人  1：是  0 不是
     private int isTruenameAuthen;//实名认证  1：是  0 不是
     private int cashdeposit;// 冻结保证金
@@ -52,6 +53,7 @@ public class UserInfoEntity {
             this.cashdeposit= json.optInt("cashdeposit",0);
             this.auctionNum = json.optInt("auctionNum",0);
             this.thinkactioncount = json.optInt("thinkactioncount",0);
+            this.myInvestprojectcount = json.optInt("myInvestprojectcount",0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -215,5 +217,13 @@ public class UserInfoEntity {
 
     public void setThinkactioncount(int thinkactioncount) {
         this.thinkactioncount = thinkactioncount;
+    }
+
+    public int getMyInvestprojectcount() {
+        return myInvestprojectcount;
+    }
+
+    public void setMyInvestprojectcount(int myInvestprojectcount) {
+        this.myInvestprojectcount = myInvestprojectcount;
     }
 }

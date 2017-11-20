@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.ts.fmxt.R;
 
+import java.text.DecimalFormat;
+
 import http.data.ConsumerEntity;
 import utils.UISKipUtils;
 import widget.image.CircleImageView;
@@ -95,7 +97,10 @@ public class PopularityView  extends RelativeLayout implements View.OnClickListe
         int exponents = (new Double(indexs)).intValue();
         pb_yellowindex.setProgress(exponents);
         tv_index.setText(exponent+"%");
-        tv_reservation.setText("¥"+info.getReservedAmount());
+        double n = (double)info.getReservedAmount()/10000;
+        DecimalFormat df   = new DecimalFormat("######0.00");
+        tv_reservation.setText(info.getReservedAmount()<10000? "¥ "+info.getReservedAmount():"¥ "+df.format(n)+"万");
+//        tv_reservation.setText("¥"+info.getReservedAmount());
 
         Double holdRatios = info.getHoldRatios()*100;
         int holdRatio = (new Double(holdRatios)).intValue();

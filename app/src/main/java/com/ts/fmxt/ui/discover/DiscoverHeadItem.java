@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.ts.fmxt.R;
 
+import java.text.DecimalFormat;
+
 import http.data.ConsumerEntity;
 import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
@@ -58,12 +60,26 @@ public class DiscoverHeadItem implements BaseViewItem {
             Double indexs = info.getHoldRatios()*100;
             int exponents = (new Double(indexs)).intValue();
             viewHolder.pb_yellowindex.setProgress(exponents);
-            viewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
+            if(info.getReservedAmount()<10000){
+                viewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
+            }else{
+                double n = (double)info.getReservedAmount()/10000;
+                DecimalFormat  df   = new DecimalFormat("######0.00");
+                viewHolder.tv_reservation.setText("¥"+df.format(n)+"万");
+            }
+//            viewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
             Double holdRatios = info.getHoldRatios()*100;
             int holdRatio = (new Double(holdRatios)).intValue();
             viewHolder.tv_schedule.setText(holdRatio+"%");
-            viewHolder.tv_target_amount.setText("目标金额¥"+info.getReserveTargetAmount());
-            viewHolder.tv_subscription_number.setText("认购人数"+info.getReservedPeopleNum());
+            if(info.getReserveTargetAmount()<10000){
+                viewHolder.tv_target_amount.setText("目标金额¥"+info.getReserveTargetAmount());
+            }else{
+                double n = (double)info.getReserveTargetAmount()/10000;
+                DecimalFormat  df   = new DecimalFormat("######0.00");
+                viewHolder.tv_target_amount.setText("目标金额¥"+df.format(n)+"万");
+            }
+
+            viewHolder.tv_subscription_number.setText("跟投人数"+info.getReservedPeopleNum());
             Long currenttime=System.currentTimeMillis()/1000;//获取系统时间的10位的时间戳
             Long finishtime =info.getReserveFinishTime()/1000;
             Long time =finishtime-currenttime;

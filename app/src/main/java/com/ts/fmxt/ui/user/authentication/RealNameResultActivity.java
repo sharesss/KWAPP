@@ -82,8 +82,10 @@ public class RealNameResultActivity extends FMBaseActivity implements View.OnCli
                 if(isinvestauthen!=2){
                      if(auditstate==0){
                            UISKipUtils.startInvestmentRecordActivity(RealNameResultActivity.this);
+                            finish();
                             }else{
                                  UISKipUtils.startCertifiedInvestorActivity(RealNameResultActivity.this,auditstate,1);//1是外面进去的，展示查看我的投资偏好，0是设计我的投资偏好
+                                finish();
                              }
 
                     return;

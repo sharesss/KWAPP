@@ -34,26 +34,23 @@ public class AuthenticationEntity {
         this.id = jsonObject.optInt("id");
         this.propertyphoto = jsonObject.optString("propertyphoto");
         if (!jsonObject.isNull("createtime")) {
-            this.createtime = DateFormatUtils.longToDate("yyyy-MM", jsonObject.optLong("createtime", 0));
+            this.createtime = DateFormatUtils.longToDate("yyyy-MM-dd", jsonObject.optLong("createtime", 0));
 
         }
-        this.auditdesc = jsonObject.optString("auditdesc");
-        this.auditstate = jsonObject.optInt("auditstate");
-        this.investProjectSum = jsonObject.optInt("investProjectSum");
-        this.historyInvestSum = jsonObject.optInt("historyInvestSum");
-        this.exitProjectSum = jsonObject.optInt("exitProjectSum");
-        this.caseProjectName = jsonObject.optString("caseProjectName");
-        this.caseIndustryId = jsonObject.optInt("caseIndustryId");
-        this.caseIndustryName = jsonObject.optString("caseIndustryName");
-        this.caseProjectTime = jsonObject.optString("caseProjectTime");
-        this.caseInvestMoney = jsonObject.optInt("caseInvestMoney");
-        this.caseFinancingState = jsonObject.optString("caseFinancingState");
-        this.caseInvestReward = jsonObject.optDouble("caseInvestReward");
-        this.assetsPhotos = jsonObject.optString("assetsPhotos");
+        this.auditdesc = jsonObject.optString("auditdesc","");
+        this.auditstate = jsonObject.optInt("auditstate",0);
+        this.investProjectSum = jsonObject.optInt("investProjectSum",0);
+        this.historyInvestSum = jsonObject.optInt("historyInvestSum",0);
+        this.exitProjectSum = jsonObject.optInt("exitProjectSum",0);
+        this.caseProjectName = jsonObject.optString("caseProjectName","");
+        this.caseIndustryId = jsonObject.optInt("caseIndustryId",0);
+        this.caseIndustryName = jsonObject.optString("caseIndustryName","");
+        this.caseProjectTime = jsonObject.optString("caseProjectTime","");
+        this.caseInvestMoney = jsonObject.optInt("caseInvestMoney",0);
+        this.caseFinancingState = jsonObject.optString("caseFinancingState","");
+        this.caseInvestReward = jsonObject.optDouble("caseInvestReward",0);
+        this.assetsPhotos = jsonObject.optString("assetsPhotos","");
         this.caseInvestMoneyUnit = jsonObject.optInt("caseInvestMoneyUnit",0);
-
-
-
 
     }
 

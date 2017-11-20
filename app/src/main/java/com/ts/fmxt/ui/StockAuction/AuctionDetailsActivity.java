@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -258,8 +259,22 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         tv_follow_up_project.setText("跟投项目："+info.getFollowNum());
         tv_transfer_project.setText("转让项目："+info.getMakeOverNum());
         tv_auction_project.setText("竞拍项目："+info.getAuctionNum());
-        tv_starting_price.setText("¥ "+info.getStartingPrice());
-        tv_fare_increase.setText("¥ "+info.getPriceRisingRate());//加价幅度
+        if(info.getStartingPrice()<10000){
+            tv_starting_price.setText("¥ "+info.getStartingPrice());
+            tv_starting_prices.setText("¥ "+info.getStartingPrice());
+        }else{
+            double n = (double)info.getStartingPrice()/10000;
+            DecimalFormat  df   = new DecimalFormat("######0.00");
+            tv_starting_price.setText("¥ "+df.format(n)+"万");
+            tv_starting_prices.setText("¥ "+df.format(n)+"万");
+        }
+        if(info.getPriceRisingRate()<10000){
+            tv_fare_increase.setText("¥ "+info.getPriceRisingRate());
+        }else{
+            double n = (double)info.getPriceRisingRate()/10000;
+            DecimalFormat  df   = new DecimalFormat("######0.00");
+            tv_fare_increase.setText("¥ "+df.format(n)+"万");
+        }
         mRankingAdapter = new RankingAdapter(this, info.getRankingarr());
         lv_ranking.setAdapter(mRankingAdapter);
         tv_company_equity.setText(info.getStockName());
@@ -273,11 +288,17 @@ public class AuctionDetailsActivity extends FMBaseScrollActivityV2 implements Vi
         editor.putInt("isApply",info.getIsApply());
         editor.commit();    //提交数据保存
         tv_equity.setText(info.getStockSellRate()+"% ");
-        tv_starting_prices.setText("¥ "+info.getStartingPrice());
+
         tv_round.setText(info.getFinancingState());
         tv_type.setText(info.getIndustryName());
         tv_names.setText(info.getLeadAgency());
-        tv_transaction_price.setText("¥ "+info.getTransactionPrice());
+        if(info.getTransactionPrice()<10000){
+            tv_transaction_price.setText("¥ "+info.getTransactionPrice());
+        }else{
+            double n = (double)info.getTransactionPrice()/10000;
+            DecimalFormat  df   = new DecimalFormat("######0.00");
+            tv_transaction_price.setText("¥ "+df.format(n)+"万");
+        }
         if(info.getReturnWay()==1){
             tv_bonus.setText("定期分红");
         }else if(info.getReturnWay()==2){

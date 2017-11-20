@@ -170,7 +170,7 @@ public class MainFrameActivity extends BaseFragmentActivity implements MainFragm
                 AppManager.getInstance().exitApp();
                 finish();
             } else {
-                ToastHelper.toastMessage(getBaseContext(), "再按一次退出疯蜜");
+                ToastHelper.toastMessage(getBaseContext(), "再按一次退出疯蜜小投");
             }
         }
         return true;

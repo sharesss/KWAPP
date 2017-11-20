@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="预约份额"
+            android:text="投资回报"
             android:textColor="@color/gray"/>
 
     </LinearLayout>

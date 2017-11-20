@@ -245,6 +245,7 @@ public class RealNameActivity extends FMBaseActivity implements View.OnClickList
                 public void onError(Bundle result) {
                     //toast message
                     UISKipUtils.startRealNameResultActivity(RealNameActivity.this, 0);
+                    finish();
                     ToastHelper.toastMessage(getBaseContext(), "授权失败");
                     Log.e("RealNameActivity", "DemoPresenterImpl.doCreditAuthRequest.onError.");
                 }

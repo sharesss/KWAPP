@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import com.ts.fmxt.R;
 
+import java.text.DecimalFormat;
+
 import http.data.FindStockEquityHomeEntity;
 import utils.UISKipUtils;
 import widget.image.CircleImageView;
 import widget.image.FMNetImageView;
-
-import static com.ts.fmxt.R.id.tv_place;
 
 /**
  * Created by A1 on 2017/9/11.
@@ -109,13 +109,16 @@ public class StockAuctionView extends RelativeLayout implements View.OnClickList
         tv_transfer_project.setText("转让项目："+info.getMakeOverNum());
         tv_auction_project.setText("竞拍项目："+info.getAuctionNum());
         tv_selling_shares.setText("出让股权："+info.getStockSellRate()+"%");
-        tv_starting_price.setText("¥ "+info.getStartingPrice());
+            double n = (double)info.getStartingPrice()/10000;
+            DecimalFormat  df   = new DecimalFormat("######0.00");
+        tv_starting_price.setText(info.getStartingPrice()<10000? "¥ "+info.getStartingPrice():"¥ "+df.format(n)+"万");
         tv_appointments.setText("预约人数: "+info.getReserveNum());
         if(info.getTransactionPrice()==0){
             tv_highest_bid.setVisibility(View.GONE);
             tv_highest_bid_no.setVisibility(View.VISIBLE);
         }else{
-            tv_highest_bid.setText("¥ "+info.getTransactionPrice());
+                double ns = (double)info.getTransactionPrice()/10000;
+            tv_highest_bid.setText(info.getTransactionPrice()<10000 ? "¥ "+info.getTransactionPrice() :"¥ "+df.format(ns)+"万");
             tv_highest_bid_no.setVisibility(View.GONE);
         }
 

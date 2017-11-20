@@ -34,7 +34,7 @@
             android:id="@+id/btn_login"
             style="@style/base_wrap"
             android:layout_centerInParent="true"
-            android:text="股权拍卖"
+            android:text="老股拍卖"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_18" />
 

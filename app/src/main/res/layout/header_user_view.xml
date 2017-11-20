@@ -179,6 +179,7 @@
         android:layout_height="70dp"
         android:layout_below="@id/rly_paren"
         android:background="@color/white"
+        android:visibility="gone"
         android:orientation="horizontal">
 
             <TextView
@@ -400,10 +401,43 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_asset"
+        android:id="@+id/rl_share_option"
         style="@style/text_user_item_style"
         android:layout_marginTop="10dp"
         android:layout_below="@id/rl_user_investment_preference"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="@color/line_bg" />
+
+        <TextView
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textColor="@color/font_main"
+            android:text="我的跟投"
+            android:textSize="@dimen/sp_15" />
+
+
+        <TextView
+            android:id="@+id/tv_share_option"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_asset"
+        style="@style/text_user_item_style"
+        android:layout_below="@id/rl_share_option"
         >
         <View
             android:layout_width="match_parent"
@@ -436,6 +470,7 @@
         android:id="@+id/rl_auction_project"
         style="@style/text_user_item_style"
         android:layout_below="@id/rl_asset"
+        android:visibility="gone"
         android:layout_marginTop="-3dp">
 
         <View
