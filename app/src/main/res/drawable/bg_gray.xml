@@ -9,6 +9,6 @@
     <padding
         android:bottom="@dimen/dp_1"
         android:top="@dimen/dp_1"
-        android:left="@dimen/dp_1"
-        android:right="@dimen/dp_1" />
+        android:left="@dimen/dp_5"
+        android:right="@dimen/dp_5" />
 </shape>

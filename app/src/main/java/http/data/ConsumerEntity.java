@@ -38,6 +38,7 @@ public class ConsumerEntity {
     private int reserveTargetAmount;//目标金额
     private int reservedPeopleNum;//已预约人数
     private List<Ceil> ceils=new ArrayList<>();
+    private List<Ceil> ceis=new ArrayList<>();
 
     public ConsumerEntity(JSONObject jsonObject) {
         this.id = jsonObject.optInt("id",0);
@@ -62,6 +63,7 @@ public class ConsumerEntity {
         this.reserveTargetAmount = jsonObject.optInt("reserveTargetAmount",0);
         this.reservedPeopleNum = jsonObject.optInt("reservedPeopleNum",0);
         String projectReward = jsonObject.optString("projectReward");
+        String projectStory = jsonObject.optString("projectStory");
         try {
             JSONObject bpdeionObj = new JSONObject(projectReward);
             //里面是json
@@ -81,6 +83,33 @@ public class ConsumerEntity {
                 ceil.setImageUrl(imageUrl);
                 ceil.setText(text);
                 ceils.add(ceil);
+            }
+
+        } catch (JSONException e) {
+            //里面是字符串
+//            Ceil ceil = new Ceil(projectReward,0);
+//            ceils.add(ceil);
+        }
+
+        try {
+            JSONObject bpdeionObj = new JSONObject(projectStory);
+            //里面是json
+            Iterator<String> keys = bpdeionObj.keys();
+            while (keys.hasNext()) {
+                //cell0  cell1   cell2
+                String key = keys.next();
+                JSONObject value = bpdeionObj.getJSONObject(key);
+
+                int imageWidth = value.optInt("imageWidth", 0);
+                int imageHeight = value.optInt("imageHeight", 0);
+                String imageUrl = value.optString("imageUrl", "");
+                String text = value.optString("text", "");
+                Ceil ceil = new Ceil();
+                ceil.setImageHeight(imageHeight);
+                ceil.setImageWidth(imageWidth);
+                ceil.setImageUrl(imageUrl);
+                ceil.setText(text);
+                ceis.add(ceil);
             }
 
         } catch (JSONException e) {
@@ -114,6 +143,7 @@ public class ConsumerEntity {
         this.reserveTargetAmount = jsonObject.optInt("reserveTargetAmount",0);
         this.reservedPeopleNum = jsonObject.optInt("reservedPeopleNum",0);
         String projectReward = jsonObject.optString("projectReward");
+        String projectStory = jsonObject.optString("projectStory");
         try {
             JSONObject bpdeionObj = new JSONObject(projectReward);
             //里面是json
@@ -140,16 +170,32 @@ public class ConsumerEntity {
 //            Ceil ceil = new Ceil(projectReward,0);
 //            ceils.add(ceil);
         }
-//        try {
-//            JSONObject jsn =jsonObject.getJSONObject("investProject");
-//            this.holdRatios= jsn.optDouble("holdRatios");
-//            this.reservedAmount = jsn.optInt("reservedAmount",0);
-//            this.reserveFinishTime = jsn.optLong("reserveFinishTime");
-//            this.isVote = jsn.optInt("isVote");
-//            this.notDokels = jsn.optInt("notDokels");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            JSONObject bpdeionObj = new JSONObject(projectStory);
+            //里面是json
+            Iterator<String> keys = bpdeionObj.keys();
+            while (keys.hasNext()) {
+                //cell0  cell1   cell2
+                String key = keys.next();
+                JSONObject value = bpdeionObj.getJSONObject(key);
+
+                int imageWidth = value.optInt("imageWidth", 0);
+                int imageHeight = value.optInt("imageHeight", 0);
+                String imageUrl = value.optString("imageUrl", "");
+                String text = value.optString("text", "");
+                Ceil ceil = new Ceil();
+                ceil.setImageHeight(imageHeight);
+                ceil.setImageWidth(imageWidth);
+                ceil.setImageUrl(imageUrl);
+                ceil.setText(text);
+                ceis.add(ceil);
+            }
+
+        } catch (JSONException e) {
+            //里面是字符串
+//            Ceil ceil = new Ceil(projectReward,0);
+//            ceils.add(ceil);
+        }
 
 
 
@@ -324,8 +370,17 @@ public class ConsumerEntity {
         return reservedPeopleNum;
     }
 
+
     public void setReservedPeopleNum(int reservedPeopleNum) {
         this.reservedPeopleNum = reservedPeopleNum;
+    }
+
+    public List<Ceil> getCeis() {
+        return ceis;
+    }
+
+    public void setCeis(List<Ceil> ceis) {
+        this.ceis = ceis;
     }
 
     public static class Ceil{

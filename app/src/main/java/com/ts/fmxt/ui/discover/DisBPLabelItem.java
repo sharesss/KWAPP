@@ -21,11 +21,11 @@ public class DisBPLabelItem implements BaseViewItem, View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_bpresult:
-                if (cont >= 6) {
+                if (cont >= 3) {
                     activity.InvestBPListRequest(true);
                     activity.adapter.notifyDataSetChanged();
                 } else {
-                    ToastHelper.toastMessage(activity,"至少要给6个BP评分后才能查看");
+                    ToastHelper.toastMessage(activity,"至少要给3个BP评分后才能查看");
                 }
 
                 break;

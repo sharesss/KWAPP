@@ -16,6 +16,7 @@
         android:paddingRight="@dimen/dp_10"
         android:paddingTop="8dp"
         app:checked="true"
+        android:visibility="gone"
         app:drawable="@mipmap/tabbar_consumer_off"
         app:drawableLight="@mipmap/tabbar_consumer_on"
         app:text="小投首页" />
@@ -28,6 +29,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
+        app:checked="true"
         app:drawable="@mipmap/stock_auction_off"
         app:drawableLight="@mipmap/stock_auction_on"
         app:text="小额跟投" />
@@ -40,6 +42,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
+        android:visibility="gone"
         app:drawable="@mipmap/small_following_off"
         app:drawableLight="@mipmap/small_following_on"
         app:text="老股拍卖" />

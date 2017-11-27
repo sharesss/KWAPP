@@ -70,7 +70,7 @@ public class MainFrameActivity extends BaseFragmentActivity implements MainFragm
     private void initFragmentManager() {
         mFragmentMap = new HashMap<Integer, Fragment>();
         mFragmentManager = getSupportFragmentManager();
-        setCurrentFragment(0);
+        setCurrentFragment(1);
     }
 
     /**/

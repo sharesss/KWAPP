@@ -71,7 +71,7 @@
 
         <SeekBar
             android:id="@+id/sb_bp"
-            android:layout_width="270dp"
+            android:layout_width="250dp"
             android:layout_height="5dp"
             android:layout_below="@id/tv_seekbar_distance"
             android:layout_marginLeft="14dp"
@@ -93,12 +93,14 @@
             android:id="@+id/tv_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_seekbar_distance"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tv_max"
+            android:layout_marginLeft="5dp"
             android:text="确定评分"
-            android:textColor="@color/orange"
-            android:visibility="gone" />
+            android:background="@drawable/bg_orange_5_shape"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_alignBaseline="@+id/tv_max"
+            android:layout_alignBottom="@+id/tv_max"
+            android:layout_toEndOf="@+id/tv_max" />
 
     </RelativeLayout>
 

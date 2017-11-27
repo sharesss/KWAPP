@@ -79,7 +79,7 @@ public class DiscoverHeadItem implements BaseViewItem {
                 viewHolder.tv_target_amount.setText("目标金额¥"+df.format(n)+"万");
             }
 
-            viewHolder.tv_subscription_number.setText("跟投人数"+info.getReservedPeopleNum());
+            viewHolder.tv_subscription_number.setText("支持人数"+info.getReservedPeopleNum());
             Long currenttime=System.currentTimeMillis()/1000;//获取系统时间的10位的时间戳
             Long finishtime =info.getReserveFinishTime()/1000;
             Long time =finishtime-currenttime;

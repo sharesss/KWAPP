@@ -232,6 +232,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
+            android:name="com.ts.fmxt.ui.discover.CommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name="com.ts.fmxt.ui.discover.ReleaseProjectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
             android:name="com.android.moblie.zmxy.antgroup.creditsdk.app.SDKActivity"
             android:screenOrientation="portrait" />
         <activity

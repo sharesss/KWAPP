@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:id="@+id/AppWidget"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_f5f5f5"
     android:layout_height="match_parent">
-
     <RelativeLayout
         android:id="@+id/rly_title_bar"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="@dimen/dp_50">
 
         <TextView
@@ -33,10 +32,10 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="跟投成功的项目"
+            android:text="项目评论"
             android:textSize="@dimen/sp_18"
             />
-<!--android:drawableBottom="@mipmap/upward"-->
+        <!--android:drawableBottom="@mipmap/upward"-->
 
         <TextView
             android:id="@+id/btn_register"
@@ -52,13 +51,49 @@
 
     </RelativeLayout>
 
-    <View
+    <RelativeLayout
+        android:id="@+id/rl_button_layout"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_c8c8c8"/>
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_praise"
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_5"
+            android:text="我想跟投"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_orange_5_shape"
+            android:textSize="@dimen/sp_15" />
+
+        <Button
+            android:id="@+id/bt_comment"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_35"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toLeftOf="@id/tv_praise"
+            android:background="@drawable/bg_edit_text_shape"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="@string/text_comment"
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+
+    </RelativeLayout>
 
     <com.thindo.base.Widget.refresh.RefreshListView
         android:id="@id/refresh_lv"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/rly_title_bar"
+        android:layout_above="@+id/rl_button_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="@null"
@@ -76,18 +111,10 @@
         app:ptrMode="both"
         app:ptrShowIndicator="false" />
 
-    <widget.NetworkView
-        android:id="@id/network"
-        style="@style/base_wrap"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone" />
-
     <widget.EmptyView
         android:id="@+id/empty_view"
         style="@style/base_wrap"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent ="true"
         android:visibility="gone" />
 
-</LinearLayout>
+</RelativeLayout>

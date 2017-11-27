@@ -2,6 +2,7 @@ package com.ts.fmxt.ui.discover;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.thindo.base.Widget.refresh.RefreshListView;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.ItemAdapter.FollowProjectAdapter;
 import com.ts.fmxt.ui.base.frameng.FMBaseTableFragment;
+import com.ts.fmxt.ui.discover.view.RedPacketsWin;
 import com.ts.fmxt.ui.discover.view.ReleaseProjectWin;
 
 import org.json.JSONArray;
@@ -32,9 +34,13 @@ import http.data.ConsumerEntity;
 import http.data.TableList;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.EmptyView;
 import widget.Share.PopupShareView;
+import widget.popup.BaseDoubleEventPopup;
+import widget.popup.PopupObject;
+import widget.popup.dialog.MessageContentDialog;
 
 /**
  *
@@ -47,6 +53,7 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
     private RefreshListView refresh_lv;
     private FollowProjectAdapter adapter;
     private ReleaseProjectWin win;
+    RedPacketsWin redwins;
     private TextView iv_share,tv_spinner;
     private ConsumerEntity info;
     private View inflate;
@@ -59,6 +66,7 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
         bindRefreshAdapter((RefreshListView) inflate.findViewById(R.id.refresh_lv), new FollowProjectAdapter(getActivity(), arrayList));
 //        ReceiverUtils.addReceiver(this);
         tv_spinner = (TextView) inflate.findViewById(R.id.tv_spinner);
+        inflate.findViewById(R.id.btn_finish).setOnClickListener(this);
         tv_spinner.setOnClickListener(this);
         startRefreshState();
         return inflate;
@@ -73,8 +81,31 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
             @Override
             public void onClick(View view) {
 //                showShareDialog();  //分享功能
-                win =new ReleaseProjectWin(getActivity());
-                win.showAtLocation(
+                SharedPreferences sharedPreferences= getActivity().getSharedPreferences("user",
+                        getActivity().MODE_PRIVATE);
+                String token=sharedPreferences.getString("token", "");
+                if (token.equals("")) {
+                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog(getActivity());
+                    mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
+                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+
+                        @Override
+                        public void onEventClick(PopupObject obj) {
+                            if (obj.getWhat() == 1){
+                                UISKipUtils.startLoginActivity(getActivity());
+                            }
+
+                        }
+                    });
+                    mPopupDialogWidget.showPopupWindow();
+
+                    return;
+                }
+                //跳转
+//                UISKipUtils.startReleaseProjectActivity(getActivity());
+                redwins =new RedPacketsWin(getActivity());
+//                win =new ReleaseProjectWin(getActivity());
+                redwins.showAtLocation(
                         inflate.findViewById(R.id.AppWidget),
                         Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
             }
@@ -94,6 +125,7 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
 
     @Override
     public void loadMore() {
+        consumerListRequest(0);
     }
 
     public void stopRefreshState(){
@@ -103,6 +135,9 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_finish:
+                UISKipUtils.statrSmallThrowRuleActivity(getActivity());
+                break;
             case R.id.tv_spinner:
                 if(isclick){
                     isclick = false;

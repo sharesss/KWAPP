@@ -58,7 +58,7 @@ public class MyHeelShotActivity extends FMBaseTableActivity implements View.OnCl
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new FollowProjectAdapter(this, arrayList));
         findViewById(R.id.btn_finish).setOnClickListener(this);
         tv_spinner = (TextView) findViewById(R.id.tv_spinner);
-        tv_spinner.setOnClickListener(this);
+//        tv_spinner.setOnClickListener(this);
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
         mEmptyView.setEmptyText("什么也没有");
         refresh_lv = (RefreshListView) findViewById(R.id.refresh_lv);

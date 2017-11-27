@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import http.data.InvestBPListEntity;
 
 /**
+ * 点击定位功能
  */
 
 public class DiscoverLabelItem implements BaseViewItem {

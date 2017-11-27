@@ -10,8 +10,10 @@ import com.thindo.base.Utils.AppManager;
 import com.ts.fmxt.ui.HomePage.SmallThrowRuleActivity;
 import com.ts.fmxt.ui.MainFrameActivity;
 import com.ts.fmxt.ui.StockAuction.AuctionDetailsActivity;
+import com.ts.fmxt.ui.discover.CommentActivity;
 import com.ts.fmxt.ui.discover.ConfirmPaymentActivity;
 import com.ts.fmxt.ui.discover.DiscoverDetailsActivity;
+import com.ts.fmxt.ui.discover.ReleaseProjectActivity;
 import com.ts.fmxt.ui.discover.ReportActivity;
 import com.ts.fmxt.ui.user.AboutusActivity;
 import com.ts.fmxt.ui.user.AuctionProjectActivity;
@@ -301,6 +303,10 @@ public class UISKipUtils {
         Intent intent = new Intent(context, HistoryDetailsActivity.class);
         context.startActivity(intent);
     }
+    public static void startReleaseProjectActivity(Activity context){
+        Intent intent = new Intent(context, ReleaseProjectActivity.class);
+        context.startActivity(intent);
+    }
     public static void startMessageActivity(Activity context){
         Intent intent = new Intent(context, MessageActivity.class);
         context.startActivity(intent);
@@ -344,6 +350,11 @@ public class UISKipUtils {
         Intent intent = new Intent(context, ProjectReturnActivity.class);
         intent.putExtra("investId", investId);
         intent.putExtra("isOver", isOver);
+        context.startActivity(intent);
+    }
+    public static void startCommentActivity(Activity context,int investId){
+        Intent intent = new Intent(context, CommentActivity.class);
+        intent.putExtra("investId", investId);
         context.startActivity(intent);
     }
 

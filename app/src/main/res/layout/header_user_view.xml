@@ -48,7 +48,7 @@
                 android:layout_marginBottom="@dimen/dp_2"
                 android:drawablePadding="@dimen/dp_2"
                 android:text="@string/text_no_login"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sp_20" />
 
                 <TextView
@@ -99,7 +99,7 @@
                     android:layout_marginTop="@dimen/dp_2"
                     android:maxLines="4"
                     android:paddingTop="@dimen/dp_2"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/sp_15" />
 
 
@@ -111,7 +111,7 @@
                 android:layout_marginTop="@dimen/dp_2"
                 android:maxLines="4"
                 android:paddingTop="@dimen/dp_2"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sp_15" />
                 <TextView
                     android:id="@+id/tv_salary"
@@ -121,7 +121,7 @@
                     android:layout_marginTop="@dimen/dp_2"
                     android:maxLines="4"
                     android:paddingTop="@dimen/dp_2"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/sp_15" />
                 <TextView
                     android:id="@+id/tv_age"
@@ -131,7 +131,7 @@
                     android:layout_marginTop="@dimen/dp_2"
                     android:maxLines="4"
                     android:paddingTop="@dimen/dp_2"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/sp_15" />
 
             </LinearLayout>
@@ -146,7 +146,7 @@
                 android:paddingLeft="@dimen/dp_20"
                 android:paddingRight="@dimen/dp_20"
                 android:paddingTop="@dimen/dp_2"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                  />
             <TextView
                 android:id="@+id/tv_autograph"
@@ -158,7 +158,7 @@
                 android:paddingLeft="@dimen/dp_20"
                 android:paddingRight="@dimen/dp_20"
                 android:paddingTop="@dimen/dp_2"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sp_18" />
         </RelativeLayout>
 
@@ -170,7 +170,7 @@
              android:layout_marginTop="@dimen/dp_50"
             android:layout_marginRight="@dimen/dp_10"
             android:drawableRight="@mipmap/icon_account_arrow"
-            android:textColor="@color/white" />
+            android:textColor="@color/black" />
     </RelativeLayout>
 
     <LinearLayout
@@ -241,6 +241,7 @@
         style="@style/text_user_item_style"
         android:layout_marginTop="10dp"
         android:layout_below="@id/ll_user_down"
+        android:visibility="gone"
         >
         <View
             android:layout_width="match_parent"
@@ -400,44 +401,12 @@
             android:background="@color/line_bg" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_share_option"
-        style="@style/text_user_item_style"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/rl_user_investment_preference"
-        >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px_1"
-            android:background="@color/line_bg" />
-
-        <TextView
-            style="@style/base_wrap"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:textColor="@color/font_main"
-            android:text="我的跟投"
-            android:textSize="@dimen/sp_15" />
-
-
-        <TextView
-            android:id="@+id/tv_share_option"
-            style="@style/base_wrap"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_5"
-            android:drawableRight="@mipmap/icon_account_arrow"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="@color/font_main_secondary"
-            android:textSize="@dimen/sp_15" />
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_asset"
         style="@style/text_user_item_style"
-        android:layout_below="@id/rl_share_option"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/rl_user_investment_preference"
         >
         <View
             android:layout_width="match_parent"
@@ -466,10 +435,43 @@
             android:textSize="@dimen/sp_15" />
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_share_option"
+        style="@style/text_user_item_style"
+        android:layout_below="@id/rl_asset"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_1"
+            android:background="@color/line_bg" />
+
+        <TextView
+            style="@style/base_wrap"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textColor="@color/font_main"
+            android:text="跟投成功的项目"
+            android:textSize="@dimen/sp_15" />
+
+
+        <TextView
+            android:id="@+id/tv_share_option"
+            style="@style/base_wrap"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:drawableRight="@mipmap/icon_account_arrow"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/font_main_secondary"
+            android:textSize="@dimen/sp_15" />
+
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rl_auction_project"
         style="@style/text_user_item_style"
-        android:layout_below="@id/rl_asset"
+        android:layout_below="@id/rl_share_option"
         android:visibility="gone"
         android:layout_marginTop="-3dp">
 

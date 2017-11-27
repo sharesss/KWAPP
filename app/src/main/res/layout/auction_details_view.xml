@@ -54,8 +54,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <widget.image.CircleImageView
             android:id="@+id/iv_portrait"
@@ -103,19 +102,18 @@
             android:layout_below="@id/tv_name"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
-            android:layout_toRightOf="@id/iv_portrait"
-            />
+            android:layout_toRightOf="@id/iv_portrait" />
 
         <TextView
             android:id="@+id/tv_set_remind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight= "true"
-            android:drawableTop="@mipmap/stock_detail_icon_alarm_n"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:textSize="@dimen/sp_13"
-            android:text="开启提醒"/>
+            android:layout_marginTop="10dp"
+            android:drawableTop="@mipmap/stock_detail_icon_alarm_n"
+            android:text="开启提醒"
+            android:textSize="@dimen/sp_13" />
     </RelativeLayout>
 
 

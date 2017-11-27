@@ -61,6 +61,26 @@
         android:layout_height="@dimen/dp_50"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
+        <LinearLayout
+            android:id="@+id/ll_message"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_f5f5f5"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="bottom"
+                android:drawableLeft="@mipmap/card_detail_n"
+                android:drawablePadding="@dimen/dp_2"
+                android:gravity="center"
+                android:text="99"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/sp_17" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_collection"
@@ -75,20 +95,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_50"
                 android:layout_gravity="bottom"
+                android:drawableLeft="@mipmap/card_detail_n"
                 android:drawablePadding="@dimen/dp_2"
                 android:gravity="center"
+                android:text="0"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/sp_17" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_group"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_f5f5f5"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_group"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="bottom"
                 android:drawableLeft="@mipmap/card_detail_n"
-                android:text="收藏"
-                android:textColor="@color/orange"
+                android:drawablePadding="@dimen/dp_2"
+                android:gravity="center"
+                android:text="路演群"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/sp_17" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_with_the_vote"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp_50"
-            android:layout_weight="1"
-            android:background="@color/orange"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_orange_5_shape"
             android:gravity="center"
             android:text="继续跟投"
             android:textColor="@color/white" />
