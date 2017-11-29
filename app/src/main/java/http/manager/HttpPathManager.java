@@ -10,8 +10,8 @@ import com.ts.fmxt.FmxtApplication;
 
 public class HttpPathManager {
 //     public static String HOST = "http://touzhi.tunnel.qydev.com/investment-app-api/";//曾本地服务器
-    public static String HOST = "http://192.168.1.145:8080/investment-app-api/";//阿峰本地服务器
-//         public static String HOST = "http://kzf.tunnel.qydev.com/investment-app-api/";//阿峰本地服务器映射
+//    public static String HOST = "http://192.168.1.145:8080/investment-app-api/";//阿峰本地服务器
+         public static String HOST = "http://kzf.tunnel.qydev.com/investment-app-api/";//阿峰本地服务器映射
 //    public static String HOST = "https://fmb.fmsecret.cn/investment-app-api/";//正式
 //        public static String HOST = "https://t.fmsecret.cn/investment-app-api/";//测试
 

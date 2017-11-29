@@ -44,6 +44,8 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
     private String arrmoney;
     private String ShareRatio;
     private String CompanyName;
+    private Double InitiateAmount;
+    private int type,AlreadyBookedMoney;
     private WeiXinPayEntity entity;
     private IWXAPI api;
 
@@ -59,6 +61,9 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
         setContentView(R.layout.activity_confirm_payment);
         ReceiverUtils.addReceiver(this);
         money = getIntent().getIntExtra("money", -1);
+        type = getIntent().getIntExtra("type", -1);//1按照名额，2按照股权金额
+        InitiateAmount = getIntent().getDoubleExtra("InitiateAmount",0);//起投金额（万）
+        AlreadyBookedMoney = getIntent().getIntExtra("AlreadyBookedMoney",0);//已预约金额
 //        proportion = getIntent().getStringExtra("proportion");
         investId = getIntent().getIntExtra("investId", -1);
         rewardId = getIntent().getIntExtra("id", -1);

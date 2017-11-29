@@ -358,12 +358,15 @@ public class UISKipUtils {
         context.startActivity(intent);
     }
 
-    public static void startConfirmPayment(Activity context,int money,int investId,String CompanyName,int id){
+    public static void startConfirmPayment(Activity context,int money,int investId,String CompanyName,int id,int type,double InitiateAmount,int AlreadyBookedMoney){
         Intent intent = new Intent(context, ConfirmPaymentActivity.class);
         intent.putExtra("money", money);
         intent.putExtra("id", id);
         intent.putExtra("investId", investId);
         intent.putExtra("CompanyName", CompanyName);
+        intent.putExtra("type", type);
+        intent.putExtra("InitiateAmount", InitiateAmount);
+        intent.putExtra("AlreadyBookedMoney", AlreadyBookedMoney);
         context.startActivity(intent);
     }
     public static void satrtWeChatCompleteInformation(Activity context,String info){

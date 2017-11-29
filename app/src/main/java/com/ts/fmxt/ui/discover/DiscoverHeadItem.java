@@ -61,7 +61,7 @@ public class DiscoverHeadItem implements BaseViewItem {
             int exponents = (new Double(indexs)).intValue();
             viewHolder.pb_yellowindex.setProgress(exponents);
             if(info.getReservedAmount()<10000){
-                viewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
+                viewHolder.tv_reservation.setText("¥"+info.getReservedAmount()+"万");
             }else{
                 double n = (double)info.getReservedAmount()/10000;
                 DecimalFormat  df   = new DecimalFormat("######0.00");
@@ -72,7 +72,7 @@ public class DiscoverHeadItem implements BaseViewItem {
             int holdRatio = (new Double(holdRatios)).intValue();
             viewHolder.tv_schedule.setText(holdRatio+"%");
             if(info.getReserveTargetAmount()<10000){
-                viewHolder.tv_target_amount.setText("目标金额¥"+info.getReserveTargetAmount());
+                viewHolder.tv_target_amount.setText("目标金额¥"+info.getReserveTargetAmount()+"万");
             }else{
                 double n = (double)info.getReserveTargetAmount()/10000;
                 DecimalFormat  df   = new DecimalFormat("######0.00");

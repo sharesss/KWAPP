@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.ts.fmxt.ui.base.activity.FMBaseScrollActivityV2;
 import com.ts.fmxt.ui.discover.view.KeyMapDailog;
 import com.ts.fmxt.ui.discover.view.ProjectReturnItem;
 import com.ts.fmxt.ui.discover.view.RedCircleBar;
+import com.ts.fmxt.ui.discover.view.WeiXinWin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +57,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private TextView tvWorth, tvNoworth;
     private LinearLayout llTemp, llCollection;
     private ConsumerEntity info;
-
+    private WeiXinWin win;
     private RedCircleBar ivRedCirclebar;
 
     private FMNoScrollListView refresh_lv, reviews_lv, lv_result;
@@ -71,7 +73,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     public RecyclerViewAdapter adapter;
     ArrayList<BaseViewItem> list;
     RecyclerView recyclerView;
-
+    String weixinNum;
+    String weixinCode;
     @Override
     public void onMessage(int receiverType, Bundle bundle) {
         if (receiverType == ReceiverUtils.SEEKBAR) {
@@ -127,11 +130,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     ArrayList<BaseViewItem> headlist = new ArrayList<BaseViewItem>();
-
     private void formatData(ConsumerEntity info) {
         if (info == null) {
             return;
         }
+        weixinNum = info.getWeixinNum();
+        weixinCode = info.getWeixinCode();
         TabItem.CallBack callBack = new TabItem.CallBack() {
             @Override
             public void onitem(int postion) {
@@ -147,23 +151,24 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         TabItem tabItem = new TabItem( callBack);
         headlist.add(1, discoverCircleItem);
         headlist.add(2, tabItem);
-        if (listcomment.isEmpty()) {
-            if(info.getCeis().size()!=0){
-                headlist.add(3, myStoryItem);
-
-            }
-            if(info.getCeils().size()!=0){
-                headlist.add(4, projectReturnItem);
-            }
-
-        } else {
-            if(info.getCeis().size()!=0){
-                headlist.add(3, myStoryItem);
-            }
-            if(info.getCeils().size()!=0){
-                headlist.add(4, projectReturnItem);
-            }
+        if(info.getCeis().size()!=0){
+            headlist.add(3, myStoryItem);
         }
+        if(info.getCeils().size()!=0){
+            headlist.add(4, projectReturnItem);
+        }
+//        if (listcomment.isEmpty()) {
+//            if(info.getCeis().size()!=0){
+//                headlist.add(3, myStoryItem);
+//
+//            }
+//            if(info.getCeils().size()!=0){
+//                headlist.add(4, projectReturnItem);
+//            }
+//
+//        } else {
+//
+//        }
 
         list.addAll(0, headlist);
 
@@ -284,7 +289,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 showShareDialog(info);
                 break;
             case R.id.ll_group:
-                ToastHelper.toastMessage(this,"微信群");
+                win =new WeiXinWin(this,weixinNum,weixinCode);
+                win.showAtLocation(
+                        findViewById(R.id.AppWidget),
+                        Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
+//                ToastHelper.toastMessage(this,"微信群");
                 break;
             case R.id.tv_report://举报
                 if (!checkLogin()) {

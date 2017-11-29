@@ -10,12 +10,16 @@ import org.json.JSONObject;
 public class ProjectReturnEntity {
     private int id;
     private int investId;
-    private int reserveAmount;
-    private String reservePeopleNum;
-    private String shareTitle;
-    private String shareContent;
-    private int yetReservePropleNum;
-    private int isYetBut;
+    private int reserveAmount;// 预约金额
+    private String reservePeopleNum;// 预约名额
+    private int financingAmount;//目标总数
+    private Double initiateAmount;// 起投金额（万）
+    private String shareTitle; // 投资比率说明标题
+    private String shareContent;// 投资比率说明内容
+    private int alreadyBookedMoney; // 已预约金额
+    private int yetReservePropleNum; // 已预约名额
+    private int isYetBut;;// 当前用户是否已经认购
+    private int equityShareType;//1按照名额，2按照股权金额
 
     public ProjectReturnEntity(JSONObject jsonObject) {
         this.id = jsonObject.optInt("id",0);
@@ -26,6 +30,10 @@ public class ProjectReturnEntity {
         this.shareContent = jsonObject.optString("shareContent","");
         this.yetReservePropleNum = jsonObject.optInt("yetReservePropleNum",0);
         this.isYetBut = jsonObject.optInt("isYetBut",0);
+        this.financingAmount = jsonObject.optInt("financingAmount",0);
+        this.alreadyBookedMoney = jsonObject.optInt("alreadyBookedMoney",0);
+        this.equityShareType = jsonObject.optInt("equityShareType",0);
+        this.initiateAmount  = jsonObject.optDouble("initiateAmount");
     }
 
     public int getId() {
@@ -90,5 +98,37 @@ public class ProjectReturnEntity {
 
     public void setIsYetBut(int isYetBut) {
         this.isYetBut = isYetBut;
+    }
+
+    public int getFinancingAmount() {
+        return financingAmount;
+    }
+
+    public void setFinancingAmount(int financingAmount) {
+        this.financingAmount = financingAmount;
+    }
+
+    public int getAlreadyBookedMoney() {
+        return alreadyBookedMoney;
+    }
+
+    public void setAlreadyBookedMoney(int alreadyBookedMoney) {
+        this.alreadyBookedMoney = alreadyBookedMoney;
+    }
+
+    public int getEquityShareType() {
+        return equityShareType;
+    }
+
+    public void setEquityShareType(int equityShareType) {
+        this.equityShareType = equityShareType;
+    }
+
+    public Double getInitiateAmount() {
+        return initiateAmount;
+    }
+
+    public void setInitiateAmount(Double initiateAmount) {
+        this.initiateAmount = initiateAmount;
     }
 }

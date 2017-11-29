@@ -37,6 +37,8 @@ public class ConsumerEntity {
     private int reservedAmount;//已预约金额
     private int reserveTargetAmount;//目标金额
     private int reservedPeopleNum;//已预约人数
+    private String weixinNum;//微信号
+    private String weixinCode;//微信二维码
     private List<Ceil> ceils=new ArrayList<>();
     private List<Ceil> ceis=new ArrayList<>();
 
@@ -63,6 +65,8 @@ public class ConsumerEntity {
         this.reserveTargetAmount = jsonObject.optInt("reserveTargetAmount",0);
         this.reservedPeopleNum = jsonObject.optInt("reservedPeopleNum",0);
         String projectReward = jsonObject.optString("projectReward");
+        this.weixinNum = jsonObject.optString("weixinNum");
+        this.weixinCode = jsonObject.optString("weixinCode");
         String projectStory = jsonObject.optString("projectStory");
         try {
             JSONObject bpdeionObj = new JSONObject(projectReward);
@@ -142,6 +146,8 @@ public class ConsumerEntity {
         this.reservedAmount = jsonObject.optInt("reservedAmount",0);
         this.reserveTargetAmount = jsonObject.optInt("reserveTargetAmount",0);
         this.reservedPeopleNum = jsonObject.optInt("reservedPeopleNum",0);
+        this.weixinNum = jsonObject.optString("weixinNum");
+        this.weixinCode = jsonObject.optString("weixinCode");
         String projectReward = jsonObject.optString("projectReward");
         String projectStory = jsonObject.optString("projectStory");
         try {
@@ -381,6 +387,22 @@ public class ConsumerEntity {
 
     public void setCeis(List<Ceil> ceis) {
         this.ceis = ceis;
+    }
+
+    public String getWeixinNum() {
+        return weixinNum;
+    }
+
+    public void setWeixinNum(String weixinNum) {
+        this.weixinNum = weixinNum;
+    }
+
+    public String getWeixinCode() {
+        return weixinCode;
+    }
+
+    public void setWeixinCode(String weixinCode) {
+        this.weixinCode = weixinCode;
     }
 
     public static class Ceil{

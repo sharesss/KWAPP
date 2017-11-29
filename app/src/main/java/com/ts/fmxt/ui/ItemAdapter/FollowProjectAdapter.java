@@ -89,7 +89,7 @@ public class FollowProjectAdapter extends FMBaseAdapter {
             int exponents = (new Double(indexs)).intValue();
             ViewHolder.pb_yellowindex.setProgress(exponents);
             if(info.getReservedAmount()<10000){
-                ViewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
+                ViewHolder.tv_reservation.setText("¥"+info.getReservedAmount()+"万");
             }else{
                 double n = (double)info.getReservedAmount()/10000;
                 DecimalFormat  df   = new DecimalFormat("######0.00");

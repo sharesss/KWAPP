@@ -49,18 +49,26 @@ public class ProjectReturnAdapter extends FMBaseAdapter {
         ViewHolder.tv_confirm.setBackground(info.getIsYetBut()==0? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
         ViewHolder.tv_confirm.setBackground(isOver==1? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
 //        info = (ProjectReturnEntity) getItem(position);
-        ViewHolder.tv_reservation_money.setText("预约金：¥"+info.getReserveAmount());
-        if(info.getReservePeopleNum().equals("null")){
-            ViewHolder.tv_shares_num.setText("预约人数 "+info.getYetReservePropleNum()+"/无限制");
-        }else{
-           int num = Integer.valueOf(info.getReservePeopleNum())-Integer.valueOf(info.getYetReservePropleNum());
-            if(num<0){
-                num=0;
+        if(info.getEquityShareType()==1){
+            ViewHolder.tv_reservation_money.setText("预约金：¥"+info.getReserveAmount());
+            if(info.getReservePeopleNum().equals("null")){
+                ViewHolder.tv_shares_num.setText(info.getYetReservePropleNum()+"人入股 "+"/无限制");
+            }else{
+                int num = Integer.valueOf(info.getReservePeopleNum())-Integer.valueOf(info.getYetReservePropleNum());
+                if(num<0){
+                    num=0;
+                }
+                ViewHolder.tv_confirm.setBackground(num>0&&info.getIsYetBut()==0&&isOver==1? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
+                ViewHolder.tv_shares_num.setText(info.getYetReservePropleNum()+"人入股 "+"/"+"剩余名额"+info.getReservePeopleNum()+"人");
             }
-            ViewHolder.tv_confirm.setBackground(num>0&&info.getIsYetBut()==0&&isOver==1? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
-            ViewHolder.tv_shares_num.setText("预约人数 "+info.getYetReservePropleNum()+"/"+info.getReservePeopleNum()+"");
+        }else if(info.getEquityShareType()==2){
+            int mount= (int) (info.getInitiateAmount()*1000);
+            ViewHolder.tv_reservation_money.setText("预约金：¥"+mount);
+            if(info.getAlreadyBookedMoney()==0){
+                int money  = info.getFinancingAmount()-info.getAlreadyBookedMoney();
+                ViewHolder.tv_shares_num.setText("已预约 "+info.getAlreadyBookedMoney()+"万"+"/剩余"+money+"万");
+            }
         }
-
 
 
 
@@ -85,7 +93,7 @@ public class ProjectReturnAdapter extends FMBaseAdapter {
                 }
 
                 String CompanyName = info.getShareTitle();
-                UISKipUtils.startConfirmPayment((Activity) getContext(),info.getReserveAmount(),info.getInvestId(),CompanyName,info.getId());
+                UISKipUtils.startConfirmPayment((Activity) getContext(),info.getReserveAmount(),info.getInvestId(),CompanyName,info.getId(),info.getEquityShareType(),info.getInitiateAmount(),info.getAlreadyBookedMoney());
             }
         });
 
