@@ -111,13 +111,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         findViewById(R.id.btn_finish).setOnClickListener(this);
         findViewById(R.id.tv_report).setOnClickListener(this);
 
-        Message message = handler.obtainMessage(1);     // Message
-        handler.sendMessageDelayed(message, 3000);
-        //饼图UI
-        DiscoverDetailsRequest();//顶部的数据获取
-        InvestBPListRequest(false);
-        ProjectRenewalRequest();
-        CommentRequest(type);
+
 
 //        //底部两个按钮
         llCollection = (LinearLayout) findViewById(R.id.ll_collection);
@@ -152,6 +146,13 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 }
             });
         }
+        Message message = handler.obtainMessage(1);     // Message
+        handler.sendMessageDelayed(message, 3000);
+        //饼图UI
+        DiscoverDetailsRequest();//顶部的数据获取
+        InvestBPListRequest(false);
+        ProjectRenewalRequest();
+        CommentRequest(type);
     }
     private View tab_bar;
     private int firstItemPosition = -1;
