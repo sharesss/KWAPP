@@ -64,10 +64,8 @@ public class ProjectReturnAdapter extends FMBaseAdapter {
         }else if(info.getEquityShareType()==2){
             int mount= (int) (info.getInitiateAmount()*1000);
             ViewHolder.tv_reservation_money.setText("预约金：¥"+mount);
-            if(info.getAlreadyBookedMoney()==0){
                 int money  = info.getFinancingAmount()-info.getAlreadyBookedMoney();
                 ViewHolder.tv_shares_num.setText("已预约 "+info.getAlreadyBookedMoney()+"万"+"/剩余"+money+"万");
-            }
         }
 
 

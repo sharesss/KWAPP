@@ -44,7 +44,7 @@ public class PopupWheelMoneyView extends BaseEventPopup implements OnClickListen
         super(context);
         int mount =(new Double(InitiateAmount)).intValue();
 //        String[] array=getContext().getResources().getStringArray(R.array.annual_salary);
-        for(int i=mount;i<FinancingAmount;i++){
+        for(int i=mount;i<=FinancingAmount;i++){
             if(!StringUtils.isEmpty(money)){
                 if(money.equals(i+"万")){
                     mCurrentIndex=i;
@@ -147,7 +147,7 @@ public class PopupWheelMoneyView extends BaseEventPopup implements OnClickListen
             @Override
             public void onScrollingFinished(WheelView wheel) {
                 int currentItem = wheel.getCurrentItem();
-                String text = String.valueOf(currentItem);//(String) mAdapter.getItemText(currentItem)
+                String text = String.valueOf(currentItem+1);//(String) mAdapter.getItemText(currentItem)
                 setItemTextSize(text, mAdapter);
                 money=text;
 

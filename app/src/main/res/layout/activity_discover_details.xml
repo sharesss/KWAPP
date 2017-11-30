@@ -73,10 +73,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_50"
                 android:layout_gravity="bottom"
-                android:drawableLeft="@mipmap/card_detail_n"
+                android:drawableLeft="@mipmap/iv_message"
                 android:drawablePadding="@dimen/dp_2"
                 android:gravity="center"
-                android:text="99"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/sp_17" />
         </LinearLayout>
@@ -115,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_50"
                 android:layout_gravity="bottom"
-                android:drawableLeft="@mipmap/card_detail_n"
+                android:drawableLeft="@mipmap/iv_weixin"
                 android:drawablePadding="@dimen/dp_2"
                 android:gravity="center"
                 android:text="路演群"

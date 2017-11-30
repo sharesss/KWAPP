@@ -307,7 +307,8 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_num:
-                mPopupWheelMoneyView = new PopupWheelMoneyView(ConfirmPaymentActivity.this, tv_num.getText().toString(),InitiateAmount,FinancingAmount);
+                int money  = FinancingAmount-AlreadyBookedMoney;
+                mPopupWheelMoneyView = new PopupWheelMoneyView(ConfirmPaymentActivity.this, tv_num.getText().toString(),InitiateAmount,money);
                 mPopupWheelMoneyView.setWheelListener(this);
                 mPopupWheelMoneyView.showPopupWindow();
                 break;
