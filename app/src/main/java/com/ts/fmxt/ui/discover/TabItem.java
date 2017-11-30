@@ -26,7 +26,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
     private ViewHolder viewHolder;
 
     public interface CallBack {
-        void onitem(int postion);
+        void onitem(int postion,TabItem item);
     }
 
     public TabItem(CallBack callBack) {
@@ -66,7 +66,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
         switch (view.getId()) {
             case R.id.tv_my_story:
                 if (callBack != null) {
-                    callBack.onitem(0);
+                    callBack.onitem(0,this);
                 }
                 viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.orange));
                 viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.orange));
@@ -79,7 +79,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 break;
             case R.id.tv_project_return://
                 if (callBack != null) {
-                    callBack.onitem(1);
+                    callBack.onitem(1,this);
                 }
                 viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.gray));
@@ -92,7 +92,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 break;
             case R.id.tv_project_highlights://
                 if (callBack != null) {
-                    callBack.onitem(2);
+                    callBack.onitem(2,this);
                 }
                 viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.gray));
@@ -105,7 +105,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 break;
             case R.id.tv_project_schedule://
                 if (callBack != null) {
-                    callBack.onitem(3+3);
+                    callBack.onitem(3+3,this);
                 }
                 viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.gray));

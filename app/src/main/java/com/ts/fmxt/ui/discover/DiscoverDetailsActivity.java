@@ -4,6 +4,7 @@ package com.ts.fmxt.ui.discover;/**
 
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -127,8 +128,50 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         findViewById(R.id.tv_top).setOnClickListener(this);
         findViewById(R.id.ll_message).setOnClickListener(this);
         findViewById(ll_group).setOnClickListener(this);
+
+        final View tab_bar = findViewById(R.id.tab_bar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                    tabView(tab_bar);
+                }
+            });
+        } else {
+            recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    tabView(tab_bar);
+                }
+            });
+        }
     }
 
+    int firstItemPosition = -1;
+
+    private void tabView(View tab_bar) {
+        if (tab_bar != null) {
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            if (layoutManager instanceof LinearLayoutManager) {
+                LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                int index = linearManager.findFirstVisibleItemPosition();
+                if (list.get(index) instanceof TabItem) {
+                    firstItemPosition = index;
+                    tab_bar.setVisibility(View.VISIBLE);
+                } else {
+                    if (firstItemPosition > index) {
+                        tab_bar.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }
+    }
     ArrayList<BaseViewItem> headlist = new ArrayList<BaseViewItem>();
     private void formatData(ConsumerEntity info) {
         if (info == null) {
@@ -138,9 +181,11 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         weixinCode = info.getWeixinCode();
         TabItem.CallBack callBack = new TabItem.CallBack() {
             @Override
-            public void onitem(int postion) {
-                int index = 2 + 1;
-                recyclerView.smoothScrollToPosition(index + postion);
+            public void onitem(int postion,TabItem item) {
+//                int index = list.indexOf(item);
+//                    index = postion + index + 1;
+                int index = 3 + 1 + postion;
+                recyclerView.smoothScrollToPosition(index);
             }
         };
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
@@ -150,12 +195,13 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         MyStoryItem myStoryItem = new MyStoryItem(info, DiscoverDetailsActivity.this);
         TabItem tabItem = new TabItem( callBack);
         headlist.add(1, discoverCircleItem);
-        headlist.add(2, tabItem);
+        headlist.add(2, new LineItem());
+        headlist.add(3, tabItem);
         if(info.getCeis().size()!=0){
-            headlist.add(3, myStoryItem);
+            headlist.add(myStoryItem);
         }
         if(info.getCeils().size()!=0){
-            headlist.add(4, projectReturnItem);
+            headlist.add(projectReturnItem);
         }
 //        if (listcomment.isEmpty()) {
 //            if(info.getCeis().size()!=0){
