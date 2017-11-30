@@ -3,7 +3,6 @@ package com.ts.fmxt.ui.discover;/**
  */
 
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -158,12 +157,47 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private int firstItemPosition = -1;
     private int oldindex = -1;
 
+    /**
+     * 滑动头部哪个模块的 就标记哪个模块
+     * @param index
+     */
+    private void scrollUpdateTab(int index,int laseindex) {
+        index = laseindex;
+        BaseViewItem baseViewItem = list.get(index);
+        if (baseViewItem instanceof MyStoryItem) {
+            if (tabItem != null) {
+                TabItem.ViewHolder viewHolder = tabItem.getViewHolder();
+                tabItem.select(viewHolder.tv_my_story);
+                selectTab(tabItem);
+            }
+        } else if (baseViewItem instanceof ProjectReturnItem) {
+            if (tabItem != null) {
+                TabItem.ViewHolder viewHolder = tabItem.getViewHolder();
+                tabItem.select(viewHolder.tv_project_return);
+                selectTab(tabItem);
+            }
+        } else if (baseViewItem instanceof DisBPItem || baseViewItem instanceof DisBPLabelItem) {
+            if (tabItem != null) {
+                TabItem.ViewHolder viewHolder = tabItem.getViewHolder();
+                tabItem.select(viewHolder.tv_project_highlights);
+                selectTab(tabItem);
+            }
+        } else if (baseViewItem instanceof ProgressUpdateItem || baseViewItem instanceof ProjectBonusItem) {
+            if (tabItem != null) {
+                TabItem.ViewHolder viewHolder = tabItem.getViewHolder();
+                tabItem.select(viewHolder.tv_project_schedule);
+                selectTab(tabItem);
+            }
+        }
+    }
     private void tabView(View tab_bar) {
         if (tab_bar != null) {
             RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
             if (layoutManager instanceof LinearLayoutManager) {
                 LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
                 int index = linearManager.findFirstVisibleItemPosition();
+                int laseindex = linearManager.findLastVisibleItemPosition();
+                scrollUpdateTab(index,laseindex);
                 if (firstItemPosition <= -1) {
                     if (oldindex == -1) {
                         oldindex = index;
@@ -171,10 +205,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     for (; oldindex <= index; oldindex++) {
                         if (list.get(oldindex) instanceof TabItem) {
                             firstItemPosition = index;
-                            tab_bar.setVisibility(View.VISIBLE);
                         }
                     }
-                } else {
+                }
+                {
                     if (firstItemPosition > index) {
                         tab_bar.setVisibility(View.GONE);
                     } else if (firstItemPosition > -1) {
@@ -221,7 +255,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     private void selectTab(TabItem item) {
-        if (tab_bar == null) {
+        if (tab_bar == null || item == null) {
             return;
         }
         TabItem.ViewHolder viewHolder = item.getViewHolder();
@@ -243,6 +277,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         tv_project_schedule_lin.setBackground(viewHolder.tv_project_schedule_lin.getBackground());
 
     }
+    TabItem tabItem;
     ArrayList<BaseViewItem> headlist = new ArrayList<BaseViewItem>();
     private void formatData(ConsumerEntity info) {
         if (info == null) {
@@ -257,7 +292,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //                    index = postion + index + 1;
                 int index = 3 + 1 + postion;
                 recyclerView.smoothScrollToPosition(index);
-                selectTab(item);
             }
         };
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
@@ -265,7 +299,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info, DiscoverDetailsActivity.this, investId);
         ProjectReturnItem projectReturnItem = new ProjectReturnItem(info, DiscoverDetailsActivity.this);
         MyStoryItem myStoryItem = new MyStoryItem(info, DiscoverDetailsActivity.this);
-        TabItem tabItem = new TabItem( callBack);
+        tabItem = new TabItem( callBack);
         setBar(tabItem);
         headlist.add(1, discoverCircleItem);
         headlist.add(2, new LineItem());

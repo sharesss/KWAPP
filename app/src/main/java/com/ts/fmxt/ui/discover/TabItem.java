@@ -65,8 +65,8 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
         View view = createView(parent);
         return new ViewHolder(view);
     }
-    @Override
-    public void onClick(View view) {
+
+    public void select(View view) {
         switch (view.getId()) {
             case R.id.tv_my_story:
 
@@ -78,9 +78,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.gray));
-                if (callBack != null) {
-                    callBack.onitem(0,this);
-                }
+
                 break;
             case R.id.tv_project_return://
 
@@ -92,9 +90,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.gray));
-                if (callBack != null) {
-                    callBack.onitem(1,this);
-                }
+
                 break;
             case R.id.tv_project_highlights://
 
@@ -106,9 +102,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.orange));
                 viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.gray));
-                if (callBack != null) {
-                    callBack.onitem(2,this);
-                }
+
                 break;
             case R.id.tv_project_schedule://
 
@@ -120,6 +114,34 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.orange));
                 viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.orange));
+
+                break;
+        }
+    }
+    @Override
+    public void onClick(View view) {
+        select(view);
+        switch (view.getId()) {
+            case R.id.tv_my_story:
+
+                if (callBack != null) {
+                    callBack.onitem(0,this);
+                }
+                break;
+            case R.id.tv_project_return://
+
+                if (callBack != null) {
+                    callBack.onitem(1,this);
+                }
+                break;
+            case R.id.tv_project_highlights://
+
+                if (callBack != null) {
+                    callBack.onitem(2,this);
+                }
+                break;
+            case R.id.tv_project_schedule://
+
                 if (callBack != null) {
                     callBack.onitem(3+3,this);
                 }
