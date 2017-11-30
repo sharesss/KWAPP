@@ -93,7 +93,7 @@ public class ProjectReturnAdapter extends FMBaseAdapter {
                 }
 
                 String CompanyName = info.getShareTitle();
-                UISKipUtils.startConfirmPayment((Activity) getContext(),info.getReserveAmount(),info.getInvestId(),CompanyName,info.getId(),info.getEquityShareType(),info.getInitiateAmount(),info.getAlreadyBookedMoney());
+                UISKipUtils.startConfirmPayment((Activity) getContext(),info.getReserveAmount(),info.getInvestId(),CompanyName,info.getId(),info.getEquityShareType(),info.getInitiateAmount(),info.getAlreadyBookedMoney(),info.getReservePeopleNum(),info.getYetReservePropleNum(),info.getFinancingAmount());
             }
         });
 

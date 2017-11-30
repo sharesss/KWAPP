@@ -1,6 +1,7 @@
 package com.ts.fmxt.ui.discover;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.ts.fmxt.FmxtApplication;
 import com.ts.fmxt.R;
 import com.ts.fmxt.ui.base.activity.FMBaseActivity;
+import com.ts.fmxt.ui.discover.view.PopupWheelMoneyView;
+import com.ts.fmxt.ui.user.view.WheelListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,26 +32,27 @@ import widget.titlebar.NavigationView;
 import widget.weixinpay.playUitls;
 
 
-
 /**
  * Created by kp on 2017/8/18.
  * 确认支付
  */
 
-public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUtils.MessageReceiver {
+public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUtils.MessageReceiver, WheelListener,View.OnClickListener {
     private TextView tvPercentage,tvTotalAmount,tvReservationMoney,tvConfirm;
+    private TextView tv_reduce,tv_num,tv_add,tv_surplus_share,tv_surplus_num;
     private EditText edtName,edtWechat,edtPhone;
     private int money;
+    private PopupWheelMoneyView mPopupWheelMoneyView;
 //    private String proportion;
     private int investId,rewardId;
     private String arrmoney;
     private String ShareRatio;
-    private String CompanyName;
+    private String CompanyName,PeopleNum;
     private Double InitiateAmount;
-    private int type,AlreadyBookedMoney;
+    private int type,AlreadyBookedMoney,YetReservePropleNum,FinancingAmount;
     private WeiXinPayEntity entity;
     private IWXAPI api;
-
+    int num = 1;
     @Override
     public void onMessage(int receiverType, Bundle bundle) {
         if(receiverType==ReceiverUtils.WX_PLAY){
@@ -68,6 +72,9 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
         investId = getIntent().getIntExtra("investId", -1);
         rewardId = getIntent().getIntExtra("id", -1);
         CompanyName= getIntent().getStringExtra("CompanyName");
+        PeopleNum= getIntent().getStringExtra("PeopleNum");//总人数
+        YetReservePropleNum= getIntent().getIntExtra("YetReservePropleNum",0);//入股人数
+        FinancingAmount = getIntent().getIntExtra("FinancingAmount",0);//目标金额
 //        arrmoney = proportion.substring(0,proportion.indexOf("万"));
 //        ShareRatio = proportion.substring(proportion.indexOf("股")+1,proportion.indexOf("%"));
 
@@ -92,8 +99,31 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
         edtPhone= (EditText) findViewById(R.id.edt_phone);
         tvReservationMoney = (TextView) findViewById(R.id.tv_reservation_money);
         tvPercentage.setText(CompanyName);
+        tv_reduce = (TextView) findViewById(R.id.tv_reduce);
+        tv_num = (TextView) findViewById(R.id.tv_num);
+        tv_add = (TextView) findViewById(R.id.tv_add);
+        tv_surplus_share = (TextView) findViewById(R.id.tv_surplus_share);
+        tv_surplus_num = (TextView) findViewById(R.id.tv_surplus_num);
 //        tvTotalAmount.setText("¥"+arrmoney+"0000");
-        tvReservationMoney.setText("¥"+money);
+        if(type==1){
+            tvReservationMoney.setText("¥"+money);
+            tv_surplus_share.setText("可预约份数"+PeopleNum+"份");
+            tv_num.setText("1");
+//            tv_surplus_num.setText("（可预约份数"+PeopleNum+"份）");
+        }else if(type==2){
+            int mount= (int) (InitiateAmount*1000);
+            tvReservationMoney.setText("¥"+mount);
+            int money  =FinancingAmount-AlreadyBookedMoney;
+            tv_surplus_share.setText("可投金额剩余"+money+"万");
+            num = (new Double(InitiateAmount)).intValue();
+            Drawable sexDrawble = getResources().getDrawable( R.mipmap.down_arrow );
+            sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
+            tv_num.setCompoundDrawables(null, null, sexDrawble, null);
+            tv_num.setText(num+"万");
+            tv_num.setOnClickListener(this);
+
+        }
+
         tvConfirm = (TextView) findViewById(R.id.tv_wxconfirm);
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +156,53 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
                 WechatPay();
             }
         });
+
+        tv_reduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (type == 1) {
+                    if (num <= 1) {
+                        return;
+                    }
+                    num = Integer.valueOf(tv_num.getText().toString()) - 1;
+                    tvReservationMoney.setText("¥" + money * num);
+                    tv_num.setText(num + "");
+                }else if(type == 2){
+
+                    if (num  <= 1) {
+                        return;
+                    }
+                    num =num-1;
+                    int mount= (int) (InitiateAmount * num*1000);
+                    tvReservationMoney.setText("¥" + mount);
+                    tv_num.setText(num + "万");
+                }
+            }
+        });
+
+        tv_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (type == 1) {
+                    int numl = Integer.valueOf(PeopleNum);
+                    if (num >= numl) {
+                        return;
+                    }
+                    num = Integer.valueOf(tv_num.getText().toString()) + 1;
+                    tvReservationMoney.setText("¥" + money * num);
+                    tv_num.setText(num + "");
+                }else if(type == 2){
+                    int money  =FinancingAmount-AlreadyBookedMoney;
+                    if (num >= money) {
+                        return;
+                    }
+                    num = num + 1;
+                    int mount= (int) (InitiateAmount * num*1000);
+                    tvReservationMoney.setText("¥" + mount);
+                    tv_num.setText(num + "万");
+                }
+            }
+        });
     }
 
     private void WechatPay(){
@@ -145,7 +222,13 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
         staff.put("wechatNumber", wechat);
         staff.put("contactWay", phone);
         staff.put("body", "支付预约金");
-        staff.put("totalFee",  String.valueOf(money*100));//
+        if(type == 1){
+            staff.put("totalFee",  String.valueOf(money*num*100));//
+        }else if(type == 2){
+            int mount= (int) (InitiateAmount * num*1000*100);
+            staff.put("totalFee",  String.valueOf(mount));//
+        }
+
         staff.put("clientType", "2");
         staff.put("orderType", "1");
 
@@ -186,9 +269,48 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
 
     }
 
+    private String age="未填写";
+    @Override
+    public void completeCall(String text, String text2, int type) {
+        switch (type) {
+            case 4://年龄
+                age =text;
+                tv_num.setText(text+"万");
+                num = Integer.valueOf(text);
+                int mount=  (Integer.valueOf(text)*1000);
+                tvReservationMoney.setText("¥" + mount);
+//                isChange = true;
+                break;
+
+        }
+    }
+
+    @Override
+    public void clearCall(int type) {
+        String str = getResourcesStr(R.string.user_info_nodata);
+        switch (type) {
+            case 4://年龄
+                age =str;
+//                isChange = true;
+//                tvAge.setText(str);
+                break;
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ReceiverUtils.removeReceiver(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_num:
+                mPopupWheelMoneyView = new PopupWheelMoneyView(ConfirmPaymentActivity.this, tv_num.getText().toString(),InitiateAmount,FinancingAmount);
+                mPopupWheelMoneyView.setWheelListener(this);
+                mPopupWheelMoneyView.showPopupWindow();
+                break;
+        }
     }
 }
