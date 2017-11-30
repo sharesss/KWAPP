@@ -3,6 +3,7 @@ package com.ts.fmxt.ui.discover;/**
  */
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -129,7 +130,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         findViewById(R.id.ll_message).setOnClickListener(this);
         findViewById(ll_group).setOnClickListener(this);
 
-        final View tab_bar = findViewById(R.id.tab_bar);
+        tab_bar = findViewById(R.id.tab_bar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
@@ -152,8 +153,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             });
         }
     }
-
-    int firstItemPosition = -1;
+    private View tab_bar;
+    private int firstItemPosition = -1;
+    private int oldindex = -1;
 
     private void tabView(View tab_bar) {
         if (tab_bar != null) {
@@ -161,16 +163,84 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             if (layoutManager instanceof LinearLayoutManager) {
                 LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
                 int index = linearManager.findFirstVisibleItemPosition();
-                if (list.get(index) instanceof TabItem) {
-                    firstItemPosition = index;
-                    tab_bar.setVisibility(View.VISIBLE);
+                if (firstItemPosition <= -1) {
+                    if (oldindex == -1) {
+                        oldindex = index;
+                    }
+                    for (; oldindex <= index; oldindex++) {
+                        if (list.get(oldindex) instanceof TabItem) {
+                            firstItemPosition = index;
+                            tab_bar.setVisibility(View.VISIBLE);
+                        }
+                    }
                 } else {
                     if (firstItemPosition > index) {
                         tab_bar.setVisibility(View.GONE);
+                    } else if (firstItemPosition > -1) {
+                        tab_bar.setVisibility(View.VISIBLE);
                     }
                 }
+                oldindex = index;
             }
         }
+    }
+
+    private void setBar(final TabItem item) {
+        if (tab_bar == null) {
+            return;
+        }
+        TextView tv_my_story = (TextView) tab_bar.findViewById(R.id.tv_my_story);
+        TextView tv_project_return = (TextView) tab_bar.findViewById(R.id.tv_project_return);
+        TextView tv_project_highlights = (TextView) tab_bar.findViewById(R.id.tv_project_highlights);
+        TextView tv_project_schedule = (TextView) tab_bar.findViewById(R.id.tv_project_schedule);
+        tv_my_story.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                item.onClick(view);
+            }
+        });
+        tv_project_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                item.onClick(view);
+            }
+        });
+        tv_project_highlights.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                item.onClick(view);
+            }
+        });
+        tv_project_schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                item.onClick(view);
+            }
+        });
+    }
+
+    private void selectTab(TabItem item) {
+        if (tab_bar == null) {
+            return;
+        }
+        TabItem.ViewHolder viewHolder = item.getViewHolder();
+        TextView tv_my_story = (TextView) tab_bar.findViewById(R.id.tv_my_story);
+        TextView tv_project_return = (TextView) tab_bar.findViewById(R.id.tv_project_return);
+        TextView tv_project_highlights = (TextView) tab_bar.findViewById(R.id.tv_project_highlights);
+        TextView tv_project_schedule = (TextView) tab_bar.findViewById(R.id.tv_project_schedule);
+        tv_my_story.setTextColor(viewHolder.tv_my_story.getCurrentTextColor());
+        tv_project_return.setTextColor(viewHolder.tv_project_return.getCurrentTextColor());
+        tv_project_highlights.setTextColor(viewHolder.tv_project_highlights.getCurrentTextColor());
+        tv_project_schedule.setTextColor(viewHolder.tv_project_schedule.getCurrentTextColor());
+        TextView tv_my_story_lin = (TextView) tab_bar.findViewById(R.id.tv_my_story_lin);
+        TextView tv_project_return_lin = (TextView) tab_bar.findViewById(R.id.tv_project_return_lin);
+        TextView tv_project_highlights_lin = (TextView) tab_bar.findViewById(R.id.tv_project_highlights_lin);
+        TextView tv_project_schedule_lin = (TextView) tab_bar.findViewById(R.id.tv_project_schedule_lin);
+        tv_my_story_lin.setBackground(viewHolder.tv_my_story_lin.getBackground());
+        tv_project_return_lin.setBackground(viewHolder.tv_project_return_lin.getBackground());
+        tv_project_highlights_lin.setBackground(viewHolder.tv_project_highlights_lin.getBackground());
+        tv_project_schedule_lin.setBackground(viewHolder.tv_project_schedule_lin.getBackground());
+
     }
     ArrayList<BaseViewItem> headlist = new ArrayList<BaseViewItem>();
     private void formatData(ConsumerEntity info) {
@@ -186,6 +256,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //                    index = postion + index + 1;
                 int index = 3 + 1 + postion;
                 recyclerView.smoothScrollToPosition(index);
+                selectTab(item);
             }
         };
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
@@ -194,6 +265,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         ProjectReturnItem projectReturnItem = new ProjectReturnItem(info, DiscoverDetailsActivity.this);
         MyStoryItem myStoryItem = new MyStoryItem(info, DiscoverDetailsActivity.this);
         TabItem tabItem = new TabItem( callBack);
+        setBar(tabItem);
         headlist.add(1, discoverCircleItem);
         headlist.add(2, new LineItem());
         headlist.add(3, tabItem);

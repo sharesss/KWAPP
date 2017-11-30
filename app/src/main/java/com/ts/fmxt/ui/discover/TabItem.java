@@ -56,6 +56,10 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
 //        viewHolder.llTemp.setVisibility(View.VISIBLE);
     }
 
+    public ViewHolder getViewHolder() {
+        return viewHolder;
+    }
+
     @Override
     public RecyclerViewHolder createViewHolder(ViewGroup parent) {
         View view = createView(parent);
@@ -65,9 +69,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_my_story:
-                if (callBack != null) {
-                    callBack.onitem(0,this);
-                }
+
                 viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.orange));
                 viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.orange));
                 viewHolder.tv_project_return.setTextColor(resources.getColor(R.color.gray));
@@ -76,11 +78,12 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.gray));
+                if (callBack != null) {
+                    callBack.onitem(0,this);
+                }
                 break;
             case R.id.tv_project_return://
-                if (callBack != null) {
-                    callBack.onitem(1,this);
-                }
+
                 viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_return.setTextColor(resources.getColor(R.color.orange));
@@ -89,11 +92,12 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.gray));
+                if (callBack != null) {
+                    callBack.onitem(1,this);
+                }
                 break;
             case R.id.tv_project_highlights://
-                if (callBack != null) {
-                    callBack.onitem(2,this);
-                }
+
                 viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_return.setTextColor(resources.getColor(R.color.gray));
@@ -102,11 +106,12 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.orange));
                 viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.gray));
+                if (callBack != null) {
+                    callBack.onitem(2,this);
+                }
                 break;
             case R.id.tv_project_schedule://
-                if (callBack != null) {
-                    callBack.onitem(3+3,this);
-                }
+
                 viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.gray));
                 viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_return.setTextColor(resources.getColor(R.color.gray));
@@ -115,10 +120,13 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                 viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.gray));
                 viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.orange));
                 viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.orange));
+                if (callBack != null) {
+                    callBack.onitem(3+3,this);
+                }
                 break;
         }
     }
-    private class ViewHolder extends RecyclerViewHolder {
+    public class ViewHolder extends RecyclerViewHolder {
         TextView tv_my_story,tv_project_return,tv_project_highlights,tv_project_schedule,tv_my_story_lin,tv_project_return_lin,tv_project_highlights_lin,tv_project_schedule_lin;
 
 
