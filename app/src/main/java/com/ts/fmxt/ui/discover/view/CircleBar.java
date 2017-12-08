@@ -30,8 +30,8 @@ public class CircleBar extends View {
 	private float mColorWheelRadius;
 	private float circleStrokeWidth;//圆圈的线条粗细
 	private float pressExtraStrokeWidth;
-	private int mTextColor = getResources().getColor(R.color.green);//默认文字颜色
-	private int mWheelColor = getResources().getColor(R.color.green);//默认圆环颜色
+	private int mTextColor = getResources().getColor(R.color.button_orange);//默认文字颜色
+	private int mWheelColor = getResources().getColor(R.color.button_orange);//默认圆环颜色
 
 	private String mText;
 	private int mTextDesSize;//描述文字的大小

@@ -3,30 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:paddingBottom="10dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp" />
+        android:layout_marginLeft="20dp"
+        android:textSize="@dimen/dp_10"/>
 
     <RelativeLayout
         android:id="@+id/ll_pb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="3dp"
         android:orientation="horizontal">
 
         <ProgressBar
             android:id="@+id/pb_yellowindex"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="270dp"
-            android:layout_height="5dp"
+            android:layout_height="3dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:indeterminate="false"
             android:max="10"
             android:progressDrawable="@drawable/yellowcolor" />
@@ -39,6 +40,7 @@
             android:layout_gravity="bottom"
             android:layout_toRightOf="@id/pb_yellowindex"
             android:text="10分"
+            android:textSize="@dimen/dp_10"
             android:textColor="@color/orange" />
 
         <TextView
@@ -47,8 +49,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/tv_fraction"
+            android:textSize="@dimen/dp_10"
             android:text="30人" />
     </RelativeLayout>
 </LinearLayout>

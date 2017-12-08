@@ -25,21 +25,24 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/small_throw_rule1"
+        android:src="@mipmap/small_throw_rule"
         />
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:src="@mipmap/small_throw_rule2"
         />
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:src="@mipmap/small_throw_rule3"
         />
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:src="@mipmap/small_throw_rule4"
         />
     </LinearLayout>

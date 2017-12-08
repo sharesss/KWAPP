@@ -28,6 +28,7 @@ import cn.jpush.android.api.TagAliasCallback;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
 import utils.CountDownButtonHelper;
+import utils.ReceiverUtils;
 import utils.Tools;
 import utils.UISKipUtils;
 import utils.helper.ToastHelper;
@@ -234,6 +235,8 @@ public class WeChatCompleteInformation extends FMBaseActivity implements View.On
                                 String stats = json.getString("stats");
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.IS_VIEW,bundle);
                                     UISKipUtils.startMainFrameActivity(WeChatCompleteInformation.this);
                                     SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
                                     SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态

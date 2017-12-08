@@ -96,7 +96,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
             view.setTextColor(Color.GRAY);
             view.setPadding(5, 5, 5, 5);
             view.setGravity(Gravity.CENTER);
-            view.setTextSize(14);
+            view.setTextSize(10);
             // 设置背景选择器到TextView上
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
@@ -104,20 +104,20 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
             if(info==null){
                 if(view.getText().toString().equals("定期分红")){
                     view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                    view.setTextColor(Color.WHITE);
+                    view.setTextColor(resources.getColor(R.color.text_black));
                     checktext3 = view.getText().toString();
                 }
             }else if(info!=null){
                 if(info.getReturnWay()==1){
                     if(view.getText().toString().equals("定期分红")){
                         view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                        view.setTextColor(Color.WHITE);
+                        view.setTextColor(resources.getColor(R.color.text_black));
                         checktext3 = view.getText().toString();
                     }
                 }else if(info.getReturnWay()==2){
                     if(view.getText().toString().equals("股权增值")){
                         view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                        view.setTextColor(Color.WHITE);
+                        view.setTextColor(resources.getColor(R.color.text_black));
                         checktext3 = view.getText().toString();
                     }
             }
@@ -130,14 +130,14 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                     String name = ((TextView) v).getText().toString();
                     Resources resources = getResources();
                     v.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                    ((TextView) v).setTextColor(Color.WHITE);
+                    ((TextView) v).setTextColor(resources.getColor(R.color.text_black));
                     for (int i = 0; i < flow_return_layout.getChildCount(); i++) {
                         View indexview = flow_return_layout.getChildAt(i);
                         if (indexview instanceof TextView) {
                             TextView indexTextView = (TextView) indexview;
                             if (indexTextView.getText().equals(checktext3)) {
                                 indexTextView.setBackground(resources.getDrawable(R.drawable.bg_gray_tag_shape));
-                                indexTextView.setTextColor(Color.GRAY);
+                                indexTextView.setTextColor(resources.getColor(R.color.text_black));
                                 break;
                             }
                         }
@@ -156,7 +156,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
             view.setTextColor(Color.GRAY);
             view.setPadding(5, 5, 5, 5);
             view.setGravity(Gravity.CENTER);
-            view.setTextSize(14);
+            view.setTextSize(10);
             // 设置背景选择器到TextView上
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
@@ -164,20 +164,20 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
             if(info==null){
                 if (view.getText().toString().equals("是")) {
                     view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                    view.setTextColor(Color.WHITE);
+                    view.setTextColor(resources.getColor(R.color.text_black));
                     checktext4 = view.getText().toString();
                 }
             }else if(info!=null){
                 if(info.getIsFamousInvestor()==0){
                     if(view.getText().toString().equals("否")){
                         view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                        view.setTextColor(Color.WHITE);
+                        view.setTextColor(resources.getColor(R.color.text_black));
                         checktext4 = view.getText().toString();
                     }
                 }else if(info.getIsFamousInvestor()==1) {
                     if (view.getText().toString().equals("是")) {
                         view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                        view.setTextColor(Color.WHITE);
+                        view.setTextColor(resources.getColor(R.color.text_black));
                         checktext4 = view.getText().toString();
                     }
                 }
@@ -191,14 +191,14 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                     String name = ((TextView) v).getText().toString();
                     Resources resources = getResources();
                     v.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                    ((TextView) v).setTextColor(Color.WHITE);
+                    ((TextView) v).setTextColor(resources.getColor(R.color.text_black));
                     for (int i = 0; i < flow_iswell_known_layout.getChildCount(); i++) {
                         View indexview = flow_iswell_known_layout.getChildAt(i);
                         if (indexview instanceof TextView) {
                             TextView indexTextView = (TextView) indexview;
                             if (indexTextView.getText().equals(checktext4)) {
                                 indexTextView.setBackground(resources.getDrawable(R.drawable.bg_gray_tag_shape));
-                                indexTextView.setTextColor(Color.GRAY);
+                                indexTextView.setTextColor(resources.getColor(R.color.text_black));
                                 break;
                             }
                         }
@@ -219,7 +219,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
             view.setTextColor(Color.GRAY);
             view.setPadding(5, 5, 5, 5);
             view.setGravity(Gravity.CENTER);
-            view.setTextSize(14);
+            view.setTextSize(10);
             // 设置背景选择器到TextView上
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
@@ -234,7 +234,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                         industryIds.add(infos.getId());
                         industryNames.add(infos.getName());
                         view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                        view.setTextColor(Color.WHITE);
+                        view.setTextColor(resources.getColor(R.color.text_black));
                     }
                 }
             }
@@ -250,7 +250,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                             String names =industryNames.get(i);
                             if(name.equals(names)){
                                 v.setBackground(resources.getDrawable(R.drawable.bg_gray_tag_shape));
-                                ((TextView) v).setTextColor(Color.GRAY);
+                                ((TextView) v).setTextColor(resources.getColor(R.color.text_black));
                                 fieldSecond--;
                                 industryIds.remove(i);
                                 industryNames.remove(name);
@@ -265,7 +265,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                         }
 
                     v.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                    ((TextView) v).setTextColor(Color.WHITE);
+                    ((TextView) v).setTextColor(resources.getColor(R.color.text_black));
                     fieldSecond++;
                     industryIds.add(infos.getId());
                     industryNames.add(infos.getName());
@@ -286,7 +286,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
             view.setTextColor(Color.GRAY);
             view.setPadding(5, 5, 5, 5);
             view.setGravity(Gravity.CENTER);
-            view.setTextSize(14);
+            view.setTextSize(10);
             // 设置背景选择器到TextView上
             Resources resources = getResources();
             Drawable btnDrawable = resources.getDrawable(R.drawable.bg_gray_tag_shape);
@@ -298,7 +298,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                     String num = raundIdsArray[j];
                     if(num.equals(infos.getId()+"")){
                         view.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                        view.setTextColor(Color.WHITE);
+                        view.setTextColor(resources.getColor(R.color.text_black));
                         roundSecond++;
                         raundIds.add(infos.getId());
                         raundNames.add(infos.getName());
@@ -318,7 +318,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                             String names =raundNames.get(i);
                             if(name.equals(names)){
                                 v.setBackground(resources.getDrawable(R.drawable.bg_gray_tag_shape));
-                                ((TextView) v).setTextColor(Color.GRAY);
+                                ((TextView) v).setTextColor(resources.getColor(R.color.text_black));
                                 raundIds.remove(i);
                                 raundNames.remove(name);
                                 return;
@@ -327,7 +327,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
 
                     }
                         v.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
-                        ((TextView) v).setTextColor(Color.WHITE);
+                        ((TextView) v).setTextColor(resources.getColor(R.color.text_black));
                         raundIds.add(infos.getId());
                         raundNames.add(infos.getName());
 

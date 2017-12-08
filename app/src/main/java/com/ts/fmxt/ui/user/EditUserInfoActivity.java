@@ -445,6 +445,8 @@ public class EditUserInfoActivity extends FMBaseActivity implements View.OnClick
                 MODE_PRIVATE);
         sharedPreferences.edit().clear().commit();
         ShortcutBadger.applyCount(FmxtApplication.getContext(), 0);
+        Bundle bundle = new Bundle();
+        ReceiverUtils.sendReceiver(ReceiverUtils.IS_VIEW,bundle);
         UISKipUtils.startMainFrameActivity(this);
         EMClient.getInstance().logout(true);
         finish();

@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/AppWidget"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/color_f5f5f5"
     android:layout_height="match_parent">
     <widget.titlebar.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/iv_release_project"/>
+
+        <TextView
+            android:id="@+id/tv_authentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_alignParentRight = "true"
+            android:text="马上认证"
+            android:layout_marginRight="20dp"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_orange_5_shape"/>
+
+        <TextView
+            android:id="@+id/tv_copy_website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:layout_alignParentRight = "true"
+            android:layout_below="@id/tv_authentication"
+            android:text="点击复制网址"
+            android:layout_marginRight="20dp"
+            android:textSize="10sp"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_orange_5_shape"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

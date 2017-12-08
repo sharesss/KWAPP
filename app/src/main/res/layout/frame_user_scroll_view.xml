@@ -9,7 +9,7 @@
         android:id="@+id/navigation_view"
         style="@style/base_height_wrap"
         android:layout_height="@dimen/dp_50"
-        android:background="#F8E9B5">
+        android:background="@color/button_orange">
 
         <TextView
             android:id="@+id/iv_back"

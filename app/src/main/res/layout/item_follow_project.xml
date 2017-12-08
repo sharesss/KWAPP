@@ -11,25 +11,29 @@
         android:layout_marginRight="20dp">
         <widget.image.CircleImageView
             android:id="@+id/iv_portrait"
-            android:layout_width="@dimen/dp_35"
-            android:layout_height="@dimen/dp_35"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10" />
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_10"
+            android:src="@mipmap/def_02"/>
 
         <TextView
             android:id="@+id/tv_name"
             style="@style/base_wrap"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_alignTop ="@id/iv_portrait"
             android:layout_toRightOf="@id/iv_portrait"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_15" />
+            android:textColor="@color/text_black_main"
+            android:textSize="@dimen/sp_10" />
         <TextView
             android:id="@+id/tv_time"
             style="@style/base_wrap"
             android:layout_below="@id/tv_name"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
+            android:textSize="@dimen/sp_10"
+            android:gravity="bottom"
+            android:layout_alignBottom = "@id/iv_portrait"
+            android:textColor="@color/text_black_main"
             android:layout_toRightOf="@id/iv_portrait" />
     </RelativeLayout>
 
@@ -48,19 +52,21 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:text="奢分期"/>
+        android:textColor="@color/title_black_main"
+        android:textSize="14sp"
+        />
 
     <TextView
         android:id="@+id/tv_brand_details"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:textSize="12sp"
-        android:text="奢分期"/>
+        android:layout_marginTop="3dp"
+        android:lineSpacingExtra="2dp"
+        android:textSize="10sp"
+        android:textColor="@color/text_black_main"
+        />
 
     <ProgressBar
         android:id="@+id/pb_index"
@@ -72,7 +78,7 @@
         android:layout_marginRight="20dp"
         android:progressDrawable="@drawable/barcolor"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_height="5dp"
+        android:layout_height="3.5dp"
         android:visibility="gone"
         android:indeterminate="false" />
     <ProgressBar
@@ -85,7 +91,7 @@
         android:layout_marginRight="20dp"
         android:progressDrawable="@drawable/greencolor"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_height="5dp"
+        android:layout_height="3.5dp"
         android:visibility="gone"
         android:indeterminate="false" />
 
@@ -101,13 +107,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:visibility="gone"
         android:text="可投指数"/>
 
     <TextView
         android:id="@+id/tv_index"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/orange"
+        android:textSize="12sp"
+        android:textColor="@color/text_black_main"
         android:text="65%"
         />
 
@@ -116,14 +124,14 @@
     <ProgressBar
         android:id="@+id/pb_yellowindex"
         android:layout_width="match_parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:progress="0"
         android:max="100"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:progressDrawable="@drawable/yellowcolor"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_height="5dp"
+        android:layout_height="3.5dp"
         android:visibility="gone"
         android:indeterminate="false" />
     <LinearLayout
@@ -145,15 +153,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:visibility="gone"
                 android:textSize="12sp"
-                android:text="预约金额"/>
+                android:text="已预约"/>
 
             <TextView
                 android:id="@+id/tv_reservation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/orange"
-                android:textSize="12sp"
+                android:textColor="@color/text_orange"
+                android:textSize="10sp"
                 android:text="65%"
                 />
         </LinearLayout>
@@ -167,6 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:visibility="gone"
                 android:textSize="12sp"
                 android:text="进度"/>
 
@@ -174,8 +184,8 @@
                 android:id="@+id/tv_schedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/orange"
-                android:textSize="12sp"
+                android:textColor="@color/text_orange"
+                android:textSize="10sp"
                 android:text="65%"
                 />
         </LinearLayout>
@@ -188,16 +198,16 @@
                 android:id="@+id/tv_remaining_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textColor="@color/text_orange"
+                android:textSize="10sp"
                 android:text="剩余天数"/>
 
             <TextView
                 android:id="@+id/tv_remaining_days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/orange"
-                android:textSize="12sp"
+                android:textColor="@color/text_orange"
+                android:textSize="10sp"
                 android:text="65%"
                 />
         </LinearLayout>

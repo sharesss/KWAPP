@@ -7,8 +7,9 @@
     <RelativeLayout
         android:id="@+id/rly_paren"
         style="@style/base_height_wrap"
-        android:layout_marginBottom="@dimen/dp_5"
-        android:background="@drawable/bg_oval">
+        android:background="@drawable/bg_oval"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/ll_user_down">
 
         <widget.image.CircleImageView
             android:id="@+id/iv_portrait"
@@ -56,10 +57,10 @@
                     style="@style/base_wrap"
                     android:layout_marginBottom="@dimen/dp_2"
                     android:drawablePadding="@dimen/dp_2"
-                    android:background="@drawable/bg_orange_kongyuan"
+                    android:background="@drawable/bg_black_kongyuan"
                     android:text="创始人"
                     android:visibility="gone"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/text_black"
                     android:textSize="@dimen/sp_10" />
                 <TextView
                     android:id="@+id/tv_investor"
@@ -69,17 +70,17 @@
                     android:text="投资人"
                     android:visibility="gone"
                     android:layout_marginLeft="3dp"
-                    android:background="@drawable/bg_orange_kongyuan"
-                    android:textColor="@color/orange"
+                    android:background="@drawable/bg_black_kongyuan"
+                    android:textColor="@color/text_black"
                     android:textSize="@dimen/sp_10" />
                 <TextView
                     android:id="@+id/tv_isVfounder"
                     style="@style/base_wrap"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/text_black"
                     android:text="大V投资人"
                     android:visibility="gone"
-                    android:background="@drawable/bg_orange_kongyuan"
+                    android:background="@drawable/bg_black_kongyuan"
                     android:textSize="@dimen/sp_10"/>
 
             </LinearLayout>

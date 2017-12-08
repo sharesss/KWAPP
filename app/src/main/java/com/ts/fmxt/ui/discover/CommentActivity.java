@@ -3,6 +3,7 @@ package com.ts.fmxt.ui.discover;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
 import com.thindo.base.Widget.refresh.RefreshListView;
@@ -24,6 +25,7 @@ import http.data.ConsumerCommentEntity;
 import http.data.TableList;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.EmptyView;
 
@@ -34,7 +36,8 @@ import widget.EmptyView;
  */
 
 public class CommentActivity extends FMBaseScrollActivityV2 implements View.OnClickListener, KeyMapDailog.SendBackListener {
-    private int investId;//股票ID
+    private int investId,isOver,isFollow;//股票ID
+    private TextView tv_praise;
     private EmptyView mEmptyView;
     private RefreshListView refresh_lv;
     private KeyMapDailog dialog;
@@ -46,6 +49,8 @@ public class CommentActivity extends FMBaseScrollActivityV2 implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_view);
         investId = getIntent().getIntExtra("investId", -1);
+        isOver = getIntent().getIntExtra("isOver", -1);
+        isFollow = getIntent().getIntExtra("isFollow", -1);
 //        bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new CommentAdapter(this, arrayList,0,1));
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
         mEmptyView.setEmptyText("什么也没有");
@@ -61,6 +66,26 @@ public class CommentActivity extends FMBaseScrollActivityV2 implements View.OnCl
     private void initView(){
         findViewById(R.id.btn_finish).setOnClickListener(this);
         findViewById(R.id.bt_comment).setOnClickListener(this);
+        tv_praise = (TextView) findViewById(R.id.tv_praise);
+        if(isOver==1){
+            if(isFollow==0){
+                tv_praise.setOnClickListener(this);
+                tv_praise.setText("我要跟投");
+                tv_praise.setTextColor(getResources().getColor(R.color.white));
+                tv_praise.setBackground(getResources().getDrawable(R.drawable.bg_orange_5_shape));
+            }else{
+                tv_praise.setOnClickListener(this);
+                tv_praise.setText("继续跟投");
+                tv_praise.setTextColor(getResources().getColor(R.color.white));
+                tv_praise.setBackground(getResources().getDrawable(R.drawable.bg_orange_5_shape));
+            }
+
+        }else{
+            tv_praise.setOnClickListener(this);
+            tv_praise.setText("跟投已经结束");
+            tv_praise.setTextColor(getResources().getColor(R.color.white));
+            tv_praise.setBackground(getResources().getDrawable(R.drawable.bg_gray));
+        }
     }
 
     @Override
@@ -68,6 +93,9 @@ public class CommentActivity extends FMBaseScrollActivityV2 implements View.OnCl
         switch (view.getId()) {
             case R.id.btn_finish:
                 finish();
+                break;
+            case R.id.tv_praise:
+                UISKipUtils.startProjectReturnActivity(CommentActivity.this, investId,isOver);
                 break;
             case R.id.bt_comment:
                 KeyMapDailog dialog = new KeyMapDailog("评论是我们的最大动力", this);

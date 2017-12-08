@@ -31,9 +31,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import http.data.ConsumerEntity;
+import http.data.ParticipationsEntity;
 import http.data.TableList;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.UISKipUtils;
 import utils.helper.ToastHelper;
 import widget.EmptyView;
@@ -42,11 +44,13 @@ import widget.popup.BaseDoubleEventPopup;
 import widget.popup.PopupObject;
 import widget.popup.dialog.MessageContentDialog;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  *
  */
 
-public class ConsumerFragment extends FMBaseTableFragment implements View.OnClickListener {
+public class ConsumerFragment extends FMBaseTableFragment implements View.OnClickListener, ReceiverUtils.MessageReceiver {
     private int pageNo = 1;
     private String brandId = "";
     private EmptyView mEmptyView;
@@ -58,9 +62,35 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
     private ConsumerEntity info;
     private View inflate;
     boolean isclick = false;
+    int  isView = 0;
+    @Override
+    public void onMessage(int receiverType, Bundle bundle) {
+      if(receiverType==ReceiverUtils.IS_VIEW){
+          SharedPreferences share = getActivity().getSharedPreferences("isView",MODE_PRIVATE);
+          SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+          editor.putString("isView", "1");
+          editor.commit();    //提交数据保存
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        SharedPreferences sharedPreferences= getActivity().getSharedPreferences("isView",
+                getActivity().MODE_PRIVATE);
+        String isView=sharedPreferences.getString("isView", "");
+        if(isView.equals("")){
+            ParticipationRequest();
+        }
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("isView");
+        editor.commit();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ReceiverUtils.addReceiver(this);
          inflate = inflater.inflate(R.layout.include_navigation_refresh_list_view, container, false);
         initTitle(inflate);
         bindRefreshAdapter((RefreshListView) inflate.findViewById(R.id.refresh_lv), new FollowProjectAdapter(getActivity(), arrayList));
@@ -102,12 +132,8 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
                     return;
                 }
                 //跳转
-//                UISKipUtils.startReleaseProjectActivity(getActivity());
-                redwins =new RedPacketsWin(getActivity());
-//                win =new ReleaseProjectWin(getActivity());
-                redwins.showAtLocation(
-                        inflate.findViewById(R.id.AppWidget),
-                        Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
+                UISKipUtils.startReleaseProjectActivity(getActivity());
+
             }
         });
 
@@ -121,6 +147,7 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
     @Override
     public void onReload() {
         consumerListRequest(0);
+
     }
 
     @Override
@@ -187,6 +214,72 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
                                         }
                                         adapter = new FollowProjectAdapter(getActivity(), tableList.getArrayList());
                                         refresh_lv.setAdapter(adapter);
+                                        mEmptyView.setVisibility(View.GONE);
+                                    }else{
+                                        refresh_lv.setAdapter(null);
+                                        mEmptyView.setVisibility(View.VISIBLE);
+                                    }
+                                    stopRefreshState();
+
+//                            ToastHelper.toastMessage(getContext(), msg);
+                                }else{
+                                    ToastHelper.toastMessage(getContext(),msg);
+                                    stopRefreshState();
+                                    refresh_lv.setAdapter(null);
+                                    mEmptyView.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
+    }
+
+    private void ParticipationRequest(){
+        SharedPreferences sharedPreferences= getActivity().getSharedPreferences("user",
+                getActivity().MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("tokenId", String.valueOf(token));
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.FINDINVESTPROJECTPARTICIPATIONREMIND,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                        stopRefreshState();
+                        refresh_lv.setAdapter(null);
+                        mEmptyView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if(!js.isNull("statsMsg")){
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if(stats.equals("1")){
+                                    TableList tableList = new TableList();
+                                    if (!js.isNull("projectParticipations")) {
+                                        JSONArray array = js.optJSONArray("projectParticipations");
+                                        if(array.length()<=0){
+                                            return;
+                                        }
+                                        for (int i = 0; i < array.length(); i++) {
+                                            tableList.getArrayList().add(new ParticipationsEntity(array.getJSONObject(i)));
+                                        }
+                                        redwins =new RedPacketsWin(getActivity(),tableList.getArrayList());
+//                win =new ReleaseProjectWin(getActivity());
+                                        redwins.showAtLocation(
+                                                inflate.findViewById(R.id.AppWidget),
+                                                Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
+//                                        adapter = new FollowProjectAdapter(getActivity(), tableList.getArrayList());
+//                                        refresh_lv.setAdapter(adapter);
                                     }
                                     stopRefreshState();
                                     mEmptyView.setVisibility(View.GONE);
@@ -251,8 +344,8 @@ public class ConsumerFragment extends FMBaseTableFragment implements View.OnClic
             this.setBackgroundDrawable(dw);
             this.setOutsideTouchable(true);
             // 显示窗口
-            setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);
-            setHeight(RelativeLayout.LayoutParams.MATCH_PARENT);
+            setWidth(RelativeLayout.LayoutParams.WRAP_CONTENT);
+            setHeight(RelativeLayout.LayoutParams.WRAP_CONTENT);
         }
 
         private void initView() {

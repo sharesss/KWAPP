@@ -24,6 +24,7 @@ import static com.ts.fmxt.R.id.tv_confirm;
 public class ProjectReturnAdapter extends FMBaseAdapter {
     ProjectReturnEntity info;
     int isOver;
+    int money;
     public ProjectReturnAdapter(Context context, List arrayList,int isOver) {
         super(context, arrayList);
         this.isOver = isOver;
@@ -52,20 +53,21 @@ public class ProjectReturnAdapter extends FMBaseAdapter {
         if(info.getEquityShareType()==1){
             ViewHolder.tv_reservation_money.setText("预约金：¥"+info.getReserveAmount());
             if(info.getReservePeopleNum().equals("null")){
-                ViewHolder.tv_shares_num.setText(info.getYetReservePropleNum()+"人入股 "+"/无限制");
+                ViewHolder.tv_shares_num.setText(info.getYetReservePropleNum()+"人预约 "+"/无限制");
             }else{
                 int num = Integer.valueOf(info.getReservePeopleNum())-Integer.valueOf(info.getYetReservePropleNum());
                 if(num<0){
                     num=0;
                 }
                 ViewHolder.tv_confirm.setBackground(num>0&&info.getIsYetBut()==0&&isOver==1? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
-                ViewHolder.tv_shares_num.setText(info.getYetReservePropleNum()+"人入股 "+"/"+"剩余名额"+info.getReservePeopleNum()+"人");
+                ViewHolder.tv_shares_num.setText(info.getYetReservePropleNum()+"人预约 "+"/"+"剩余名额"+info.getReservePeopleNum()+"人");
             }
         }else if(info.getEquityShareType()==2){
             int mount= (int) (info.getInitiateAmount()*1000);
             ViewHolder.tv_reservation_money.setText("预约金：¥"+mount);
-                int money  = info.getFinancingAmount()-info.getAlreadyBookedMoney();
+                money= info.getFinancingAmount()-info.getAlreadyBookedMoney();
                 ViewHolder.tv_shares_num.setText("已预约 "+info.getAlreadyBookedMoney()+"万"+"/剩余"+money+"万");
+            ViewHolder.tv_confirm.setBackground(money>0&&info.getIsYetBut()==0&&isOver==1? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
         }
 
 
@@ -77,8 +79,14 @@ public class ProjectReturnAdapter extends FMBaseAdapter {
                 if(info.getIsYetBut()==1){
                     return;
                 }
-                if(isOver==0){
-                    return;
+                    if(isOver==0){
+                        return;
+                    }
+
+                if(info.getEquityShareType()==2) {
+                    if (money == 0) {
+                        return;
+                    }
                 }
                 if(!info.getReservePeopleNum().equals("null")) {
                     int num = Integer.valueOf(info.getReservePeopleNum()) - Integer.valueOf(info.getYetReservePropleNum());

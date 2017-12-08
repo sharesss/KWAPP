@@ -3,9 +3,100 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ImageView
         android:id="@+id/banner_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+        <ImageView
+            android:id="@+id/oppen_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent= "true"
+            android:background="@drawable/open_red_drawable"
+            />
+        <LinearLayout
+            android:id="@+id/ll_project_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/oppen_image"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:text="恭喜"/>
+            <TextView
+                android:id="@+id/tv_project_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:text="【现金贷】"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="项目最新分红"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_share_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_project_name"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_share_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/ll_project_name"
+                android:textColor="#ED9B44"
+                android:textSize="20sp"
+                android:text="500"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#ED9B44"
+                android:textSize="14sp"
+                android:text="万元"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_return_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/ll_share_amount"
+            android:gravity="center"
+            android:text="平均年回报率100%"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_return_rate"
+            android:textColor="@color/gray_line"
+            android:layout_alignParentBottom = "true"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:text="错过几个亿？更高回报率的项目在等你"/>
+
+    </RelativeLayout>
 </LinearLayout>

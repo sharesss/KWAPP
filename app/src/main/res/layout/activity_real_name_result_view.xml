@@ -41,6 +41,7 @@
         android:background="@drawable/bg_orange_5_shape"
         android:clickable="true"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="进行投资人认证"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_16" />

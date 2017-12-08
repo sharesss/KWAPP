@@ -28,8 +28,8 @@ public class CustomViewPager extends ViewPager {
     }
 
     private void init(){
-        setClipToPadding(false);
-        setOverScrollMode(OVER_SCROLL_NEVER);
+//        setClipToPadding(false);
+//        setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
 
@@ -47,9 +47,9 @@ public class CustomViewPager extends ViewPager {
             for (int i = 0; i < childCount; ++i) {
                 int indexAbs = Math.abs(viewCenterX - getViewCenterX(getChildAt(i)));
                 //两个距离相同，后来的那个做自增，从而保持abs不同
-                if (childIndex.get(indexAbs) != null) {
-                    ++indexAbs;
-                }
+//                if (childIndex.get(indexAbs) != null) {
+//                    ++indexAbs;
+//                }
                 childCenterXAbs.add(indexAbs);
                 childIndex.append(indexAbs, i);
             }
@@ -62,6 +62,6 @@ public class CustomViewPager extends ViewPager {
     private int getViewCenterX(View view) {
         int[] array = new int[2];
         view.getLocationOnScreen(array);
-        return array[0] + view.getWidth() / 2;
+        return array[0] + view.getWidth() ;
     }
 }

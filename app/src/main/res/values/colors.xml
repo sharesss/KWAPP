@@ -19,6 +19,14 @@
     <color name="ui_bg">@color/color_f6f6f6</color>
 
     <color name="colort_EE9A49">#EE9A49</color>
+
+    <!-- 4.0版本色-->
+    <color name="button_orange">#ffdb60</color>
+    <color name="text_orange">#e6ad14</color>
+    <color name="text_black_main">#646464</color>
+    <color name="title_black_main">#2e2f34</color>
+    <color name="gray_p">#eeeeee</color>
+    <color name="red_p">#eb96a7</color>
     <!---***************MVC 新版架构******************-->
 
 

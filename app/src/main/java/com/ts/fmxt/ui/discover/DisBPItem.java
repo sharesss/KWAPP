@@ -51,15 +51,16 @@ public class DisBPItem implements BaseViewItem {
                 if(!info.getCeils().get(i).getText().equals("")){
 //                viewHolder.ll_details.
                     final TextView showText = new TextView(context);
-                    showText.setTextColor(Color.BLACK);
-                    showText.setTextSize(14);
+                    showText.setTextColor(context.getResources().getColor(R.color.text_black_main));
+                    showText.setTextSize(12);
                     showText.setText(info.getCeils().get(i).getText());
                     showText.setBackgroundColor(Color.WHITE);
+                    showText.setLineSpacing(0,2);
                     // set 文本大小
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
                             RecyclerView.LayoutParams.WRAP_CONTENT);
                     //set 四周距离
-                    params.setMargins(30, 10, 10, 10);
+                    params.setMargins(50, 0, 50, 0);
 
                     showText.setLayoutParams(params);
 
@@ -72,7 +73,8 @@ public class DisBPItem implements BaseViewItem {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
                             RecyclerView.LayoutParams.WRAP_CONTENT);
                     //set 四周距离
-                    params.setMargins(10, 10, 10, 10);
+                    params.height=700;
+                    params.setMargins(30, 0, 30, 0);
 
                     imageView.setLayoutParams(params);
 

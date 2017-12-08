@@ -223,6 +223,8 @@ public class LoginActivity extends FMBaseActivity implements View.OnClickListene
                                         loginIM(account);
                                     }
                                     ToastHelper.toastMessage(LoginActivity.this,msg);
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.IS_VIEW,bundle);
                                     UISKipUtils.startMainFrameActivity(LoginActivity.this,2);
                                     finish();
                                 }else{

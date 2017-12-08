@@ -55,6 +55,7 @@ public class FollowProjectActivity extends FMBaseTableActivity implements View.O
         findViewById(R.id.btn_finish).setOnClickListener(this);
         tv_spinner = (TextView) findViewById(R.id.tv_spinner);
         tv_spinner.setOnClickListener(this);
+        tv_spinner.setText("想跟投的项目");
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new FollowProjectAdapter(this, arrayList));
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
         mEmptyView.setEmptyText("跟投项目，及时跟踪项目动态");

@@ -48,7 +48,7 @@ public class RankingAdapter extends FMBaseAdapter {
         if(item.getTopBidPrice()<10000){
             mHolder.tv_highest_price.setText("目标金额¥"+item.getTopBidPrice());
         }else{
-            double n = (double)item.getTopBidPrice()/10000;
+            double n = (double)item.getTopBidPrice();
             DecimalFormat  df   = new DecimalFormat("######0.00");
             mHolder.tv_highest_price.setText("目标金额¥"+df.format(n)+"万");
         }

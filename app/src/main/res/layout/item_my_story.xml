@@ -4,23 +4,25 @@
     android:id="@+id/ll_consumer_info"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_marginTop="10dp"
     android:background="@color/white"
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/tv_brand_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:text="奢分期"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@mipmap/title_my_story"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:background="@color/black"/>
 
@@ -51,7 +53,6 @@
         android:id="@+id/ll_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
     </LinearLayout>

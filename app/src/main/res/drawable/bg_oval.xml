@@ -4,6 +4,6 @@
         android:bottomLeftRadius="@dimen/dp_8"
         android:bottomRightRadius="@dimen/dp_8" />
     <stroke android:color="@color/white" />
-    <solid android:color="#F8E9B5" />
+    <solid android:color="@color/button_orange" />
 
 </shape>

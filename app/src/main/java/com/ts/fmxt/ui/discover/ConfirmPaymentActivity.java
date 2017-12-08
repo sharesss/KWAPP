@@ -107,7 +107,11 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
 //        tvTotalAmount.setText("¥"+arrmoney+"0000");
         if(type==1){
             tvReservationMoney.setText("¥"+money);
-            tv_surplus_share.setText("可预约份数"+PeopleNum+"份");
+            if(PeopleNum.equals("null")){
+                tv_surplus_share.setText("可预约份数无限份");
+            }else{
+                tv_surplus_share.setText("可预约份数"+PeopleNum+"份");
+            }
             tv_num.setText("1");
 //            tv_surplus_num.setText("（可预约份数"+PeopleNum+"份）");
         }else if(type==2){
@@ -168,8 +172,8 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
                     tvReservationMoney.setText("¥" + money * num);
                     tv_num.setText(num + "");
                 }else if(type == 2){
-
-                    if (num  <= 1) {
+                    int nums = (new Double(InitiateAmount)).intValue();
+                    if (num  <= nums) {
                         return;
                     }
                     num =num-1;
@@ -184,20 +188,32 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
             @Override
             public void onClick(View view) {
                 if (type == 1) {
-                    int numl = Integer.valueOf(PeopleNum);
-                    if (num >= numl) {
-                        return;
+                    if(PeopleNum.equals("null")){
+//                        int numl =  num+1;
+//                        if (num >= numl) {
+//                            return;
+//                        }
+                        num = Integer.valueOf(tv_num.getText().toString()) + 1;
+                        tvReservationMoney.setText("¥" + money * num);
+                        tv_num.setText(num + "");
+
+                    }else{
+                        int numl = Integer.valueOf(PeopleNum);
+                        if (num >= numl) {
+                            return;
+                        }
+                        num = Integer.valueOf(tv_num.getText().toString()) + 1;
+                        tvReservationMoney.setText("¥" + money * num);
+                        tv_num.setText(num + "");
                     }
-                    num = Integer.valueOf(tv_num.getText().toString()) + 1;
-                    tvReservationMoney.setText("¥" + money * num);
-                    tv_num.setText(num + "");
+
                 }else if(type == 2){
                     int money  =FinancingAmount-AlreadyBookedMoney;
                     if (num >= money) {
                         return;
                     }
                     num = num + 1;
-                    int mount= (int) (InitiateAmount * num*1000);
+                    int mount= (int) ( num*1000);//InitiateAmount *
                     tvReservationMoney.setText("¥" + mount);
                     tv_num.setText(num + "万");
                 }
@@ -216,16 +232,17 @@ public class ConfirmPaymentActivity extends FMBaseActivity implements ReceiverUt
         staff.put("investId", String.valueOf(investId));
         staff.put("tokenId", String.valueOf(token));
         staff.put("rewardId", String.valueOf(rewardId));
-        staff.put("amount","1");
+            staff.put("amount",num+"");
         staff.put("stockRate", "1");
         staff.put("investPeople", name);
+        staff.put("shareType", type+"");
         staff.put("wechatNumber", wechat);
         staff.put("contactWay", phone);
         staff.put("body", "支付预约金");
         if(type == 1){
             staff.put("totalFee",  String.valueOf(money*num*100));//
         }else if(type == 2){
-            int mount= (int) (InitiateAmount * num*1000*100);
+            int mount= (int) (num*1000*100);
             staff.put("totalFee",  String.valueOf(mount));//
         }
 

@@ -5,11 +5,17 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_circleX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/circle_x"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:background="@drawable/bg_white_5_shape"
@@ -32,14 +38,16 @@
             android:scaleType="centerCrop" />
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="扫码添加客服，进入项目路演群"/>
         <TextView
+            android:id="@+id/tv_investName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="方便拉您进入路演群"/>
+            />
             <TextView
                 android:id="@+id/tv_collection"
                 android:layout_width="match_parent"
@@ -53,7 +61,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="点击复制微信号"
                 android:background="@drawable/bg_orange_5_shape"
-                android:textColor="@color/gray_line"
+                android:textColor="@color/text_black"
                 android:textSize="@dimen/sp_17" />
         </LinearLayout>
 

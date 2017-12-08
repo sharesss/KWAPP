@@ -32,7 +32,6 @@ import com.ts.fmxt.ui.discover.view.holder.MZViewHolder;
 import com.ts.fmxt.ui.discover.view.transformer.CoverModeTransformer;
 import com.ts.fmxt.ui.discover.view.transformer.ScaleYTransformer;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,27 +111,27 @@ public class MZBannerView<T> extends RelativeLayout {
 
 
     private void init(){
-      View view = null;
+        View view = null;
         if(mIsOpenMZEffect){
             view = LayoutInflater.from(getContext()).inflate(R.layout.mz_banner_effect_layout,this,true);
         }else{
             view = LayoutInflater.from(getContext()).inflate(R.layout.mz_banner_normal_layout,this,true);
         }
-      mIndicatorContainer = (LinearLayout) view.findViewById(R.id.banner_indicator_container);
-      mViewPager = (CustomViewPager) view.findViewById(R.id.mzbanner_vp);
-      mViewPager.setOffscreenPageLimit(4);
+        mIndicatorContainer = (LinearLayout) view.findViewById(R.id.banner_indicator_container);
+        mViewPager = (CustomViewPager) view.findViewById(R.id.mzbanner_vp);
+        mViewPager.setOffscreenPageLimit(4);
 
-      mMZModePadding = dpToPx(30);
+        mMZModePadding = dpToPx(30);
         // 初始化Scroller
-      initViewPagerScroll();
+        initViewPagerScroll();
 
-      if(mIndicatorAlign == 0){
-          setIndicatorAlign(IndicatorAlign.LEFT);
-      }else if(mIndicatorAlign == 1){
-          setIndicatorAlign(IndicatorAlign.CENTER);
-      }else{
-          setIndicatorAlign(IndicatorAlign.RIGHT);
-      }
+        if(mIndicatorAlign == 0){
+            setIndicatorAlign(IndicatorAlign.LEFT);
+        }else if(mIndicatorAlign == 1){
+            setIndicatorAlign(IndicatorAlign.CENTER);
+        }else{
+            setIndicatorAlign(IndicatorAlign.RIGHT);
+        }
 
 
     }
@@ -158,21 +157,21 @@ public class MZBannerView<T> extends RelativeLayout {
      * 设置ViewPager的滑动速度
      * */
     private void initViewPagerScroll() {
-        try {
-            Field mScroller = null;
-            mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            mViewPagerScroller = new ViewPagerScroller(
-                 mViewPager.getContext());
-            mScroller.set(mViewPager, mViewPagerScroller);
+//        try {
+//            Field mScroller = null;
+//            mScroller = ViewPager.class.getDeclaredField("mScroller");
+//            mScroller.setAccessible(true);
+//            mViewPagerScroller = new ViewPagerScroller(
+//                    mViewPager.getContext());
+//            mScroller.set(mViewPager, mViewPagerScroller);
 
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        } catch (IllegalArgumentException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
@@ -183,8 +182,8 @@ public class MZBannerView<T> extends RelativeLayout {
                 mCurrentItem = mViewPager.getCurrentItem();
                 mCurrentItem++;
                 if(mCurrentItem == mAdapter.getCount() - 1){
-                    mCurrentItem = 0;
-                    mViewPager.setCurrentItem(mCurrentItem,false);
+//                    mCurrentItem = 0;
+//                    mViewPager.setCurrentItem(mCurrentItem,false);
                     mHandler.postDelayed(this,mDelayedTime);
                 }else{
                     mViewPager.setCurrentItem(mCurrentItem);
@@ -357,7 +356,7 @@ public class MZBannerView<T> extends RelativeLayout {
         }
         mDatas = datas;
         //如果在播放，就先让播放停止
-//        pause();
+        pause();
 
         //增加一个逻辑：由于魅族模式会在一个页面展示前后页面的部分，因此，数据集合的长度至少为3,否则，自动为普通Banner模式
         //不管配置的:open_mz_mode 属性的值是否为true
@@ -405,10 +404,10 @@ public class MZBannerView<T> extends RelativeLayout {
                         mIndicators.get(i).setImageResource(mIndicatorRes[0]);
                     }
                 }
-                  // 不能直接将mOnPageChangeListener 设置给ViewPager ,否则拿到的position 是原始的positon
-                 if(mOnPageChangeListener!=null){
-                     mOnPageChangeListener.onPageSelected(realSelectPosition);
-                  }
+                // 不能直接将mOnPageChangeListener 设置给ViewPager ,否则拿到的position 是原始的positon
+                if(mOnPageChangeListener!=null){
+                    mOnPageChangeListener.onPageSelected(realSelectPosition);
+                }
             }
 
             @Override
@@ -497,7 +496,7 @@ public class MZBannerView<T> extends RelativeLayout {
             for(T t:datas){
                 mDatas.add(t);
             }
-           // mDatas.add(datas.get(0));//在最后加入最前面一个
+            // mDatas.add(datas.get(0));//在最后加入最前面一个
             mMZHolderCreator = MZHolderCreator;
             this.canLoop = canLoop;
         }
@@ -514,23 +513,23 @@ public class MZBannerView<T> extends RelativeLayout {
             mViewPager = viewPager;
             mViewPager.setAdapter(this);
             mViewPager.getAdapter().notifyDataSetChanged();
-            int currentItem = canLoop ? getStartSelectItem():0;
-            //设置当前选中的Item
-            mViewPager.setCurrentItem(currentItem);
+//            int currentItem = canLoop ? getStartSelectItem():0;
+//            //设置当前选中的Item
+//            mViewPager.setCurrentItem(currentItem);
         }
 
         private int getStartSelectItem(){
             // 我们设置当前选中的位置为Integer.MAX_VALUE / 2,这样开始就能往左滑动
             // 但是要保证这个值与getRealPosition 的 余数为0，因为要从第一页开始显示
-            int currentItem = getRealCount() * mLooperCountFactor / 2;
-            if(currentItem % getRealCount()  ==0 ){
-                return currentItem;
-            }
-            // 直到找到从0开始的位置
-            while (currentItem % getRealCount() != 0){
-                currentItem++;
-            }
-            return currentItem;
+//            int currentItem = getRealCount() * mLooperCountFactor / 2;
+//            if(currentItem % getRealCount()  ==0 ){
+//                return currentItem;
+//            }
+//            // 直到找到从0开始的位置
+//            while (currentItem % getRealCount() != 0){
+//                currentItem++;
+//            }
+            return 0;
         }
 
         public void setDatas(List<T> datas) {
@@ -558,7 +557,7 @@ public class MZBannerView<T> extends RelativeLayout {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-           container.removeView((View) object);
+            container.removeView((View) object);
         }
 
         @Override
@@ -566,7 +565,7 @@ public class MZBannerView<T> extends RelativeLayout {
             // 轮播模式才执行
             if(canLoop){
                 int position = mViewPager.getCurrentItem();
-                 if (position == getCount() - 1) {
+                if (position == getCount() - 1) {
                     position = 0;
                     setCurrentItem(position);
                 }
@@ -614,7 +613,7 @@ public class MZBannerView<T> extends RelativeLayout {
             }
 
             // 添加点击事件
-           view.setOnClickListener(new OnClickListener() {
+            view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(mPageClickListener!=null){

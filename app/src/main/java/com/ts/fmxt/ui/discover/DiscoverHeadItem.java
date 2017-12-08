@@ -39,7 +39,9 @@ public class DiscoverHeadItem implements BaseViewItem {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.ivImage.loadImage(info.getInvestPhoto());
-        viewHolder.iv_portrait.loadImage(info.getHeadPic());
+        if(!info.getHeadPic().equals("")){
+            viewHolder.iv_portrait.loadImage(info.getHeadPic());
+        }
         viewHolder.tv_name.setText(info.getNickName());
         viewHolder.tv_time.setText(info.getCreateTime());
         viewHolder.tvBrandName.setText(info.getInvestName());
@@ -55,28 +57,33 @@ public class DiscoverHeadItem implements BaseViewItem {
             viewHolder.pbGreenindex.setVisibility(View.VISIBLE);
             viewHolder.pbIndex.setVisibility(View.GONE);
         }
-        viewHolder.tvIndex.setText(exponent + "%");
+        viewHolder.tvIndex.setText("可投指数"+exponent + "%");
         if(info.getHoldRatios()!=null){
             Double indexs = info.getHoldRatios()*100;
             int exponents = (new Double(indexs)).intValue();
             viewHolder.pb_yellowindex.setProgress(exponents);
             if(info.getReservedAmount()<10000){
-                viewHolder.tv_reservation.setText("¥"+info.getReservedAmount()+"万");
+                viewHolder.tv_reservation.setText("已预约 ¥"+info.getReservedAmount()+"万");
             }else{
                 double n = (double)info.getReservedAmount()/10000;
                 DecimalFormat  df   = new DecimalFormat("######0.00");
-                viewHolder.tv_reservation.setText("¥"+df.format(n)+"万");
+                viewHolder.tv_reservation.setText("已预约 ¥"+df.format(n)+"万");
             }
 //            viewHolder.tv_reservation.setText("¥"+info.getReservedAmount());
             Double holdRatios = info.getHoldRatios()*100;
-            int holdRatio = (new Double(holdRatios)).intValue();
-            viewHolder.tv_schedule.setText(holdRatio+"%");
-            if(info.getReserveTargetAmount()<10000){
-                viewHolder.tv_target_amount.setText("目标金额¥"+info.getReserveTargetAmount()+"万");
+            DecimalFormat df   = new DecimalFormat("######0.00");//展示两位数的倍数
+//            int holdRatio = (new Double(holdRatios)).intValue();
+            if(holdRatios==0){
+                viewHolder.tv_schedule.setText(0+"%");
             }else{
-                double n = (double)info.getReserveTargetAmount()/10000;
-                DecimalFormat  df   = new DecimalFormat("######0.00");
-                viewHolder.tv_target_amount.setText("目标金额¥"+df.format(n)+"万");
+                viewHolder.tv_schedule.setText(df.format(holdRatios)+"%");
+            }
+
+            if(info.getReserveTargetAmount()<10000){
+                viewHolder.tv_target_amount.setText("目标金额 ¥"+info.getReserveTargetAmount()+"万");
+            }else{
+                double n = (double)info.getReserveTargetAmount();
+                viewHolder.tv_target_amount.setText("目标金额 ¥"+df.format(n)+"万");
             }
 
             viewHolder.tv_subscription_number.setText("支持人数"+info.getReservedPeopleNum());

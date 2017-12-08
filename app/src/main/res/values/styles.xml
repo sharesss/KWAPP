@@ -147,11 +147,11 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="checked">false</item>
         <item name="mixedMode">top</item>
-        <item name="textColor">@color/font_main</item>
-        <item name="textColorLight">@color/orange</item>
-        <item name="textSize">@dimen/sp_14</item>
+        <item name="textColor">@color/gray</item>
+        <item name="textColorLight">@color/black</item>
+        <item name="textSize">@dimen/sp_10</item>
         <item name="gravity">center_horizontal</item>
-        <item name="textSizeLight">@dimen/sp_14</item>
+        <item name="textSizeLight">@dimen/sp_10</item>
     </style>
     <!-- 保险列表 选中按钮样式 -->
     <style name="insurace_list_item_mixed" parent="base_wrap">

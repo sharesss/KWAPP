@@ -25,6 +25,7 @@ public class ProgressUpdateEntity {
     private String  participationStartTime;//开始时间
     private String  participationEndTime;//结束时间
     private int  participationType;//类型1进度，2是分红
+    private int  participationState;//类型1进度，2是分红
     private List<Ceil> ceils=new ArrayList<>();
 
     public ProgressUpdateEntity(JSONObject jsonObject) {
@@ -35,6 +36,7 @@ public class ProgressUpdateEntity {
         this.bonusShareAmount = jsonObject.optInt("bonusShareAmount",0);
         this.annualizedReturn = jsonObject.optInt("annualizedReturn",0);
         this.participationType = jsonObject.optInt("participationType",0);
+        this.participationState = jsonObject.optInt("participationState",0);
         if (!jsonObject.isNull("participationStartTime")) {
             this.participationStartTime = DateFormatUtils.longToDate("yyyy-MM-dd", jsonObject.optLong("participationStartTime", 0));
         }
@@ -135,6 +137,14 @@ public class ProgressUpdateEntity {
 
     public void setParticipationType(int participationType) {
         this.participationType = participationType;
+    }
+
+    public int getParticipationState() {
+        return participationState;
+    }
+
+    public void setParticipationState(int participationState) {
+        this.participationState = participationState;
     }
 
     public List<Ceil> getCeils() {

@@ -64,7 +64,9 @@ public class FollowProjectAdapter extends FMBaseAdapter {
         }
         ConsumerEntity info = (ConsumerEntity) getItem(position);
         ViewHolder.iv_image.loadImage(info.getInvestPhoto());
-        ViewHolder.iv_portrait.loadImage(info.getHeadPic());
+        if(!info.getHeadPic().equals("")){
+            ViewHolder.iv_portrait.loadImage(info.getHeadPic());
+        }
         ViewHolder.tv_name.setText(info.getNickName());
         ViewHolder.tv_time.setText(info.getCreateTime());
         ViewHolder.tv_brand_name.setText(info.getInvestName());
@@ -80,7 +82,7 @@ public class FollowProjectAdapter extends FMBaseAdapter {
             ViewHolder.pb_greenindex.setVisibility(View.VISIBLE);
             ViewHolder.pb_index.setVisibility(View.GONE);
         }
-        ViewHolder.tv_index.setText(exponent+"%");
+        ViewHolder.tv_index.setText("可投指数"+exponent+"%");
 
         if(info.getHoldRatios()!=null){
             ViewHolder.pb_yellowindex.setVisibility(View.VISIBLE);
@@ -89,15 +91,23 @@ public class FollowProjectAdapter extends FMBaseAdapter {
             int exponents = (new Double(indexs)).intValue();
             ViewHolder.pb_yellowindex.setProgress(exponents);
             if(info.getReservedAmount()<10000){
-                ViewHolder.tv_reservation.setText("¥"+info.getReservedAmount()+"万");
+                ViewHolder.tv_reservation.setText("已预约¥ "+info.getReservedAmount()+"万");
             }else{
                 double n = (double)info.getReservedAmount()/10000;
                 DecimalFormat  df   = new DecimalFormat("######0.00");
-                ViewHolder.tv_reservation.setText("¥"+df.format(n)+"万");
+                ViewHolder.tv_reservation.setText("已预约¥ "+df.format(n)+"万");
             }
+
+//            int holdRatio = (new Double(holdRatios)).intValue();
             Double holdRatios = info.getHoldRatios()*100;
-            int holdRatio = (new Double(holdRatios)).intValue();
-            ViewHolder.tv_schedule.setText(holdRatio+"%");
+            DecimalFormat df   = new DecimalFormat("######0.00");//展示两位数的倍数
+//            int holdRatio = (new Double(holdRatios)).intValue();
+            if(holdRatios==0){
+                ViewHolder.tv_schedule.setText("进度"+0+"%");
+            }else{
+                ViewHolder.tv_schedule.setText("进度"+df.format(holdRatios)+"%");
+            }
+
             Long currenttime=System.currentTimeMillis()/1000;//获取系统时间的10位的时间戳
             Long finishtime =info.getReserveFinishTime()/1000;
             Long time =finishtime-currenttime;

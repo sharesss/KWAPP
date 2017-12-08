@@ -10,9 +10,9 @@ import com.ts.fmxt.FmxtApplication;
 
 public class HttpPathManager {
 //     public static String HOST = "http://touzhi.tunnel.qydev.com/investment-app-api/";//曾本地服务器
-//    public static String HOST = "http://192.168.1.145:8080/investment-app-api/";//阿峰本地服务器
-         public static String HOST = "http://kzf.tunnel.qydev.com/investment-app-api/";//阿峰本地服务器映射
-//    public static String HOST = "https://fmb.fmsecret.cn/investment-app-api/";//正式
+//    public static String HOST = "http://192.168.1.115:8080/investment-app-api/";//阿峰本地服务器
+//         public static String HOST = "http://kzf.tunnel.qydev.com/investment-app-api/";//阿峰本地服务器映射
+    public static String HOST = "https://fmb.fmsecret.cn/investment-app-api/";//正式
 //        public static String HOST = "https://t.fmsecret.cn/investment-app-api/";//测试
 
     //      public static String HOST = "http://fmb.fmsecret.cn/newfmb-app-server/rest";`
@@ -92,6 +92,8 @@ public class HttpPathManager {
     public static String INVESTDETAIL = INVEST+"investDetail";
     public static String INVESTBPLIST = INVEST+"investBPList";
     public static String FINDPROJECTPARTICIPATION = INVESTRENEWAL+"findProjectParticipation";
+    public static String FINDINVESTPROJECTPARTICIPATIONREMIND = INVESTRENEWAL+"findInvestProjectParticipationRemind";
+    public static String UPDATEINVESTPROJECTPARTICIPATIONREMINDSTATE = INVESTRENEWAL+"updateInvestProjectParticipationRemindState";
     public static String INVESTCOMMENTLIST = INVESTCOMMENT+"investCommentList";
     public static String SAVEINVESTCOMMENT = INVESTCOMMENT+"saveInvestComment";
     public static String SAVEINVESTCOMMENTLIKE = INVESTCOMMENT+"saveInvestCommentLike";

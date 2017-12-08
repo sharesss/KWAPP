@@ -14,7 +14,6 @@ import com.ts.fmxt.ui.user.view.WheelListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.StringUtils;
 import widget.popup.BaseEventPopup;
 import widget.wheelview.OnWheelChangedListener;
 import widget.wheelview.OnWheelScrollListener;
@@ -45,14 +44,9 @@ public class PopupWheelMoneyView extends BaseEventPopup implements OnClickListen
         int mount =(new Double(InitiateAmount)).intValue();
 //        String[] array=getContext().getResources().getStringArray(R.array.annual_salary);
         for(int i=mount;i<=FinancingAmount;i++){
-            if(!StringUtils.isEmpty(money)){
-                if(money.equals(i+"万")){
-                    mCurrentIndex=i;
-                }
-            }
             mArrayList.add(i+"万");
         }
-        this.money=mCurrentIndex+"";
+        this.money=mount+"";
         getView().findViewById(R.id.tv_finish).setOnClickListener(this);
         getView().findViewById(R.id.tv_clean).setOnClickListener(this);
 
@@ -147,7 +141,7 @@ public class PopupWheelMoneyView extends BaseEventPopup implements OnClickListen
             @Override
             public void onScrollingFinished(WheelView wheel) {
                 int currentItem = wheel.getCurrentItem();
-                String text = String.valueOf(currentItem+1);//(String) mAdapter.getItemText(currentItem)
+                String text = String.valueOf(currentItem+Integer.valueOf(money));//(String) mAdapter.getItemText(currentItem)
                 setItemTextSize(text, mAdapter);
                 money=text;
 

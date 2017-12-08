@@ -38,6 +38,7 @@ public class ReceiverUtils {
     public final static int IMREFRESH = 19;     //出价成功
     public final static int AUCTION_STATUS = 20;     //出价成功
     public final static int CERTIFIEDINVESTOR_FINISH = 21;     //认证结束
+    public final static int IS_VIEW = 22;     //认证结束
 
 
 

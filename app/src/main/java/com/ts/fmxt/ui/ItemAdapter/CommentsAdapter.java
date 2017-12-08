@@ -70,7 +70,10 @@ public class CommentsAdapter extends FMBaseAdapter implements KeyMapDailog.SendB
             mHolder = (CommentsAdapter.ViewHolder) convertView.getTag();
         }
         ConsumerCommentEntity item = (ConsumerCommentEntity) getItem(position);
-        mHolder.iv_portrait.loadImage(item.getHeadPic());
+        if(!item.getHeadPic().equals("")){
+            mHolder.iv_portrait.loadImage(item.getHeadPic());
+        }
+
         mHolder.tv_time.setText(item.getTime());
 
         mHolder.tv_name.setText(item.getNickName());

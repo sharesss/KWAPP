@@ -31,7 +31,9 @@ public class ConsumerEntity {
     private int   notDokels;//不值得投票数
     private int   isVote;//0表示当前用户并未投票，大于0表示当成用户
     private int   isCollect;//是否收藏：0否 ，1是
+    private int   isFollow;//是否跟投：0否 ，1是
     private int   voteNum;//投票总数
+    private int   collectNum;//收藏总数
     private String amount;
     private Long  reserveFinishTime;//预约截止时间
     private int reservedAmount;//已预约金额
@@ -59,8 +61,10 @@ public class ConsumerEntity {
         this.dokels = jsonObject.optInt("dokels");
         this.notDokels = jsonObject.optInt("notDokels");
         this.isVote = jsonObject.optInt("isVote");
+        this.isFollow = jsonObject.optInt("isFollow");
         this.isCollect = jsonObject.optInt("isCollect");
         this.voteNum = jsonObject.optInt("voteNum");
+        this.collectNum = jsonObject.optInt("collectNum");
         this.reservedAmount = jsonObject.optInt("reservedAmount",0);
         this.reserveTargetAmount = jsonObject.optInt("reserveTargetAmount",0);
         this.reservedPeopleNum = jsonObject.optInt("reservedPeopleNum",0);
@@ -141,8 +145,10 @@ public class ConsumerEntity {
         this.dokels = jsonObject.optInt("dokels");
         this.notDokels = jsonObject.optInt("notDokels");
         this.isVote = jsonObject.optInt("isVote");
+        this.isFollow = jsonObject.optInt("isFollow");
         this.isCollect = jsonObject.optInt("isCollect");
         this.voteNum = jsonObject.optInt("voteNum");
+        this.collectNum = jsonObject.optInt("collectNum");
         this.reservedAmount = jsonObject.optInt("reservedAmount",0);
         this.reserveTargetAmount = jsonObject.optInt("reserveTargetAmount",0);
         this.reservedPeopleNum = jsonObject.optInt("reservedPeopleNum",0);
@@ -299,12 +305,28 @@ public class ConsumerEntity {
         this.isCollect = isCollect;
     }
 
+    public int getIsFollow() {
+        return isFollow;
+    }
+
+    public void setIsFollow(int isFollow) {
+        this.isFollow = isFollow;
+    }
+
     public int getVoteNum() {
         return voteNum;
     }
 
     public void setVoteNum(int voteNum) {
         this.voteNum = voteNum;
+    }
+
+    public int getCollectNum() {
+        return collectNum;
+    }
+
+    public void setCollectNum(int collectNum) {
+        this.collectNum = collectNum;
     }
 
     public String getAmount() {

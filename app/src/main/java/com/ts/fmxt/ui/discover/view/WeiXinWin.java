@@ -25,15 +25,16 @@ public class WeiXinWin extends PopupWindow {
     private View mMenuView;
     private Activity context;
     private WebView mWebView;
-    private TextView tv_collection,tv_weixinnum;
+    private TextView tv_collection,tv_weixinnum,tv_investName,tv_circleX;
     private FMNetImageView iv_image;
     public String url;
     String weixinNum;
-    String weixinCode;
-    public WeiXinWin(Activity context,String weixinNum,String weixinCode){
+    String weixinCode,investName;
+    public WeiXinWin(Activity context,String weixinNum,String weixinCode,String investName){
         this.context = context;
         this.weixinCode =weixinCode;
         this.weixinNum = weixinNum;
+        this.investName = investName;
         initParam();
 
     }
@@ -65,6 +66,9 @@ public class WeiXinWin extends PopupWindow {
         tv_collection = (TextView) mMenuView.findViewById(R.id.tv_collection);
         tv_weixinnum = (TextView) mMenuView.findViewById(R.id.tv_weixinnum);
         iv_image = (FMNetImageView) mMenuView.findViewById(R.id.iv_image);
+        tv_investName = (TextView) mMenuView.findViewById(R.id.tv_investName);
+        tv_circleX = (TextView) mMenuView.findViewById(R.id.tv_circleX);
+        tv_investName.setText("【暗号："+investName+"】");
         tv_weixinnum.setText("客服微信："+weixinNum);
         iv_image.loadImage(weixinCode);
         tv_collection.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +84,12 @@ public class WeiXinWin extends PopupWindow {
                     ToastHelper.toastMessage(context,"微信号已复制");
                 }
 
+            }
+        });
+        tv_circleX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
             }
         });
     }

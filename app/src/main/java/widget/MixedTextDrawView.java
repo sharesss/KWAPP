@@ -99,7 +99,7 @@ public class MixedTextDrawView extends LinearLayout {
 			textColorLight = mTypedArray.getColor(
 					R.styleable.MixedTextDraw_textColorLight, 0);
 			textSize = mTypedArray.getDimensionPixelSize(
-					R.styleable.MixedTextDraw_textSize, 12);
+					R.styleable.MixedTextDraw_textSize, 10);
 			textSizeLight = mTypedArray.getDimensionPixelSize(
 					R.styleable.MixedTextDraw_textSizeLight, 0);
 

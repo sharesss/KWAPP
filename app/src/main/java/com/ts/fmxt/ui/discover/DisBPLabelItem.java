@@ -25,7 +25,7 @@ public class DisBPLabelItem implements BaseViewItem, View.OnClickListener {
                     activity.InvestBPListRequest(true);
                     activity.adapter.notifyDataSetChanged();
                 } else {
-                    ToastHelper.toastMessage(activity,"至少要给3个BP评分后才能查看");
+                    ToastHelper.toastMessage(activity,"项目亮点打分后才能查看");
                 }
 
                 break;

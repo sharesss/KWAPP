@@ -73,22 +73,26 @@ public class DiscoverCircleItem implements BaseViewItem,View.OnClickListener {
         int progre = Math.round(percen);
         viewHolder.ivRedCirclebar.setText(String.valueOf(progre));//中间的数字
         viewHolder.ivRedCirclebar.setSweepAngle(inxe);//进度
-        if (info.getIsVote() == 0) {
-            viewHolder.ll_dokels.setOnClickListener(this);
-            viewHolder.ll_notdokels.setOnClickListener(this);
-        } else if (info.getIsVote() == 1) {
-            viewHolder.tvWorth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
-            viewHolder.tvWorth.setTextColor(resources.getColor(R.color.gray));
+//        if (info.getIsVote() == 0) {
+//            viewHolder.ll_dokels.setOnClickListener(this);
+//            viewHolder.ll_notdokels.setOnClickListener(this);
+//        } else
+            if (info.getIsVote() == 1) {
+            viewHolder.tvWorth.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
+            viewHolder.tvWorth.setTextColor(resources.getColor(R.color.text_black));
             viewHolder.tvNoworth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
             viewHolder.tvNoworth.setTextColor(resources.getColor(R.color.gray));
+
             type = 1;
         } else if (info.getIsVote() == 2) {
             viewHolder.tvWorth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
             viewHolder.tvWorth.setTextColor(resources.getColor(R.color.gray));
-            viewHolder.tvNoworth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
-            viewHolder.tvNoworth.setTextColor(resources.getColor(R.color.gray));
+            viewHolder.tvNoworth.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
+            viewHolder.tvNoworth.setTextColor(resources.getColor(R.color.text_black));
             type = 2;
         }
+        viewHolder.ll_dokels.setOnClickListener(this);
+        viewHolder.ll_notdokels.setOnClickListener(this);
 
     }
     public int getType() {
@@ -111,6 +115,10 @@ public class DiscoverCircleItem implements BaseViewItem,View.OnClickListener {
                     UISKipUtils.startLoginActivity(activity);
                     return;
                 }
+                if (info.getIsVote() != 0) {
+                    ToastHelper.toastMessage(activity,"你已经投过票了");
+                    return;
+                }
                 type = 1;
                 IsWorthRequest(type);
                 break;
@@ -118,6 +126,10 @@ public class DiscoverCircleItem implements BaseViewItem,View.OnClickListener {
             case R.id.ll_notdokels://不值得投
                 if (token.equals("")) {
                     UISKipUtils.startLoginActivity(activity);
+                    return;
+                }
+                if (info.getIsVote() != 0) {
+                    ToastHelper.toastMessage(activity,"你已经投过票了");
                     return;
                 }
                 type = 2;
@@ -185,12 +197,20 @@ public class DiscoverCircleItem implements BaseViewItem,View.OnClickListener {
                                 String stats = json.getString("stats");
                                 String msg = json.getString("msg");
                                 if (stats.equals("1")) {
-                                    viewHolder.tvWorth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
-                                    viewHolder.tvWorth.setTextColor(resources.getColor(R.color.gray));
-                                    viewHolder.tvNoworth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
-                                    viewHolder.tvNoworth.setTextColor(resources.getColor(R.color.gray));
-                                    viewHolder.ll_dokels.setOnClickListener(null);
-                                    viewHolder.ll_notdokels.setOnClickListener(null);
+//                                    if (type == 1) {
+//                                        viewHolder.tvWorth.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
+//                                        viewHolder.tvWorth.setTextColor(resources.getColor(R.color.white));
+//                                        viewHolder.tvNoworth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
+//                                        viewHolder.tvNoworth.setTextColor(resources.getColor(R.color.gray));
+//                                    } else if (type == 2) {
+//                                        viewHolder.tvWorth.setBackground(resources.getDrawable(R.drawable.bg_gray_circle));
+//                                        viewHolder.tvWorth.setTextColor(resources.getColor(R.color.gray));
+//                                        viewHolder.tvNoworth.setBackground(resources.getDrawable(R.drawable.bg_orange_5_shape));
+//                                        viewHolder.tvNoworth.setTextColor(resources.getColor(R.color.white));
+//                                    }
+                                    activity.DiscoverDetailsRequest();
+//                                    viewHolder.ll_dokels.setOnClickListener(null);
+//                                    viewHolder.ll_notdokels.setOnClickListener(null);
                                 } else {
                                     ToastHelper.toastMessage(activity, msg);
 

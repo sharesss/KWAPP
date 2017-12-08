@@ -30,8 +30,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         app:checked="true"
-        app:drawable="@mipmap/stock_auction_off"
-        app:drawableLight="@mipmap/stock_auction_on"
+        app:drawable="@mipmap/stock_auction_off_gray"
+        app:drawableLight="@mipmap/stock_auction_on_back"
         app:text="小额跟投" />
 
 
@@ -54,8 +54,8 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        app:drawable="@mipmap/tab_mine_icon_0ff"
-        app:drawableLight="@mipmap/tab_mine_on"
+        app:drawable="@mipmap/tab_mine_icon_0ff_gray"
+        app:drawableLight="@mipmap/tab_mine_on_back"
         app:text="个人中心" />
 
     </LinearLayout>

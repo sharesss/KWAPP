@@ -40,7 +40,11 @@ public class RealNameResultActivity extends FMBaseActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 finish();
+                SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
+                SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+                editor.putInt("isTruenameAuthen", 1);
                 Bundle bundle = new Bundle();
+                editor.commit();
                 ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
             }
         });

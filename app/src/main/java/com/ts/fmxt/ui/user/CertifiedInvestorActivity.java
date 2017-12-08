@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import http.data.AuthenticationEntity;
+import http.data.UserInfoEntity;
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
 import utils.FileUtils;
@@ -55,6 +56,7 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
     private LinearLayout ll_authentication;
     private boolean ivPictureFlg = false;
     private int type,state;
+    private UserInfoEntity userInfo;
 
     @Override
     public void onMessage(int receiverType, Bundle bundle) {
@@ -288,7 +290,7 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
                             if (!js.isNull("statsMsg")) {
                                 JSONObject json = js.optJSONObject("statsMsg");
                                 String stats = json.getString("stats");
-
+                                userInfoRequest();
                                 if (stats.equals("1")) {
                                     if(type==0){
                                         String msg = json.getString("msg");
@@ -299,6 +301,8 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
                                         info =  new AuthenticationEntity(js.getJSONObject("assets"));
                                         formatData();
                                     }
+
+                                    SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
                                     Bundle bundle = new Bundle();
                                     ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
 
@@ -452,5 +456,54 @@ public class CertifiedInvestorActivity extends FMBaseActivity implements View.On
         intent.putExtra("outputY", 320);
         intent.putExtra("return-data", true);
         startActivityForResult(intent, 2);
+    }
+
+    private void  userInfoRequest(){
+        SharedPreferences sharedPreferences= getSharedPreferences("user",
+                MODE_PRIVATE);
+        String token=sharedPreferences.getString("token", "");
+        Map<String, String> staff = new HashMap<String, String>();
+        staff.put("tokenId",token);
+        staff.put("userId","");
+
+        OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.INFORMATION,
+                new OkHttpClientManager.ResultCallback<String>() {
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject js = new JSONObject(result);
+                            if (!js.isNull("statsMsg")) {
+                                JSONObject json = js.optJSONObject("statsMsg");
+                                String stats = json.getString("stats");
+                                String msg = json.getString("msg");
+                                if (stats.equals("1")) {
+                                    if(!js.isNull("information")){
+                                        JSONObject jsonobj = js.optJSONObject("information");
+                                        userInfo = new UserInfoEntity(jsonobj);
+                                        SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+                                        editor.putInt("isTruenameAuthen", userInfo.getIsTruenameAuthen());
+                                        editor.putInt("isinvestauthen", userInfo.getIsinvestauthen());
+                                        editor.putInt("auditstate", userInfo.getAuditstate());
+
+                                        editor.commit();    //提交数据保存
+
+                                    }
+                                } else {
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, staff
+        );
     }
 }

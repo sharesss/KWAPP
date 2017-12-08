@@ -19,7 +19,7 @@
         android:layout_centerVertical = "true"
         android:progressDrawable="@drawable/yellowcolor"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_height="5dp"
+        android:layout_height="3dp"
         android:indeterminate="false" />
         <TextView
             android:id="@+id/tv_fraction"
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf= "@id/pb_yellowindex"
             android:text="10分"
+            android:textSize="@dimen/dp_10"
             android:layout_gravity="bottom"
             android:layout_centerVertical = "true"
             android:textColor="@color/orange"
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf= "@id/tv_fraction"
             android:text="30人"
+            android:textSize="@dimen/dp_10"
             android:layout_gravity="bottom"
             android:layout_centerVertical = "true"
             android:layout_marginLeft="5dp"
@@ -72,14 +74,16 @@
         <SeekBar
             android:id="@+id/sb_bp"
             android:layout_width="250dp"
-            android:layout_height="5dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/tv_seekbar_distance"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="5dp"
+            android:maxHeight="2dp"
             android:max="10"
             android:progress="0"
             android:progressDrawable="@drawable/yellowcolor"
-            android:thumb="@drawable/thumb_image" />
+            android:thumb="@drawable/thumb_image"
+            android:thumbOffset="5dip"  />
 
         <TextView
             android:id="@+id/tv_max"
@@ -87,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_seekbar_distance"
             android:layout_toRightOf="@id/sb_bp"
+            android:textSize="@dimen/dp_10"
             android:text="10" />
 
         <TextView
@@ -95,8 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="确定评分"
-            android:background="@drawable/bg_orange_5_shape"
-            android:textColor="@color/white"
+            android:background="@drawable/bg_orange_8_shape"
+            android:textColor="@color/text_black_main"
             android:visibility="gone"
             android:layout_alignBaseline="@+id/tv_max"
             android:layout_alignBottom="@+id/tv_max"

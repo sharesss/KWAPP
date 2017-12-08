@@ -19,6 +19,7 @@ import java.util.Map;
 
 import http.manager.HttpPathManager;
 import http.manager.OkHttpClientManager;
+import utils.ReceiverUtils;
 import utils.SpannableUtils;
 import utils.helper.ToastHelper;
 import widget.titlebar.NavigationView;
@@ -55,7 +56,7 @@ public class RealNameSuccessActivity extends FMBaseActivity {
             }
         });
 
-        tv_desc.setText(SpannableUtils.getSpannableStr(getResourcesStr(R.string.text_authorization_1), getResourcesStr(R.string.text_authorization_2), getResourcesColor(R.color.font_main_third), 0f));
+        tv_desc.setText(SpannableUtils.getSpannableStr(getResourcesStr(R.string.text_authorization_1), getResourcesStr(R.string.text_authorization_2), getResourcesColor(R.color.text_gray), 0f));
         userRealRequest();
     }
 
@@ -90,7 +91,12 @@ public class RealNameSuccessActivity extends FMBaseActivity {
                                     ed_name.setText(name);
                                     no = no.substring(0, 2) + "**************" + no.substring(16, 18);
                                     ed_no.setText(no);
-
+                                    SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = share.edit(); //使处于可编辑状态
+                                    editor.putInt("isTruenameAuthen", 1);
+                                    editor.commit();    //提交数据保存
+                                    Bundle bundle = new Bundle();
+                                    ReceiverUtils.sendReceiver(ReceiverUtils.REFRESH,bundle);
                                 } else {
                                     ToastHelper.toastMessage(RealNameSuccessActivity.this, msg);
                                 }
@@ -103,6 +109,4 @@ public class RealNameSuccessActivity extends FMBaseActivity {
                 }, staff
         );
     }
-
-
 }

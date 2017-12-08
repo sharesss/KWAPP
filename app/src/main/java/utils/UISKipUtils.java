@@ -352,9 +352,11 @@ public class UISKipUtils {
         intent.putExtra("isOver", isOver);
         context.startActivity(intent);
     }
-    public static void startCommentActivity(Activity context,int investId){
+    public static void startCommentActivity(Activity context,int investId,int isOver,int isFollow){
         Intent intent = new Intent(context, CommentActivity.class);
         intent.putExtra("investId", investId);
+        intent.putExtra("isOver", isOver);
+        intent.putExtra("isFollow", isFollow);
         context.startActivity(intent);
     }
 

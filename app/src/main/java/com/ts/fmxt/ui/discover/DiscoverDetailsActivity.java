@@ -70,7 +70,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private boolean isCollect;
 
     private int recLen = 3;
-    private int types,isOver=0;
+    private int types,isOver=0,isFollow=0;
     public RecyclerViewAdapter adapter;
     ArrayList<BaseViewItem> list;
     RecyclerView recyclerView;
@@ -156,7 +156,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private View tab_bar;
     private int firstItemPosition = -1;
     private int oldindex = -1;
-
+    int state;//状态
     /**
      * 滑动头部哪个模块的 就标记哪个模块
      * @param index
@@ -299,7 +299,14 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info, DiscoverDetailsActivity.this, investId);
         ProjectReturnItem projectReturnItem = new ProjectReturnItem(info, DiscoverDetailsActivity.this);
         MyStoryItem myStoryItem = new MyStoryItem(info, DiscoverDetailsActivity.this);
-        tabItem = new TabItem( callBack);
+
+        for(int i=0;i< arr.size();i++){
+            if(arr.get(i).getParticipationState()==1){
+                state = arr.get(i).getParticipationState();
+            }
+
+        }
+        tabItem = new TabItem( callBack,state,DiscoverDetailsActivity.this);
         setBar(tabItem);
         headlist.add(1, discoverCircleItem);
         headlist.add(2, new LineItem());
@@ -310,32 +317,31 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         if(info.getCeils().size()!=0){
             headlist.add(projectReturnItem);
         }
-//        if (listcomment.isEmpty()) {
-//            if(info.getCeis().size()!=0){
-//                headlist.add(3, myStoryItem);
-//
-//            }
-//            if(info.getCeils().size()!=0){
-//                headlist.add(4, projectReturnItem);
-//            }
-//
-//        } else {
-//
-//        }
 
         list.addAll(0, headlist);
 
         Long currenttime=System.currentTimeMillis()/1000;//获取系统时间的10位的时间戳
         Long finishtime =info.getReserveFinishTime()/1000;
         Long time =finishtime-currenttime;
+
         if(time>0) {
-            isOver=1;
-            tvWithTheVote.setOnClickListener(this);
-            tvWithTheVote.setText("继续跟投");
-            tvWithTheVote.setTextColor(getResources().getColor(R.color.white));
-            tvWithTheVote.setBackground(getResources().getDrawable(R.drawable.bg_orange_5_shape));
+            if(info.getIsFollow()==0){
+                isOver=1;
+                tvWithTheVote.setOnClickListener(this);
+                tvWithTheVote.setText("我要跟投");
+                tvWithTheVote.setTextColor(getResources().getColor(R.color.text_black_main));
+                tvWithTheVote.setBackground(getResources().getDrawable(R.drawable.bg_orange_5_shape));
+            }else{
+                isOver=1;
+                isFollow=1;
+                tvWithTheVote.setOnClickListener(this);
+                tvWithTheVote.setText("继续跟投");
+                tvWithTheVote.setTextColor(getResources().getColor(R.color.text_black_main));
+                tvWithTheVote.setBackground(getResources().getDrawable(R.drawable.bg_orange_5_shape));
+            }
+
         }else{
-            tvWithTheVote.setOnClickListener(null);
+            tvWithTheVote.setOnClickListener(this);
             tvWithTheVote.setText("跟投已经结束");
             tvWithTheVote.setTextColor(getResources().getColor(R.color.white));
             tvWithTheVote.setBackground(getResources().getDrawable(R.drawable.bg_gray));
@@ -349,6 +355,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         Drawable sexDrawble = getResources().getDrawable(info.getIsCollect() == 1 ? R.mipmap.card_detail_s : R.mipmap.card_detail_n);
         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
         tvCollection.setCompoundDrawables(sexDrawble, null, null, null);
+        tvCollection.setText(info.getCollectNum()+"");
         if(info.getIsCollect() == 1){
             isCollect=true;
         }else{
@@ -377,6 +384,9 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
 //        DiscoverLabelItem labelItem = new DiscoverLabelItem(arr, callBack);
 //        labellist.add(labelItem);
+
+        ProjectHighlightsItem  projectHighlights = new ProjectHighlightsItem( DiscoverDetailsActivity.this);
+        labellist.add(projectHighlights);
         int cont = 0;
         for (InvestBPListEntity entity : arr) {
             DisBPItem disBPItem = new DisBPItem(entity, investId,this);
@@ -404,7 +414,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         }
         list.removeAll(updatelist);
         updatelist.clear();
-
+        if(arr.size()>0){
+            ProjectProgressItem  projectHighlights = new ProjectProgressItem( DiscoverDetailsActivity.this);
+            updatelist.add(projectHighlights);
+        }
         for (ProgressUpdateEntity entity : arr) {
             if (entity.getParticipationType() == 1) {
                 ProgressUpdateItem disBPItem = new ProgressUpdateItem(entity, this);
@@ -418,7 +431,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 //        DisBPLabelItem disBPLabelItem = new DisBPLabelItem(cont, DiscoverDetailsActivity.this);
 //        labellist.add(disBPLabelItem);
         if (headlist.isEmpty()) {
-            list.addAll(0, updatelist);
+            list.addAll(0+labellist.size(), updatelist);
         } else {
             list.addAll(headlist.size()+labellist.size(), updatelist);
         }
@@ -442,22 +455,29 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 showShareDialog(info);
                 break;
             case R.id.ll_group:
-                win =new WeiXinWin(this,weixinNum,weixinCode);
-                win.showAtLocation(
-                        findViewById(R.id.AppWidget),
-                        Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
+                if(info.getIsFollow()==0){
+                        ToastHelper.toastMessage(DiscoverDetailsActivity.this,"预约跟投后可加入路演群");
+                }else if(info.getIsFollow()==1){
+                    win =new WeiXinWin(this,weixinNum,weixinCode,info.getInvestName());
+                    win.showAtLocation(
+                            findViewById(R.id.AppWidget),
+                            Gravity.CENTER | Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
+                }
+
 //                ToastHelper.toastMessage(this,"微信群");
                 break;
             case R.id.tv_report://举报
-                if (!checkLogin()) {
+                if (token.equals("")) {
                     MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
                     mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
                     mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
 
                         @Override
                         public void onEventClick(PopupObject obj) {
-                            if (obj.getWhat() == 1)
+                            if (obj.getWhat() == 1){
                                 UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                            }
+
                         }
                     });
                     mPopupDialogWidget.showPopupWindow();
@@ -467,15 +487,17 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 UISKipUtils.startReportActivity(DiscoverDetailsActivity.this,investId);
                 break;
             case R.id.ll_collection:
-                if (!checkLogin()) {
+                if (token.equals("")) {
                     MessageContentDialog mPopupDialogWidget = new MessageContentDialog(DiscoverDetailsActivity.this);
                     mPopupDialogWidget.setMessage("您还未登录，是否去登录？");
                     mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
 
                         @Override
                         public void onEventClick(PopupObject obj) {
-                            if (obj.getWhat() == 1)
+                            if (obj.getWhat() == 1){
                                 UISKipUtils.startLoginActivity(DiscoverDetailsActivity.this);
+                            }
+
                         }
                     });
                     mPopupDialogWidget.showPopupWindow();
@@ -487,6 +509,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                     isCollect = false;
                 } else {
                     collectionRequest(1);
+
                     isCollect = true;
                 }
                 break;
@@ -582,12 +605,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
 
                      return;
                  }
-                 UISKipUtils.startCommentActivity(DiscoverDetailsActivity.this, investId);
+                 UISKipUtils.startCommentActivity(DiscoverDetailsActivity.this, investId,isOver,isFollow);
                     break;
         }
     }
 
-    private void DiscoverDetailsRequest() {
+    public void DiscoverDetailsRequest() {
 //        if (!checkLogin()) {
 //            return;
 //        }
@@ -690,7 +713,6 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                                 recyclerView.smoothScrollToPosition(index + 1);
                                             }
                                         }
-
                                     }
                                 } else {
 //                                    llTemp.setVisibility(View.GONE);
@@ -863,11 +885,23 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                         Drawable sexDrawble = getResources().getDrawable(R.mipmap.card_detail_s);
                                         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
                                         tvCollection.setCompoundDrawables(sexDrawble, null, null, null);
+                                        if(info.getIsCollect() == 1){
+                                            tvCollection.setText(info.getCollectNum()+"");
+                                        }else{
+                                            tvCollection.setText(info.getCollectNum()+1+"");
+                                        }
+
                                         ToastHelper.toastMessage(DiscoverDetailsActivity.this, "收藏成功");
                                     } else {
                                         Drawable sexDrawble = getResources().getDrawable(R.mipmap.card_detail_n);
                                         sexDrawble.setBounds(0, 0, sexDrawble.getMinimumWidth(), sexDrawble.getMinimumHeight());
                                         tvCollection.setCompoundDrawables(sexDrawble, null, null, null);
+                                        if(info.getIsCollect() == 1){
+                                            tvCollection.setText(info.getCollectNum()-1+"");
+                                        }else{
+                                            tvCollection.setText(info.getCollectNum()+"");
+                                        }
+
                                         ToastHelper.toastMessage(DiscoverDetailsActivity.this, "取消收藏成功");
                                     }
 
@@ -937,12 +971,12 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         );
 
     }
-
+    ArrayList<ProgressUpdateEntity> arr= new ArrayList<ProgressUpdateEntity>();
     //项目更新信息
     public void ProjectRenewalRequest() {//
         final Map<String, String> staff = new HashMap<String, String>();
         staff.put("investId", String.valueOf(investId));
-         staff.put("informState", String.valueOf("1"));
+         staff.put("participationState", String.valueOf("1"));
         OkHttpClientManager.postAsyn(HttpPathManager.HOST + HttpPathManager.FINDPROJECTPARTICIPATION,
                 new OkHttpClientManager.ResultCallback<String>() {
 
@@ -964,13 +998,13 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                     if (!js.isNull("projectParticipations")) {
 //                                        TableList tableList = new TableList();
                                         JSONArray array = js.optJSONArray("projectParticipations");
-                                        ArrayList<ProgressUpdateEntity> arr = new ArrayList<ProgressUpdateEntity>();
                                         for (int i = 0; i < array.length(); i++) {
                                             arr.add(new ProgressUpdateEntity(array.getJSONObject(i)));
                                         }
                                         ProgressUpdateData(arr);
                                     }
                                 } else {
+                                    ProgressUpdateData(null);
                                     ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
                                 }
                             }
@@ -1056,6 +1090,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
 
     private void RequestBoot() {
-        recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+        recyclerView.smoothScrollToPosition(adapter.getItemCount() );
     }
+
+
 }

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
+        android:textColor="@color/title_black_main"
         android:textSize="18sp"
         android:text="奢分期"/>
     <TextView
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:textColor="@color/gray_line"
+        android:textColor="@color/text_black_main"
         android:textSize="12sp"
         />
     <View
@@ -44,7 +44,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
-                android:textColor="@color/gray_line"
+                android:textColor="@color/text_black_main"
                 android:text="项目投资总金额"
                 />
             <TextView
@@ -76,7 +76,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center"
-            android:textColor="@color/gray_line"
+            android:textColor="@color/text_black_main"
             android:text="本次分红金额"
             />
         <TextView
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textColor="@color/orange"
+            android:textColor="@color/text_orange"
             />
     </LinearLayout>
     <View
@@ -109,7 +109,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center"
-            android:textColor="@color/gray_line"
+            android:textColor="@color/text_black_main"
             android:text="平均年回报率"
             />
         <TextView
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textColor="@color/orange"
+            android:textColor="@color/text_orange"
             />
     </LinearLayout>
     <View
@@ -141,7 +141,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center"
-            android:textColor="@color/gray_line"
+            android:textColor="@color/text_black_main"
             android:text="本期分红周期"
             />
         <TextView

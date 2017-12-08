@@ -50,7 +50,8 @@
                     android:id="@+id/iv_brand_icon"
                     android:layout_width="@dimen/dp_50"
                     android:layout_height="@dimen/dp_50"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/def_02"/>
                 <TextView
                     android:id="@+id/tv_max"
                     android:layout_width="wrap_content"

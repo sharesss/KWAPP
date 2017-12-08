@@ -93,7 +93,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
             rl_sp_bp.setVisibility(View.GONE);
             ll_pb.setVisibility(View.VISIBLE);
             pb_yellowindex.setProgress(info.getScore());
-            tv_ceek.setText("此BP评价结果");
+            tv_ceek.setText("此BP评分结果");
         }
         tv_fraction.setText(info.getScore()+"分");
         tv_peoplenum.setText(info.getPeopleNum()+"人");
@@ -120,20 +120,20 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
 
                     return;
                 }
-                if(isTruenameAuthen==0){
-                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) context);
-                    mPopupDialogWidget.setMessage("您还实名认证，是否去认证？");
-                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
-
-                        @Override
-                        public void onEventClick(PopupObject obj) {
-                            if (obj.getWhat() == 1)
-                                UISKipUtils.startRealNameActivity((Activity) context);
-                        }
-                    });
-                    mPopupDialogWidget.showPopupWindow();
-                    return;
-                }
+//                if(isTruenameAuthen==0){
+//                    MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) context);
+//                    mPopupDialogWidget.setMessage("您还未实名认证，是否去认证？");
+//                    mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+//
+//                        @Override
+//                        public void onEventClick(PopupObject obj) {
+//                            if (obj.getWhat() == 1)
+//                                UISKipUtils.startRealNameActivity((Activity) context);
+//                        }
+//                    });
+//                    mPopupDialogWidget.showPopupWindow();
+//                    return;
+//                }
                 investBPGradeRequest(investIds);
 
             }
@@ -173,20 +173,20 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
                 mPopupDialogWidget.showPopupWindow();
                 return;
             }
-        if(isTruenameAuthen==0){
-            MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) context);
-            mPopupDialogWidget.setMessage("您还实名认证，是否去认证？");
-            mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
-
-                @Override
-                public void onEventClick(PopupObject obj) {
-                    if (obj.getWhat() == 1)
-                        UISKipUtils.startRealNameActivity((Activity) context);
-                }
-            });
-            mPopupDialogWidget.showPopupWindow();
-            return;
-        }
+//        if(isTruenameAuthen==0){
+//            MessageContentDialog mPopupDialogWidget = new MessageContentDialog((Activity) context);
+//            mPopupDialogWidget.setMessage("您还实名认证，是否去认证？");
+//            mPopupDialogWidget.setOnEventClickListener(new BaseDoubleEventPopup.onEventClickListener() {
+//
+//                @Override
+//                public void onEventClick(PopupObject obj) {
+//                    if (obj.getWhat() == 1)
+//                        UISKipUtils.startRealNameActivity((Activity) context);
+//                }
+//            });
+//            mPopupDialogWidget.showPopupWindow();
+//            return;
+//        }
     }
     // 停止拖动
     @Override
@@ -201,12 +201,12 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
             tv_seekbar_distance.setVisibility(View.GONE);
             return;
         }
-        if(isTruenameAuthen==0){
-            seekBar.setProgress(0);
-            tv_result.setVisibility(View.GONE);
-            tv_seekbar_distance.setVisibility(View.GONE);
-            return;
-        }
+//        if(isTruenameAuthen==0){
+//            seekBar.setProgress(0);
+//            tv_result.setVisibility(View.GONE);
+//            tv_seekbar_distance.setVisibility(View.GONE);
+//            return;
+//        }
 
     }
 
@@ -241,7 +241,7 @@ public class seekBar extends RelativeLayout implements SeekBar.OnSeekBarChangeLi
                                     rl_sp_bp.setVisibility(View.GONE);
                                     ll_pb.setVisibility(View.VISIBLE);
                                     pb_yellowindex.setProgress(info.getScore());
-                                    tv_ceek.setText("此BP评价结果");
+                                    tv_ceek.setText("此BP评分结果");
                                     String fen = tv_seekbar_distance.getText().toString();
                                     int SumTotal = info.getSumTotal()+Integer.valueOf(fen);
                                     int PeopleNum = info.getPeopleNum()+1;
