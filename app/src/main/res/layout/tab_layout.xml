@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:gravity="center"
-        android:layout_height="40dp">
+        android:layout_height="@dimen/tap_h">
         <TextView
             android:id="@+id/tv_my_story"
             android:layout_width="0dp"

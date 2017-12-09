@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OlLinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -100,7 +101,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         list = new ArrayList<BaseViewItem>();
         adapter = new RecyclerViewAdapter(this, list);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        LinearLayoutManager wrapContentLinearLayoutManager = new LinearLayoutManager(this);
+        OlLinearLayoutManager wrapContentLinearLayoutManager = new OlLinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(wrapContentLinearLayoutManager);
         recyclerView.setAdapter(adapter);

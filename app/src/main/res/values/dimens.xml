@@ -51,5 +51,7 @@
     <dimen name="overlap_pager_margin">-60dp</dimen>
     <dimen name="dp_280">280dp</dimen>
 
+    <dimen name="tap_h">40dp</dimen>
+
 
 </resources>
