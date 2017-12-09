@@ -439,7 +439,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
         }else if(checktext4.equals("是")){
             staff.put("isFamousInvestor", "1");//是否知名机构
         }
-        if(tv_currency_type.equals("RMB¥")){
+        if(tv_currency_type.getText().toString().equals("RMB¥")){
             staff.put("investMoneyUnit", "1");//是否知名机构
         }else{
             staff.put("investMoneyUnit", "2");//是否知名机构
@@ -596,7 +596,7 @@ public class SettingInvestmentPreferenceActivity  extends FMBaseActivity impleme
                                         edt_mini_num.setText(info.getInvestSumMin()+"");//
                                         edt_maxi_num.setText(info.getInvestSumMax()+"");//
                                         if(info.getInvestMoneyUnit()==1){
-                                            tv_currency_type.setText("人民币¥");//
+                                            tv_currency_type.setText("RMB¥");//
                                         }else{
                                             tv_currency_type.setText("US$");//
                                         }

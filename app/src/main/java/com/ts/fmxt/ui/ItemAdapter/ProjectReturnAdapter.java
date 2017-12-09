@@ -67,7 +67,7 @@ public class ProjectReturnAdapter extends FMBaseAdapter {
             ViewHolder.tv_reservation_money.setText("预约金：¥"+mount);
                 money= info.getFinancingAmount()-info.getAlreadyBookedMoney();
                 ViewHolder.tv_shares_num.setText("已预约 "+info.getAlreadyBookedMoney()+"万"+"/剩余"+money+"万");
-            ViewHolder.tv_confirm.setBackground(money>0&&info.getIsYetBut()==0&&isOver==1? getContext().getResources().getDrawable(R.drawable.bg_full_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_full_gray_5_shape));
+            ViewHolder.tv_confirm.setBackground(money>0&&info.getIsYetBut()==0&&isOver==1? getContext().getResources().getDrawable(R.drawable.bg_orange_5_shape):getContext().getResources().getDrawable(R.drawable.bg_orange_5_shape));
         }
 
 

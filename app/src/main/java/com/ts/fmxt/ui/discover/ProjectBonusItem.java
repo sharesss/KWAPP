@@ -3,6 +3,7 @@ package com.ts.fmxt.ui.discover;
 import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,7 @@ public class ProjectBonusItem implements BaseViewItem {
                 //set 四周距离
                 params.setMargins(30, 0, 30, 0);
                 params.height=700;
+                params.gravity = Gravity.CENTER_HORIZONTAL;
                 imageView.setLayoutParams(params);
 
                 //添加文本到主布局

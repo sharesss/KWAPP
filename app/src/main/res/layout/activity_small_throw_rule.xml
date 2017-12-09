@@ -14,19 +14,22 @@
         android:layout_height="1dp"
         android:background="@color/gray"
         />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/small_throw_rule"
+        />
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="gone"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/small_throw_rule"
-        />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textColor="@color/green"
+            android:textColor="@color/text_orange"
             android:layout_marginLeft="10dp"
             android:text="预约金：￥1000"
             android:textSize="18sp"/>

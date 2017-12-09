@@ -46,7 +46,7 @@
             android:layout_below="@id/iv_circlebar"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bg_orange_kongyuan"
+            android:background="@drawable/bg_orange_circle"
             android:text="值得投"
             android:textColor="@color/text_orange" />
     </LinearLayout>
@@ -74,7 +74,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bg_orange_kongyuan"
+            android:background="@drawable/bg_orange_circle"
             android:text="不值得投"
             android:textColor="@color/text_orange" />
     </LinearLayout>

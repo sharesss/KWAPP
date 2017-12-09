@@ -50,12 +50,12 @@ public class FollowProjectActivity extends FMBaseTableActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_follow_project);
+        setContentView(R.layout.activity_follow_projects);
         userid  =getIntent().getIntExtra("userid",0);
         findViewById(R.id.btn_finish).setOnClickListener(this);
         tv_spinner = (TextView) findViewById(R.id.tv_spinner);
         tv_spinner.setOnClickListener(this);
-        tv_spinner.setText("想跟投的项目");
+        tv_spinner.setText("全部");
         bindRefreshAdapter((RefreshListView) findViewById(R.id.refresh_lv), new FollowProjectAdapter(this, arrayList));
         mEmptyView = (EmptyView) findViewById(R.id.empty_view);
         mEmptyView.setEmptyText("跟投项目，及时跟踪项目动态");
@@ -122,9 +122,13 @@ public class FollowProjectActivity extends FMBaseTableActivity implements View.O
                                         }
                                         adapter = new FollowProjectAdapter(FollowProjectActivity.this, tableList.getArrayList());
                                         refresh_lv.setAdapter(adapter);
+                                        mEmptyView.setVisibility(View.GONE);
+                                    }else{
+                                        refresh_lv.setAdapter(null);
+                                        mEmptyView.setVisibility(View.VISIBLE);
                                     }
                                     stopRefreshState();
-                                    mEmptyView.setVisibility(View.GONE);
+
 //                            ToastHelper.toastMessage(getContext(), msg);
                                 }else{
                                     ToastHelper.toastMessage(FollowProjectActivity.this,msg);
@@ -195,8 +199,8 @@ public class FollowProjectActivity extends FMBaseTableActivity implements View.O
             this.setBackgroundDrawable(dw);
             this.setOutsideTouchable(true);
             // 显示窗口
-            setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);
-            setHeight(RelativeLayout.LayoutParams.MATCH_PARENT);
+            setWidth(RelativeLayout.LayoutParams.WRAP_CONTENT);
+            setHeight(RelativeLayout.LayoutParams.WRAP_CONTENT);
         }
 
         private void initView() {

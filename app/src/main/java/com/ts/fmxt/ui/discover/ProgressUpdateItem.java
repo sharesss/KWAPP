@@ -3,6 +3,7 @@ package com.ts.fmxt.ui.discover;
 import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class ProgressUpdateItem implements BaseViewItem {
                         RecyclerView.LayoutParams.WRAP_CONTENT);
                 //set 四周距离
                 params.height=700;
+                params.gravity = Gravity.CENTER_HORIZONTAL;
                 params.setMargins(30, 0, 30, 0);
 
                 imageView.setLayoutParams(params);
