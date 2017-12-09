@@ -129,7 +129,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                    tabView(tab_bar);
+                    tabView(tab_bar,view);
                 }
             });
         } else {
@@ -142,7 +142,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    tabView(tab_bar);
+                    tabView(tab_bar,recyclerView);
                 }
             });
         }
@@ -162,36 +162,53 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
      * 滑动头部哪个模块的 就标记哪个模块
      * @param index
      */
-    private void scrollUpdateTab(int index,int laseindex) {
-        index = laseindex;
+    private void scrollUpdateTab(int index,int lastindex) {
+        if (lastindex == list.size() - 1) {
+            index = lastindex;
+        }
         BaseViewItem baseViewItem = list.get(index);
+        boolean find = findItem(baseViewItem);
+        if (!find) {
+            int i = lastindex - index;
+            i = i >= 1 ? 1 : 0;
+            findItem(list.get(i + index));
+        }
+    }
+
+    boolean findItem(BaseViewItem baseViewItem) {
+
         if (baseViewItem instanceof MyStoryItem) {
             if (tabItem != null) {
                 TabItem.ViewHolder viewHolder = tabItem.getViewHolder();
                 tabItem.select(viewHolder.tv_my_story);
                 selectTab(tabItem);
+                return true;
             }
         } else if (baseViewItem instanceof ProjectReturnItem) {
             if (tabItem != null) {
                 TabItem.ViewHolder viewHolder = tabItem.getViewHolder();
                 tabItem.select(viewHolder.tv_project_return);
                 selectTab(tabItem);
+                return true;
             }
-        } else if (baseViewItem instanceof DisBPItem || baseViewItem instanceof DisBPLabelItem) {
+        } else if (baseViewItem instanceof DisBPItem || baseViewItem instanceof DisBPLabelItem || baseViewItem instanceof ProjectHighlightsItem) {
             if (tabItem != null) {
                 TabItem.ViewHolder viewHolder = tabItem.getViewHolder();
                 tabItem.select(viewHolder.tv_project_highlights);
                 selectTab(tabItem);
+                return true;
             }
-        } else if (baseViewItem instanceof ProgressUpdateItem || baseViewItem instanceof ProjectBonusItem) {
+        } else if (baseViewItem instanceof ProgressUpdateItem || baseViewItem instanceof ProjectBonusItem || baseViewItem instanceof ProjectProgressItem) {
             if (tabItem != null) {
                 TabItem.ViewHolder viewHolder = tabItem.getViewHolder();
                 tabItem.select(viewHolder.tv_project_schedule);
                 selectTab(tabItem);
+                return true;
             }
         }
+        return false;
     }
-    private void tabView(View tab_bar) {
+    private void tabView(View tab_bar,View view) {
         if (tab_bar != null) {
             RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
             if (layoutManager instanceof LinearLayoutManager) {
@@ -211,8 +228,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                 }
                 {
                     if (firstItemPosition > index) {
+                        view.setPadding(0, 0, 0, 0);
                         tab_bar.setVisibility(View.GONE);
                     } else if (firstItemPosition > -1) {
+                        view.setPadding(0, (int) getResources().getDimension(R.dimen.tap_h), 0, 0);
                         tab_bar.setVisibility(View.VISIBLE);
                     }
                 }
@@ -291,11 +310,38 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
             public void onitem(int postion,TabItem item) {
 //                int index = list.indexOf(item);
 //                    index = postion + index + 1;
-                int index = 3 + 1 + postion;
+
+
+                int index = 0;
+                for (int i = 0; i < list.size(); i++) {
+                    BaseViewItem baseViewItem = list.get(i);
+                    if (postion == 0) {
+                        if (baseViewItem instanceof MyStoryItem) {
+                            index = i;
+                            break;
+                        }
+                    } else if (postion == 1) {
+                        if (baseViewItem instanceof ProjectReturnItem) {
+                            index = i;
+                            break;
+                        }
+                    } else if (postion == 2) {
+                        if (baseViewItem instanceof ProjectHighlightsItem) {
+                            index = i;
+                            break;
+                        }
+                    } else if (postion == 3) {
+                        if (baseViewItem instanceof ProjectProgressItem) {
+                            index = i;
+                            break;
+                        }
+                    }
+                }
                 recyclerView.smoothScrollToPosition(index);
             }
         };
         DiscoverHeadItem discoverHeadItem = new DiscoverHeadItem(info);
+
         headlist.add(0, discoverHeadItem);
         DiscoverCircleItem discoverCircleItem = new DiscoverCircleItem(info, DiscoverDetailsActivity.this, investId);
         ProjectReturnItem projectReturnItem = new ProjectReturnItem(info, DiscoverDetailsActivity.this);
@@ -416,8 +462,8 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         list.removeAll(updatelist);
         updatelist.clear();
         if(arr.size()>0){
-            ProjectProgressItem  projectHighlights = new ProjectProgressItem( DiscoverDetailsActivity.this);
-            updatelist.add(projectHighlights);
+            ProjectProgressItem  projectProgressItem = new ProjectProgressItem( DiscoverDetailsActivity.this);
+            updatelist.add(projectProgressItem);
         }
         for (ProgressUpdateEntity entity : arr) {
             if (entity.getParticipationType() == 1) {

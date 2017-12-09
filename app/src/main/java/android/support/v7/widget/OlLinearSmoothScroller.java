@@ -1,7 +1,6 @@
 package android.support.v7.widget;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import com.ts.fmxt.R;
@@ -22,7 +21,7 @@ public class OlLinearSmoothScroller extends LinearSmoothScroller {
         final int distance = (int) Math.sqrt(dx * dx + dy * dy);
         final int time = calculateTimeForDeceleration(distance);
         if (time > 0) {
-            dy = (int) ((int) -targetView.getY() + targetView.getResources().getDimension(R.dimen.tap_h));
+            dy = (int) (-targetView.getY() + targetView.getResources().getDimension(R.dimen.tap_h));
             action.update(-dx, -dy, time, mDecelerateInterpolator);
         }
     }

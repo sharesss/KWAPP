@@ -103,7 +103,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
 
                 break;
             case R.id.tv_project_schedule://
-                if(state==1){
+//                if(state==1){
                     viewHolder.tv_my_story.setTextColor(resources.getColor(R.color.gray));
                     viewHolder.tv_my_story_lin.setBackgroundColor(resources.getColor(R.color.gray_line));
                     viewHolder.tv_project_return.setTextColor(resources.getColor(R.color.gray));
@@ -112,7 +112,7 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
                     viewHolder.tv_project_highlights_lin.setBackgroundColor(resources.getColor(R.color.gray_line));
                     viewHolder.tv_project_schedule.setTextColor(resources.getColor(R.color.orange));
                     viewHolder.tv_project_schedule_lin.setBackgroundColor(resources.getColor(R.color.orange));
-                }
+//                }
 
 
 
@@ -138,17 +138,17 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
             case R.id.tv_project_highlights://
 
                 if (callBack != null) {
-                    callBack.onitem(2+1,this);
+                    callBack.onitem(2,this);
                 }
                 break;
             case R.id.tv_project_schedule://
-                if(state==1) {
+//                if (state == 1) {
                     if (callBack != null) {
-                        callBack.onitem(3 + 5, this);
+                        callBack.onitem(3, this);
                     }
-                }else{
-                    ToastHelper.toastMessage(activity,"暂未发布项目更新");
-                }
+//                } else {
+//                    ToastHelper.toastMessage(activity, "暂未发布项目更新");
+//                }
                 break;
         }
     }
