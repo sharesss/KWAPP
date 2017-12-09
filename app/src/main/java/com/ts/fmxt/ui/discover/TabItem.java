@@ -22,13 +22,13 @@ public class TabItem implements BaseViewItem ,View.OnClickListener{
     DiscoverDetailsActivity activity;
     private Resources resources;
     private ViewHolder viewHolder;
-    int state;
+//    int state;
     public interface CallBack {
         void onitem(int postion,TabItem item);
     }
 
-    public TabItem(CallBack callBack, int state,DiscoverDetailsActivity activity) {
-        this.state = state;
+    public TabItem(CallBack callBack,DiscoverDetailsActivity activity) {
+//        this.state = state;
         this.callBack = callBack;
         this.activity = activity;
     }

@@ -157,13 +157,13 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     private View tab_bar;
     private int firstItemPosition = -1;
     private int oldindex = -1;
-    int state;//状态
+//    int state;//状态
     /**
      * 滑动头部哪个模块的 就标记哪个模块
      * @param index
      */
     private void scrollUpdateTab(int index,int lastindex) {
-        if (lastindex == list.size() - 1) {
+        if (index != lastindex && lastindex == list.size() - 1) {
             index = lastindex;
         }
         BaseViewItem baseViewItem = list.get(index);
@@ -269,6 +269,10 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         tv_project_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (updatelist.isEmpty()) {
+                    ToastHelper.toastMessage(DiscoverDetailsActivity.this, "暂未发布项目更新");
+                    return;
+                }
                 item.onClick(view);
             }
         });
@@ -347,13 +351,13 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
         ProjectReturnItem projectReturnItem = new ProjectReturnItem(info, DiscoverDetailsActivity.this);
         MyStoryItem myStoryItem = new MyStoryItem(info, DiscoverDetailsActivity.this);
 
-        for(int i=0;i< arr.size();i++){
-            if(arr.get(i).getParticipationState()==1){
-                state = arr.get(i).getParticipationState();
-            }
-
-        }
-        tabItem = new TabItem( callBack,state,DiscoverDetailsActivity.this);
+//        for(int i=0;i< arr.size();i++){
+//            if(arr.get(i).getParticipationState()==1){
+//                state = arr.get(i).getParticipationState();
+//            }
+//
+//        }
+        tabItem = new TabItem(callBack,DiscoverDetailsActivity.this);
         setBar(tabItem);
         headlist.add(1, discoverCircleItem);
         headlist.add(2, new LineItem());
@@ -456,29 +460,30 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
     }
     ArrayList<BaseViewItem> updatelist = new ArrayList<>();
     private void ProgressUpdateData(ArrayList<ProgressUpdateEntity> arr){
-        if (arr.size() == 0) {
-            list.removeAll(updatelist);
-        }
+//        if (arr.size() == 0) {
+//            list.removeAll(updatelist);
+//        }
         list.removeAll(updatelist);
         updatelist.clear();
-        if(arr.size()>0){
-            ProjectProgressItem  projectProgressItem = new ProjectProgressItem( DiscoverDetailsActivity.this);
+        if (arr != null && arr.size() > 0) {
+            ProjectProgressItem projectProgressItem = new ProjectProgressItem(DiscoverDetailsActivity.this);
             updatelist.add(projectProgressItem);
-        }
-        for (ProgressUpdateEntity entity : arr) {
-            if (entity.getParticipationType() == 1) {
-                ProgressUpdateItem disBPItem = new ProgressUpdateItem(entity, this);
-                updatelist.add(disBPItem);
-            }else if(entity.getParticipationType() == 2){
-                ProjectBonusItem disBPItem = new ProjectBonusItem(entity, this);
-                updatelist.add(disBPItem);
-            }
+            for (ProgressUpdateEntity entity : arr) {
+                if (entity.getParticipationType() == 1) {
+                    ProgressUpdateItem disBPItem = new ProgressUpdateItem(entity, this);
+                    updatelist.add(disBPItem);
+                } else if (entity.getParticipationType() == 2) {
+                    ProjectBonusItem disBPItem = new ProjectBonusItem(entity, this);
+                    updatelist.add(disBPItem);
+                }
 
+            }
         }
+
 //        DisBPLabelItem disBPLabelItem = new DisBPLabelItem(cont, DiscoverDetailsActivity.this);
 //        labellist.add(disBPLabelItem);
         if (headlist.isEmpty()) {
-            list.addAll(0+labellist.size(), updatelist);
+            list.addAll(labellist.size(), updatelist);
         } else {
             list.addAll(headlist.size()+labellist.size(), updatelist);
         }
@@ -1041,6 +1046,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                 JSONObject json = js.optJSONObject("statsMsg");
                                 String stats = json.getString("stats");
                                 String msg = json.getString("msg");
+                                arr.clear();
                                 if (stats.equals("1")) {
                                     if (!js.isNull("projectParticipations")) {
 //                                        TableList tableList = new TableList();
@@ -1051,7 +1057,7 @@ public class DiscoverDetailsActivity extends FMBaseScrollActivityV2 implements V
                                         ProgressUpdateData(arr);
                                     }
                                 } else {
-                                    ProgressUpdateData(null);
+                                    ProgressUpdateData(arr);
                                     ToastHelper.toastMessage(DiscoverDetailsActivity.this, msg);
                                 }
                             }
